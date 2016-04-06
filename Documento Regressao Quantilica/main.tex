@@ -1,0 +1,74 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl}
+\usepackage[pdftex]{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath,amsfonts,amsthm,mathtools} % Math packages
+\usepackage{hyperref}
+\usepackage{indentfirst}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{todonotes}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+
+%\usepackage[a4paper, total={6in, 8in}]{geometry}
+
+
+%\usepackage{biblatex}
+%\usepackage{natbib}
+%\selectlanguage{english}
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}
+\fancyhead{}											% No page header
+\fancyfoot[L]{}											% Empty 
+\fancyfoot[C]{}											% Empty
+\fancyfoot[R]{\thepage}									% Pagenumbering
+\renewcommand{\headrulewidth}{0pt}			% Remove header underlines
+\renewcommand{\footrulewidth}{0pt}				% Remove footer underlines
+\setlength{\headheight}{13.6pt}
+
+%%% Equation and float numbering
+\numberwithin{equation}{section}		% Equationnumbering: section.eq#
+\numberwithin{figure}{section}			% Figurenumbering: section.fig#
+\numberwithin{table}{section}				% Tablenumbering: section.tab#
+
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+%%% Maketitle metadata
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} 	% Horizontal rule
+
+\title{
+		%\vspace{-1in} 	
+		\usefont{OT1}{bch}{b}{n}
+		\normalfont \normalsize \textsc{Pontíficia Universidade Católica do Rio de Janeiro \\ Departamento de Engenharia Elétrica} \\ 
+		\horrule{0.5pt} \\[0.4cm]
+		\huge Quantile Regression \\
+		\horrule{2pt} \\[0.5cm]
+}
+\author{
+		\normalfont 								\normalsize
+		 Marcelo Castiel Ruas\footnote{Aluno de doutorado do Departamento de Engenharia Elétrica da PUC-RIO.}~,
+        Henrique Helfer Hoeltgebaum\footnote{Aluno de doutorado do Departamento de Engenharia Elétrica da PUC-RIO.}~,
+         Alexandre Street\footnote{Professor do Departamento de Engenharia Elétrica da PUC-RIO.}~,\\ \normalfont 								\normalsize Cristiano Fernandes\footnote{Professor do Departamento de Engenharia Elétrica da PUC-RIO.}\ 
+        \\[-1pt]		\normalsize
+        \today}
+
+\date{}
+\setlength\parindent{24pt}
+\begin{document}
+
+\maketitle
+\include{tnen-introduction}
+\include{tnen-linear-models}
+\include{tnen-nonparametric-models}
+%\include{tnen-conclusion}
+
+\clearpage
+\bibliographystyle{plain}
+\bibliography{QR}
+
+\input{tnen-anexos}
+
+\end{document}
+

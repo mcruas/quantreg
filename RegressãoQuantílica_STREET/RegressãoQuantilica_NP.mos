@@ -1,0 +1,108 @@
+model RegressaoQuantilica
+uses "mmxprs"; 
+uses "mmetc";  
+uses 'mmsystem'
+uses "mmive"
+uses "mmnl"
+
+
+declarations
+	! Parâmetros do problema.
+		alpha = 0.05 ! parâmetro que penaliza os erros na função objetivo
+		NumObservacoes = 372 ! número de observações 
+		Lag = {1,2,3,4,5,6,7,8,9,10,11,12} !Lags explicativos
+		MaxLag = 12
+		K = 4
+		M = 10
+		lamb = 10
+		
+	! Dados x e y.		
+		!x : array(1..NumObservacoes) of real ! Aqui estamos declarando um vetor de número reais cujas posições são 1,2,...,NumObservacoes. 
+		y : array(1..NumObservacoes) of real ! Aqui estamos declarando um vetor de número reais cujas posições são 1,2,...,NumObservacoes.
+		x : array(1..NumObservacoes) of real ! Aqui estamos declarando um vetor de número reais cujas posições são 1,2,...,NumObservacoes.  
+		theta: array(1..NumObservacoes) of mpvar
+		D2_theta: array(1..NumObservacoes) of mpvar  
+		! Reparem que diferente dos parâmetros, os arrays devem ser declarados com ":" ao invés de "=".
+		
+	! Variáveis de decisão
+		b        	: array(Lag) of mpvar ! Coeficiente angular da reta. mpvar = variável de decisão. Variáveis de decisão devem também ser declaradas com ":"
+		h        	: array(Lag) of mpvar ! Coeficiente angular da reta. mpvar = variável de decisão. Variáveis de decisão devem também ser declaradas com ":"		
+		b0          : mpvar ! Coeficiente linear da reta
+		delta_mais  : array(1..NumObservacoes) of mpvar ! Vetor da parte positiva do módulo do erro
+		delta_menos : array(1..NumObservacoes) of mpvar ! Vetor da parte negativa do módulo do erro
+		z        	: array(Lag) of mpvar !Variaveis indicadoras para regularizar o vetor b
+	! Restrições
+		FuncObj   : linctr ! Função objetivo. linctr = restrição linear
+		restricao : array(1..NumObservacoes) of linctr ! Como nesse caso temos uma restrição pra cada observação, criamos um vetor com NumObservações posições. Cada restrição é armazenada em uma posição desse vetor.
+		
+	! Os seguintes arrays são necessários para exportar os resultados em formato .csv
+		b_output 		   : array(1..(MaxLag+1)) of real
+		delta_mais_output  : array(1..NumObservacoes) of real
+		delta_menos_output : array(1..NumObservacoes) of real
+		
+		
+end-declarations ! lembrar de SEMPRE fechar com end-
+
+! Leitura de dados. Os dados x e y das observações feitas estão gravadas em um arquivo Input.txt anexo.
+! Muito importante: O .txt deve estar na mesma pasta que este arquivo. Muito importante(2): os dados no .txt sempre são escritos da seguinte maneira x : [ "observações ]. Olhar o Input.txt para entender melhor.
+
+!initializations from 'Input.txt'
+!	x y
+!end-initializations
+
+diskdata(ETC_IN,'y.csv',y)
+diskdata(ETC_IN,'x.csv',x)
+
+! Aqui são escritas a função objetivo do problema e as restrições
+
+! Função objetivo
+	
+	!Regularizacao norma 0 - inteiro misto
+	
+	!FuncObj := sum(i in 1..NumObservacoes) (alpha*delta_mais(i) + (1-alpha)*delta_menos(i)) !Regularizacao norma 0 (inteiro)
+	!forall(j in Lag) b(j)<=M*z(j)
+	!forall(j in Lag) b(j)>=-M*z(j)
+	!sum(j in Lag) z(j) <= K
+	
+	!Regularizacao via LASSO - lienar	
+	!FuncObj := sum(i in 1..NumObservacoes) (alpha*delta_mais(i) + (1-alpha)*delta_menos(i)) + lamb*(sum(j in Lag) h(j)) !LASSO
+	!forall(j in Lag) h(j) >= b(j)
+	!forall(j in Lag) h(j) >= -b(j)
+	
+	!Regularizacao derivada segunda via LASSO
+	FuncObj := sum(i in 3..NumObservacoes) (alpha*delta_mais(i) + (1-alpha)*delta_menos(i)) + lamb*(sum(i in 3..NumObservacoes)(D2_theta(i))) !LASSO
+	forall(i in 3..NumObservacoes) D2_theta(i) >= ( (theta(i)-theta(i-1))/(x(i)-x(i-1))-(theta(i-1)-theta(i-2))/(x(i-1)-x(i-2)) ) / (x(i)-x(i-1))
+	forall(i in 3..NumObservacoes) D2_theta(i) >= -( (theta(i)-theta(i-1))/(x(i)-x(i-1))-(theta(i-1)-theta(i-2))/(x(i-1)-x(i-2)) ) / (x(i)-x(i-1))
+	
+	forall(i in 3..NumObservacoes) restricao(i) := delta_mais(i) - delta_menos(i) = y(i) - theta(i)
+	
+! Restrições
+	!forall(i in (MaxLag+1)..NumObservacoes) restricao(i) := delta_mais(i) - delta_menos(i) = y(i) - sum(j in Lag)b(j)*y(i-j) - b0
+	
+	! importante: sempre que uma variável de decisão é declarada, o Xpress assume automaticamente que essa variável é >= 0. Como nesse caso as variáveis beta e c podem assumir valores negativos, as seguintes restrições são incluidas
+	forall(j in Lag) b(j) is_free
+	forall(j in Lag) z(j) is_binary
+	b0    is_free
+	forall(i in 3..NumObservacoes) theta(i) is_free
+	forall(i in 3..NumObservacoes) D2_theta(i) is_free
+	
+! Finalmente, minimizamos a função objetivo:
+	minimize(FuncObj)
+	
+	forall(j in 1..(MaxLag+1)) b_output(j):=0
+	b_output(1) := getsol(b0)
+	forall(j in Lag) b_output(j+1):=getsol(b(j))
+	
+! Impressão dos dados.
+	forall(j in 1..(MaxLag+1)) writeln("b",j-1," = ",b_output(j)) ! O getsol é necessário para que o Xpress imprima o resultado correto.
+	writeln("Função objetivo = ",getobjval) ! getobjval = mínimo global
+	
+! Exporta os dados
+
+	diskdata(ETC_OUT,'.\b.csv',b_output) ! O comando diskdata salvará o resultado da variável a no arquivo a.csv que será salva na pasta "Output"
+	diskdata(ETC_OUT,'.\delta_mais.csv',delta_mais_output)
+	diskdata(ETC_OUT,'.\delta_menos.csv',delta_menos_output)
+	diskdata(ETC_OUT,'.\theta.csv',theta)
+	diskdata(ETC_OUT,'.\D2_theta.csv',D2_theta)
+
+end-model

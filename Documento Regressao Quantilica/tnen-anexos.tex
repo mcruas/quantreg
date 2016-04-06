@@ -1,0 +1,35 @@
+\section{Appendices}
+\label{appendice}
+
+\subsection{Proof of quantiles as an optimization problem}
+\label{sec:quantile-proof}
+Let $Z^{\alpha}=\mbox{arg min}_{Q}E[\alpha\max\{0,X-Q\}+(1-\alpha)\max\{0,Q-X\}].$
+We can rewrite the function as
+
+\[
+\begin{aligned}Y & =\alpha\int_{Q}^{\infty}(X-Q)dF_{x}+(1-\alpha)\int_{-\infty}^{Q}(Q-X)dF_{X}\\
+& =\alpha\int_{Q}^{\infty}XdF_{x}-\alpha Q\int_{Q}^{\infty}QdF_{x}+Q\int_{-\infty}^{Q}dF_{x}-\int_{-\infty}^{Q}XdF_{x}-\alpha Q\int_{-\infty}^{Q}dF_{x}+\alpha\int_{-\infty}^{Q}XdF_{x}\\
+& =\alpha\int_{Q}^{\infty}XdF_{x}-\alpha Q+QF_{X}(Q)-\int_{-\infty}^{Q}XdF_{x}-\alpha QF_{X}(Q)+\alpha\int_{-\infty}^{Q}XdF_{x}\\
+& =\alpha\int_{Q}^{\infty}XdF_{x}-\alpha Q+QF_{X}(Q)-\int_{-\infty}^{Q}XdF_{x}+\alpha\int_{-\infty}^{Q}XdF_{x}
+\end{aligned}
+\]
+By the first order condition for optimality, we need that $\frac{dZ(Q^{*})}{dQ}=0$.
+So, we have:
+
+\[
+-\alpha Q^{*}f(Q^{*})-\alpha+F_{X}(Q^{*})+Q^{*}f(Q^{*})-Q^{*}f(Q^{*})+\alpha Q^{*}f(Q^{*})=0
+\]
+\[
+F_{X}(Q^{*})=\alpha.
+\]
+Thus, we have that $Z^\alpha$ is the $\alpha-quantile$ of random variable $X$.
+
+\subsection{Tables}
+
+\input{Tabelas/table-betas-selecaointeira-alpha-005}
+\input{Tabelas/table-betas-selecaointeira-alpha-01}
+\input{Tabelas/table-betas-selecaointeira-alpha-05}
+\input{Tabelas/table-betas-selecaointeira-alpha-09}
+\input{Tabelas/table-betas-selecaointeira-alpha-095}
+\input{Tabelas/tabela-icaraizinho}
+
