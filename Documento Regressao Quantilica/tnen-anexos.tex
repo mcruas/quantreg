@@ -26,6 +26,12 @@ Thus, we have that $Z^\alpha$ is the $\alpha-quantile$ of random variable $X$.
 
 \subsection{Tables}
 
+The following tables inform the size of Coefficients when using the regularization method based on MIP described on session \ref{sec:best-subset-mip}. When using this method, we choose a parameter $K$ which defines the total number of nonzero coefficients (without accounting the intercept $\beta_0$, which is always included). 
+
+In each column we find the estimated values of coefficients for each different choice of $K$. As coefficients are quantile dependent, we provide tables for $\alpha \in (0.05, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95)$.
+
+%\caption{\textbf{$\alpha = 0.05.} 
+
 \input{Tabelas/table-betas-selecaointeira-alpha-005}
 \input{Tabelas/table-betas-selecaointeira-alpha-01}
 \input{Tabelas/table-betas-selecaointeira-alpha-05}
