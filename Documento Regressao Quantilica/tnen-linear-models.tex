@@ -6,9 +6,9 @@ We investigate two ways of accomplishing this goal.
 The first of them consists of selecting the best subset of variables through Mixed Integer Programming, given that $K$ variables are included in the model. Using MIP to select the best subset of variables is investigated in \cite{bertsimas2015best}. The second way is including a $\ell_1$ penalty on the linear quantile regression, as in \cite{kim2009ell_1}, and let the model select which and how many variables will have nonzero coefficients. 
 Both of them will be built over the standard Quantile Linear Regression model. In the end of the section, we discuss a information criteria to be used for quantile regression and verify how close are the solutions in the eyes of this criteria.
 
-When we choose $f(x_t)$ to be a linear function, as on equation \ref{eq:linear-model} (that we reproduce below for convenience):
+When we choose $q(x_t)$ to be a linear function, as on equation \ref{eq:linear-model} (that we reproduce below for convenience):
 \begin{equation}
-\min_{f}\sum_{t=1}^{n}\alpha|y_{t}-f(x_t)|^{+}+(1-\alpha)|y_{t}-f(x_t)|^{-},
+\min_{f}\sum_{t=1}^{n}\alpha|y_{t}-q(x_t)|^{+}+(1-\alpha)|y_{t}-q(x_t)|^{-},
 \end{equation}
 we can substitute it on problem \ref{eq:qar-general}, getting the following LP problem:
 \begin{equation}
@@ -53,11 +53,11 @@ This is the same strategy of the LASSO, and its usage for the quantile regressio
 The proposed optimization problem to be solved is:
 
 \begin{equation}
-\min_{\beta_{0},\beta}\sum_{t=1}^{n}\alpha|y_{t}-f(x_t)|^{+}+(1-\alpha)|y_{t}-f(x_t)|^{-}+\lambda\|\beta\|_{1}
+\min_{\beta_{0},\beta}\sum_{t=1}^{n}\alpha|y_{t}-q(x_t)|^{+}+(1-\alpha)|y_{t}-q(x_t)|^{-}+\lambda\|\beta\|_{1}
 \label{eq:l1-qar-optim}
 \end{equation}
 \[
-f(x_t)=\beta_{0}-\sum_{p=1}^{P}\beta_{p}x_{t,p},
+q(x_t)=\beta_{0}-\sum_{p=1}^{P}\beta_{p}x_{t,p},
 \]
 where the regressors $x_{t,p}$ used are its lags. In order to represent the above problem to be solved with linear programming solver, we restructure the problem as below:
 \begin{eqnarray}
@@ -120,6 +120,54 @@ L_\lambda = \{ p \; | \; p \in \{ 1,\dots,P \}, \; |\beta^{*LASSO}_{\lambda,p}| 
 Hence, we have that
 $$\beta^{*LASSO}_{\lambda,p} = 0 \iff \beta^{*}_{\lambda,p} = 0.$$
 
+
+\subsection{Simulation Study}
+\label{sec:simulation-ar1}
+If we knew an autoregressive process true model
+\[
+	y_t = \phi_0 + \sum_{p=1}^{P} \phi_p y_{t-p} + \varepsilon_t,
+\]
+and knew the error distribution, we could estimate the one-step ahead quantile as the sum $\hat{y}_{t+1} + t_{\alpha}$, where $t_\alpha$ is the $\alpha$-quantile for the error distribution. This means that we would be able to use all developments made on conditional mean estimation and simply add an error to estimate quantiles. 
+
+However, that is not the case. When working with quantile estimation for real data we don't know the generating process exactly. Using a quantile regression model provides us a good solution even without knowing the error distribution. 
+
+We propose simulating an AR(1) model
+\begin{equation}
+	y_t = \phi_0 +  \phi y_{t-1} + \varepsilon_t,\qquad \varepsilon_t \sim N(0, \sigma_\varepsilon^2),	
+\label{eq:sim-true-model}
+\end{equation}
+and test two approaches to predict the one-step ahead quantile. On the first one, we consider known the process true model, given on equation \ref{eq:sim-true-model}. Thus, our task is to estimate values for $\hat{\phi}_0$, $\hat{\phi}$ and $\hat{\sigma}_\epsilon^2$. In order to calculate the one-step ahead $\alpha$-quantile, we need to compute
+\begin{equation}
+	\hat{q}^{AR}_{t+1|t}(\alpha) = \hat{y}_{t+1|t} + z_\alpha \hat{\sigma}_\varepsilon,
+\end{equation}
+where $\hat{y}_{t+1|t} = \hat{\phi}_0 + \hat{\phi} y_{t}$ stands for the one-step ahead conditional mean and $z_\alpha = F^{-1}(\alpha)$, where $F$ is the gaussian distribution function.
+
+On the second approach, we fit a quantile regression by solving problem \ref{eq:qar-lp}. The solution of this optimization problem are coefficients $\hat{\beta}_0$ and $\hat{\beta}$. In order to find the one-step ahead $\alpha$-quantile, we use the following expression:
+\begin{equation}
+		\hat{q}^{QR}_{t+1|t}(\alpha) = \hat{\beta}_0 + \hat{\beta} y_{t}.
+\end{equation}
+Note that in both approaches we have one intercept term ($z_\alpha \sigma_\varepsilon + {\phi}_0$ and $\beta_0$) and a coefficient for the first lag ($\phi$ and $\beta$). 
+
+We generate data according to equation \ref{eq:sim-true-model}, with different values for $\phi$ (0.25, 0.5, 0.7 and 0.9) and different signal to noise ratios (0.01, 0.05, 0.1, 0.5, 1). We use the signal to noise ratio (RSN) to form the error variance such that $\sigma_e^2 = \dfrac{\phi_0}{1-\phi} \cdot RSN$. This experiment was run with samples of size $n=20000$. The first half was used to fit coefficients and the second half was used as testing set, on which forecasting was done.
+
+Our first goal is then to evaluate the ability of these two approaches to predict the one-step ahead $\alpha$-quantile for a few selected $\alpha$'s. We define the model $m$ forecasting error $\varepsilon_t^m$ as the quantity 
+\begin{equation}
+\varepsilon_t^m(\alpha) = \hat{q}^m_{t|t-1}(\alpha) - q_t(\alpha) = \hat{q}^m_{t|t-1}(\alpha) - \phi_0 - \phi y_{t-1} - z_\alpha \sigma_\epsilon.
+\end{equation}
+We use the Root Mean Squared Error (RMSE) to evaluate forecasting performance, which is defined for the model $m$ as follows:
+\begin{equation}
+RMSE^m = \sqrt{ \frac{1}{n-1} \sum_{i=2}^{n} \left( \varepsilon_t^m(\alpha) \right)^2}
+\end{equation}
+
+On section \ref{sec:simulation-tables}, we show a comparison of RMSE for both approaches. To compare them, we compute their RMSE ratio
+\begin{equation}
+R^{Q/A} = \dfrac{RMSE^{QR}}{RMSE^{AR}}.
+\end{equation}
+If $R^{Q/A}$ is smaller than 1, it means that the quantile regression approach performed better in terms of RMSE than the conditional mean based on autoregressive models approach.
+
+Once simulations are executed, we notice forecasting errors are similar for both approaches. The exception being when $\phi$ is large (0.9) and the noise is small ($RSN = 0.01$). In those cases, quantile regression performed on average 10\% better than when using the conditional mean approach.
+We also provide tables showing differences for the estimated autoregressive and intercept coefficients on section \ref{sec:simulation-tables}.
+
 \subsection{Model selection}
 
 On sections \ref{sec:best-subset-mip} and \ref{sec:best-subset-ell1}, we presented ways of doing regularization. But regularization can be done with different levels of parsimony. For example, we can select a different number $K$ of variables to be included in the best subset selection via MIP or choose different values of $\lambda$ for the $\ell_1$ penalty. Each of these choices leads to a different model, so one needs to know how to select the best one among the options we have. One way of achieving this is by using an information criteria to guide our decision. 
@@ -142,7 +190,7 @@ k_\lambda = \| \beta^*_\lambda \|_0.
 \end{equation}
 Then, for each number $K$ of total nonzero coefficients (from 1 until 13, where 1 means that only the intercept is included), there will be a penalty $\lambda^*_K$ which minimizes the SIC:
 \begin{equation}
-\lambda^*_k = \argmin_\lambda \left\lbrace  SIC\left( k_\lambda \right)  | \, k_\lambda = K \right\rbrace.
+\lambda^*_K = \argmin_\lambda \left\lbrace  SIC\left( k_\lambda \right)  | \, k_\lambda = K \right\rbrace.
 \end{equation}
 Thus, we can compare the SIC of the best lasso fit where exactly $K$ variables are selected with the SIC selected by the MIP problem, also with $K$ variables selected.
 
@@ -183,3 +231,5 @@ Figure \ref{fig:comparison-lm-results} shows the results of these experiments fo
   \caption{Comparison of SIC between a solution with Lasso as a variable selector and the best subset selection with MIP. The bars represent the distance $d$ as defined by equation \ref{eq:distance}. \\ (*) When the distance is zero, it means that the same variables are selected from both methods for a given $k$. Thus, in these cases we have the same SIC for both of them.}
   \label{fig:comparison-lm-results}
 \end{figure}
+
+

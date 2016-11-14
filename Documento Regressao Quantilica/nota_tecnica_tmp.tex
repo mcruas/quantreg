@@ -1,0 +1,504 @@
+\documentclass[a4paper]{IEEEtran}
+\usepackage[latin1]{inputenc}
+\usepackage{epstopdf}
+%\usepackage[spanish]{babel}
+\usepackage[cmex10]{amsmath}
+\interdisplaylinepenalty=2500
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{dcolumn}
+\usepackage{color}
+\usepackage[noadjust]{cite}
+\usepackage{url}
+\usepackage{balance}
+\usepackage[usenames,dvipsnames]{xcolor}
+%\DeclareGraphicsExtensions{.eps}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+
+\DeclareMathOperator*{\Max}{max}
+\DeclareMathOperator*{\Min}{min}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\Maximize}{Maximize}
+
+\begin{document}
+\title{A non-parametric quantile autoregressive model for wind power Firm Energy Certificate}
+
+\author{Henrique~Hoeltgebaum,
+		Marcelo~Ruas,
+		Cristiano~Fernandes
+	    and Alexandre~Street,~\IEEEmembership{Member,~IEEE}
+
+\thanks{This work was partially supported by the R\&D project ANEEL PD-7625-0001/2013.}
+\thanks{Henrique Hoeltgebaum, Marcelo Ruas, Cristiano Fernandes and Alexandre Street are with the Electrical Engineering Department, Pontifical Catholic University of Rio de Janeiro (PUC-Rio), Rio de Janeiro, RJ, Brazil (e-mail: \mbox{hhhelfer@hotmail.com}; \mbox{mcruas@gmail.com}; \mbox{cris@ele.puc-rio.br}; \mbox{street@ele.puc-rio.br}).}
+}
+
+\maketitle
+\begin{abstract}
+	In this article we use the framework of a non-parametric quantile regression model to generate forecasts of wind capacity factors of several quantiles. Such scenarios are then used as input to raise the distribution of the quantiles associated with each wind plant. In our proposed model we introduce a $\ell_{1}$ penalty term in the objective function, in order to properly adress an adaptive dependency structure for the $\alpha$-quantile time series. Hence, in contrast to the well-known quantile regression model, our proposed framework is not limited to linear functions. Computation experiments show a slight improvement when comparing our non-parametric framework to the benchmark.
+		
+%	In this article we use the framework of a non-parametric quantile regression model to generate forecasts of wind capacity factors of several quantiles. Such scenarios are then used as input to raise the distribution of the quantiles associated with each wind plant. In our proposed model we introduce a $\ell_{1}$ penalty term in the objective function, in order to properly adress an adaptive dependency structure for the $\alpha$-quantile time series. Hence, in contrast to the well-known quantile regression model, our proposed framework is not limited to linear functions. Computation experiments show a slight improvement when comparing our non-parametric framework to the benchmark.  	
+
+
+\end{abstract}
+
+\begin{IEEEkeywords}
+	Quantile regression, quantile autoregressive models, firm energy certificate, wind power, $\ell_{1}$-penalty term, time varying quantiles.
+\end{IEEEkeywords}
+
+% ===== Sec. I - Introduction ===== %
+
+\section{Introduction}
+\IEEEPARstart{W}{i}nd Firm Energy Certificate (FEC) estimation impose several challenges. First and foremost, it is a quantile function of an aleatory quantity, named here on wind capacity factor (WP). Due to its non-dispachable profile, accurate scenario generation model could reproduce a fairly dependence structure in order to the estimation of FEC. Secondly, as a quantile function, the more close to the extremes, more sensitive to sampling error.
+
+In this work, we introduce a new non-parametric quantile autoregressive model with $\ell_{1}$-penalty term, in order to properly simulate FEC densities for several $\alpha$-quantiles. 
+
+
+\subsection{Review of the Brazilian Electricty Sector}
+In response to the growing demand of energy, Brazil began a period of major structural reforms in the 1990s \cite{portal13}. Such reforms were positively accepted by private investors, which leads to numerous concession auctions for new projects \cite{barroso06}. Such enviroment had a mood turn over during 2001-2002, since the former security criteria were fully based on market mechanism and lead to a serious supply crisis. The outcomes of such crisis were the reduction of total load by 20\% and an economic loss of tens of billions US dollars \cite{pereira04}.
+
+Therefore, as a response to aforementioned crisis, brazilian government developed a new power sector model in 2004 \cite{barroso06}. The implementation of the reformed framework for Brazil's electricity sector generally aims to provide the long-term system's expansion incentive, reduce uncertainty in generation companies future revenues, and mitigate unfavourable effects of the short-term market \cite{street09}.
+
+In addition, such system was applied to the Brazilian case based on mandatory reability contracts as an incentive to investors. These contracts are considered to be financial instruments, in the same spirit as forward contracts. Moreover, in order to provide a confidence sensibility over generation, all contracts ought to be covered by so-called ``firm energy certificates'' (FEC). These FECs are defined in GWh/year and represent the plant's physical energy production capacity. In a nutshell, the FEC of a certain plant is the maximum amount of energy that can be sold through contracts and establishes the reliability assured by the generator backing the contract. It is thus a critical parameter for the power plant's economic feasibility.
+
+\subsection{Motivation and objetives}
+Accurate estimation of FEC values provide the investors safety regarding his cash-flows, since the main issue about introducing renewable energy into energy matrixes is its intermitent\footnote{When there is no human intervention over its production.} profile. Regarding wind power, its production is fully conditioned to the wind speed, which is caused by diference in atmospheric pressure. Hence, prior knowledge over its future behaviour is essential when considering the generation of this renewable source.
+
+Regarding wind plants, its FEC where fully detailed on a document produced by ANEEL in July of 2008 [XXX], which defines the firm energy certificate of a wind plant as the mean of the monthly production. As described in the mentioned document, the estimation of wind plants FEC is given by
+
+\begin{equation} 
+FEC^{(\alpha)} =\sum_{m=1}^{12} \frac{E_m^{(\alpha)} \times h_m}{8760}, \label{eq:FEC}
+\end{equation}					
+\noindent
+where $FEC^{(\alpha)}$ denotes the FEC of the wind plant certified with $\alpha$\% of confidence, ${h_m}$ is the number of hours in the month ${m}$ and $E_m^{(\alpha)}$ denotes the mean of the monthly quantiles certified at $\alpha$\%. In practice, the generator provides 12 values of energy certified at $\alpha$\%. refering to the month $m$. 
+
+To give the reader a further understanding about Equation \eqref{eq:FEC}, we present in Figure \ref{percentiles_FEC} the calculated FEC's for a windplant located at the brazilian northeast, named Icaraizinho. The estimatives $E_m^{(\alpha)}$ for several $\alpha \in \{50,55,...,95\}$ are ploted.
+
+%O critÃ©rio P50% indica que em 50% dos anos do histÃ³rico utilizado, a energia produzida em um determinado mÃªs m superou o valor E_m^((50%)). Quando aumentamos o critÃ©rio de confiabilidade de 50% para um valor Î± > 50, esperamos ver uma reduÃ§Ã£o da GF. Os dois grÃ¡ficos que sÃ£o exibidos a seguir mostram, para um parque no Nordeste do Brasil (Icaraizinho), as estimativas E_m^((Î±%)) e GF^((Î±%)) para diversos valores de confiabilidade Î±â{50,55,â¦,95}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3.5cm,width=7cm]{Figures/GF_SIM.pdf}
+\caption{Percentiles $E_m^{(\alpha)}$ for each month $m$ and confidence criteria $\alpha$.}
+\label{percentiles_FEC}
+\end{figure}
+
+
+%Onde $GF^{(\alpha)}$ representa a Garantia FÃ­sica da usina em questÃ£o certificada a um nÃ­vel $\alpha$\% de confianÃ§a, ${h_m}$ Ã© o nÃºmero de horas no mÃªs ${m}$ e $E_m^{(\alpha)}$ denota a mÃ©dia dos quantis mensais certificados a $\alpha$\%, i.e., recebe-se um conjunto de 12 valores de energia certificados a $\alpha\%$ referentes ao mÃªs \emph{m}. Logo, a GF de uma usina Ã© assumida ser uma variÃ¡vel aleatÃ³ria, uma vez que estÃ¡ em funÃ§Ã£o da produÃ§Ã£o da usina, pois ($E_m^{(\alpha)}$) Ã© calculado com base no histÃ³rico do fator de capacidade da usina e este depende unicamente da produÃ§Ã£o da mesma, que por definiÃ§Ã£o Ã© uma variÃ¡vel estocÃ¡stica.
+%
+%O cÃ¡lculo alternativo proposto por esta dissertaÃ§Ã£o Ã© utilizar o \emph{quantil das mÃ©dias mensais} dos cenÃ¡rios ao invÃ©s das \emph{mÃ©dias dos quantis mensais}. AtravÃ©s disso, o novo cÃ¡lculo para a garantia fÃ­sica tomaria a seguinte forma, esboÃ§ado pela equaÃ§Ã£o \eqref{eq:3}.
+%\vspace{-1pt}
+%\begin{align} 
+%	\begin{split}
+%	GF_{alternativa}^{(\alpha)} =\mathbb{Q}^{(\alpha)}\Bigr( \sum_{i=1}^{31} \sum_{m=1}^{12} \frac{{\tilde{G}}_{m,i}^ \times h_m}{8760}\Bigl) \label{eq:3}
+%	\end{split}					
+%\end{align}
+%
+%Onde $\mathbb{Q}^{(\alpha)}$ representa o quantil de $\alpha\%$, ${\tilde{G}}_{m,i}$ representa a geraÃ§Ã£o mÃ©dia do cenÃ¡rio simulado do mÃªs $m$ do ano $i$ e $h_m$ o nÃºmero de horas do mÃªs $m$, compondo assim uma mÃ©dia de geraÃ§Ã£o ponderada pelo nÃºmero de meses.
+
+ 
+% Figura XX - COLOCAR A GERAÃÃO EÃLICA AQUI
+%
+%Devido Ã  essa caracterÃ­stica, o novo marco regulatÃ³rio estabelece que, para usinas com perfil de geraÃ§Ã£o intermitÃªntes, a respectiva produÃ§Ã£o de cada uma dessas usinas deve estar assegurada por um Certificado de Garantia FÃ­sica (GF) expedido pela ANEEL. Ou seja, as usinas geradoras devem emitir, atrelada Ã  sua produÃ§Ã£o, um valor (em MW mÃ©dio) que representa a quantidade mÃ¡xima de energia que esta pode se comprometer a comercializar sob condiÃ§Ãµes adversas, a um certo nÃ­vel de probabilidade $\alpha$, ao longo do ano. Para usinas hidroelÃ©tricas, por exemplo, esses valores representam a capacidade da usina de produzir energia em perÃ­odos (anos) secos \cite{faria09}.
+%
+%Esses valores tambÃ©m figuram como responsÃ¡veis pela expansÃ£o segura da oferta, pois os mesmos agregam um certo nÃ­vel de confianÃ§a aos contratos, dado que 100\% da carga de todas as Distribuidoras devem ser cobertas por contratos futuros assegurados pela GF de cada unidade geradora, i.e., as geradoras podem comercializar um valor menor ou igual Ã  soma das GF's individuais das usinas contratadas. Criando assim um ambiente favorÃ¡vel Ã  novos investimentos em geraÃ§Ã£o reduzindo a incerteza a cerca dos possÃ­veis \emph{dÃ©ficits} de produÃ§Ã£o.
+%
+%A importÃ¢ncia em calcular com precisÃ£o esse valor, para a geradora, se materializa no momento da entrega da energia, dado que contratualmente sua produÃ§Ã£o atual de energia serÃ¡ medida e comparada com a GF da usina. Assim, em adiÃ§Ã£o ao risco de liquidaÃ§Ã£o no mercado de curto prazo, o investidor fica sujeito a penalidades regulatÃ³rias se a produÃ§Ã£o de energia verificada ficar abaixo dos valores declarados, pois qualquer desvio Ã© penalizado a um preÃ§o que reflete o custo de energia nova. JÃ¡ para a distribuidora, esse valor Ã© visto como balizador para a escolha de usinas contratadas por disponibilidade.  Contratos atrelados a usinas certificadas a um maior nÃ­vel de confianÃ§a ($\alpha$), irÃ£o gerar uma receita maior e mais frequente Ã  curto prazo atravÃ©s da liquidaÃ§Ã£o do \emph{surplus} de energia no mercado \emph{spot}. 
+%
+%Um sistema certificado, a um maior nÃ­vel de comprometimento de entrega, contarÃ¡ com um \emph{surplus} de energia para o atendimento Ã  demanda maior e mais frequente. AlÃ©m de Consumidores e Investidores, o Operador Nacional do Sistema (ONS) tambÃ©m se beneficia sob um maior nÃ­vel de confiabilidade de entrega de energia, pois reduzirÃ¡ assim o risco das usinas nÃ£o atenderem suas respectivas demandas, causando um racionamento. Entretanto, como tudo que possui maior valor deve custar mais caro, os preÃ§os de \emph{breakeven} de empreendimentos eÃ³licos deverÃ£o acompanhar o aumento da confiabilidade de forma a compensar a reduÃ§Ã£o de GF, uma vez que ao aumentarmos o nÃ­vel de confiabilidade $\alpha$ o valor de GF Ã© reduzido. Assim, existe um claro \emph{tradeoff} entre o aumento da qualidade da energia para o sistema e o aumento de preÃ§o que poderÃ¡ ser oferecido nos leilÃµes por esses empreendimentos. Uma das motivaÃ§Ãµes dessa dissertaÃ§Ã£o Ã© medir esse potencial impacto no preÃ§o dos empreendimentos eÃ³licos no Ã¢mbito do ACR. 
+%
+%% COLOCAR O GRÃFICO AQUI QUE TÃ NA NOTA TÃCNICA? PROBLEMA Ã QUE TEREMOS QUE EXPLICAR DE ONDE VEM OS DADOS E TAL...
+%
+%Na prÃ¡tica, o cÃ¡lculo da GF de uma usina eÃ³lica necessita de uma sÃ©rie de dados (da produÃ§Ã£o histÃ³rica da usina) de tamanho significativa, de forma que a medida obtida possa ser confiÃ¡vel. Em se tratando de usinas eÃ³licas no Brasil, a possibilidade de se obter sÃ©ries com tamanhos adequados Ã© bem restrita. As usinas mais antigas no paÃ­s estÃ£o operando hÃ¡ no mÃ¡ximo dois anos. Portanto as sÃ©ries de dados de velocidade de vento, pressÃ£o do ar e temperatura ambiente, registradas com rigor necessÃ¡rio para avaliaÃ§Ã£o do potencial de energia eÃ³lica, ainda sÃ£o relativamente pequenas. Isso impede a realizaÃ§Ã£o das simulaÃ§Ãµes estocÃ¡sticas de geraÃ§Ã£o eÃ³lica, integrada ao sistema interligado hidrotÃ©rmico nacional, com o Modelo NEWAVE [\cite{street01}, \cite{portaria}]. Tais simulaÃ§Ãµes sÃ£o fundamentais para fomentar a confecÃ§Ã£o de estratÃ©gias de comercializaÃ§Ã£o e investimento competitivas ao investidor. 
+%
+%Ã importante notar que sob o olhar dos financiadores de projeto, usinas eÃ³licas certificadas a 90\% sÃ£o mais atrativas perante as demais. Isso porque a razÃ£o social dos bancos financiadores nÃ£o Ã© a produÃ§Ã£o de energia, consequentemente esses nÃ£o possuem uma estratÃ©gia para anular o risco de baixa performance dos parques. Por consequÃªncia, o financiador fica exposto ao risco de uma eventual inadimplÃªncia em caso de baixa performance dos parques e o mesmo nÃ£o recebe nada a mais em caso de boa performance [NT street]. Posto que esse aumento de confiabilidade Ã© de suma importancia para agentes financiadores, esse trabalho se propÃµe a estudar a questÃ£o do erro amostral atrelada Ã  essa estimativa. Pois o cÃ¡lculo da GF leva em consideraÃ§Ã£o o percentil da produÃ§Ã£o anual, esse percentil Ã© uma estatÃ­stica de ordem e o erro amostral gerado pela sua estimaÃ§Ã£o fica sujeito a um aumento, ao elevarmos o nÃ­vel de confianÃ§a $\alpha$ \cite{casella}. Como jÃ¡ citado anteriormente, o tamanho das sÃ©ries de energia eÃ³lica no paÃ­s Ã© limitado, logo, como os percentis sÃ£o definidos por mÃªs, o percentil de 90\%, contarÃ¡ com um nÃºmero muito menor de dados observados do que no percentil de 50\%, expondo-o a um erro amostral na estimaÃ§Ã£o do percentil extremo. A utilizaÃ§Ã£o indevida desse valor pode estar penalizando o investidor, pois este paga um valor mais elevado por uma energia que acredita estar sendo assegurada sob um maior nÃ­vel de confiabilidade, como o 90\%, quando na realidade seu valor foi mal estimado e o investidor corre o risco de ter seu lastro de venda reduzido.
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%A certificaÃ§Ã£o de uma usina e a estipulaÃ§Ã£o do montante de energia que esta pode comercializar Ã© denominada de garantia fÃ­sica (GF). No contexto atual, o cÃ¡lculo da garantia fÃ­sica de uma determinada usina eÃ³lica Ã© realizado com base na mÃ©dia da produÃ§Ã£o mensal certificada. Essa energia certificada Ã© determinada pelo percentil  $\alpha$\% ou $P(\alpha)\%$ da produÃ§Ã£o histÃ³rica de cada mÃªs do ano. Com isso, o certificador entrega para o empreendedor, 12 valores correspondentes ao percentil empÃ­rico $\alpha$\% de cada mÃªs em MW mÃ©dio, de energia certificada a $P(\alpha)\%$. A $GF^{(\alpha\%)}$ Ã© a mÃ©dia desses 12 valores, conforme especificada pela EquaÃ§Ã£o \ref{eq:1}, e indica que em $\alpha$\% dos anos do histÃ³rico utilizado, a energia produzida em um determinado mÃªs \emph{m} superou o valor do percentil $\alpha$\% da sÃ©rie histÃ³rica.  
+%
+%Assim, na prÃ¡tica o cÃ¡lculo da GF de uma usina eÃ³lica necessita de uma sÃ©rie de dados (da produÃ§Ã£o histÃ³rica da usina) de tamanho significativa, de forma que a medida obtida possa ser confiÃ¡vel. Em se tratando de usinas eÃ³licas no Brasil, a possibilidade de se obter sÃ©ries com tamanhos adequados Ã© bem restrita, uma vez que as usinas mais antigas no paÃ­s estÃ£o operando hÃ¡ no mÃ¡ximo dois anos. Portanto as sÃ©ries de dados de velocidade de vento, pressÃ£o do ar e temperatura ambiente, registradas com rigor necessÃ¡rio para avaliaÃ§Ã£o do potencial de energia eÃ³lica ainda sÃ£o relativamente pequenas. Isso impede a realizaÃ§Ã£o das simulaÃ§Ãµes estocÃ¡sticas de geraÃ§Ã£o eÃ³lica, integrada ao sistema interligado hidrotÃ©rmico nacional, com o Modelo NEWAVE. Tais simulaÃ§Ãµes sÃ£o fundamentais para fomentar a confecÃ§Ã£o de estratÃ©gias de comercializaÃ§Ã£o e investimento competitivas ao investidor. 
+%
+%Para suprimir essa restriÃ§Ã£o, utilizaremos uma metodologia desenvolvida para extender os histÃ³ricos de velocidade de vento pelo uso de regressÃ£o multivariada. Assim, obteremos estimativas dos fatores de capacidade das usinas que utilizaremos para o cÃ¡lculo de suas respectivas GF pelo uso das duas abordagens: (i) a corrente em uso e (ii) uma alternativa que serÃ¡ proposta.
+%
+
+
+  
+
+%penetration of wind energy into electricity matrixes is growing fast worldwide. In 2008 the installed capacity of wind power exceeded 120.000 MW. Only in Brazil, an estimation of its production capacity spins around 140.000 MW \cite{porrua2010wind}. In order to properly management the electricity generation provided by this renewable source, suitable models ought to be proposed to generate accurate forecasts. 
+
+
+% However, after a few short years, political and economic challenges swiftly altered the invest- ment climate for the worse. In particular, between 2001-2002 the reformâs pure reliance on market mechanisms to provide security of supply led to a serious supply crisis resulting in the necessary reduction of total load (base and peak) by 20% [45]. This, in turn, resulted in an economic loss of tens of billions of US dollars [45]. In response, in 2004 the government launched a new power sector model, introducting a second stage in the Brazilian power sector reform [7]. Learning from their mistakes, the new model maintained the positive apsects of the first reform, while introducing a mixed investment environment, with competition and private sector participation to build new capacity [7]. In particular, this second stage of reform has increased the importance of long-term signals in contract prices and dropped short-term spot prices due to the advantage of the former in terms of providing a degree of certainty in the generatorâs cash flow, with demand coming from contract markets, rather than from the volatile and risky spot market [9].
+
+
+%Desde 2009 a comercializaÃ§Ã£o dessa fonte de energia no paÃ­s se baseia em um mecanismo de leilÃµes anuais \cite{street01}. Os leilÃµes foram introduzidos apÃ³s o marco regulatÃ³rio estabelecido em MarÃ§o de 2004 e detalhado em Julho do mesmo ano, neles sÃ£o disponibilizados contratos bilaterais de longo-prazo de venda de energia elÃ©trica. Isto Ã©, as distribuidoras de energia participantes do leilÃ£o disputam lotes de energia oferecidos pelas geradoras a fim de garantir o abastecimento de suas respectivas demandas, apÃ³s acordado o preÃ§o Ã© estabelecido um contrato bilateral regulando os termos e condiÃ§Ãµes de fornecimento.
+%
+%Esse marco regulatÃ³rio foi consolidado pela Lei n.Âº 10.848/04 e regulamentado pelo Decreto nÂº 5.163/04 que, entre outros assuntos, criou dois ambientes de contrataÃ§Ã£o de energia, o Ambiente de ContrataÃ§Ã£o Livre (ACL) e o  Ambiente de ContrataÃ§Ã£o Regulada (ACR). Os contratos oferecidos dentro do ACR sÃ£o chamados de Contrato de ComercializaÃ§Ã£o de Energia ElÃ©trica no Ambiente Regulado (CCEEAR). Esses contratos sÃ£o firmados atravÃ©s da utilizaÃ§Ã£o de dois instrumentos financeiros conhecidos, contratos futuro (contrato de quantidade) e opÃ§Ãµes (contrato por disponibilidade). JÃ¡ no Ambiente de ContrataÃ§Ã£o Livre (ACL) existe uma alta flexibilidade com relaÃ§Ã£o Ã  contrataÃ§Ã£o e ainda incentivos para a contrataÃ§Ã£o com fontes renovÃ¡veis, como descontos referentes as tarifas de transmissÃ£o e distribuiÃ§Ã£o (TUST/TUSD). Qualquer contrato de compra e venda firmado nesses ambientes, deve ser registrado na CÃ¢mara de ComercializaÃ§Ã£o de Energia ElÃ©trica (CCEE) \cite{ccee}, balizando assim a contabilizaÃ§Ã£o da liquidaÃ§Ã£o das diferenÃ§as entre a quantidade de energia gerada e a quantidade de energia contratada no volÃ¡til mercado de curto prazo, que serÃ¡ discutido com maiores detalhes posteriormente.
+%
+%Esses contratos de longo-prazo figuram como os principais responsÃ¡veis pela expansÃ£o segura da oferta, uma vez que fornecem um sinal de preÃ§o mais adequado para os investidores no setor de geraÃ§Ã£o em relaÃ§Ã£o ao preÃ§o de curto prazo \cite{barroso06b}, pois reduzem a incerteza no fluxo de caixa da Geradora e mitiga o risco do mercado de energia de curto prazo. Essa seguranÃ§a com relaÃ§Ã£o ao fluxo de caixa do investidor Ã© de fundamental importÃ¢ncia, uma vez que o principal problema atrelado ao uso de fontes renovÃ¡veis Ã© o perfil inconstante de sua geraÃ§Ã£o. Em se tratando de energia eÃ³lica, a produÃ§Ã£o de energia por parte do aerogerador, Ã© funÃ§Ã£o da disponibilidade dos ventos. %A Figura XX explicita o perfil altamente intermitente e sazonal da geraÃ§Ã£o eÃ³lica para (DA ONDE VEM OS DADOS?).
+%
+%% Figura XX - COLOCAR A GERAÃÃO EÃLICA AQUI
+%
+%Devido Ã  essa caracterÃ­stica, o novo marco regulatÃ³rio estabelece que, para usinas com perfil de geraÃ§Ã£o intermitÃªntes, a respectiva produÃ§Ã£o de cada uma dessas usinas deve estar assegurada por um Certificado de Garantia FÃ­sica (GF) expedido pela ANEEL. Ou seja, as usinas geradoras devem emitir, atrelada Ã  sua produÃ§Ã£o, um valor (em MW mÃ©dio) que representa a quantidade mÃ¡xima de energia que esta pode se comprometer a comercializar sob condiÃ§Ãµes adversas, a um certo nÃ­vel de probabilidade $\alpha$, ao longo do ano. Para usinas hidroelÃ©tricas, por exemplo, esses valores representam a capacidade da usina de produzir energia em perÃ­odos (anos) secos \cite{faria09}.
+%
+%Esses valores tambÃ©m figuram como responsÃ¡veis pela expansÃ£o segura da oferta, pois os mesmos agregam um certo nÃ­vel de confianÃ§a aos contratos, dado que 100\% da carga de todas as Distribuidoras devem ser cobertas por contratos futuros assegurados pela GF de cada unidade geradora, i.e., as geradoras podem comercializar um valor menor ou igual Ã  soma das GF's individuais das usinas contratadas. Criando assim um ambiente favorÃ¡vel Ã  novos investimentos em geraÃ§Ã£o reduzindo a incerteza a cerca dos possÃ­veis \emph{dÃ©ficits} de produÃ§Ã£o.
+%
+%A importÃ¢ncia em calcular com precisÃ£o esse valor, para a geradora, se materializa no momento da entrega da energia, dado que contratualmente sua produÃ§Ã£o atual de energia serÃ¡ medida e comparada com a GF da usina. Assim, em adiÃ§Ã£o ao risco de liquidaÃ§Ã£o no mercado de curto prazo, o investidor fica sujeito a penalidades regulatÃ³rias se a produÃ§Ã£o de energia verificada ficar abaixo dos valores declarados, pois qualquer desvio Ã© penalizado a um preÃ§o que reflete o custo de energia nova. JÃ¡ para a distribuidora, esse valor Ã© visto como balizador para a escolha de usinas contratadas por disponibilidade.  Contratos atrelados a usinas certificadas a um maior nÃ­vel de confianÃ§a ($\alpha$), irÃ£o gerar uma receita maior e mais frequente Ã  curto prazo atravÃ©s da liquidaÃ§Ã£o do \emph{surplus} de energia no mercado \emph{spot}. 
+%
+%Um sistema certificado, a um maior nÃ­vel de comprometimento de entrega, contarÃ¡ com um \emph{surplus} de energia para o atendimento Ã  demanda maior e mais frequente. AlÃ©m de Consumidores e Investidores, o Operador Nacional do Sistema (ONS) tambÃ©m se beneficia sob um maior nÃ­vel de confiabilidade de entrega de energia, pois reduzirÃ¡ assim o risco das usinas nÃ£o atenderem suas respectivas demandas, causando um racionamento. Entretanto, como tudo que possui maior valor deve custar mais caro, os preÃ§os de \emph{breakeven} de empreendimentos eÃ³licos deverÃ£o acompanhar o aumento da confiabilidade de forma a compensar a reduÃ§Ã£o de GF, uma vez que ao aumentarmos o nÃ­vel de confiabilidade $\alpha$ o valor de GF Ã© reduzido. Assim, existe um claro \emph{tradeoff} entre o aumento da qualidade da energia para o sistema e o aumento de preÃ§o que poderÃ¡ ser oferecido nos leilÃµes por esses empreendimentos. Uma das motivaÃ§Ãµes dessa dissertaÃ§Ã£o Ã© medir esse potencial impacto no preÃ§o dos empreendimentos eÃ³licos no Ã¢mbito do ACR. 
+%
+%% COLOCAR O GRÃFICO AQUI QUE TÃ NA NOTA TÃCNICA? PROBLEMA Ã QUE TEREMOS QUE EXPLICAR DE ONDE VEM OS DADOS E TAL...
+%
+%Na prÃ¡tica, o cÃ¡lculo da GF de uma usina eÃ³lica necessita de uma sÃ©rie de dados (da produÃ§Ã£o histÃ³rica da usina) de tamanho significativa, de forma que a medida obtida possa ser confiÃ¡vel. Em se tratando de usinas eÃ³licas no Brasil, a possibilidade de se obter sÃ©ries com tamanhos adequados Ã© bem restrita. As usinas mais antigas no paÃ­s estÃ£o operando hÃ¡ no mÃ¡ximo dois anos. Portanto as sÃ©ries de dados de velocidade de vento, pressÃ£o do ar e temperatura ambiente, registradas com rigor necessÃ¡rio para avaliaÃ§Ã£o do potencial de energia eÃ³lica, ainda sÃ£o relativamente pequenas. Isso impede a realizaÃ§Ã£o das simulaÃ§Ãµes estocÃ¡sticas de geraÃ§Ã£o eÃ³lica, integrada ao sistema interligado hidrotÃ©rmico nacional, com o Modelo NEWAVE [\cite{street01}, \cite{portaria}]. Tais simulaÃ§Ãµes sÃ£o fundamentais para fomentar a confecÃ§Ã£o de estratÃ©gias de comercializaÃ§Ã£o e investimento competitivas ao investidor. 
+%
+%Ã importante notar que sob o olhar dos financiadores de projeto, usinas eÃ³licas certificadas a 90\% sÃ£o mais atrativas perante as demais. Isso porque a razÃ£o social dos bancos financiadores nÃ£o Ã© a produÃ§Ã£o de energia, consequentemente esses nÃ£o possuem uma estratÃ©gia para anular o risco de baixa performance dos parques. Por consequÃªncia, o financiador fica exposto ao risco de uma eventual inadimplÃªncia em caso de baixa performance dos parques e o mesmo nÃ£o recebe nada a mais em caso de boa performance [NT street]. Posto que esse aumento de confiabilidade Ã© de suma importancia para agentes financiadores, esse trabalho se propÃµe a estudar a questÃ£o do erro amostral atrelada Ã  essa estimativa. Pois o cÃ¡lculo da GF leva em consideraÃ§Ã£o o percentil da produÃ§Ã£o anual, esse percentil Ã© uma estatÃ­stica de ordem e o erro amostral gerado pela sua estimaÃ§Ã£o fica sujeito a um aumento, ao elevarmos o nÃ­vel de confianÃ§a $\alpha$ \cite{casella}. Como jÃ¡ citado anteriormente, o tamanho das sÃ©ries de energia eÃ³lica no paÃ­s Ã© limitado, logo, como os percentis sÃ£o definidos por mÃªs, o percentil de 90\%, contarÃ¡ com um nÃºmero muito menor de dados observados do que no percentil de 50\%, expondo-o a um erro amostral na estimaÃ§Ã£o do percentil extremo. A utilizaÃ§Ã£o indevida desse valor pode estar penalizando o investidor, pois este paga um valor mais elevado por uma energia que acredita estar sendo assegurada sob um maior nÃ­vel de confiabilidade, como o 90\%, quando na realidade seu valor foi mal estimado e o investidor corre o risco de ter seu lastro de venda reduzido.
+
+
+%%%%%OBJETIVOS
+
+%A energia eÃ³lica Ã© uma fonte inflexÃ­vel, comparada Ã s fontes hÃ­dricas e tÃ©rmicas convencionais que possuem capacidade de reserva e podem gerenciar a sua operaÃ§Ã£o, a qual conforme exposto na SeÃ§Ã£o \ref{sec:motivacao} possui um perfil intermitente nÃ£o possuindo domÃ­nio sobre seus perÃ­odos de geraÃ§Ã£o. Cientes das restriÃ§Ãµes na realizaÃ§Ã£o do cÃ¡lculo da GF para empreendimentos de energia eÃ³lica, o objetivo principal dessa dissertaÃ§Ã£o Ã© estudar o cÃ¡lculo desse importante parÃ¢metro para o sistema, visando suprir as deficiÃªncias supracitadas da metodologia em uso. 
+%
+%Inicialmente, afim de dirimir o fato do erro amostral e obtermos resultados mais confiÃ¡veis para esse parÃ¢metro, serÃ¡ abordada uma metodologia de extensÃ£o de histÃ³ricos apresentada em \cite{streetEjoaquim} (que serÃ¡ posteriomente descrita com maiores detalhes). Obter-se-Ã  sÃ©ries de produÃ§Ã£o mais longas e assim, serÃ¡ possÃ­vel uma melhor compreensÃ£o quanto aos percentis extremos, menos susetÃ­veis ao erro amostral causado pelo aumento no nÃ­vel de confianÃ§a no cÃ¡lculo da GF. 
+%
+%Posteriormente, serÃ£o construÃ­dos intervalos de confianÃ§a nÃ£o paramÃ©tricos para esses percentis. Com o intuito de verificar se, de fato, o cÃ¡lculo em questÃ£o estÃ¡ expondo o investidor a uma reduÃ§Ã£o de lastro em sua comercializaÃ§Ã£o injustamente. SerÃ¡ levantada por simulaÃ§Ã£o Monte Carlo uma distribuiÃ§Ã£o multivariada de GF para determinados $\alpha$'s. Numa segunda etapa, ao invÃ©s de utilizar os percentis empÃ­ricos, estes podem ser obtidos a partir dos percentis de distribuiÃ§Ãµes probabilÃ­sticas ajustadas Ã s sÃ©ries mensais de produÃ§Ã£o, como por exemplo Weibull, gama generalizada etc.  Em particular essas distribuiÃ§Ãµes podem ser especificadas utilizando o arcabouÃ§o dos modelos \emph{Generalized Autoregressive Scores} (GAS) \cite{modeloGAS01}. Ã importante mostrar que o resultado do cÃ¡lculo da metodologia vigente deve cair dentro dos intervalos de confianÃ§a dos estimadores que serÃ£o levantados. Ou seja, o ponto a ser comparado deve ser calculado com o histÃ³rico sob a metodologia e depois, os resultados confrontados com os ICs.
+
+
+
+%%%%%%% GARANTIA FÃSICA
+%\section{Garantia FÃ­sica} \label{explic_GF}
+%
+%A certificaÃ§Ã£o de uma usina e a estipulaÃ§Ã£o do montante de energia que esta pode comercializar Ã© denominada de garantia fÃ­sica (GF). No contexto atual, o cÃ¡lculo da garantia fÃ­sica de uma determinada usina eÃ³lica Ã© realizado com base na mÃ©dia da produÃ§Ã£o mensal certificada. Essa energia certificada Ã© determinada pelo percentil  $\alpha$\% ou $P(\alpha)\%$ da produÃ§Ã£o histÃ³rica de cada mÃªs do ano. Com isso, o certificador entrega para o empreendedor, 12 valores correspondentes ao percentil empÃ­rico $\alpha$\% de cada mÃªs em MW mÃ©dio, de energia certificada a $P(\alpha)\%$. A $GF^{(\alpha\%)}$ Ã© a mÃ©dia desses 12 valores, conforme especificada pela EquaÃ§Ã£o \ref{eq:1}, e indica que em $\alpha$\% dos anos do histÃ³rico utilizado, a energia produzida em um determinado mÃªs \emph{m} superou o valor do percentil $\alpha$\% da sÃ©rie histÃ³rica.  
+%
+%Assim, na prÃ¡tica o cÃ¡lculo da GF de uma usina eÃ³lica necessita de uma sÃ©rie de dados (da produÃ§Ã£o histÃ³rica da usina) de tamanho significativa, de forma que a medida obtida possa ser confiÃ¡vel. Em se tratando de usinas eÃ³licas no Brasil, a possibilidade de se obter sÃ©ries com tamanhos adequados Ã© bem restrita, uma vez que as usinas mais antigas no paÃ­s estÃ£o operando hÃ¡ no mÃ¡ximo dois anos. Portanto as sÃ©ries de dados de velocidade de vento, pressÃ£o do ar e temperatura ambiente, registradas com rigor necessÃ¡rio para avaliaÃ§Ã£o do potencial de energia eÃ³lica ainda sÃ£o relativamente pequenas. Isso impede a realizaÃ§Ã£o das simulaÃ§Ãµes estocÃ¡sticas de geraÃ§Ã£o eÃ³lica, integrada ao sistema interligado hidrotÃ©rmico nacional, com o Modelo NEWAVE. Tais simulaÃ§Ãµes sÃ£o fundamentais para fomentar a confecÃ§Ã£o de estratÃ©gias de comercializaÃ§Ã£o e investimento competitivas ao investidor. 
+%
+%Para suprimir essa restriÃ§Ã£o, utilizaremos uma metodologia desenvolvida para extender os histÃ³ricos de velocidade de vento pelo uso de regressÃ£o multivariada. Assim, obteremos estimativas dos fatores de capacidade das usinas que utilizaremos para o cÃ¡lculo de suas respectivas GF pelo uso das duas abordagens: (i) a corrente em uso e (ii) uma alternativa que serÃ¡ proposta.
+%
+%Atualmente o cÃ¡lculo da GF  dos empreendimentos de energia eÃ³lica, segundo a portaria ANEEL 258 de julho de 2008, Ã© realizado com base na mÃ©dia da produÃ§Ã£o mensal de energia certificada. Conforme descrito na portaria, o cÃ¡lculo consiste em:
+%\vspace{-1pt}
+%\begin{align} 
+%	\begin{split}
+%	GF^{(\alpha)} =\sum_{m=1}^{12} \frac{E_m^{(\alpha)} \times h_m}{8760} \label{eq:1}
+%	\end{split}					
+%\end{align}
+%
+%Onde $GF^{(\alpha)}$ representa a Garantia FÃ­sica da usina em questÃ£o certificada a um nÃ­vel $\alpha$\% de confianÃ§a, ${h_m}$ Ã© o nÃºmero de horas no mÃªs ${m}$ e $E_m^{(\alpha)}$ denota a mÃ©dia dos quantis mensais certificados a $\alpha$\%, i.e., recebe-se um conjunto de 12 valores de energia certificados a $\alpha\%$ referentes ao mÃªs \emph{m}. Logo, a GF de uma usina Ã© assumida ser uma variÃ¡vel aleatÃ³ria, uma vez que estÃ¡ em funÃ§Ã£o da produÃ§Ã£o da usina, pois ($E_m^{(\alpha)}$) Ã© calculado com base no histÃ³rico do fator de capacidade da usina e este depende unicamente da produÃ§Ã£o da mesma, que por definiÃ§Ã£o Ã© uma variÃ¡vel estocÃ¡stica.
+%
+%O cÃ¡lculo alternativo proposto por esta dissertaÃ§Ã£o Ã© utilizar o \emph{quantil das mÃ©dias mensais} dos cenÃ¡rios ao invÃ©s das \emph{mÃ©dias dos quantis mensais}. AtravÃ©s disso, o novo cÃ¡lculo para a garantia fÃ­sica tomaria a seguinte forma, esboÃ§ado pela equaÃ§Ã£o \eqref{eq:3}.
+%\vspace{-1pt}
+%\begin{align} 
+%	\begin{split}
+%	GF_{alternativa}^{(\alpha)} =\mathbb{Q}^{(\alpha)}\Bigr( \sum_{i=1}^{31} \sum_{m=1}^{12} \frac{{\tilde{G}}_{m,i}^ \times h_m}{8760}\Bigl) \label{eq:3}
+%	\end{split}					
+%\end{align}
+%
+%Onde $\mathbb{Q}^{(\alpha)}$ representa o quantil de $\alpha\%$, ${\tilde{G}}_{m,i}$ representa a geraÃ§Ã£o mÃ©dia do cenÃ¡rio simulado do mÃªs $m$ do ano $i$ e $h_m$ o nÃºmero de horas do mÃªs $m$, compondo assim uma mÃ©dia de geraÃ§Ã£o ponderada pelo nÃºmero de meses.
+
+
+% ===== Sec. II - Parametric and Non-parametric models ===== %
+
+\section{Parametric model}
+Here we donoted as parametric model the well-known quantile regression model \cite{koenker2005quantile}. In contrast to the linear regression model through ordinary least squares (OLS), which provides only an estimation of the dependent variable conditional mean, quantile regression model yields a much more detailed information concerning the complex relationship about the dependent variable and its covariates, as defined by Equation \eqref{eq:QR}, 
+
+\begin{equation} 
+	\begin{split}
+	\mathcal{Q}_{y}(\alpha|x_{1}, x_{2}, ..., x_{n}) = \beta_{0}(\alpha) + \beta_{1}(\alpha)x_{1} + \beta_{2}(\alpha)x_{2} + ...\\ + \beta_{n}(\alpha)x_{n} + \emph{F}^{-1}_\varepsilon(\alpha), \label{eq:QR}
+	\end{split}					
+\end{equation}
+\noindent
+where $\emph{F}_\varepsilon$ denotes the error density function.
+
+\subsection{Parameter estimation}\label{QR_estimation}
+The parameters of the quantile regression are estimated by a linear programming optimization problem that can be formulated as
+
+\begin{equation} 
+	\underset{\beta \; \in \; \mathbb{R}^{p} \times \mathbb{R}^{2n}_{+} }{\text{min}} \{\tau \mathbf{1}_{n}^{T}u + (1-\tau)\mathbf{1}_{n}^{T}v | X\beta + u - v = y \} .\label{PL}
+\end{equation}
+
+Here, $X$ stands for the usual covariates matrix, the residual vector $ y-X\beta $ splits itself into negative and positive parts ($u$ and $v$).
+
+
+%{\parindent0pt onde $ X $ representa a matriz usual dos regressores n por p. Divide-se o vetor de resÃ­duos $ y-X\beta $ em partes negativas e positivas ($u$ e $v$), e entÃ£o estamos minimizando uma funÃ§Ã£o linear em um poliedro restrito por um conjunto de restriÃ§Ãµes, e muitas das propriedades importantes das soluÃ§Ãµes, $\hat{\beta(\tau)}$, os quais sÃ£o denominamos "quantis regressores", sÃ£o derivadas imediatamente a partir de propriedades de soluÃ§Ãµes bem conhecidas de problemas lineares. }
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{SeleÃ§Ã£o do modelo}
+%Conforme apresentado na SeÃ§Ã£o 4.9.1 de \cite{koenker2005quantile}, existe uma vasta literatura a respeito de seleÃ§Ã£o de modelos. SerÃ£o abordados apenas alguns desenvolvimentos recentes a cerca do tema. 
+%
+%Em \cite{machado1993robust} Ã© apresentada uma variaÃ§Ã£o do critÃ©rio de penalizaÃ§Ã£o de Schwarz para M-estimadores de regressÃ£o, incluindo o caso da regressÃ£o quantÃ­lica. Ã enfatiza a necessidade de procedimentos invariantes a locaÃ§Ã£o e escala: para regressÃµes da mediana ($\tau$=1/2) o seguinte cÃ¡lculo rende o critÃ©rio,
+%\vspace{-10pt}
+%\begin{align} 
+%	\begin{split}
+%	SIC(j) = log(\hat{\sigma}_{j})+\frac{1}{2}p_{j}\;log\;n,\label{eq:SIC}
+%	\end{split}					
+%\end{align}
+%
+%{\parindent0pt onde $\hat{\sigma}_{j}=\sum_{i=1}^{n} \rho_{1/2}(y_{i}-x^{T}_{i}\hat{\beta}_{n}(1/2))$ e $p_{j}$ indica a dimensÃ£o do $j$-Ã©simo modelo. Esse procedimento rende uma seleÃ§Ã£o de modelo consistente sob a circustÃ¢ncia de que um dos modelos $p_{j}$-dimensional esteja de fato bem especificado.}
+%
+%Alternativamente ao critÃ©rio supracitado, podemos considerar o critÃ©rio de Akaike, calculado conforme
+%\vspace{-10pt}
+%\begin{align} 
+%	\begin{split}
+%	AIC(j) = log(\hat{\sigma}_{j})+p_{j}.\label{eq:AIC}
+%	\end{split}					
+%\end{align}
+%Com prababilidade positiva, a seleÃ§Ã£o baseada na minimizaÃ§Ã£o do AIC($j$) superestima a dimensÃ£o do modelo, mas pode vir a exercer uma performance superior para a previsÃ£o. 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%\subsection{DiagnÃ³sticos}
+%Em \cite{koenker1999goodness} Ã© apresentada uma versÃ£o do familiar $ R^{2} $ do modelo de regressÃ£o por mÃ­nimos quadrados para o modelo de regressÃ£o quantÃ­lica, o $ R^{1}(\tau) $. Atenta-se ao fato de que esse novo parÃ¢metro Ã© uma medida de diagnÃ³stico para um quantil em particular, ao contrÃ¡rio do seu anÃ¡logo $ R^{2} $ que fornece uma medida global de ajuste sob toda a distribuiÃ§Ã£o condicional. Ã fÃ¡cil de imaginar circunstÃ¢ncias na qual as covariÃ¡veis podem exercer um efeito em uma cauda da distribuiÃ§Ã£o condicional da variÃ¡vel resposta porÃ©m podem vir a nÃ£o surtir efeito na outra cauda. Em \cite{chamberlain1994quantile} Ã© apresentado um exemplo disso no arcabouÃ§o de regressÃ£o quantÃ­lica. 
+%
+%Alternativamente Ã  metodologia supracitada, em \cite{van2007worm} (SeÃ§Ã£o 5), Ã© apresentada uma ferramenta de diagnÃ³stico visual para verificar o ajuste do modelo aos dados. Essa metodologia Ã© denominada de "grÃ¡fico da minhoca", nela Ã© possÃ­vel apontar os quantis nos quais o ajuste pode ser melhorado e comparar o ajuste de diferentes modelos com o modelo selecionado. 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------%
+%%------------------------------------------------------PAREI AQUI! Daqui para baixo----------------------------------------------------------------------------------------------------------------%
+%%---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------%
+%
+%\subsection{PrevisÃ£o fora da amostra}
+%
+%PrevisÃ£o pontual
+%
+%Densidade preditiva
+%
+%% googleia out of sample forecast quantile regression
+%% paper erik bunn --> descriÃ§Ã£o muito boa de regressÃ£o quantÃ­lica!
+%%http://astrostatistics.psu.edu/datasets/R/html/quantreg/html/predict.rq.html
+%%http://faculty.washington.edu/marzban/quantile.pdf
+%
+%
+%%---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------%
+%%------------------------------------------------------PAREI AQUI! Daqui para baixo----------------------------------------------------------------------------------------------------------------%
+%%---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------%
+%
+%\section{RegressÃ£o QuantÃ­lica para sÃ©ries temporais}\label{regQuantilicaST}
+%Quando relaxada a condiÃ§Ã£o de independÃªncia das observaÃ§Ãµes, podemos continuar com a aplicaÃ§Ã£o da metodologia de regressÃ£o quantÃ­lica. Bloomfield e Steiger (1983) mostraram a normalidade assintÃ³tica de um estimador autoregressivo da mediana para um modelo no qual as observaÃ§Ãµes $\{(x_{i},y_{i}):i=1,...,n\}$ eram assumidas serem estacionÃ¡rias e de diferenÃ§a martingal ergÃ³diga.
+%
+%\subsection{AutoregressÃ£o}
+%JÃ¡ existe uma ampla literatura a respeito da estimaÃ§Ã£o e inferÃªncia para modelos de sÃ©ries temporais lineares se utilizando de mÃ©todos de regressÃ£o quantÃ­lica. Bloomfiel e Steiger (1983) consideraram o modelo autoregressivo
+%\vspace{-10pt}
+%\begin{align} 
+%	\begin{split}
+%	y_{t}=\alpha_{0}+\alpha_{1}y_{t-1}+...+\alpha_{p} y_{t-p}+u_{t} \label{eq:modelo_AR}
+%	\end{split}					
+%\end{align}
+%
+%{\parindent0pt com a condiÃ§Ã£o usual de estacionariedade de que as raÃ­zes do polinÃ´mio caracterÃ­stico $1-\alpha_{1}z-...-\alpha_{p}z^{p}=0$ permaneÃ§am fora do cÃ­rculo unitÃ¡rio e com erros $u_{t}$ iid com uma distribuiÃ§Ã£o nonlattice $F$ satisfazendo as seguintes condiÃ§Ãµes: (i) $E(log_{+}|{u_{t}|})$}, (ii) mediana $\{u_{t}\}$=0, e (iii) $E|u_{t}| < \infty$. Isso prova que o estimador da regressÃ£o da mediana
+%\vspace{-10pt}
+%\begin{align} 
+%	\begin{split}
+%	\hat{\alpha_{n}}=argmin_{\alpha \in \mathbb{R}} \sum_{t=1}^{n}|y_{t}-\alpha_{0}-\alpha_{1}y_{t-1}-...-\alpha_{p} y_{t-p}|  \label{eq:modelo_AR}
+%	\end{split}					
+%\end{align}
+%
+%{\parindent0pt Ã fortemente consistente. Quando $F$ tem densidade $f(0)>0$, e $Eu_{t}^2=\sigma^2<\infty$, as tÃ©cnicas descritas anteriormente (veja Poolard, 1991, Exemplo 2) podem ser usadas para estabelecer normalidade assintÃ³tica de $\hat{\alpha_{n}}(\tau)$.}
+%
+%Ã valido considerar um simples modelo AR(1) a fim de ilustraÃ§Ã£o,
+%\begin{align} 
+%	\begin{split}
+%	y_{t}=\alpha_{1}y_{t-1}+u_{t} \label{eq:modelo_AR_1},
+%	\end{split}					
+%\end{align}
+%{\parindent0pt demonstraremos algumas caracterÃ­sticas especiais da especificaÃ§Ã£o AR. Considerando $n^{-1}\sum y_{t-1}^2 \rightarrow \frac{\sigma^2}{(1-\alpha^2)}$ e utilizando a quantidade que podemos denominar de $D_{0}$ para enfatizar a analogia com o caso de regressÃ£o, Ã© fÃ¡cil mostrar que}
+%\begin{align} 
+%	\begin{split}
+%	\sqrt n (\hat{\alpha_{n}}-\alpha) \leadsto N(0,\omega^{2}D_{0}^{-1})
+%	\end{split}					
+%\end{align}
+% {\parindent0pt onde $\omega = (2f(0))^{-1}$. Em contraste, o estimador de mÃ­nimos quadrados de $\alpha$,}
+%\begin{align} 
+%	\begin{split}
+%	\tilde{\alpha_{n}}=\frac{\sum_{t=2}^{n}y_{t}y_{t-1}}{\sum_{t=2}^{n}y_{t-1}^2}
+%	\end{split}					
+%\end{align}     
+%{\parindent0pt satisfaz, sob a condiÃ§Ã£o de que,}
+%\begin{align} 
+%	\begin{split}
+%	\sqrt n (\tilde{\alpha_{n}}-\alpha) \leadsto N(0,\sigma^{2}D_{0}^{-1})
+%	\end{split}					
+%\end{align}   
+% 
+%\subsection{Modelos ARMA}
+%Segundo a SeÃ§Ã£o 2.6.2 de \cite{koenker2005quantile} os modelos autoregressivos se ajustam bem ao arcabouÃ§o original da regressÃ£o quantÃ­lica: a computaÃ§Ã£o Ã© direta e muitas das propriedades da teoria assintÃ³tica de regressÃ£o se mantÃ©m.
+%
+%No caso dos modelos ARMA, a situaÃ§Ã£o Ã© complicada pela nÃ£o convexidade da funÃ§Ã£o objetivo, uma dificuldade que Ã© superada pela aproximaÃ§Ã£o criteriosa da funÃ§Ã£o objetivo na vizinhanÃ§a do verdadeiro valor do parÃ¢metro. Isso assegura uma sequÃªncia de minimizadores $locais$ que convergem como especificados mas tambÃ©m implica em alguma preocupaÃ§Ã£o a respeito dos mÃ©todos computacionais que irÃ£o levar ao minimizador apropriado. 
+%
+%AtÃ© hoje, grande parte da literatura de aplicaÃ§Ãµes de regressÃ£o quantÃ­lica em sÃ©ries temporais foca em modelos com inovaÃ§Ãµes iid. Parece haver um escopo considerÃ¡vel para explorar modelos que partem dessa condiÃ§Ã£o restritiva. Os primeiros passos nessa direÃ§Ã£o sÃ£o descritos na SeÃ§Ã£o 8.3 de \cite{koenker2005quantile}, atravÃ©s da exemplificaÃ§Ã£o dos modelos QAR que serÃ¡ discutido na prÃ³xima SeÃ§Ã£o.
+%
+%\subsection{Modelos QAR}
+%Existe uma ampla literatura a respeito dos modelos QAR. Nesse modelo o $\tau$-Ã©simo quantil condicional da variÃ¡vel resposta $y_{t}$ Ã© expressado como uma funÃ§Ã£o linear de valores defasados da resposta. Mas uma caracterÃ­stica notÃ¡vel a respeito dessa literatura Ã© que ela tenha se focado, quase que exclusivamente em inovaÃ§Ãµes iid, na qual as variÃ¡veis condicionantes possuem um papel de deslocar a locaÃ§Ã£o da densidade condicional de $y_{t}$, porÃ©m nÃ£o surtindo efeito na escala nem na forma condicional.
+%
+%SerÃ¡ explorado o mÃ©todo de estimaÃ§Ã£o e inferÃªncia em uma classe mais geral de modelos QAR onde todos os coeficientes autoregressivos assumem ser $\tau$ dependentes e, portanto, sÃ£o capazes de alterar a locaÃ§Ã£o, escala e forma da densidade condicional. Escreveremos a forma geral do modelo como
+%
+%\vspace{-10pt}
+%\begin{align} 
+%	\begin{split}
+%	Q_{y_{t}}(\tau|y_{t-1}, ..., y_{t-p}) = \beta_{0}(\tau) + \beta_{1}(\tau)y_{t-1} + ... + \beta_{p}(\tau)y_{t-p} \label{eq:QAR}
+%	\end{split}					
+%\end{align}
+%{\parindent0pt ou matricialmente podemos escrever como,.}
+%\vspace{-10pt}
+%\begin{align} 
+%	\begin{split}
+%	Q_{y_{t}}(\tau|I_{t-1}) = x_{t}^{T}\alpha(\tau) \label{eq:QAR_matr}
+%	\end{split}					
+%\end{align}
+%{\parindent0pt onde $I_{t}$ representa o conjunto de informaÃ§Ãµes geradas por $\{y_{s},s\leq t\}$, e o vetor de repostas defasadas Ã© representado por $x_t=(1,y_{t-1},y_{t-2},...,y_{t-p})^T$.}
+%
+%Vamos motivar o uso deste modelo pela utilizaÃ§Ã£o do mesmo em sua forma mais simples, o QAR(1) representado por
+%\begin{align} 
+%	\begin{split}
+%	Q_{y_{t}}(\tau|I_{t-1}) = \alpha_{o}(\tau)+\alpha_{1}(\tau)y_{t-1}. \label{eq:QAR_1}
+%	\end{split}					
+%\end{align}
+%
+%Sabendo que $Q_{y}(\tau|I_{t-1}) $ Ã© o quantil condicional da densidade de $y_{t}$, o modelo pode ser representado por
+%\begin{align} 
+%	\begin{split}
+%	y_{t} = \alpha_{o}(U_{t})+\alpha_{1}(U_{t})y_{t-1} \label{eq:QAR_RC}
+%	\end{split}					
+%\end{align}
+%{\parindent0pt onde assume-se que $U_{t}$ seja uma variÃ¡vel aleatÃ³ria uniformemente distribuida no intervalo unitÃ¡rio e iid. Simular o modelo Ã© convenientemente conduzido empregando essa forma. O modelo AR(1) gaussiano clÃ¡ssico Ã© obtido ao atribuirmos $\alpha_{0}(u)=\sigma\Phi^{-1}(u)$ e $\alpha_{1}$, uma constante. A formulaÃ§Ã£o pela equaÃ§Ã£o \eqref{eq:QAR_RC} revela que o modelo pode ser interpretado como uma versÃ£o nÃ£o usual de modelos autoregressivos de coeficientes aleatÃ³rios. PorÃ©m, em constraste com a maior parte da literatura em modelos de coeficientes aleatÃ³rios - veja, Nicholls e Quinn (1982) e Tjostheim (1986) - no qual os coeficientes sÃ£o assumidos serem estocasticamente independentes de cada um, o modelo QAR possui coeficientes que sÃ£o funcionalmente dependentes. Uma vez que a monotonocidade Ã© necessÃ¡ria pela funÃ§Ã£o quantil, veremos que isso implica em uma certa disciplina na forma assumida pela funÃ§Ã£o-$\alpha$.Essa disciplina essencialmente requer que o vetor $\alpha(\tau)$, ou alguma transformaÃ§Ã£o afim deste, seja monotonica em cada coordenada. Essa condiÃ§Ã£o assegura que o vetor aleatÃ³rio $\alpha_{t}=\alpha(U_{t})$ seja comonotÃ´nica.}
+%
+%A estimaÃ§Ã£o do modelo linear QAR envolve a resoluÃ§Ã£o do problema
+%\vspace{-10pt}
+%\begin{align} 
+%	\begin{split}
+%	\underset{\alpha \; \in \; \mathbb{R}^{p+1} }{\text{min}} \sum_{t=1}^{n} \rho_{\tau}(y_{t}-x_{t}^{T}\alpha). \label{eq:min_QAR}
+%	\end{split}					
+%\end{align}
+%SoluÃ§Ãµes $\hat{\alpha}(\tau)$ podem ser chamadas quantis autoregressivos. Dado $\hat{\alpha}(\tau)$, o $\tau$-Ã©simo quantil condicional de $y_{t}$, condicionado ao conjunto de informaÃ§Ãµes passadas, pode ser estimado por
+%\vspace{-10pt}
+%\begin{align} 
+%	\begin{split}
+%	\hat{Q}_{y_{t}}(\tau|x_{t-1}) = x_{t}^{T}\hat{\alpha}(\tau) \label{eq:QAR_matr2}
+%	\end{split}					
+%\end{align}
+%{\parindent0pt e a densidade condicional de $y_t$ pode ser estimada pela diferenÃ§a entre os quocientes,}
+%\vspace{-10pt}
+%\begin{align} 
+%	\begin{split}
+%	\hat{f}_{y_{t}}(\tau|x_{t-1} = (\tau_{i}-\tau_{i-1})/\hat{Q}_{y_{t}}(\tau_{i}|x_{t-1})-\hat{Q}_{y_{t}}(\tau_{i-1}|x_{t-1}) )          \label{eq:QAR_densid}
+%	\end{split}					
+%\end{align}
+%{\parindent0pt para alguma sequencia apropriadamente escolhidas de $\tau $s.}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Quantile Autoregression}
+
+Our main objective in this paper is estimating the p-step ahead $\alpha$-quantile function $\mathcal{Q}_{y_t|y_{t-p}}^\alpha(t)$ for a given set of time series data $y_t$, as the one on figure \ref{fig:exemployt}. So, given a sequence $\{y_t\}$, we can pair an observation $y_t$ with its $p$-lagged correspondent $y_{t-p}$. Figure \ref{fig:exemploar} shows this relationship. We will assume that all information regarding the estimated quantile value are past observations, being in accordance with other pure autoregressive models.  
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\linewidth]{Figuras/exemplo-yt}
+\caption{Time series $y_t$}
+\label{fig:exemployt}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\linewidth]{Figuras/exemplo-ar}
+\caption[Tst]{Relationship between $y_t$ and its first lag $y_{t-1}$}
+\label{fig:exemploar}
+\end{figure}
+
+We will investigate two ways of estimating the quantiles for the aforementioned relationship: we will use a linear and a nonparametric model.
+
+\section{Linear-QAR}
+
+
+
+\section{NP-QAR}
+
+Fitting a linear estimator for the Quantile Auto Regression isn't appropriate  when nonlinearity is present in the data. This nonlinearity may produce a linear estimator that underestimates the quantile for a chunk of data while overestimating for the other chunk (we illustrate this in figure \ref{fig:nonlinear}). To prevent this issue from occurring we propose a modification which we let the prediction $\mathcal{Q}_{y_t|y_{t-1}}^\alpha(t)$ adjust freely to the data and its nonlinearities. To prevent overfitting and smoothen our predictor, we include a penalty on its roughness by including the $\ell_1$ norm of its second derivative. For more information on the $\ell_1$ norm acting as a filter, one can refer to \cite{kim2009ell_1}.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{../Paper_IEEE/nonlinear}
+\caption{Example of data where nonlinearity is present and a linear quantile estimator is employed}
+\label{fig:nonlinear}
+\end{figure}
+
+Let $\{\tilde{y}_t \}_{t=1}^n$ be the sequence of observations in time $t$. Now, let $\tilde{x}_t$ be the $p-$lagged time series of $\tilde{y}_t$, such that $\tilde{x}_t = L^p(\tilde{y}_t)$, where $L$ is the lag operator. Matching each observation $\tilde{y}_t$ with its $p-$lagged correspondent $\tilde{x}_t$ will produce $n-p$ pairs $\{(\tilde{y}_t,\tilde{x}_t)\}_{t=p+1}^n$ (note that the first $p$ observations of $y_t$ must be discarded). Consider $J$ to be the set of indexes such that
+$$\tilde{x}_{J_1} \leq \tilde{x}_{J_2} \leq \dots \leq \tilde{x}_{J_{n-P}}.$$ 
+Now, we define $\{x_i\}_{i=1}^{n-p} = \{\tilde{x}_{J_t} \}_{t=p+1}^{n}$ and $\{y_i\}_{i=1}^{n-p} = \{\tilde{y}_{J_t} \}_{t=p+1}^{n}$ and $I = \{2,\dots, n-p-1\}$. As we need the second difference of $q_i$, $I$ have to be shortened by two elements.
+
+Our optimization model to estimate the nonparametric quantile is as follows:
+\begin{equation}
+\begin{split}
+\mathcal{Q}_{y_t|y_{t-1}}^\alpha(i) =\underset{q_{i}}{\arg\min}\sum_{i\in I}\left(|y_{i}-q_{i}|^{+}\alpha + |y_{i}-q_{i}|^{-}(1-\alpha)\right) \\ +\lambda  \sum_{i\in I}|D^{2}q_{i}|,
+\end{split}
+\end{equation}
+where $D^2 q_t$ is the second derivative of the $q_t$ function, calculated as follows:
+\begin{equation*}
+D^{2}q_{i}=\left(\frac{q_{i+1}-q_{i}}{x_{i+1}-x_{i}}\right)-\left(\frac{q_{i}-q_{i-1}}{x_{i}-x_{i-1}}\right).
+\end{equation*}
+The first part on the objective function is the usual quantile regression condition for $\{q_i\}$. The second part is the $\ell_1$-filter. The purpose of a filter is to control the amount of variation for our estimator $q_i$. When no penalty is employed we would always get $q_i = y_i$. On the other hand, when $\lambda \rightarrow \infty$, our estimator approaches the linear quantile regression.
+The penalty for variation on the values of 
+
+The output of our optimization problem is a sequence of ordered points $\{(x_i, q_i)\}_{i \in I}$. The next step is to interpolate these points in order to provide an estimation for any other value of x. To address this issue, we propose a B-splines interpolation, that will be discussed in another subsection.
+
+When estimating quantiles for a few different values of $\alpha$, however, sometimes we find them overlapping each other, which we call crossing quantiles. To prevent this, we include a non-crossing constraint:
+\begin{equation}
+q_i^{\alpha} \leq q_i^{\alpha'}, \quad \forall i \in I, \alpha < \alpha'.
+\end{equation} 
+
+% ======================== %
+
+\section*{Acknowledgment}
+
+The authors would like to thank FICO (Xpress-MP developer) for the academic partnership program with the Electrical Engineering Department of Pontifical Catholic University of Rio de Janeiro, Brazil (PUC-Rio). The authors would also like thank the LAMPS researchers for the daily exchanges and their insightful considerations.
+
+%\IEEEtriggeratref{17}
+
+\bibliography{QR}
+\bibliographystyle{ieeetr}
+
+
+%\begin{IEEEbiographynophoto}{Bruno Fanzeres} (S'11) has a B.Sc. degree in Electrical and Industrial Engineering and a M.Sc. degree in Operations Research from PUC-Rio, Brazil. He is pursuing a Ph.D degree in Operations Research at the same university.
+%\end{IEEEbiographynophoto}
+
+%\begin{IEEEbiographynophoto}{Arthur Brigatto} (S'14) received a B.Sc. degree in Electrical Engineering from the Federal University of Juiz de Fora, Brazil, and is pursuing a M.Sc. in Electrical Engineering at PUC-Rio, Brazil.
+%\end{IEEEbiographynophoto}
+
+%\begin{IEEEbiographynophoto}{Alexandre Street} (S'06, M'10) holds the degrees of M.Sc. and D.Sc. in Electrical Engineering (Operations Research) from PUC-Rio, Brazil. 
+%\end{IEEEbiographynophoto}
+
+%\begin{IEEEbiographynophoto}{Luiz Augusto Barroso} (S'00, M'06, SM'07) has a B.Sc. in Mathematics and a Ph.D degree in Operations Research. He is a technical director at PSR.
+%\end{IEEEbiographynophoto}
+
+\end{document}

@@ -5,12 +5,12 @@
 # - os valores de alpha e lambda desejados
 # - os dados gerados
 # - o nome dos arquivos
+using JuMP, DataFrames, Plots, RCall #, Distributions
 
 usesolver = "glpk"    # Escolher entre os valores 'mosek' ou 'gurobi'
 cd("/home/marcelo/Dropbox/Pesquisa Doutorado/Paper NPQuantile/RegressãoQuantílica_STREET")
 include("funcoes_npqar.jl")
 
-using JuMP, DataFrames, Winston, RCall #, Distributions
 
 
 # Nao linear
@@ -52,7 +52,7 @@ y = convert(Matrix,readtable("y.csv", header = false))
 #x = convert(Matrix,readtable("x_nonlin.csv", header = false))
 #y = convert(Matrix,readtable("y_nonlin.csv", header = false))
 
-p = 1 # lag
+p =  1 # lag
 
 # takes a time series and transforms its lags
 
@@ -63,7 +63,7 @@ I2 = 1:n
 # lambdas = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 100, 200]
 lambdas = [150]
 
-lambda = 0.1
+lambda = 0.
 alphas = [0.05, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95]
 #alphas = 0.05:0.05:0.95
 #alphas = 0.01:0.01:0.99
@@ -91,7 +91,7 @@ for ilamb in 1:length(lambdas) # Itera so bos valores de lambda
 			( ( (theta[i,j]-theta[i-1,j])/(x[i]-x[i-1]) - (theta[i-1,j]-theta[i-2,j])/(x[i-1]-x[i-2]) ) ))
 
 
-	@addConstraint(m, absolut_negat[i = 3:n, j = Alf], D2_theta[i,j] >= 
+	@addConstraint(m, absolut_negat[i = 3:n, j = Alf], D2_theta[i,j] >=
 		-( ( (theta[i,j]-theta[i-1,j])/(x[i]-x[i-1]) - (theta[i-1,j]-theta[i-2,j])/(x[i-1]-x[i-2]) )  ) )
 
 	########## Evitar cruzamento de quantis
@@ -116,14 +116,9 @@ for ilamb in 1:length(lambdas) # Itera so bos valores de lambda
 	oplot(x[I],thetasoptMat[I,5], "y-") # 0.75
 	oplot(x[I],thetasoptMat[I,6], "g-") # 0.9
 	oplot(x[I],thetasoptMat[I,7], "b-") # 0.95
-	
+
 	oplot(x,y, "r.")
 	savefig("icaraizinho-crossing-" * string(lambda) * ".pdf")
 
 #savefig("sem ccruzar quantile.pdf")
 end # Fim do laço dos lambdas
-
-
-
-
-

@@ -1,0 +1,12 @@
+\BOOKMARK [1][-]{section.1}{Introdu\347\343o}{}% 1
+\BOOKMARK [1][-]{section.2}{Regress\343o Quant\355lica}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Estima\347\343o dos par\342metros}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Sele\347\343o do modelo}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Diagn\363sticos}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.4}{Previs\343o fora da amostra}{section.2}% 6
+\BOOKMARK [1][-]{section.3}{Regress\343o Quant\355lica para s\351ries temporais}{}% 7
+\BOOKMARK [2][-]{subsection.3.1}{Autoregress\343o}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.2}{Modelos ARMA}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.3}{Modelos QAR}{section.3}% 10
+\BOOKMARK [1][-]{section.4}{Estimando a QAR com um modelo linear}{}% 11
+\BOOKMARK [1][-]{section.5}{Estimando a QAR n\343o parametricamente}{}% 12

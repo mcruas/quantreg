@@ -1,0 +1,12 @@
+Fala galera. Alguns comentários iniciais:
+1) a nota deve estar toda em inglês e com a mesma voz.
+
+2) ela objetiva retratar o que fizemos em termos de modelagem e de estudos. Então vale a pena usar os dados que utilizamos para os testes. Vamos reproduzir os dois estudos: 2.1) o linear com diversos lags e seleção de variáveis por inteira e por lasso (duas subseções da seção de parametric); 2.2) a extensão para o caso não linear, onde o polinômios, logaritmos e exponenciais, de x(t) são considerados e regularizados conforme 2.1 e 2.2; 2.3) caso não parametrico unidimensional. Introduza logo no início uma breve apresentação da série de icariizinho, descrevendo a mesma e mostrando os plots y(t) vs y(t-1) e com t-12, argumentando sobre a sazonalidade. Daí, em cada subseção, onde um conceito de modelo é introduzindo, apresente um pequeno caso de estudo rápido sempre para essa série que já foi apresentada. Não usem séries que não foram apresentadas. Usem sempre a mesma (icarizinho). Um gráfico, com o que fizemos. Mas sigam essa estrutura. Seção parametrico e subseções de tipos de regularização e não linear. Daí outra seção pro não parametrico.
+
+3) o multi-quantil pode ser uma terceira seção, onde será estendido em uma subseção o parametrico linear e o não parametrico em outra. Para o caso multi-quantil, temos que pensar que os modelos de cada quantil devem se comunicar através de uma restrição genérica. Mas que por exemplo, pro AR1, o intercepto varia por quantil mas a parte linear (angular) não. 
+
+4) Podemos incluir posteriormente estudos complementares de resultados pro multi-quantil com coisas que já conhecemos e testar se eles se verificam. Por exemplo, sabemos que o melhor estimado para um ar1 e linear, pois o quantil de alpha dele e uma função linear de y(t-1), onde o intercepto é composto por a0 + z(alpha)*Sigma. Então, poderíamos testar com um ar1 que conhecemos, simulados uma série grande e estimamos e vemos se 3.1) se recuperam os valores do intercepto, que dependerá de alpha, e do coeficiente linear, que não dependerá; 3.2) colocar múltiplos quantis e usar o mesmo coeficiente angular mas permitir diferentes intercepto; 3.3) colocar mais de um lag e ver se ele não seleciona o segundo uma vez que o real não tem.
+
+Vamos ver isso na quarta? 
+
+Abs

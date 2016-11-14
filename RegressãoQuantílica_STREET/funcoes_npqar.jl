@@ -123,7 +123,7 @@ function lagmatrix(x, lags)
   n = length(x)
   I = (lags+1):(n)
   x_estim = zeros(n-lags, lags)
-  for (i in 1:lags)
+  for i in 1:lags
     x_estim[:,i] = x[I - i]
   end
   return x_estim

@@ -1,0 +1,40 @@
+\begin{thebibliography}{1}
+
+\bibitem{chamberlain1994quantile}
+Gary Chamberlain.
+\newblock Quantile regression, censoring, and the structure of wages.
+
+\bibitem{kim2009ell_1}
+Seung-Jean Kim, Kwangmoo Koh, Stephen Boyd, and Dimitry Gorinevsky.
+\newblock $\ell_1$ trend filtering.
+\newblock {\em SIAM review}, 51(2):339--360, 2009.
+
+\bibitem{koenker2005quantile}
+Roger Koenker.
+\newblock {\em Quantile regression}.
+\newblock Number~38. Cambridge university press, 2005.
+
+\bibitem{koenker1978regression}
+Roger Koenker and Gilbert Bassett~Jr.
+\newblock Regression quantiles.
+\newblock {\em Econometrica: journal of the Econometric Society}, pages 33--50,
+  1978.
+
+\bibitem{koenker1999goodness}
+Roger Koenker and Jose~AF Machado.
+\newblock Goodness of fit and related inference processes for quantile
+  regression.
+\newblock {\em Journal of the american statistical association},
+  94(448):1296--1310, 1999.
+
+\bibitem{machado1993robust}
+Jose~AF Machado.
+\newblock Robust model selection and m-estimation.
+\newblock {\em Econometric Theory}, 9:478--493, 1993.
+
+\bibitem{van2007worm}
+Stef van Buuren.
+\newblock Worm plot to diagnose fit in quantile regression.
+\newblock {\em Statistical Modelling}, 7(4):363--376, 2007.
+
+\end{thebibliography}

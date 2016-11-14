@@ -1,0 +1,33 @@
+ERAI:
+
+SOURCE,3TIER
+DATA_SET,eraint
+LATITUDE,-3.012
+LONGITUDE,-39.674
+PERIOD,010000,specified as HHMMSS
+UTC_OFFSET,0
+
+================================================
+
+MERRA:
+
+SOURCE,3TIER
+DATA_SET,merra
+LATITUDE,-3.012
+LONGITUDE,-39.674
+PERIOD,010000,specified as HHMMSS
+UTC_OFFSET,0
+
+================================================
+
+NNRP:
+
+SOURCE,3TIER
+DATA_SET,nnrp-downscaled
+LATITUDE,-3.012
+LONGITUDE,-39.674
+PERIOD,010000,specified as HHMMSS
+UTC_OFFSET,0
+
+================================================
+

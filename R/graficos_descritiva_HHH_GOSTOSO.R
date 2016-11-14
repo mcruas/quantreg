@@ -31,7 +31,7 @@ boxplot(bd.mes.a.mes)
 
 meltdf = melt(bd.mes.a.mes); colnames(meltdf) = c("Year", "Month", "Mean MW")
 
-require(reshape2)
+require(reshape2); require(ggplot2)
 ggplot(data = meltdf, aes(x=Month, y=`Mean MW`)) +
   geom_boxplot(aes(fill=Month)) + theme(legend.position="none") + xlab("")
 

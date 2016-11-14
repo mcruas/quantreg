@@ -13,7 +13,7 @@ for (i in 1:length(arquivos.tabelas)) {
 }
 
 
-# \caption{\textbf{$\alpha = 0.05.} Coefficients $\beta_i$ for each value of $K$, where $K$ is the number of nonzero coefficients, excluding the intercept $\beta_0, which is always included.$}
+# \caption{\textbf{$\alpha = 0.05.} Coefficients $\beta_i$ for each value of $K$, where $K$ is the number of nonzero coefficients, excluding the intercept $\beta_0 which is always included.$}
 
 
 

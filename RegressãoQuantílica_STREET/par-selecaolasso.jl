@@ -10,12 +10,13 @@ tic()
 usesolver = "gurobi"    # Escolher entre os valores 'mosek' ou 'gurobi'
 # cd("/home/marcelo/Dropbox/Pesquisa Doutorado/Paper NPQuantile/RegressãoQuantílica_STREET")
 cd("/home/mcruas/Dropbox/Pesquisa Doutorado/Paper NPQuantile/RegressãoQuantílica_STREET")
-# cd("C:/Users/mcruas/Dropbox/Pesquisa Doutorado/Paper NPQuantile/RegressãoQuantílica_STREET")
+cd("C:/Users/mcruas/Dropbox/Pesquisa Doutorado/Paper NPQuantile/RegressãoQuantílica_STREET")
 
 
 include("funcoes_npqar.jl")
 
-using JuMP, DataFrames, Winston, RCall #, Distributions
+# using JuMP, DataFrames, Winston, RCall #, Distributions
+using JuMP, DataFrames,LaTeXStrings, RCall, PyPlot #, Distributions
 
 x = convert(Matrix,readtable("icaraizinho.csv", header = false))
 
@@ -31,7 +32,8 @@ I = (P+1):(n)
 I1 = 1:(n-P)
 y = x[I]
 # lambdas = 10:10:500
-lambdas = e .^(-2:0.005:6.9)
+#lambdas = e .^(-2:0.005:6.9)
+lambdas = e .^(-2:1:6.9)
 # lambda = 500
 
 # Create matrix with all p lags.
@@ -55,11 +57,11 @@ for ilamb in 1:length(lambdas) # Itera sob os valores de lambda
 	##################### Inicio laço principal #######################
 	m = Model(solver = solvfunc)
 
-	@defVar(m, beta[1:n_var, Alf])
-	@defVar(m, beta0[Alf])
-	@defVar(m, delta_mais[I1, Alf] >= 0)
-	@defVar(m, delta_menos[I1, Alf] >= 0)
-	@defVar(m, abs_beta[1:n_var, Alf] >= 0)
+	@variable(m, beta[1:n_var, Alf])
+	@variable(m, beta0[Alf])
+	@variable(m, delta_mais[I1, Alf] >= 0)
+	@variable(m, delta_menos[I1, Alf] >= 0)
+	@variable(m, abs_beta[1:n_var, Alf] >= 0)
 
 	# Objective Function
 	@setObjective(m, Min, sum{alphas[j] *  delta_mais[i, j] + (1-alphas[j]) *
@@ -119,15 +121,26 @@ for ilamb in 1:length(lambdas) # Itera sob os valores de lambda
 end # Fim do laço dos lambdas
 
 tablebetas = keep_betas[2:13,:]'
-plot(log10(lambdas), tablebetas, "-", xlabel = "log_{10}(\\lambda)", ylabel = "size of coefficients", title = "Alpha = $alpha")
+tablebetas2 = convert(DataFrame, tablebetas)
+# plot(log10(lambdas), tablebetas, "-", xlabel = "log_{10}(\\lambda)", ylabel = "size of coefficients", title = "Alpha = $alpha")
 legend(["y_{t-1}","y_{t-2}","y_{t-3}","y_{t-4}","y_{t-5}","y_{t-6}","y_{t-7}","y_{t-8}","y_{t-9}","y_{t-10}","y_{t-11}","y_{t-12}"])
 alpha_out = replace("$alpha", ".", "")
-savefig("par-sellasso-$alpha_out.pdf")
+# savefig("par-sellasso-$alpha_out.pdf")
 
-writetable("table-betas-selecaolasso-alpha-$alpha_out.csv", convert(DataFrame, keep_betas), header = false)
+# writetable("table-betas-selecaolasso-alpha-$alpha_out.csv", convert(DataFrame, keep_betas), header = false)
 
 toc()
 
 
 
 
+using Plots
+pyplot()
+gadfly()
+xkcd()
+plot(log10(lambdas), tablebetas), #xlabel = "\\log_{10}(\\lambda)",
+				ylabel = "Size of coefficients", title = "Alpha = $alpha")
+
+using PyPlot
+xkcd()
+plot(1:100,1:100)

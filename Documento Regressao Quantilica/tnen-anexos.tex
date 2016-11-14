@@ -24,10 +24,9 @@ F_{X}(Q^{*})=\alpha.
 \]
 Thus, we have that $Z^\alpha$ is the $\alpha-quantile$ of random variable $X$.
 
-\subsection{Tables}
+\subsection{MIP coefficients tables}
 
 The following tables inform the size of Coefficients when using the regularization method based on MIP described on session \ref{sec:best-subset-mip}. When using this method, we choose a parameter $K$ which defines the total number of nonzero coefficients (without accounting the intercept $\beta_0$, which is always included). 
-
 In each column we find the estimated values of coefficients for each different choice of $K$. As coefficients are quantile dependent, we provide tables for $\alpha \in (0.05, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95)$.
 
 %\caption{\textbf{$\alpha = 0.05.} 
@@ -39,3 +38,27 @@ In each column we find the estimated values of coefficients for each different c
 \input{Tabelas/table-betas-selecaointeira-alpha-095}
 \input{Tabelas/tabela-icaraizinho}
 
+
+\subsection{Simulation study tables}
+\label{sec:simulation-tables}
+
+On section \ref{sec:simulation-ar1} we explain a simulation study to try evaluating differences between estimating a quantile with a quantile regression model or using the conditional mean when knowing the true generating model. From this experiment, we present below table of results for three different aspects, for five different quantiles. Tables from \ref{tab:sim-rmse-005} to \ref{tab:sim-rmse-095}  shows the difference between the root mean square errors between both methods of predicting the one-step ahead quantile for a few different values of $\alpha$. Tables \ref{tab:sim-auto-005}-\ref{tab:sim-auto-095} are the ones that shows the nominal difference between the autoregressive coefficients $\hat{\phi}$ and $\hat{\beta}$. The nominal difference between the intercept terms $\hat{\phi}_0 + z_\alpha  \hat{\sigma}^2_\varepsilon)$ and $\hat{\beta}_0)$ is 
+
+\input{Tabelas/simulation-ar-rmse-005.tex}
+\input{Tabelas/simulation-ar-rmse-01.tex}
+\input{Tabelas/simulation-ar-rmse-05.tex}
+\input{Tabelas/simulation-ar-rmse-09.tex}
+\input{Tabelas/simulation-ar-rmse-095.tex}
+
+\input{Tabelas/simulation-ar-auto-005.tex}
+\input{Tabelas/simulation-ar-auto-01.tex}
+\input{Tabelas/simulation-ar-auto-05.tex}
+\input{Tabelas/simulation-ar-auto-09.tex}
+\input{Tabelas/simulation-ar-auto-095.tex}
+
+\input{Tabelas/simulation-ar-intercept-005.tex}
+\clearpage
+\input{Tabelas/simulation-ar-intercept-01.tex}
+\input{Tabelas/simulation-ar-intercept-05.tex} % clearpage aqui
+\input{Tabelas/simulation-ar-intercept-09.tex}
+\input{Tabelas/simulation-ar-intercept-095.tex}

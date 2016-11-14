@@ -1,0 +1,47 @@
+\begin{thebibliography}{1}
+
+\bibitem{belloni2009least}
+Alexandre Belloni and Victor Chernozhukov.
+\newblock Least squares after model selection in high-dimensional sparse
+  models.
+\newblock 2009.
+
+\bibitem{bertsimas2015best}
+Dimitris Bertsimas, Angela King, and Rahul Mazumder.
+\newblock Best subset selection via a modern optimization lens.
+\newblock {\em arXiv preprint arXiv:1507.03133}, 2015.
+
+\bibitem{kim2009ell_1}
+Seung-Jean Kim, Kwangmoo Koh, Stephen Boyd, and Dimitry Gorinevsky.
+\newblock $\ell_1$ trend filtering.
+\newblock {\em SIAM review}, 51(2):339--360, 2009.
+
+\bibitem{koenker2005quantile}
+Roger Koenker.
+\newblock {\em Quantile regression}.
+\newblock Number~38. Cambridge university press, 2005.
+
+\bibitem{li2012l1}
+Youjuan Li and Ji~Zhu.
+\newblock L1-norm quantile regression.
+\newblock {\em Journal of Computational and Graphical Statistics}, 2012.
+
+\bibitem{machado1993robust}
+Jose~AF Machado.
+\newblock Robust model selection and m-estimation.
+\newblock {\em Econometric Theory}, 9:478--493, 1993.
+
+\bibitem{porrua2010wind}
+Fernando Porrua, Bernardo Bezerra, Luiz~Augusto Barroso, Priscila Lino,
+  Francisco Ralston, and Mario Pereira.
+\newblock Wind power insertion through energy auctions in brazil.
+\newblock In {\em Power and Energy Society General Meeting, 2010 IEEE}, pages
+  1--8. IEEE, 2010.
+
+\bibitem{tibshirani1996regression}
+Robert Tibshirani.
+\newblock Regression shrinkage and selection via the lasso.
+\newblock {\em Journal of the Royal Statistical Society. Series B
+  (Methodological)}, pages 267--288, 1996.
+
+\end{thebibliography}

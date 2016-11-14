@@ -10,7 +10,7 @@ vector.alpha <- c(0.05, 0.1, 0.5, 0.9, 0.95)
 vector.phi <- c(0.25, 0.5, 0.7, 0.9)
 vector.RSN <- c(0.01, 0.05, 0.1, 0.5, 1)
 n.rows <- length(vector.alpha) * length(vector.phi) * length(vector.RSN)
-n = 10000; alpha = 0.05; i = 1; phi = 0.2; RSN = 0.1; phi0  = 1; serie = rep(0,n)
+n = 10000; alpha = 0.05; i = 1; phi = 0.9; RSN = 0.1; phi0  = 1; serie = rep(0,n)
 
 results <- data.frame(alpha = rep(0,n.rows), phi = rep(0,n.rows), RSN = rep(0,n.rows),
                       phi.hat = rep(0,n.rows), phi0.hat = rep(0,n.rows), sigma.e = rep(0,n.rows),
