@@ -20,7 +20,7 @@ Our optimization model to estimate the nonparametric quantile is as follows:
 \end{equation}
 where $D^2 q_t$ is the second derivative of the $q_t$ function, calculated as follows:
 \begin{equation*}
-D_{x_t}^{2}q_{t}=\left(\frac{q_{t+1}-q_{t}}{x_{t+1}-x_{t}}\right)-\left(\frac{q_t-q_{t-1}}{x_{t}-x_{t-1}}\right).
+D_{x_{t}}^{2}q_{t}=\frac{\left(\frac{q_{t+1}-q_{t}}{x_{t+1}-x_{t}}\right)-\left(\frac{q_{t}-q_{t-1}}{x_{t}-x_{t-1}}\right)}{x_{t+1}-2x_{t} + x_{t-1}}.
 \end{equation*}
 The first part on the objective function is the usual quantile regression condition for $\{q_t\}$. The second part is the $\ell_1$-filter. The purpose of a filter is to control the amount of variation for our estimator $q_t$. When no penalty is employed we would always get $q_t = y_t$. On the other hand, when $\lambda \rightarrow \infty$, our estimator approaches the linear quantile regression. 
 
@@ -89,3 +89,27 @@ The first issue is how to select an appropriate value for $\lambda$. A simple wa
 
 The other issue occurs when we try to add more than one lag to the analysis at the same time. This happens because the problem solution is a set of points that we need to interpolate. This multivariate interpolation, however, is not easily solved, in the sense that we can either choose using a very naive estimator such as the K-nearest neighbors or just find another method that is not yet adopted for a wide range of applications.
 
+\subsection{Solar power data}
+
+While the Icaraizinho dataset has monthly observations for a wide range of time, we also test the same model for hourly data. In this case, we use the NP-QAR for solar power data. This dataset was retrieved from \textit{https://www.renewables.ninja/} and includes predicted hourly power data for the city of Tubarão (Brazil).
+This location was chosen because it is the spot of the biggest solar power plant in Brazil. 
+
+As solar power production is irradiation dependent, the best single predictor we may have is the hour of the day, as can be seen in the boxplot shown in Figure 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\linewidth]{Figuras/npqar-solar/hourly-solar-power.pdf}
+	\caption{Icaraizinho yearly data. Each serie consists of monthly observations for each year.}
+	\label{fig:solar-tubarao}
+\end{figure}
+
+
+
+
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=0.8\linewidth]{Figuras/npqar-solar/com-divisao-lambda100.png}
+	\caption{Icaraizinho yearly data. Each serie consists of monthly observations for each year.}
+	\label{fig:npqar-solar-tubarao}
+\end{figure}

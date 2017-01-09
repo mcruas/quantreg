@@ -129,7 +129,7 @@ If we knew an autoregressive process true model
 \]
 and knew the error distribution, we could estimate the one-step ahead quantile as the sum $\hat{y}_{t+1} + t_{\alpha}$, where $t_\alpha$ is the $\alpha$-quantile for the error distribution. This means that we would be able to use all developments made on conditional mean estimation and simply add an error to estimate quantiles. 
 
-However, that is not the case. When working with quantile estimation for real data we don't know the generating process exactly. Using a quantile regression model provides us a good solution even without knowing the error distribution. 
+However, that is not the case. When working with quantile estimation for real data we don't know the generating process exactly. Using a quantile regression model provides us a good solution even without making assumptions about the error distribution. 
 
 We propose simulating an AR(1) model
 \begin{equation}
