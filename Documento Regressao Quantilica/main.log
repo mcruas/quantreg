@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.10)  9 JAN 2017 09:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.10)  11 JAN 2017 14:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -736,18 +736,8 @@ Class scrartcl Warning: Usage of package `fancyhdr' together
 \f@ncyO@olf=\skip66
 \f@ncyO@orf=\skip67
 ) (./main.aux
-(./tnen-introduction.aux) (./tnen-linear-models.aux
-
-LaTeX Warning: Label `fig:npqar-cross' multiply defined.
-
-) (./tnen-nonparametric-models.aux
-
-LaTeX Warning: Label `fig:npqar-cross' multiply defined.
-
-
-LaTeX Warning: Label `fig:npqar-results' multiply defined.
-
-))
+(./tnen-introduction.aux) (./tnen-linear-models.aux)
+(./tnen-nonparametric-models.aux))
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 60.
@@ -764,7 +754,8 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 60.
 LaTeX Font Info:    ... okay on input line 60.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 60.
 LaTeX Font Info:    ... okay on input line 60.
- (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+
+(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count144
 \scratchdimen=\dimen188
@@ -888,7 +879,11 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <6> not available
 \openout2 = `tnen-introduction.aux'.
 
  (./tnen-introduction.tex
-<./Figuras/Icaraizinho/icaraizinho-mensal.pdf, id=71, 433.62pt x 289.08pt>
+
+LaTeX Warning: Reference `sec:best-subset-mip' on page 2 undefined on input lin
+e 8.
+
+<./Figuras/Icaraizinho/icaraizinho-mensal.pdf, id=54, 433.62pt x 289.08pt>
 File: ./Figuras/Icaraizinho/icaraizinho-mensal.pdf Graphic file (type pdf)
 
 <use ./Figuras/Icaraizinho/icaraizinho-mensal.pdf>
@@ -896,7 +891,7 @@ Package pdftex.def Info: ./Figuras/Icaraizinho/icaraizinho-mensal.pdf used on i
 nput line 11.
 (pdftex.def)             Requested size: 386.95901pt x 257.98615pt.
 
-<./Figuras/Icaraizinho/icaraizinho-boxplot.pdf, id=72, 433.62pt x 289.08pt>
+<./Figuras/Icaraizinho/icaraizinho-boxplot.pdf, id=55, 433.62pt x 289.08pt>
 File: ./Figuras/Icaraizinho/icaraizinho-boxplot.pdf Graphic file (type pdf)
 
 <use ./Figuras/Icaraizinho/icaraizinho-boxplot.pdf>
@@ -904,7 +899,7 @@ Package pdftex.def Info: ./Figuras/Icaraizinho/icaraizinho-boxplot.pdf used on
 input line 19.
 (pdftex.def)             Requested size: 386.95901pt x 257.98615pt.
 
-<Figuras/Icaraizinho/icaraizinho-1-lag.pdf, id=73, 542.025pt x 542.025pt>
+<Figuras/Icaraizinho/icaraizinho-1-lag.pdf, id=56, 542.025pt x 542.025pt>
 File: Figuras/Icaraizinho/icaraizinho-1-lag.pdf Graphic file (type pdf)
 
 <use Figuras/Icaraizinho/icaraizinho-1-lag.pdf>
@@ -912,7 +907,7 @@ Package pdftex.def Info: Figuras/Icaraizinho/icaraizinho-1-lag.pdf used on inpu
 t line 52.
 (pdftex.def)             Requested size: 217.66214pt x 217.65802pt.
 
-<Figuras/Icaraizinho/icaraizinho-4-lag.pdf, id=74, 542.025pt x 542.025pt>
+<Figuras/Icaraizinho/icaraizinho-4-lag.pdf, id=57, 542.025pt x 542.025pt>
 File: Figuras/Icaraizinho/icaraizinho-4-lag.pdf Graphic file (type pdf)
 
 <use Figuras/Icaraizinho/icaraizinho-4-lag.pdf>
@@ -920,7 +915,7 @@ Package pdftex.def Info: Figuras/Icaraizinho/icaraizinho-4-lag.pdf used on inpu
 t line 55.
 (pdftex.def)             Requested size: 217.66214pt x 217.65802pt.
 
-<Figuras/Icaraizinho/icaraizinho-11-lag.pdf, id=75, 542.025pt x 542.025pt>
+<Figuras/Icaraizinho/icaraizinho-11-lag.pdf, id=58, 542.025pt x 542.025pt>
 File: Figuras/Icaraizinho/icaraizinho-11-lag.pdf Graphic file (type pdf)
 
 <use Figuras/Icaraizinho/icaraizinho-11-lag.pdf>
@@ -928,7 +923,7 @@ Package pdftex.def Info: Figuras/Icaraizinho/icaraizinho-11-lag.pdf used on inp
 ut line 61.
 (pdftex.def)             Requested size: 217.66214pt x 217.65802pt.
 
-<Figuras/Icaraizinho/icaraizinho-12-lag.pdf, id=76, 542.025pt x 542.025pt>
+<Figuras/Icaraizinho/icaraizinho-12-lag.pdf, id=59, 542.025pt x 542.025pt>
 File: Figuras/Icaraizinho/icaraizinho-12-lag.pdf Graphic file (type pdf)
 
 <use Figuras/Icaraizinho/icaraizinho-12-lag.pdf>
@@ -955,141 +950,14 @@ g.pdf): PDF inclusion: multiple pdfs with page group included in a single page
 >]
 \openout2 = `tnen-linear-models.aux'.
 
- (./tnen-linear-models.tex
-Overfull \hbox (13.86394pt too wide) in paragraph at lines 38--39
-[]\OT1/cmr/m/n/10.95 We ran this op-ti-miza-tion for each value of $\OML/cmm/m/
-it/10.95 K \OMS/cmsy/m/n/10.95 2 f\OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; [] 
-; \OT1/cmr/m/n/10.95 12\OMS/cmsy/m/n/10.95 g$ \OT1/cmr/m/n/10.95 and quan-tiles
- $\OML/cmm/m/it/10.95  \OMS/cmsy/m/n/10.95 2 f\OT1/cmr/m/n/10.95 0\OML/cmm/m/i
-t/10.95 :\OT1/cmr/m/n/10.95 05\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 0\OML/cm
-m/m/it/10.95 :\OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 0\OM
-L/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 5\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 
-0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 9\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10
-.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 95\OMS/cmsy/m/n/10.95 g$\OT1/cmr/m
-/n/10.95 .
- []
-
-<Figuras/npqar/icaraizinho-crossing-200.pdf, id=188, 542.025pt x 542.025pt>
-File: Figuras/npqar/icaraizinho-crossing-200.pdf Graphic file (type pdf)
-
-<use Figuras/npqar/icaraizinho-crossing-200.pdf>
-Package pdftex.def Info: Figuras/npqar/icaraizinho-crossing-200.pdf used on inp
-ut line 42.
-(pdftex.def)             Requested size: 338.58636pt x 338.59937pt.
- [5
+ (./tnen-linear-models.tex) [5
 
 
 ]
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 48.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\ell' on input line 48.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 48.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 48.
-
-[6 <./Figuras/npqar/icaraizinho-crossing-200.pdf>]
-<Figuras/selecao-lasso/par-sellasso-005.pdf, id=230, 542.025pt x 542.025pt>
-File: Figuras/selecao-lasso/par-sellasso-005.pdf Graphic file (type pdf)
-
-<use Figuras/selecao-lasso/par-sellasso-005.pdf>
-Package pdftex.def Info: Figuras/selecao-lasso/par-sellasso-005.pdf used on inp
-ut line 83.
-(pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
-
-<Figuras/selecao-lasso/par-sellasso-01.pdf, id=231, 542.025pt x 542.025pt>
-File: Figuras/selecao-lasso/par-sellasso-01.pdf Graphic file (type pdf)
-
-<use Figuras/selecao-lasso/par-sellasso-01.pdf>
-Package pdftex.def Info: Figuras/selecao-lasso/par-sellasso-01.pdf used on inpu
-t line 86.
-(pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
-
-<Figuras/selecao-lasso/par-sellasso-05.pdf, id=232, 542.025pt x 542.025pt>
-File: Figuras/selecao-lasso/par-sellasso-05.pdf Graphic file (type pdf)
-
-<use Figuras/selecao-lasso/par-sellasso-05.pdf>
-Package pdftex.def Info: Figuras/selecao-lasso/par-sellasso-05.pdf used on inpu
-t line 89.
-(pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
-
-<Figuras/selecao-lasso/par-sellasso-09.pdf, id=233, 542.025pt x 542.025pt>
-File: Figuras/selecao-lasso/par-sellasso-09.pdf Graphic file (type pdf)
-
-<use Figuras/selecao-lasso/par-sellasso-09.pdf>
-Package pdftex.def Info: Figuras/selecao-lasso/par-sellasso-09.pdf used on inpu
-t line 95.
-(pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
-
-<Figuras/selecao-lasso/par-sellasso-095.pdf, id=234, 542.025pt x 542.025pt>
-File: Figuras/selecao-lasso/par-sellasso-095.pdf Graphic file (type pdf)
-
-<use Figuras/selecao-lasso/par-sellasso-095.pdf>
-Package pdftex.def Info: Figuras/selecao-lasso/par-sellasso-095.pdf used on inp
-ut line 98.
-(pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
- [7] [8 <./Figuras/selecao-lasso/par-sellasso-005.pdf> <./Figuras/selecao-lasso
-/par-sellasso-01.pdf
-
-pdfTeX warning: /usr/bin/pdflatex (file ./Figuras/selecao-lasso/par-sellasso-01
-.pdf): PDF inclusion: multiple pdfs with page group included in a single page
-> <./Figuras/selecao-lasso/par-sellasso-05.pdf
-
-pdfTeX warning: /usr/bin/pdflatex (file ./Figuras/selecao-lasso/par-sellasso-05
-.pdf): PDF inclusion: multiple pdfs with page group included in a single page
-> <./Figuras/selecao-lasso/par-sellasso-09.pdf
-
-pdfTeX warning: /usr/bin/pdflatex (file ./Figuras/selecao-lasso/par-sellasso-09
-.pdf): PDF inclusion: multiple pdfs with page group included in a single page
-> <./Figuras/selecao-lasso/par-sellasso-095.pdf
-
-pdfTeX warning: /usr/bin/pdflatex (file ./Figuras/selecao-lasso/par-sellasso-09
-5.pdf): PDF inclusion: multiple pdfs with page group included in a single page
->] [9] <Figuras/SIC005.pdf, id=342, 433.62pt x 325.215pt>
-File: Figuras/SIC005.pdf Graphic file (type pdf)
-
-<use Figuras/SIC005.pdf>
-Package pdftex.def Info: Figuras/SIC005.pdf used on input line 212.
-(pdftex.def)             Requested size: 193.47581pt x 145.10976pt.
- <Figuras/SIC01.pdf, id=343, 433.62pt x 325.215pt>
-File: Figuras/SIC01.pdf Graphic file (type pdf)
-
-<use Figuras/SIC01.pdf>
-Package pdftex.def Info: Figuras/SIC01.pdf used on input line 215.
-(pdftex.def)             Requested size: 193.47581pt x 145.10976pt.
- <Figuras/SIC05.pdf, id=344, 433.62pt x 325.215pt>
-File: Figuras/SIC05.pdf Graphic file (type pdf)
-
-<use Figuras/SIC05.pdf>
-Package pdftex.def Info: Figuras/SIC05.pdf used on input line 218.
-(pdftex.def)             Requested size: 193.47581pt x 145.10976pt.
- <Figuras/SIC09.pdf, id=345, 433.62pt x 325.215pt>
-File: Figuras/SIC09.pdf Graphic file (type pdf)
-
-<use Figuras/SIC09.pdf>
-Package pdftex.def Info: Figuras/SIC09.pdf used on input line 224.
-(pdftex.def)             Requested size: 193.47581pt x 145.10976pt.
- <Figuras/SIC095.pdf, id=346, 433.62pt x 325.215pt>
-File: Figuras/SIC095.pdf Graphic file (type pdf)
-
-<use Figuras/SIC095.pdf>
-Package pdftex.def Info: Figuras/SIC095.pdf used on input line 227.
-(pdftex.def)             Requested size: 193.47581pt x 145.10976pt.
-) [10] [11 <./Figuras/SIC005.pdf> <./Figuras/SIC01.pdf> <./Figuras/SIC05.pdf> <
-./Figuras/SIC09.pdf> <./Figuras/SIC095.pdf>]
 \openout2 = `tnen-nonparametric-models.aux'.
 
-
-(./tnen-nonparametric-models.tex
-<Figuras/npqar/icaraizinho-crossing-01.pdf, id=420, 542.025pt x 542.025pt>
+ (./tnen-nonparametric-models.tex
+<Figuras/npqar/icaraizinho-crossing-01.pdf, id=179, 542.025pt x 542.025pt>
 File: Figuras/npqar/icaraizinho-crossing-01.pdf Graphic file (type pdf)
 
 <use Figuras/npqar/icaraizinho-crossing-01.pdf>
@@ -1097,7 +965,7 @@ Package pdftex.def Info: Figuras/npqar/icaraizinho-crossing-01.pdf used on inpu
 t line 47.
 (pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
 
-<Figuras/npqar/icaraizinho-crossing-03.pdf, id=421, 542.025pt x 542.025pt>
+<Figuras/npqar/icaraizinho-crossing-03.pdf, id=180, 542.025pt x 542.025pt>
 File: Figuras/npqar/icaraizinho-crossing-03.pdf Graphic file (type pdf)
 
 <use Figuras/npqar/icaraizinho-crossing-03.pdf>
@@ -1105,7 +973,7 @@ Package pdftex.def Info: Figuras/npqar/icaraizinho-crossing-03.pdf used on inpu
 t line 51.
 (pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
 
-<Figuras/npqar/icaraizinho-crossing-1.pdf, id=422, 542.025pt x 542.025pt>
+<Figuras/npqar/icaraizinho-crossing-1.pdf, id=181, 542.025pt x 542.025pt>
 File: Figuras/npqar/icaraizinho-crossing-1.pdf Graphic file (type pdf)
 
 <use Figuras/npqar/icaraizinho-crossing-1.pdf>
@@ -1113,7 +981,7 @@ Package pdftex.def Info: Figuras/npqar/icaraizinho-crossing-1.pdf used on input
  line 55.
 (pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
 
-<Figuras/npqar/icaraizinho-crossing-3.pdf, id=423, 542.025pt x 542.025pt>
+<Figuras/npqar/icaraizinho-crossing-3.pdf, id=182, 542.025pt x 542.025pt>
 File: Figuras/npqar/icaraizinho-crossing-3.pdf Graphic file (type pdf)
 
 <use Figuras/npqar/icaraizinho-crossing-3.pdf>
@@ -1121,24 +989,26 @@ Package pdftex.def Info: Figuras/npqar/icaraizinho-crossing-3.pdf used on input
  line 62.
 (pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
 
-<Figuras/npqar/icaraizinho-crossing-10.pdf, id=424, 542.025pt x 542.025pt>
+<Figuras/npqar/icaraizinho-crossing-10.pdf, id=183, 542.025pt x 542.025pt>
 File: Figuras/npqar/icaraizinho-crossing-10.pdf Graphic file (type pdf)
 
 <use Figuras/npqar/icaraizinho-crossing-10.pdf>
 Package pdftex.def Info: Figuras/npqar/icaraizinho-crossing-10.pdf used on inpu
 t line 66.
 (pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
+
+<Figuras/npqar/icaraizinho-crossing-200.pdf, id=184, 542.025pt x 542.025pt>
 File: Figuras/npqar/icaraizinho-crossing-200.pdf Graphic file (type pdf)
 
 <use Figuras/npqar/icaraizinho-crossing-200.pdf>
 Package pdftex.def Info: Figuras/npqar/icaraizinho-crossing-200.pdf used on inp
 ut line 70.
 (pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
- [12
+ [6
 
 
-] [13 <./Figuras/npqar/icaraizinho-crossing-01.pdf> <./Figuras/npqar/icaraizinh
-o-crossing-03.pdf
+] [7 <./Figuras/npqar/icaraizinho-crossing-01.pdf> <./Figuras/npqar/icaraizinho
+-crossing-03.pdf
 
 pdfTeX warning: /usr/bin/pdflatex (file ./Figuras/npqar/icaraizinho-crossing-03
 .pdf): PDF inclusion: multiple pdfs with page group included in a single page
@@ -1154,27 +1024,35 @@ pdf): PDF inclusion: multiple pdfs with page group included in a single page
 
 pdfTeX warning: /usr/bin/pdflatex (file ./Figuras/npqar/icaraizinho-crossing-10
 .pdf): PDF inclusion: multiple pdfs with page group included in a single page
->] <Figuras/npqar-solar/hourly-solar-power.pdf, id=511, 578.16pt x 433.62pt>
+> <./Figuras/npqar/icaraizinho-crossing-200.pdf
+
+pdfTeX warning: /usr/bin/pdflatex (file ./Figuras/npqar/icaraizinho-crossing-20
+0.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+>] <Figuras/npqar-solar/hourly-solar-power.pdf, id=285, 578.16pt x 433.62pt>
 File: Figuras/npqar-solar/hourly-solar-power.pdf Graphic file (type pdf)
 
 <use Figuras/npqar-solar/hourly-solar-power.pdf>
 Package pdftex.def Info: Figuras/npqar-solar/hourly-solar-power.pdf used on inp
-ut line 101.
+ut line 109.
 (pdftex.def)             Requested size: 386.95901pt x 290.21953pt.
 
-<Figuras/npqar-solar/com-divisao-lambda100.png, id=512, 602.25pt x 401.5pt>
+<Figuras/npqar-solar/com-divisao-lambda100.png, id=286, 602.25pt x 401.5pt>
 File: Figuras/npqar-solar/com-divisao-lambda100.png Graphic file (type png)
 
 <use Figuras/npqar-solar/com-divisao-lambda100.png>
 Package pdftex.def Info: Figuras/npqar-solar/com-divisao-lambda100.png used on 
-input line 112.
+input line 120.
 (pdftex.def)             Requested size: 386.95901pt x 257.98222pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-) [14 <./Figuras/npqar-solar/hourly-solar-power.pdf>] [15 <./Figuras/npqar-sola
-r/com-divisao-lambda100.png>] (./main.bbl) (./tnen-anexos.tex
+) [8 <./Figuras/npqar-solar/hourly-solar-power.pdf>] [9 <./Figuras/npqar-solar/
+com-divisao-lambda100.png>] (./main.bbl) (./tnen-anexos.tex
+
+LaTeX Warning: Reference `sec:best-subset-mip' on page 10 undefined on input li
+ne 29.
+
 (./Tabelas/table-betas-selecaointeira-alpha-005.tex)
 (./Tabelas/table-betas-selecaointeira-alpha-01.tex)
 (./Tabelas/table-betas-selecaointeira-alpha-05.tex)
@@ -1192,27 +1070,156 @@ Underfull \hbox (badness 10000) in paragraph at lines 42--42
  here:
  []
 
-) [16
+)
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 10 undefined on input lin
+e 45.
+
+[10
 
 
-] (./Tabelas/simulation-ar-rmse-005.tex)
-(./Tabelas/simulation-ar-rmse-01.tex) (./Tabelas/simulation-ar-rmse-05.tex)
-(./Tabelas/simulation-ar-rmse-09.tex) (./Tabelas/simulation-ar-rmse-095.tex)
-(./Tabelas/simulation-ar-auto-005.tex) (./Tabelas/simulation-ar-auto-01.tex)
-(./Tabelas/simulation-ar-auto-05.tex) (./Tabelas/simulation-ar-auto-09.tex)
-(./Tabelas/simulation-ar-auto-095.tex)
-(./Tabelas/simulation-ar-intercept-005.tex) [17] [18] [19] [20] [21]
-(./Tabelas/simulation-ar-intercept-01.tex)
-(./Tabelas/simulation-ar-intercept-05.tex)
-(./Tabelas/simulation-ar-intercept-09.tex)
-(./Tabelas/simulation-ar-intercept-095.tex)) [22
+] (./Tabelas/simulation-ar-rmse-005.tex
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+) (./Tabelas/simulation-ar-rmse-01.tex
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+) (./Tabelas/simulation-ar-rmse-05.tex
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+) (./Tabelas/simulation-ar-rmse-09.tex
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+) (./Tabelas/simulation-ar-rmse-095.tex
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+) (./Tabelas/simulation-ar-auto-005.tex
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+) (./Tabelas/simulation-ar-auto-01.tex
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+) (./Tabelas/simulation-ar-auto-05.tex
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+) (./Tabelas/simulation-ar-auto-09.tex
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+) (./Tabelas/simulation-ar-auto-095.tex
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+) (./Tabelas/simulation-ar-intercept-005.tex
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 11 undefined on input lin
+e 18.
+
+) [11] [12] [13] [14] [15] (./Tabelas/simulation-ar-intercept-01.tex
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 16 undefined on input lin
+e 18.
+
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 16 undefined on input lin
+e 18.
+
+) (./Tabelas/simulation-ar-intercept-05.tex
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 16 undefined on input lin
+e 18.
+
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 16 undefined on input lin
+e 18.
+
+) (./Tabelas/simulation-ar-intercept-09.tex
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 16 undefined on input lin
+e 18.
+
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 16 undefined on input lin
+e 18.
+
+) (./Tabelas/simulation-ar-intercept-095.tex
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 16 undefined on input lin
+e 18.
+
+
+LaTeX Warning: Reference `sec:simulation-ar1' on page 16 undefined on input lin
+e 18.
+
+)) [16
 
 ]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 74.
- [23]
+ [17]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 74.
- (./main.aux
-(./tnen-introduction.aux) (./tnen-linear-models.aux)
+ (./main.aux (./tnen-introduction.aux) (./tnen-linear-models.aux)
 (./tnen-nonparametric-models.aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 74.
 \snap@out=\write5
@@ -1222,24 +1229,24 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 74.
 Dependency list written on main.dep.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 74.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 65DA80819E4B664B19A630C14D4AB48F;883.
+(rerunfilecheck)             Checksum: 1E1DD5E163A1B0B26E147357861D56E5;563.
 
-LaTeX Warning: There were multiply-defined labels.
+LaTeX Warning: There were undefined references.
 
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 74.
  ) 
 Here is how much of TeX's memory you used:
- 21443 strings out of 493029
- 399818 string characters out of 6136234
- 622966 words of memory out of 5000000
- 24393 multiletter control sequences out of 15000+600000
- 17708 words of font info for 67 fonts, out of 8000000 for 9000
+ 21330 strings out of 493029
+ 397409 string characters out of 6136234
+ 618870 words of memory out of 5000000
+ 24318 multiletter control sequences out of 15000+600000
+ 16471 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 73i,18n,79p,1027b,695s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/t
+ 73i,18n,79p,919b,695s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/t
 exmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-di
 st/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/font
 s/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1
@@ -1251,10 +1258,10 @@ b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on main.pdf (23 pages, 826546 bytes).
+Output written on main.pdf (17 pages, 673288 bytes).
 PDF statistics:
- 698 PDF objects out of 1000 (max. 8388607)
- 541 compressed objects within 6 object streams
- 97 named destinations out of 1000 (max. 500000)
- 229 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 438 PDF objects out of 1000 (max. 8388607)
+ 340 compressed objects within 4 object streams
+ 70 named destinations out of 1000 (max. 500000)
+ 147 words of extra memory for PDF output out of 10000 (max. 10000000)
 

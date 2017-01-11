@@ -89,27 +89,35 @@ The first issue is how to select an appropriate value for $\lambda$. A simple wa
 
 The other issue occurs when we try to add more than one lag to the analysis at the same time. This happens because the problem solution is a set of points that we need to interpolate. This multivariate interpolation, however, is not easily solved, in the sense that we can either choose using a very naive estimator such as the K-nearest neighbors or just find another method that is not yet adopted for a wide range of applications.
 
-\subsection{Solar power data}
-
-While the Icaraizinho dataset has monthly observations for a wide range of time, we also test the same model for hourly data. In this case, we use the NP-QAR for solar power data. This dataset was retrieved from \textit{https://www.renewables.ninja/} and includes predicted hourly power data for the city of Tubarão (Brazil).
-This location was chosen because it is the spot of the biggest solar power plant in Brazil. 
-
-As solar power production is irradiation dependent, the best single predictor we may have is the hour of the day, as can be seen in the boxplot shown in Figure 
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.8\linewidth]{Figuras/npqar-solar/hourly-solar-power.pdf}
-	\caption{Icaraizinho yearly data. Each serie consists of monthly observations for each year.}
-	\label{fig:solar-tubarao}
-\end{figure}
-
-
-
-
-
-\begin{figure}[h]
-	\centering
-		\includegraphics[width=0.8\linewidth]{Figuras/npqar-solar/com-divisao-lambda100.png}
-	\caption{Icaraizinho yearly data. Each serie consists of monthly observations for each year.}
-	\label{fig:npqar-solar-tubarao}
-\end{figure}
+%\subsection{Solar power data}
+%
+%While the Icaraizinho dataset has monthly observations for a wide range of time, we also test the same model for hourly data. In this case, we use the NP-QAR for solar power data. This dataset was retrieved from \textit{https://www.renewables.ninja/} and includes predicted hourly power data for the city of Tubarão (Brazil).
+%This location was chosen because it is the spot of the biggest solar power plant in Brazil. 
+%
+%
+%%Tabocas do Brejo Velho (usina solar "Horizonte" em construção, será a maior da america latina; -12.692, -44.006)
+%
+%
+%%São José de Mipibu (usina solar  http://oportaln10.com.br/grupo-chines-instalara-fabrica-de-placas-solares-no-rn-50324/, -6.068 , -35.241)
+%
+%% Tubarão -28.467_-49.005_
+%
+%As solar power production is irradiation dependent, the best single predictor we may have is the hour of the day, as can be seen in the boxplot shown in Figure \ref{fig:solar-tubarao}
+%
+%\begin{figure}[h]
+%	\centering
+%	\includegraphics[width=0.8\linewidth]{Figuras/npqar-solar/hourly-solar-power.pdf}
+%	\caption{Icaraizinho yearly data. Each serie consists of monthly observations for each year.}
+%	\label{fig:solar-tubarao}
+%\end{figure}
+%
+%
+%
+%
+%
+%\begin{figure}[h]
+%	\centering
+%		\includegraphics[width=0.8\linewidth]{Figuras/npqar-solar/com-divisao-lambda100.png}
+%	\caption{Icaraizinho yearly data. Each serie consists of monthly observations for each year.}
+%	\label{fig:npqar-solar-tubarao}
+%\end{figure}
