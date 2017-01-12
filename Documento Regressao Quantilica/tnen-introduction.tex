@@ -87,6 +87,7 @@ Section \ref{sec:linear-models} is about linear models, so we investigate the qu
 	q(y_t, \alpha; \beta) = \beta_0(\alpha) + \beta_1(\alpha)y_{t-1} + \beta_2(\alpha)y_{t-2} + \dots + \beta_p(\alpha) y_{t-p}.
 	\label{eq:ft-qar}
 \end{equation}
-In that section we investigate two ways of estimating coeficients, one based on Mixed Integer Programming ideas and the other based on the LASSO \cite{tibshirani1996regression} penalty. Both of them are strategies to make regularization.
 
 In section \ref{sec:npqar} we introduce a Nonparametric Quantile Autoregressive model with a $\ell_{1}$-penalty term, in order to properly simulate FEC densities for several $\alpha$-quantiles. In this nonparametric approach we don't assume any form for $q(x_t)$, but rather let the function adjust to the data. To prevent overfitting, the $\ell_1$ penalty for the second derivative (approximated by the second difference of the ordered observations) is included in the objective function.
+
+In section 

@@ -1,8 +1,8 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
 \BOOKMARK [1][-]{section.2}{Linear Models for the Quantile Autoregression}{}% 2
 \BOOKMARK [1][-]{section.3}{Quantile Autoregression with a nonparametric approach}{}% 3
-\BOOKMARK [2][-]{subsection.3.1}{Solar power data}{section.3}% 4
-\BOOKMARK [1][-]{section.4}{Appendices}{}% 5
-\BOOKMARK [2][-]{subsection.4.1}{Proof of quantiles as an optimization problem}{section.4}% 6
-\BOOKMARK [2][-]{subsection.4.2}{MIP coefficients tables}{section.4}% 7
-\BOOKMARK [2][-]{subsection.4.3}{Simulation study tables}{section.4}% 8
+\BOOKMARK [1][-]{section.4}{Simulation}{}% 4
+\BOOKMARK [1][-]{section.5}{Appendices}{}% 5
+\BOOKMARK [2][-]{subsection.5.1}{Proof of quantiles as an optimization problem}{section.5}% 6
+\BOOKMARK [2][-]{subsection.5.2}{MIP coefficients tables}{section.5}% 7
+\BOOKMARK [2][-]{subsection.5.3}{Simulation study tables}{section.5}% 8

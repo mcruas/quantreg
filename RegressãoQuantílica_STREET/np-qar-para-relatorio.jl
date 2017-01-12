@@ -122,3 +122,5 @@ for ilamb in 1:length(lambdas) # Itera so bos valores de lambda
 
 #savefig("sem ccruzar quantile.pdf")
 end # Fim do laço dos lambdas
+
+gr()

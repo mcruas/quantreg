@@ -15,7 +15,7 @@ we can then define $\{x_i\}_{i=1}^{n-p} = \{\tilde{x}^{(t)} \}_{t=p+1}^{n}$ and 
 Our optimization model to estimate the nonparametric quantile is as follows:
 \begin{equation}
 \begin{split}
-\mathcal{Q}_{y_t|y_{t-1}}^\alpha(t) =\underset{q_{t}}{\arg\min}\sum_{t\in T}\left(|y_{t}-q_{t}|^{+}\alpha + |y_{t}-q_{t}|^{-}(1-\alpha)\right) \\ +\lambda  \sum_{t\in T}|D_{x_t}^{2}q_{t}|,
+\mathcal{Q}_{y_t|y_{t-1}}^\alpha(t) =\underset{q_{t}}{\arg\min}\sum_{t\in T} \left( \alpha |y_{t}-q_{t}|^{+} + (1-\alpha)|y_{t}-q_{t}|^{-}\right) \\ +\lambda  \sum_{t\in T}|D_{x_t}^{2}q_{t}|,
 \end{split}
 \end{equation}
 where $D^2 q_t$ is the second derivative of the $q_t$ function, calculated as follows:
