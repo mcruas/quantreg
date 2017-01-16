@@ -49,3 +49,8 @@ nvar = colApply((elemApply(tabela, abs) .> 0.0000001), sum)
 lambdas = e .^ (-5:0.1:5)
 
 plot(-log(lambdas), nvar, "r", xlabel = "-log_e(\\lambda)", ylabel = "Number of variables included")
+
+
+
+##################### Gráfico aproximacao funcao de distribuicao ##############################
+using Plots
