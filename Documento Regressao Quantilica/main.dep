@@ -1,35 +1,35 @@
 \RequireVersions{
   *{application}{TeX}     {1990/03/25 v3.x}
-  *{format} {LaTeX2e}     {2011/06/27 v2.e}
+  *{format} {LaTeX2e}     {2016/02/01 v2.e}
   *{package}{snapshot}    {2002/03/05 v1.14}
-  *{class}  {scrartcl}    {2013/12/19 v3.12}
-  *{package}{scrkbase}    {2013/12/19 v3.12}
-  *{package}{scrbase}     {2013/12/19 v3.12}
-  *{package}{keyval}      {1999/03/16 v1.13}
-  *{package}{scrlfile}    {2013/12/19 v3.12}
-  *{package}{tocbasic}    {2013/12/19 v3.12}
-  *{file}   {scrsize11pt.clo}{2013/12/19 v3.12}
-  *{package}{typearea}    {2013/12/19 v3.12}
-  *{package}{graphicx}    {1999/02/16 v1.0f}
-  *{package}{graphics}    {2009/02/05 v1.0o}
-  *{package}{trig}        {1999/03/16 v1.09}
+  *{class}  {scrartcl}    {2015/10/03 v3.19a}
+  *{package}{scrkbase}    {2015/10/03 v3.19a}
+  *{package}{scrbase}     {2015/10/03 v3.19a}
+  *{package}{keyval}      {2014/10/28 v1.15}
+  *{package}{scrlfile}    {2015/10/03 v3.19a}
+  *{package}{tocbasic}    {2015/10/03 v3.19a}
+  *{file}   {scrsize11pt.clo}{2015/10/03 v3.19a}
+  *{package}{typearea}    {2015/10/03 v3.19a}
+  *{package}{graphicx}    {2014/10/28 v1.0g}
+  *{package}{graphics}    {2016/01/03 v1.0q}
+  *{package}{trig}        {2016/01/03 v1.10}
   *{file}   {graphics.cfg}{2010/04/23 v1.9}
   *{file}   {pdftex.def}  {2011/05/27 v0.06d}
   *{package}{infwarerr}   {2010/04/08 v1.3}
   *{package}{ltxcmds}     {2011/11/09 v1.22}
-  *{package}{inputenc}    {2008/03/30 v1.1d}
+  *{package}{inputenc}    {2015/03/17 v1.2c}
   *{file}   {utf8x.def}   {2004/10/17 v8}
   *{package}{ucs}         {2013/05/11 v2.2}
   *{file}   {uni-global.def}{2013/05/13 v0.0}
-  *{package}{amsmath}     {2013/01/14 v2.14}
+  *{package}{amsmath}     {2016/03/03 v2.15a}
   *{package}{amstext}     {2000/06/29 v2.01}
   *{package}{amsgen}      {1999/11/30 v2.0}
   *{package}{amsbsy}      {1999/11/29 v1.2d}
   *{package}{amsopn}      {1999/12/14 v2.01}
   *{package}{amsfonts}    {2013/01/14 v3.01}
-  *{package}{amsthm}      {2004/08/06 v2.20}
-  *{package}{mathtools}   {2013/02/12 v1.13}
-  *{package}{calc}        {2007/08/22 v4.3}
+  *{package}{amsthm}      {2015/03/04 v2.20.2}
+  *{package}{mathtools}   {2015/11/12 v1.18}
+  *{package}{calc}        {2014/10/28 v4.3}
   *{package}{mhsetup}     {2010/01/21 v1.2a}
   *{package}{hyperref}    {2012/11/06 v6.83m}
   *{package}{hobsub-hyperref}{2012/05/28 v1.13}
@@ -64,31 +64,33 @@
   *{package}{rerunfilecheck}{2011/04/15 v1.7}
   *{package}{indentfirst} {1995/11/23 v1.03}
   *{package}{float}       {2001/11/08 v1.3d}
-  *{package}{caption}     {2013/05/02 v3.3-89}
-  *{package}{caption3}    {2013/05/02 v1.6-88}
-  *{package}{subcaption}  {2013/02/03 v1.1-62}
+  *{package}{caption}     {2016/02/21 v3.3-144}
+  *{package}{caption3}    {2016/02/04 v1.7-139}
+  *{package}{subcaption}  {2016/02/20 v1.1-142}
   *{package}{todonotes}   {2012/07/25 v0.0}
-  *{package}{ifthen}      {2001/05/26 v1.1c}
-  *{package}{xkeyval}     {2012/10/14 v2.6b}
-  *{file}   {xkeyval.tex} {2012/10/14 v2.6b}
+  *{package}{ifthen}      {2014/09/29 v1.1c}
+  *{package}{xkeyval}     {2014/12/03 v2.7a}
+  *{file}   {xkeyval.tex} {2014/12/03 v2.7a}
   *{package}{xcolor}      {2007/01/21 v2.11}
   *{file}   {color.cfg}   {2007/01/18 v1.5}
-  *{package}{tikz}        {2010/10/13 v2.10}
-  *{package}{pgf}         {2008/01/15 v2.10}
-  *{package}{pgfrcs}      {2010/10/25 v2.10}
+  *{package}{tikz}        {2015/08/07 v3.0.1a}
+  *{package}{pgf}         {2015/08/07 v3.0.1a}
+  *{package}{pgfrcs}      {2015/08/07 v3.0.1a}
   *{package}{everyshi}    {2001/05/15 v3.00}
   *{file}   {pgfrcs.code.tex}{0000/00/00 v0.0}
-  *{package}{pgfcore}     {2010/04/11 v2.10}
-  *{package}{pgfsys}      {2010/06/30 v2.10}
+  *{package}{pgfcore}     {2010/04/11 v3.0.1a}
+  *{package}{pgfsys}      {2014/07/09 v3.0.1a}
   *{file}   {pgfsys.code.tex}{0000/00/00 v0.0}
-  *{file}   {pgfsyssoftpath.code.tex}{2008/07/18 v1.7)}
+  *{file}   {pgfsyssoftpath.code.tex}{2013/09/09 v1.9)}
   *{file}   {pgfsysprotocol.code.tex}{2006/10/16 v1.4)}
   *{file}   {pgfcore.code.tex}{0000/00/00 v0.0}
-  *{package}{pgfcomp-version-0-65}{2007/07/03 v2.10}
-  *{package}{pgfcomp-version-1-18}{2007/07/23 v2.10}
-  *{package}{pgffor}      {2010/03/23 v2.10}
+  *{package}{pgfcomp-version-0-65}{2007/07/03 v3.0.1a}
+  *{package}{pgfcomp-version-1-18}{2007/07/23 v3.0.1a}
+  *{package}{pgffor}      {2013/12/13 v3.0.1a}
   *{package}{pgfkeys}     {0000/00/00 v0.0}
   *{file}   {pgfkeys.code.tex}{0000/00/00 v0.0}
+  *{package}{pgfmath}     {0000/00/00 v0.0}
+  *{file}   {pgfmath.code.tex}{0000/00/00 v0.0}
   *{file}   {pgffor.code.tex}{0000/00/00 v0.0}
   *{file}   {tikz.code.tex}{0000/00/00 v0.0}
   *{package}{geometry}    {2010/09/12 v5.6}
@@ -106,6 +108,23 @@
   *{file}   {uni-0.def}   {2013/05/13 v0000..U+00FF}
   *{file}   {umsa.fd}     {2013/01/14 v3.01}
   *{file}   {umsb.fd}     {2013/01/14 v3.01}
+  *{file}   {omscmr.fd}   {2014/09/29 v2.5h}
+  *{file}   {tnen-introduction.tex}{0000/00/00 v0.0}
+  *{file}   {./Figuras/Icaraizinho/icaraizinho-mensal.pdf}{0000/00/00 v0.0}
+  *{file}   {./Figuras/Icaraizinho/icaraizinho-boxplot.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/Icaraizinho/icaraizinho-1-lag.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/Icaraizinho/icaraizinho-4-lag.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/Icaraizinho/icaraizinho-11-lag.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/Icaraizinho/icaraizinho-12-lag.pdf}{0000/00/00 v0.0}
+  *{file}   {tnen-linear-models.tex}{0000/00/00 v0.0}
+  *{file}   {tnen-nonparametric-models.tex}{0000/00/00 v0.0}
+  *{file}   {Figuras/npqar/icaraizinho-crossing-01.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/npqar/icaraizinho-crossing-03.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/npqar/icaraizinho-crossing-1.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/npqar/icaraizinho-crossing-3.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/npqar/icaraizinho-crossing-10.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/npqar/icaraizinho-crossing-200.pdf}{0000/00/00 v0.0}
   *{file}   {tnen-simulation.tex}{0000/00/00 v0.0}
+  *{file}   {./Figuras/grafico-quantis.pdf}{0000/00/00 v0.0}
   *{file}   {main.bbl}    {0000/00/00 v0.0}
 }
