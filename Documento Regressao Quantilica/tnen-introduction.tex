@@ -1,25 +1,33 @@
 \section{Introduction}
 
-Wind Firm Energy Certificate (FEC) \cite{porrua2010wind} estimation imposes several challenges. First, it is a quantile function of an aleatory quantity, named here on wind capacity factor (WP). Due to its non-dispachable profile, accurate scenario generation models could reproduce a fairly dependence structure in order to the estimation of FEC. Second, as it is a quantile functions, the more close to the extremes of the interval, the more sensitive to sampling error.
+%Wind Firm Energy Certificate (FEC) \cite{porrua2010wind} estimation imposes several challenges. First, it is a quantile function of an aleatory quantity, named here on wind capacity factor (WP). Due to its non-dispachable profile, accurate scenario generation models could reproduce a fairly dependence structure in order to the estimation of FEC. Second, as it is a quantile functions, the more close to the extremes of the interval, the more sensitive to sampling error.
 
-In this work, we apply a few different techniques to forecast the quantile function a few steps ahead. The main frameworks we investigate are parametric linear models and a non-parametric regression. In all approaches we use the time series lags as the regression covariates. To study our methods performance, we use the mean power monthly data of Icaraizinho, a wind farm located in the Brazilian northeast. 
 
-The Icaraizinho dataset consists of monthly observations from 1981 to 2011 of mean power measured in Megawatts. The full Icaraizinho serie can be found on the appendices from this article.  As is common in renewable energy generation, there is a strong seasonality component. Figures \ref{fig:icaraizinho-mensal} and \ref{fig:icaraizinho-boxplot} illustrate this seasonality, where we can observe low amounts of power generation for the time span between February and May, and a yearly peek between August and November.  
-Figure \ref{lags-icaraizinho} shows four scatter plots relating $y_t$ with some of its lags. We choose to present here the four lags that were selected for the quantile regression in the experiment of section \ref{sec:best-subset-mip}, which are the 1\textsuperscript{st}, 4\textsuperscript{th}, 11\textsuperscript{th} and 12\textsuperscript{th}. They are most likely the four main lags to use for these analysis.
+
+Quantile Regression is a powerful tool for measuring quantiles others than the median or predicting the mean. A quantile of a random variable is important in risk measuring, as we can measure the probability of occurrence of extreme events, and in many other fields. While working with energy forecasts, quantile regression can produce interesting results when working with both short term (hourly) or long term (monthly) data. As an example, we present a solar time series for the short term and a wind time series for long term. The first set of data is measured at the location of Tubarao (Brazil) on the year of 2014, while the latter is a dataset of mean power  monthly observations from Icaraizinho (Brazil) between 1981 to 2011 of measured in Megawatts. Figures \ref{fig:icaraizinho-mensal}, \ref{fig:icaraizinho-boxplot} and Figures \textbf{Inserir figuras de dados solares.} illustrate the seasonality present in these datasets.
+
 \begin{figure}[h]
-\centering
-\includegraphics[width=0.8\linewidth]{./Figuras/Icaraizinho/icaraizinho-mensal}
-\caption{Icaraizinho yearly data. Each serie consists of monthly observations for each year.}
-\label{fig:icaraizinho-mensal}
+	\centering
+	\includegraphics[width=0.8\linewidth]{./Figuras/Icaraizinho/icaraizinho-mensal}
+	\caption{Icaraizinho yearly data. Each serie consists of monthly observations for each year.}
+	\label{fig:icaraizinho-mensal}
 \end{figure}
 
 
 \begin{figure}
-\centering
-\includegraphics[width=0.8\linewidth]{./Figuras/Icaraizinho/icaraizinho-boxplot}
-\caption{Boxplot for each month for the Icaraizinho dataset}
-\label{fig:icaraizinho-boxplot}
+	\centering
+	\includegraphics[width=0.8\linewidth]{./Figuras/Icaraizinho/icaraizinho-boxplot}
+	\caption{Boxplot for each month for the Icaraizinho dataset}
+	\label{fig:icaraizinho-boxplot}
 \end{figure}
+
+In this work, we apply a few different techniques to forecast the quantile function a few steps ahead. The main frameworks we investigate are parametric linear models and a non-parametric regression. In all approaches we use the time series lags as the regression covariates. We also investigate how to apply quantile estimations to produce an empirical distribution for the $k$-step ahead forecasting by using a nonparametric approach.
+%To study our methods performance, we use the mean power monthly data of Icaraizinho, a wind farm located in the Brazilian northeast, and solar. 
+
+%The Icaraizinho dataset consists of monthly observations from 1981 to 2011 of mean power measured in Megawatts. The full Icaraizinho serie can be found on the appendices from this article.  As is common in renewable energy generation, there is a strong seasonality component. Figures \ref{fig:icaraizinho-mensal} and \ref{fig:icaraizinho-boxplot} illustrate this seasonality, where we can observe low amounts of power generation for the time span between February and May, and a yearly peek between August and November.  
+
+To make good predictions of random variables, one must find good explanatory variables: it can be either autoregressive, exogenous terms or even a deterministic function that repeats itself. 
+Figure \ref{lags-icaraizinho} shows scatter plots relating $y_t$ with some of its lags. We can see that in both sort and long term, past values are good explanatory variables to use for forecasting.
 
 % % % % fadf
 %\begin{figure}[htp]
@@ -46,29 +54,29 @@ Figure \ref{lags-icaraizinho} shows four scatter plots relating $y_t$ with some 
 
 \begin{figure}
   \centering
-  \begin{minipage}[t]{0.45\linewidth}
+  \begin{minipage}[t]{\linewidth}
     \centering
-    \begin{minipage}[t]{\linewidth}
+    \begin{minipage}[t]{0.45\linewidth}
       \centering     \includegraphics[width=\textwidth]{Figuras/Icaraizinho/icaraizinho-1-lag.pdf}
     \end{minipage}
-    \begin{minipage}[b]{\linewidth}
+    \begin{minipage}[b]{0.45\linewidth}
       \centering     \includegraphics[width=\textwidth]{Figuras/Icaraizinho/icaraizinho-4-lag.pdf}
     \end{minipage}
   \end{minipage}
-  \begin{minipage}[t]{0.45\linewidth}
-    \centering
-    \begin{minipage}[t]{\linewidth}
-      \centering     \includegraphics[width=\textwidth]{Figuras/Icaraizinho/icaraizinho-11-lag.pdf}
-    \end{minipage}
-    \begin{minipage}[b]{\linewidth}
-      \centering     \includegraphics[width=\textwidth]{Figuras/Icaraizinho/icaraizinho-12-lag.pdf}
-    \end{minipage}
-  \end{minipage}
+%  \begin{minipage}[t]{0.45\linewidth}
+%    \centering
+%    \begin{minipage}[t]{\linewidth}
+%      \centering     \includegraphics[width=\textwidth]{Figuras/Icaraizinho/icaraizinho-11-lag.pdf}
+%    \end{minipage}
+%    \begin{minipage}[b]{\linewidth}
+%      \centering     \includegraphics[width=\textwidth]{Figuras/Icaraizinho/icaraizinho-12-lag.pdf}
+%    \end{minipage}
+%  \end{minipage}
   \caption{Relationship between $y_t$ and some chosen lags.}
   \label{lags-icaraizinho}
 \end{figure}
 
-Here we denote as parametric linear model the well-known quantile regression model \cite{koenker2005quantile}. In contrast to the linear regression model through ordinary least squares (OLS), which provides only an estimation of the dependent variable conditional mean, quantile regression model yields a much more detailed information concerning the complex relationship about the dependent variable and its covariates. A Quantile Regression for the $\alpha$-quantile is the solution of the following optimization problem:
+In contrast to the linear regression model through ordinary least squares (OLS), which provides only an estimation of the dependent variable conditional mean, quantile regression model yields a much more detailed information concerning the complex relationship about the dependent variable and its covariates. Here we denote as parametric linear model the well-known quantile regression model \cite{koenker2005quantile}. A Quantile Regression for the $\alpha$-quantile is the solution of the following optimization problem:
 \begin{equation}
 \min_{q}\sum_{t=1}^{n}\alpha|y_{t}-q(x_t)|^{+}+(1-\alpha)|y_{t}-q(x_t)|^{-},
 \label{eq:linear-model}
@@ -76,18 +84,53 @@ Here we denote as parametric linear model the well-known quantile regression mod
 where $q(x_t)$ is the estimated quantile value at a given time $t$ and $|x|^+=\max\{0,x\}$ and $|x|^-=-\min\{0,x\}$. To model this problem as a Linear Programming problem, thus being able to use a modern solver to fit our model,  we can create variables $\varepsilon^+_t$ e $\varepsilon^-_t$ to represent $|y-q(x_t)|^+$ and $|y-q(x_t)|^-$, respectively. So we have:
 \begin{equation}
 \begin{aligned}\min_{q,\varepsilon_{t}^{+}, \varepsilon_{t}^{-}} & \sum_{t=1}^{n}\left(\alpha \varepsilon_{t}^{+}+(1-\alpha)\varepsilon_{t}^{-}\right) & \\
-\mbox{s.t. } & \varepsilon_{t}^{+}-\varepsilon_{t}^{-}=y_{t}-q(x_{t}), & \qquad\forall t \in \{1,\dots,n\},\\
+\mbox{s.t. } & \varepsilon_{t}^{+}-\varepsilon_{t}^{-}=y_{t}-q^\alpha(x_{t}), & \qquad\forall t \in \{1,\dots,n\},\\
 & \varepsilon_t^+,\varepsilon_t^- \geq 0, & \qquad \forall t \in \{1,\dots,n\}.
 \end{aligned}
 \label{eq:qar-general}
 \end{equation}
 
-Section \ref{sec:linear-models} is about linear models, so we investigate the quantile estimation when $q$ is a linear function of the series past values, up to a maximum number of lags $p$:
-\begin{equation}
-	q(y_t, \alpha; \beta) = \beta_0(\alpha) + \beta_1(\alpha)y_{t-1} + \beta_2(\alpha)y_{t-2} + \dots + \beta_p(\alpha) y_{t-p}.
-	\label{eq:ft-qar}
-\end{equation}
 
-In section \ref{sec:npqar} we introduce a Nonparametric Quantile Autoregressive model with a $\ell_{1}$-penalty term, in order to properly simulate FEC densities for several $\alpha$-quantiles. In this nonparametric approach we don't assume any form for $q(x_t)$, but rather let the function adjust to the data. To prevent overfitting, the $\ell_1$ penalty for the second derivative (approximated by the second difference of the ordered observations) is included in the objective function.
+
+
+One of our goals with quantile regression is to estimate a distribution function $F_X$ of a given random variable $X$ from a sequence of quantiles $q^{\alpha_1}_{t} \leq q^{\alpha_2}_{t} \leq \dots \leq q^{\alpha_Q}_{t}$, with $0 < \alpha_1 < \alpha_2 < \dots < \alpha_Q < 1$. 
+The process of fitting $\hat{F}_X$ is by mapping every $\alpha_i$ with its estimated quantile $\hat{q}^{\alpha_i}$. 
+When this sequence of chosen $\alpha_i$ is thin enough, we can approximate well the distribution function of X, as is shown in Figure \ref{fig:grafico-quantis-fx}. 
+Thus, the distribution found for $X$ is nonparametric, as no previous assumptions are made about its shape, and its form is fully recovered by the data we have.
+ 
+A typical problem, however, arises when working with quantile regression. When quantiles are estimated independently, it is possible to find $q^{\alpha_1}_{t} > q^{\alpha_2}_{t}$, for a given $t$, when $\alpha_1 < \alpha_2$. An example can be seen on Figure \ref{fig:crossing-quantiles}, where quantiles $\alpha = 0.95$ and $\alpha = 0.9$ cross. This problem, called \textit{crossing quantiles}, can be prevented by estimating all quantiles with a single maximization problem.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.6\linewidth]{./Figuras/npqar/icaraizinho-crossing-200}
+	\caption{Linear quantile estimator with crossing quantiles for $\alpha = 0.95$ and $\alpha = 0.9$}
+	\label{fig:crossing-quantiles}
+\end{figure}
+
+Let $A$ be the set containing all quantiles $\alpha_i$ such that $0 < \alpha_1 < \alpha_2 < \dots < \alpha_Q < 1$ and $T_\tau = \{1, 2, \dots, \tau\}$. In order to estimate all quantiles simultaneously, the new objective function will be the sum of all individual objective functions, as well as include all constraints from all individual problems. The only difference is the inclusion of an equation to guarantee that quantiles won't cross. When modifying problem \ref{eq:qar-general} to account for all quantiles, we have the following new problem:
+\begin{eqnarray}
+\label{eq:non-crossing-quantiles1}
+\min_{q,\varepsilon_{t,\alpha}^{+}, \varepsilon_{t,\alpha}^{-}} &  \sum_{\alpha \in A} \sum_{t \in T}\left(\alpha \varepsilon_{t,\alpha}^{+}+(1-\alpha)\varepsilon_{t,\alpha}^{-}\right) &  \\
+\mbox{s.t. } & \varepsilon_{t,\alpha}^{+}-\varepsilon_{t,\alpha}^{-}=y_{t}-q^\alpha(x_{t}), & \qquad\forall t \in T_\tau,\forall \alpha \in A,\\
+& \varepsilon_{t,\alpha}^+,\varepsilon_{t,\alpha}^- \geq 0, & \qquad\forall t \in T_\tau,\forall \alpha \in A,\\\label{eq:non-crossing-constraint}
+& q_t^{\alpha} \leq q_t^{\alpha'}, & \qquad \forall t \in T_\tau, \forall \alpha, \alpha' \in A, \alpha < \alpha', 
+\end{eqnarray}
+where constraint \ref{eq:non-crossing-constraint} assures that no lower quantile will have a bigger value than a higher quantile. 
+
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\linewidth]{Figuras/grafico-quantis-fx}
+\caption{Fitting a distribution function from quantile estimations}
+\label{fig:grafico-quantis-fx}
+\end{figure}
+
+The next section discusses with bigger details how to fit a distribution function from a sequence of estimated quantiles, as well as showing two different strategies to estimate them: linear models and nonparametric models. In the former, $q$ is a linear function of the series past values, up to a maximum number of lags $p$, such as:
+\begin{equation}
+q(y_t, \alpha; \beta) = \beta_0(\alpha) + \beta_1(\alpha)y_{t-1} + \beta_2(\alpha)y_{t-2} + \dots + \beta_p(\alpha) y_{t-p}.
+\label{eq:ft-qar}
+\end{equation}
+In the latter, we let $q(x_t)$ assume any functional form. To prevent overfitting, however, we penalize the function's roughness by incorporating a penalty on the second derivative.
 
 In section \ref{sec:simulation} we investigate how to simulate $S$ scenarios of $y_t$, considering a linear model and errors $\varepsilon_t$ for which the distribution is unknown. To address this issue, we use quantile linear regression to calculate a thin grid of quantiles and fit a distribution function $\hat{F}_{y_t}$. This function will be used to simulate the innovations on the model.
+

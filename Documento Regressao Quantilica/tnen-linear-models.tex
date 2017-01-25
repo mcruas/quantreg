@@ -1,4 +1,4 @@
-\section{Linear Models for the Quantile Autoregression}
+\subsection{Linear Models for the Quantile Autoregression}
 \label{sec:linear-models}
 
 Given a time series $\{y_t\}$, we investigate how to select which lags will be included in the Quantile Autoregression. We won't be choosing the full model because this normally leads to a bigger variance in our estimators, which is often linked with bad performance in forecasting applications. So our strategy will be to use some sort of regularization method in order to improve performance.
@@ -8,7 +8,7 @@ Both of them will be built over the standard Quantile Linear Regression model. I
 
 When we choose $q(x_t)$ to be a linear function, as on equation \ref{eq:linear-model} (that we reproduce below for convenience):
 \begin{equation}
-\min_{f}\sum_{t=1}^{n}\alpha|y_{t}-q(x_t)|^{+}+(1-\alpha)|y_{t}-q(x_t)|^{-},
+\min_{q_t}\sum_{t \in T_\tau}^{n}\alpha|y_{t}-q(x_t)|^{+}+(1-\alpha)|y_{t}-q(x_t)|^{-},
 \end{equation}
 we can substitute it on problem \ref{eq:qar-general}, getting the following LP problem:
 \begin{equation}
@@ -18,6 +18,17 @@ we can substitute it on problem \ref{eq:qar-general}, getting the following LP p
 \end{aligned}
 \label{eq:qar-lp}
 \end{equation}
+
+
+
+
+\begin{eqnarray}
+\label{eq:non-crossing-quantiles1-sim}
+\min_{q,\varepsilon_{t,\alpha}^{+}, \varepsilon_{t,\alpha}^{-}} &  \sum_{\alpha \in A} \sum_{t \in T}\left(\alpha \varepsilon_{t,\alpha}^{+}+(1-\alpha)\varepsilon_{t,\alpha}^{-}\right) &  \\
+\mbox{s.t. } & \varepsilon_{t,\alpha}^{+}-\varepsilon_{t,\alpha}^{-}=y_{t}- \beta_{0}^\alpha - (\beta^{\alpha})^T x_{t}, & \qquad\forall t \in T_\tau,\forall \alpha \in A,\\
+& \varepsilon_{t,\alpha}^+,\varepsilon_{t,\alpha}^- \geq 0, & \qquad\forall t \in T_\tau,\forall \alpha \in A,\\\label{eq:non-crossing-constraint-sim}
+& q_t^{\alpha} \leq q_t^{\alpha'}, & \qquad \forall t \in T_\tau, \forall \alpha, \alpha' \in A, \alpha < \alpha', 
+\end{eqnarray}
 
 In this work, we didn't explore the addition of terms other than the terms $y_t$ past lags. For example, we could include functions of $y_{t-p}$, such as $log(y_{t-p})$ or $exp(y_{t-p})$. We leave such inclusion for further works. 
 

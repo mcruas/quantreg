@@ -1,4 +1,4 @@
-\section{Quantile Autoregression with a nonparametric approach}
+\subsection{Quantile Autoregression with a nonparametric approach}
 \label{sec:npqar}
 
 Fitting a linear estimator for the Quantile Auto Regression isn't appropriate  when nonlinearity is present in the data. This nonlinearity may produce a linear estimator that underestimates the quantile for a chunk of data while overestimating for the other chunk (for example, scatter plot of $y_t$ versus $y_{t-1}$ that is seen on the upper left of figure \ref{lags-icaraizinho}). To prevent this issue from occurring we propose a modification which we let the prediction $\mathcal{Q}_{y_t|y_{t-1}}(\alpha)$ adjust freely to the data and its nonlinearities. To prevent overfitting and smoothen our predictor, we include a penalty on its roughness by including the $\ell_1$ norm of its second derivative. For more information on the $\ell_1$ norm acting as a filter, one can refer to \cite{kim2009ell_1}.
@@ -9,13 +9,13 @@ Fitting a linear estimator for the Quantile Auto Regression isn't appropriate  w
 
 Let $\{\tilde{y}_t \}_{t=1}^n$ be the sequence of observations in time $t$. Now, let $\tilde{x}_t$ be the $p-$lagged time series of $\tilde{y}_t$, such that $\tilde{x}_t = L^p(\tilde{y}_t)$, where $L$ is the lag operator. Matching each observation $\tilde{y}_t$ with its $p-$lagged correspondent $\tilde{x}_t$ will produce $n-p$ pairs $\{(\tilde{y}_t,\tilde{x}_t)\}_{t=p+1}^n$ (note that the first $p$ observations of $y_t$ must be discarded). When we order the observation of $x$ in such way that they are in growing order
 $$\tilde{x}^{(p+1)} \leq \tilde{x}^{(p+2)} \leq \dots \leq \tilde{x}^{(n)},$$ 
-we can then define $\{x_i\}_{i=1}^{n-p} = \{\tilde{x}^{(t)} \}_{t=p+1}^{n}$ and $\{y_i\}_{i=1}^{n-p} = \{\tilde{y}^{(t)} \}_{t=p+1}^{n}$ and $T = \{2,\dots, n-p-1\}$. As we need the second difference of $q_i$, $I$ has to be shortened by two elements.
+we can then define $\{x_i\}_{i=1}^{n-p} = \{\tilde{x}^{(t)} \}_{t=p+1}^{n}$ and $\{y_i\}_{i=1}^{n-p} = \{\tilde{y}^{(t)} \}_{t=p+1}^{n}$ and $T' = \{2,\dots, n-p-1\}$. As we need the second difference of $q_i$, $I$ has to be shortened by two elements.
 
 
 Our optimization model to estimate the nonparametric quantile is as follows:
 \begin{equation}
 \begin{split}
-\mathcal{Q}_{y_t|y_{t-1}}^\alpha(t) =\underset{q_{t}}{\arg\min}\sum_{t\in T} \left( \alpha |y_{t}-q_{t}|^{+} + (1-\alpha)|y_{t}-q_{t}|^{-}\right) \\ +\lambda  \sum_{t\in T}|D_{x_t}^{2}q_{t}|,
+\mathcal{Q}_{y_\tau|y_{\tau-1}}^\alpha(\tau) =\underset{q_{t}}{\arg\min}\sum_{t\in T'} \left( \alpha |y_{t}-q_{t}|^{+} + (1-\alpha)|y_{t}-q_{t}|^{-}\right) \\ +\lambda  \sum_{t\in T'}|D_{x_t}^{2}q_{t}|,
 \end{split}
 \end{equation}
 where $D^2 q_t$ is the second derivative of the $q_t$ function, calculated as follows:
@@ -26,7 +26,7 @@ The first part on the objective function is the usual quantile regression condit
 
 The full model can be rewritten as a LP problem as bellow:
 \begin{eqnarray}
-\min_{q_{t}} & \sum_{t=1}^{n}\left(\alpha\delta_{t}^{+}+(1-\alpha)\delta_{t}^{-}\right)+\lambda\sum_{t=1}^{n}\xi_{t}\\
+\min_{q_{t}} & \sum_{t=1}^{n}\left(\alpha\delta_{t}^{+}+(1-\alpha)\delta_{t}^{-}\right)+\lambda\sum_{t \in T'}\xi_{t}\\
 s.t. & \delta_{t}^{+}-\delta_{t}^{-}=y_{t}-q_{t}, & \qquad\forall t\in\{3,\dots,n-1\},\\
  & D_{t}=\left(\frac{q_{t+1}-q_{t}}{x_{t+1}-x_{t}}\right)-\left(\frac{q_{t}-q_{t-1}}{x_{t}-x_{t-1}}\right) & \qquad\forall t\in\{3,\dots,n-1\},\\
  & \xi_{t}\geq D_{t}, & \qquad\forall t\in\{3,\dots,n-1\},\\
