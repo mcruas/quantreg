@@ -27,7 +27,10 @@ for(m in 1:12){
 bd.mes.a.mes
 colnames(bd.mes.a.mes) = c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
 rownames(bd.mes.a.mes) = 1981:2011
-boxplot(bd.mes.a.mes)
+pdf("Documento Regressao Quantilica/Figuras/Icaraizinho/icaraizinho-boxplot.pdf")
+boxplot(bd.mes.a.mes,col =2, ylab = "Mean MW", main = "Icaraizinho monthly data boxplot")
+dev.off()
+
 
 meltdf = melt(bd.mes.a.mes); colnames(meltdf) = c("Year", "Month", "Mean MW")
 
@@ -41,6 +44,45 @@ ggplot(meltdf,aes(x=Month,y=`Mean MW`,colour=Year,group=Year)) + geom_line() + x
 # Faz tabela de icaraizinho mes a mes
 library(xtable)
 print(xtable(bd.mes.a.mes), type = "latex", file = "Documento Regressao Quantilica/Tabelas/tabela-icaraizinho.tex")
+
+## scatterplot mensal em icaraizinho (vento)
+library(latex2exp)
+pdf("Documento Regressao Quantilica/Figuras/Icaraizinho/scatterplot.pdf", width = 4, height = 4)
+# x11()
+qplot(bd[-1,],head(bd,-1)) + xlab(TeX("y_{t-1}")) + ylab(TeX("y_t")) + ggtitle("Icaraizinho monthly data")
+dev.off()
+
+
+
+
+################# Mesmo gráficos com série solar
+library(readxl); library(dplyr)
+bd2 <- read_excel("Dados Climaticos/Solar-tubarao/tubarao solar.xlsx")[, 1:8] %>% select(yt0, yt1,mes)
+
+pdf("Documento Regressao Quantilica/Figuras/Solar-exemplos/tubarao-boxplot.pdf")
+boxplot(yt0 ~ mes, data = bd2, col = 2, names = c("Jan","Feb","Mar","Apr",
+                          "May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"), ylab = "Mean MW",
+                          main = "Tubarão hourly data boxplot")
+dev.off()
+serie = bd2[[1]]
+
+pdf("Documento Regressao Quantilica/Figuras/Solar-exemplos/scatterplot.pdf", width = 3, height = 3)
+# x11()
+qplot(bd2$yt0,bd2$yt1) + xlab(TeX("y_{t-1}")) + ylab(TeX("y_t")) + ggtitle("Tubarão hourly data")
+dev.off()
+
+# bd.mes.a.mes <- bd %>% group_by(mes) %>% summarise(blau = mean(yt0, na.rm = TRUE))
+
+
+## scatterplot diário em tubarão (solar)
+
+
+
+
+
+
+
+
 
 
 ##########################################################################################################

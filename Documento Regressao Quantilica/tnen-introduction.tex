@@ -4,22 +4,34 @@
 
 
 
-Quantile Regression is a powerful tool for measuring quantiles others than the median or predicting the mean. A quantile of a random variable is important in risk measuring, as we can measure the probability of occurrence of extreme events, and in many other fields. While working with energy forecasts, quantile regression can produce interesting results when working with both short term (hourly) or long term (monthly) data. As an example, we present a solar time series for the short term and a wind time series for long term. The first set of data is measured at the location of Tubarao (Brazil) on the year of 2014, while the latter is a dataset of mean power  monthly observations from Icaraizinho (Brazil) between 1981 to 2011 of measured in Megawatts. Figures \ref{fig:icaraizinho-mensal}, \ref{fig:icaraizinho-boxplot} and Figures \textbf{Inserir figuras de dados solares.} illustrate the seasonality present in these datasets.
+Quantile Regression is a powerful tool for measuring quantiles others than the median or predicting the mean. A quantile of a random variable is important in risk measuring, as we can measure the probability of occurrence of extreme events, and in many other fields. While working with energy forecasts, quantile regression can produce interesting results when working with both short term (hourly) or long term (monthly) data. As an example, we present a solar time series for the short term and a wind time series for long term. The first set of data is measured at the location of Tubarao (Brazil) on the year of 2014, while the latter is a dataset of mean power  monthly observations from Icaraizinho (Brazil) between 1981 to 2011 of measured in Megawatts. Figure \ref{fig:boxplots} illustrate the seasonality present in these datasets.
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.8\linewidth]{./Figuras/Icaraizinho/icaraizinho-mensal}
-	\caption{Icaraizinho yearly data. Each serie consists of monthly observations for each year.}
-	\label{fig:icaraizinho-mensal}
-\end{figure}
+%\begin{figure}[h]
+%	\centering
+%	\includegraphics[width=0.8\linewidth]{./Figuras/Icaraizinho/icaraizinho-mensal}
+%	\caption{Icaraizinho yearly data. Each serie consists of monthly observations for each year.}
+%	\label{fig:icaraizinho-mensal}
+%\end{figure}
 
+%
+%\begin{figure}
+%  \centering
+%  \begin{minipage}[t]{1.2\linewidth}
+%    \begin{minipage}[t]{0.45\linewidth}
+%       \includegraphics[width=\textwidth]{./Figuras/Icaraizinho/icaraizinho-mensal}
+%      	%\caption{Boxplot for each month for the Icaraizinho dataset}
+%      	\label{fig:icaraizinho-boxplot}
+%    \end{minipage}
+%    \begin{minipage}[t]{0.45\linewidth}
+%       \includegraphics[width=\textwidth]{./Figuras/Icaraizinho/icaraizinho-mensal}
+%      	%\caption{Boxplot for each month for the Icaraizinho dataset}
+%      	\label{fig:tubarao-boxplot}
+%    \end{minipage}
+%  \end{minipage}
+%  \caption{Relationship between $y_t$ and some chosen lags.}
+%  \label{fig:boxplots}
+%\end{figure}
 
-\begin{figure}
-	\centering
-	\includegraphics[width=0.8\linewidth]{./Figuras/Icaraizinho/icaraizinho-boxplot}
-	\caption{Boxplot for each month for the Icaraizinho dataset}
-	\label{fig:icaraizinho-boxplot}
-\end{figure}
 
 In this work, we apply a few different techniques to forecast the quantile function a few steps ahead. The main frameworks we investigate are parametric linear models and a non-parametric regression. In all approaches we use the time series lags as the regression covariates. We also investigate how to apply quantile estimations to produce an empirical distribution for the $k$-step ahead forecasting by using a nonparametric approach.
 %To study our methods performance, we use the mean power monthly data of Icaraizinho, a wind farm located in the Brazilian northeast, and solar. 
@@ -27,28 +39,28 @@ In this work, we apply a few different techniques to forecast the quantile funct
 %The Icaraizinho dataset consists of monthly observations from 1981 to 2011 of mean power measured in Megawatts. The full Icaraizinho serie can be found on the appendices from this article.  As is common in renewable energy generation, there is a strong seasonality component. Figures \ref{fig:icaraizinho-mensal} and \ref{fig:icaraizinho-boxplot} illustrate this seasonality, where we can observe low amounts of power generation for the time span between February and May, and a yearly peek between August and November.  
 
 To make good predictions of random variables, one must find good explanatory variables: it can be either autoregressive, exogenous terms or even a deterministic function that repeats itself. 
-Figure \ref{lags-icaraizinho} shows scatter plots relating $y_t$ with some of its lags. We can see that in both sort and long term, past values are good explanatory variables to use for forecasting.
+Figure \ref{fig:scatterplot-1lag} shows scatter plots relating $y_t$ with its first lag for both short and long term. We can see that in both of them past values are good explanatory variables to use for forecasting.
 
-% % % % fadf
-%\begin{figure}[htp]
-%  \centering
-%  \begin{minipage}[t]{0.45\linewidth}
-%    \centering
-%    \begin{minipage}[t]{\linewidth}
-%      \centering     \includegraphics[width=\textwidth]{Figuras/Icaraizinho/icaraizinho-boxplot.pdf}
-%      \subcaption{Monthly Boxplot}
-%    \end{minipage}
-%  \end{minipage}
-%  \begin{minipage}[t]{0.45\linewidth}
-%    \centering
-%    \begin{minipage}[t]{\linewidth}
-%      \centering     \includegraphics[width=\textwidth]{Figuras/Icaraizinho/icaraizinho-mensal.pdf}
-%      \subcaption{Yearly data}
-%    \end{minipage}
-%  \end{minipage}
-%  \caption{heading}
-%  \label{fig:icaraizinho-sazonal}
-%\end{figure}
+\begin{figure}
+  \centering
+  \begin{minipage}[t]{\linewidth}
+    
+    \begin{minipage}[t]{0.45\linewidth}
+      %\centering    
+       \includegraphics[width=\textwidth]{./Figuras/Icaraizinho/icaraizinho-boxplot}
+      	%\caption{Boxplot for each month for the Icaraizinho dataset}
+      	\label{fig:icaraizinho-boxplot}
+    \end{minipage}
+    \begin{minipage}[t]{0.45\linewidth}
+      %\centering    
+       \includegraphics[width=\textwidth]{./Figuras/Solar-exemplos/tubarao-boxplot}
+      	%\caption{Boxplot for each month for the Icaraizinho dataset}
+      	\label{fig:tubarao-boxplot}
+    \end{minipage}
+  \end{minipage}
+  \caption{Boxplots showing seasonality for monthly and hourly data.}
+  \label{fig:boxplots}
+\end{figure}
 
 
 
@@ -57,28 +69,33 @@ Figure \ref{lags-icaraizinho} shows scatter plots relating $y_t$ with some of it
   \begin{minipage}[t]{\linewidth}
     \centering
     \begin{minipage}[t]{0.45\linewidth}
-      \centering     \includegraphics[width=\textwidth]{Figuras/Icaraizinho/icaraizinho-1-lag.pdf}
+      \centering     \includegraphics[width=\textwidth]{Figuras/Icaraizinho/scatterplot.pdf}
     \end{minipage}
-    \begin{minipage}[b]{0.45\linewidth}
-      \centering     \includegraphics[width=\textwidth]{Figuras/Icaraizinho/icaraizinho-4-lag.pdf}
+    \begin{minipage}[t]{0.45\linewidth}
+      \centering     \includegraphics[width=\textwidth]{Figuras/Solar-exemplos/scatterplot}
     \end{minipage}
   \end{minipage}
-%  \begin{minipage}[t]{0.45\linewidth}
-%    \centering
-%    \begin{minipage}[t]{\linewidth}
-%      \centering     \includegraphics[width=\textwidth]{Figuras/Icaraizinho/icaraizinho-11-lag.pdf}
-%    \end{minipage}
-%    \begin{minipage}[b]{\linewidth}
-%      \centering     \includegraphics[width=\textwidth]{Figuras/Icaraizinho/icaraizinho-12-lag.pdf}
-%    \end{minipage}
-%  \end{minipage}
-  \caption{Relationship between $y_t$ and some chosen lags.}
-  \label{lags-icaraizinho}
+  \caption{Relationship between $y_t$ and its first lags for two selected series.}
+  \label{fig:scatterplot-1lag}
 \end{figure}
 
-In contrast to the linear regression model through ordinary least squares (OLS), which provides only an estimation of the dependent variable conditional mean, quantile regression model yields a much more detailed information concerning the complex relationship about the dependent variable and its covariates. Here we denote as parametric linear model the well-known quantile regression model \cite{koenker2005quantile}. A Quantile Regression for the $\alpha$-quantile is the solution of the following optimization problem:
+In contrast to the linear regression model through ordinary least squares (OLS), which provides only an estimation of the dependent variable conditional mean, quantile regression model yields a much more detailed information concerning the complex relationship about the dependent variable and its covariates. Here we denote as parametric linear model the well-known quantile regression model \cite{koenker2005quantile}.
+
+Let $X$ be a real valued random variable. Its $\alpha$ quantile is given by 
 \begin{equation}
-\min_{q}\sum_{t=1}^{n}\alpha|y_{t}-q(x_t)|^{+}+(1-\alpha)|y_{t}-q(x_t)|^{-},
+Q_X(\alpha) = F_X^{-1}(\alpha) = \inf\{x: F_X(x) \geq \alpha\},
+\label{eq:quantile-function}
+\end{equation}
+where $F_X$ is its distribution function and $\alpha \in [0,1]$. Equation \ref{eq:quantile-function} defines what we call from now on as the quantile function $Q_X(\alpha)$, in relation to random variable $X$. In our time series application we are interested in a conditional quantile function $Q_{X|Z=z}(\alpha, z)$, where $Z$ can be a vector.
+When the distribution $F_X$ is known, the conditional quantile function can be found as the result of the following optimization problem:
+\begin{equation}
+Q_{X|Z=z}(\alpha, z) \quad \in \quad \underset{\alpha}{ \text{arg min}} \, (1-\alpha) \int_{-\infty}^{\alpha} dF_{X|Z=z}(x,z) + 
+(\alpha) \int^{\infty}_{\alpha} dF_{X|Z=z}(x,z).
+\end{equation}
+
+In this work, we use the sample quantile, which consider the distribution $F_X$ as unknown. For the specific case where the random variable is a time series $y_t$, quantiles are estimated from a $n$ size sample of observations of $y_t$ and a explanatory variable $x_t$.  we define as quantile regression the solution of the following optimization problem:
+\begin{equation}
+\min_{q}\sum_{t=1}^{n}\alpha|y_{t}-q_\alpha(x_t)|^{+}+(1-\alpha)|y_{t}-q_\alpha(x_t)|^{-},
 \label{eq:linear-model}
 \end{equation}
 where $q(x_t)$ is the estimated quantile value at a given time $t$ and $|x|^+=\max\{0,x\}$ and $|x|^-=-\min\{0,x\}$. To model this problem as a Linear Programming problem, thus being able to use a modern solver to fit our model,  we can create variables $\varepsilon^+_t$ e $\varepsilon^-_t$ to represent $|y-q(x_t)|^+$ and $|y-q(x_t)|^-$, respectively. So we have:
@@ -93,12 +110,12 @@ where $q(x_t)$ is the estimated quantile value at a given time $t$ and $|x|^+=\m
 
 
 
-One of our goals with quantile regression is to estimate a distribution function $F_X$ of a given random variable $X$ from a sequence of quantiles $q^{\alpha_1}_{t} \leq q^{\alpha_2}_{t} \leq \dots \leq q^{\alpha_Q}_{t}$, with $0 < \alpha_1 < \alpha_2 < \dots < \alpha_Q < 1$. 
-The process of fitting $\hat{F}_X$ is by mapping every $\alpha_i$ with its estimated quantile $\hat{q}^{\alpha_i}$. 
+One of our goals with quantile regression is to estimate a quantile function $Q$ of a given a real valued random variable $X$ from a sequence of quantiles $q^{\alpha_1}_{t} \leq q^{\alpha_2}_{t} \leq \dots \leq q^{\alpha_Q}_{t}$, with $0 < \alpha_1 < \alpha_2 < \dots < \alpha_Q < 1$. 
+The process of fitting $\hat{Q}_X$ is by mapping every $\alpha_i$ with its estimated quantile $\hat{q}^{\alpha_i}$. 
 When this sequence of chosen $\alpha_i$ is thin enough, we can approximate well the distribution function of X, as is shown in Figure \ref{fig:grafico-quantis-fx}. 
 Thus, the distribution found for $X$ is nonparametric, as no previous assumptions are made about its shape, and its form is fully recovered by the data we have.
  
-A typical problem, however, arises when working with quantile regression. When quantiles are estimated independently, it is possible to find $q^{\alpha_1}_{t} > q^{\alpha_2}_{t}$, for a given $t$, when $\alpha_1 < \alpha_2$. An example can be seen on Figure \ref{fig:crossing-quantiles}, where quantiles $\alpha = 0.95$ and $\alpha = 0.9$ cross. This problem, called \textit{crossing quantiles}, can be prevented by estimating all quantiles with a single maximization problem.
+A typical problem, however, arises when working with quantile regression. When quantiles are estimated independently, it is possible to find $q^{\alpha_1}_{t} > q^{\alpha_2}_{t}$, for a given $t$, when $\alpha_1 < \alpha_2$. An example can be seen on Figure \ref{fig:crossing-quantiles}, where quantiles $\alpha = 0.95$ and $\alpha = 0.9$ cross. This problem, called \textit{crossing quantiles}, can be prevented by estimating all quantiles with a single minimization problem.
 \begin{figure}
 	\centering
 	\includegraphics[width=0.6\linewidth]{./Figuras/npqar/icaraizinho-crossing-200}

@@ -19,9 +19,7 @@ we can substitute it on problem \ref{eq:qar-general}, getting the following LP p
 \label{eq:qar-lp}
 \end{equation}
 
-
-
-
+To solve the crossing quantile issue discussed earlier, we employ a minimization problem with all quantiles at the same time and adding the non crossing constraints. The new optimization problem is shown below:
 \begin{eqnarray}
 \label{eq:non-crossing-quantiles1-sim}
 \min_{q,\varepsilon_{t,\alpha}^{+}, \varepsilon_{t,\alpha}^{-}} &  \sum_{\alpha \in A} \sum_{t \in T}\left(\alpha \varepsilon_{t,\alpha}^{+}+(1-\alpha)\varepsilon_{t,\alpha}^{-}\right) &  \\
