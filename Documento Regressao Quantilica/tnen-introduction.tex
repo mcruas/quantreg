@@ -81,41 +81,48 @@ Figure \ref{fig:scatterplot-1lag} shows scatter plots relating $y_t$ with its fi
 
 In contrast to the linear regression model through ordinary least squares (OLS), which provides only an estimation of the dependent variable conditional mean, quantile regression model yields a much more detailed information concerning the complex relationship about the dependent variable and its covariates. Here we denote as parametric linear model the well-known quantile regression model \cite{koenker2005quantile}.
 
-Let $X$ be a real valued random variable. Its $\alpha$ quantile is given by 
+Let $Y$ be a real valued random variable. Its $\alpha$-quantile is given by 
 \begin{equation}
-Q_X(\alpha) = F_X^{-1}(\alpha) = \inf\{x: F_X(x) \geq \alpha\},
+Q_Y(\alpha) = F_Y^{-1}(\alpha) = \inf\{y: F_Y(y) \geq \alpha\},
 \label{eq:quantile-function}
 \end{equation}
-where $F_X$ is its distribution function and $\alpha \in [0,1]$. Equation \ref{eq:quantile-function} defines what we call from now on as the quantile function $Q_X(\alpha)$, in relation to random variable $X$. In our time series application we are interested in a conditional quantile function $Q_{X|Z=z}(\alpha, z)$, where $Z$ can be a vector.
-When the distribution $F_X$ is known, the conditional quantile function can be found as the result of the following optimization problem:
+where $F_Y$ is its distribution function and $\alpha \in [0,1]$. Equation \ref{eq:quantile-function} defines what we call from now on as the quantile function $Q_Y(\alpha)$, in relation to random variable $Y$. In our time series application we are interested in a conditional quantile function $Q_{Y|X=x}(\alpha, x)$, where $X$ can be a vector.
+When the distribution $F_Y$ is known, the conditional quantile function can be found as the result of the following optimization problem:
+\begin{eqnarray}
+Q_{Y|X=x}(\alpha,x)\quad & \in\quad\underset{q_\alpha}{\text{arg min}}\, &
+(1-\alpha)\int_{-\infty}^{+\infty}|y(t)-q_\alpha(x(t))|^{-}dP_{Y|X=x}(t) \label{eq:optim-continuous}
+ \\ & & + (\alpha)\int_{-\infty}^{+\infty}|y(t)-q_\alpha(x(t))|^{+}dP_{Y|X=x}(t). \nonumber
+\end{eqnarray}
+ 
 \begin{equation}
-Q_{X|Z=z}(\alpha, z) \quad \in \quad \underset{\alpha}{ \text{arg min}} \, (1-\alpha) \int_{-\infty}^{\alpha} dF_{X|Z=z}(x,z) + 
-(\alpha) \int^{\infty}_{\alpha} dF_{X|Z=z}(x,z).
+  q_\alpha  \in \mathcal{Q}, \qquad \forall {\alpha \in A}, 
 \end{equation}
+where $A$ is a set containing a sequence of probabilities  $\alpha_i$ such that $0 < \alpha_1 < \alpha_2 < \dots < \alpha_Q < 1$. This set represents a finite discretization of the interval $[0,1]$. These values must be close enough so that $Q_Y(\alpha)$ has a precise representation. The argument of optimization problem described on equation \ref{eq:optim-continuous} is the function $q_\alpha$, which belongs to a function space $\mathcal{Q}$. We might have different assumptions for the space $\mathcal{Q}$.
 
-In this work, we use the sample quantile, which consider the distribution $F_X$ as unknown. For the specific case where the random variable is a time series $y_t$, quantiles are estimated from a $n$ size sample of observations of $y_t$ and a explanatory variable $x_t$.  we define as quantile regression the solution of the following optimization problem:
+In this work, we use the sample quantile,  where we calculate the optimization based on a finite number of observations, instead of integrating over all domain of random variable $Y$. For the specific case where the random variable is a time series $y_t$, quantiles are estimated from a $n$ size sample of observations of $y_t$ and a explanatory variable $x_t$.  To estimate the quantile from a sample, we change \ref{eq:optim-continuous} for the following optimization problem:
 \begin{equation}
-\min_{q}\sum_{t=1}^{n}\alpha|y_{t}-q_\alpha(x_t)|^{+}+(1-\alpha)|y_{t}-q_\alpha(x_t)|^{-},
+Q_{Y|X=x}(\alpha,x)\quad \in\quad\underset{q_\alpha}{\text{arg min}}\,\sum_{t=1}^{n}\alpha|y_{t}-q_\alpha(x_t)|^{+}+(1-\alpha)|y_{t}-q_\alpha(x_t)|^{-},
 \label{eq:linear-model}
 \end{equation}
-where $q(x_t)$ is the estimated quantile value at a given time $t$ and $|x|^+=\max\{0,x\}$ and $|x|^-=-\min\{0,x\}$. To model this problem as a Linear Programming problem, thus being able to use a modern solver to fit our model,  we can create variables $\varepsilon^+_t$ e $\varepsilon^-_t$ to represent $|y-q(x_t)|^+$ and $|y-q(x_t)|^-$, respectively. So we have:
+\begin{equation}
+  q_\alpha  \in \mathcal{Q}, \qquad \forall {\alpha \in A}, 
+\end{equation}
+where $q_\alpha(x_t)$ is the estimated quantile value at a given time $t$ and $|x|^+=\max\{0,x\}$ and $|x|^-=-\min\{0,x\}$. To model this problem as a Linear Programming problem, thus being able to use a modern solver to fit our model,  we can create variables $\varepsilon^+_t$ e $\varepsilon^-_t$ to represent $|y-q(x_t)|^+$ and $|y-q(x_t)|^-$, respectively. So we have:
 \begin{equation}
 \begin{aligned}\min_{q,\varepsilon_{t}^{+}, \varepsilon_{t}^{-}} & \sum_{t=1}^{n}\left(\alpha \varepsilon_{t}^{+}+(1-\alpha)\varepsilon_{t}^{-}\right) & \\
-\mbox{s.t. } & \varepsilon_{t}^{+}-\varepsilon_{t}^{-}=y_{t}-q^\alpha(x_{t}), & \qquad\forall t \in \{1,\dots,n\},\\
+\mbox{s.t. } & \varepsilon_{t}^{+}-\varepsilon_{t}^{-}=y_{t}-q_\alpha(x_{t}), & \qquad\forall t \in \{1,\dots,n\},\\
 & \varepsilon_t^+,\varepsilon_t^- \geq 0, & \qquad \forall t \in \{1,\dots,n\}.
 \end{aligned}
 \label{eq:qar-general}
 \end{equation}
 
 
-
-
-One of our goals with quantile regression is to estimate a quantile function $Q$ of a given a real valued random variable $X$ from a sequence of quantiles $q^{\alpha_1}_{t} \leq q^{\alpha_2}_{t} \leq \dots \leq q^{\alpha_Q}_{t}$, with $0 < \alpha_1 < \alpha_2 < \dots < \alpha_Q < 1$. 
-The process of fitting $\hat{Q}_X$ is by mapping every $\alpha_i$ with its estimated quantile $\hat{q}^{\alpha_i}$. 
-When this sequence of chosen $\alpha_i$ is thin enough, we can approximate well the distribution function of X, as is shown in Figure \ref{fig:grafico-quantis-fx}. 
-Thus, the distribution found for $X$ is nonparametric, as no previous assumptions are made about its shape, and its form is fully recovered by the data we have.
+One of our goals with quantile regression is to estimate a quantile function $Q$ of a given real valued random variable $X$ from a sequence of quantiles $q_{\alpha_1}(x_t) \leq q_{\alpha_2}(x_t) \leq \dots \leq q_{\alpha_{|A|}}(x_t)$, with $0 < \alpha_1 < \alpha_2 < \dots < \alpha_{|A|} < 1$, for any given $t$. 
+The process of fitting $\hat{Q}_Y$ is by mapping every $\alpha_i$ with its estimated quantile $\hat{q}_{\alpha_i}(x_t)$. 
+When this sequence of chosen $\alpha_i$ is thin enough, we can approximate well the distribution function of $Y$.
+Thus, the distribution found for $Y$ is nonparametric, as no previous assumptions are made about its shape, and its form is fully recovered by the data we have.
  
-A typical problem, however, arises when working with quantile regression. When quantiles are estimated independently, it is possible to find $q^{\alpha_1}_{t} > q^{\alpha_2}_{t}$, for a given $t$, when $\alpha_1 < \alpha_2$. An example can be seen on Figure \ref{fig:crossing-quantiles}, where quantiles $\alpha = 0.95$ and $\alpha = 0.9$ cross. This problem, called \textit{crossing quantiles}, can be prevented by estimating all quantiles with a single minimization problem.
+A typical problem, however, arises when working with quantile regression. When quantiles are estimated independently, it is possible to find $q_{\alpha}(x_t) > q_{\alpha'}(x_t)$, for a given $t$, when $\alpha_1 < \alpha_2$. An example can be seen on Figure \ref{fig:crossing-quantiles}, where quantiles $\alpha = 0.95$ and $\alpha = 0.9$ cross. This problem, called \textit{crossing quantiles}, can be prevented by estimating all quantiles with a single minimization problem.
 \begin{figure}
 	\centering
 	\includegraphics[width=0.6\linewidth]{./Figuras/npqar/icaraizinho-crossing-200}
@@ -123,31 +130,21 @@ A typical problem, however, arises when working with quantile regression. When q
 	\label{fig:crossing-quantiles}
 \end{figure}
 
-Let $A$ be the set containing all quantiles $\alpha_i$ such that $0 < \alpha_1 < \alpha_2 < \dots < \alpha_Q < 1$ and $T_\tau = \{1, 2, \dots, \tau\}$. In order to estimate all quantiles simultaneously, the new objective function will be the sum of all individual objective functions, as well as include all constraints from all individual problems. The only difference is the inclusion of an equation to guarantee that quantiles won't cross. When modifying problem \ref{eq:qar-general} to account for all quantiles, we have the following new problem:
+ Let $T_n = \{1, 2, \dots, n\}$. In order to estimate all quantiles simultaneously, the new objective function will be the sum of all individual objective functions, as well as include all constraints from all individual problems. The only difference is the inclusion of an equation to guarantee that quantiles won't cross. When modifying problem \ref{eq:qar-general} to account for all quantiles, we have the following new problem:
 \begin{eqnarray}
 \label{eq:non-crossing-quantiles1}
 \min_{q,\varepsilon_{t,\alpha}^{+}, \varepsilon_{t,\alpha}^{-}} &  \sum_{\alpha \in A} \sum_{t \in T}\left(\alpha \varepsilon_{t,\alpha}^{+}+(1-\alpha)\varepsilon_{t,\alpha}^{-}\right) &  \\
-\mbox{s.t. } & \varepsilon_{t,\alpha}^{+}-\varepsilon_{t,\alpha}^{-}=y_{t}-q^\alpha(x_{t}), & \qquad\forall t \in T_\tau,\forall \alpha \in A,\\
+\mbox{s.t. } & \varepsilon_{t,\alpha}^{+}-\varepsilon_{t,\alpha}^{-}=y_{t}-q_\alpha(x_{t}), & \qquad\forall t \in T_\tau,\forall \alpha \in A,\\
 & \varepsilon_{t,\alpha}^+,\varepsilon_{t,\alpha}^- \geq 0, & \qquad\forall t \in T_\tau,\forall \alpha \in A,\\\label{eq:non-crossing-constraint}
-& q_t^{\alpha} \leq q_t^{\alpha'}, & \qquad \forall t \in T_\tau, \forall \alpha, \alpha' \in A, \alpha < \alpha', 
+& q_{\alpha}(x_t) \leq q_{\alpha'}(x_t), & \qquad \forall t \in T_\tau, \forall (\alpha, \alpha') \in AxA,  \alpha' \geq \alpha, 
 \end{eqnarray}
 where constraint \ref{eq:non-crossing-constraint} assures that no lower quantile will have a bigger value than a higher quantile. 
 
 
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.7\linewidth]{Figuras/grafico-quantis-fx}
-\caption{Fitting a distribution function from quantile estimations}
-\label{fig:grafico-quantis-fx}
-\end{figure}
 
-The next section discusses with bigger details how to fit a distribution function from a sequence of estimated quantiles, as well as showing two different strategies to estimate them: linear models and nonparametric models. In the former, $q$ is a linear function of the series past values, up to a maximum number of lags $p$, such as:
-\begin{equation}
-q(y_t, \alpha; \beta) = \beta_0(\alpha) + \beta_1(\alpha)y_{t-1} + \beta_2(\alpha)y_{t-2} + \dots + \beta_p(\alpha) y_{t-p}.
-\label{eq:ft-qar}
-\end{equation}
-In the latter, we let $q(x_t)$ assume any functional form. To prevent overfitting, however, we penalize the function's roughness by incorporating a penalty on the second derivative.
+The next section discusses with bigger details how to fit a distribution function $Q_{Y|X=x}(\alpha,x)$ from a sequence of estimated quantiles, as well as showing two different strategies to estimate them: linear models and nonparametric models. In the former, $q_\alpha$ is a linear function of an explanatory variable $x_t$.
+In the latter, we let $q_\alpha(x_t)$ assume any functional form. To prevent overfitting, however, we penalize the function's roughness by incorporating a penalty on the second derivative.
 
 In section \ref{sec:simulation} we investigate how to simulate $S$ scenarios of $y_t$, considering a linear model and errors $\varepsilon_t$ for which the distribution is unknown. To address this issue, we use quantile linear regression to calculate a thin grid of quantiles and fit a distribution function $\hat{F}_{y_t}$. This function will be used to simulate the innovations on the model.
 

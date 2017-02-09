@@ -6,13 +6,14 @@ We investigate two ways of accomplishing this goal.
 The first of them consists of selecting the best subset of variables through Mixed Integer Programming, given that $K$ variables are included in the model. Using MIP to select the best subset of variables is investigated in \cite{bertsimas2015best}. The second way is including a $\ell_1$ penalty on the linear quantile regression, as in \cite{kim2009ell_1}, and let the model select which and how many variables will have nonzero coefficients. 
 Both of them will be built over the standard Quantile Linear Regression model. In the end of the section, we discuss a information criteria to be used for quantile regression and verify how close are the solutions in the eyes of this criteria.
 
-When we choose $q(x_t)$ to be a linear function, as on equation \ref{eq:linear-model} (that we reproduce below for convenience):
+When we choose $q_\alpha(x_t)$ to be a linear function
 \begin{equation}
-\min_{q_t}\sum_{t \in T_\tau}^{n}\alpha|y_{t}-q(x_t)|^{+}+(1-\alpha)|y_{t}-q(x_t)|^{-},
+\hat{q}_\alpha(x_t) = \beta_{0\alpha} + \beta_\alpha^T x_t
 \end{equation}
 we can substitute it on problem \ref{eq:qar-general}, getting the following LP problem:
 \begin{equation}
-\begin{aligned}\min_{\beta_0,\beta,\varepsilon_{t}^{+},\varepsilon_{t}^{-}} & \sum_{t=1}^{n}\left(\alpha\varepsilon_{t}^{+}+(1-\alpha)\varepsilon_{t}^{-}\right)\\
+\begin{aligned}
+ \underset{\beta_0,\beta,\varepsilon_{t}^{+},\varepsilon_{t}^{-}}{\text{min}}\, & \sum_{t \in T}\left(\alpha\varepsilon_{t}^{+}+(1-\alpha)\varepsilon_{t}^{-}\right) \\
 \mbox{s.t. } & \varepsilon_{t}^{+}-\varepsilon_{t}^{-}=y_{t} - \beta_0 - \beta^T x_{t},\qquad\forall t\in\{1,\dots,n\},\\
 & \varepsilon_t^+,\varepsilon_t^- \geq 0, \qquad \forall t \in \{1,\dots,n\}.
 \end{aligned}
@@ -20,13 +21,18 @@ we can substitute it on problem \ref{eq:qar-general}, getting the following LP p
 \end{equation}
 
 To solve the crossing quantile issue discussed earlier, we employ a minimization problem with all quantiles at the same time and adding the non crossing constraints. The new optimization problem is shown below:
+
+
 \begin{eqnarray}
-\label{eq:non-crossing-quantiles1-sim}
-\min_{q,\varepsilon_{t,\alpha}^{+}, \varepsilon_{t,\alpha}^{-}} &  \sum_{\alpha \in A} \sum_{t \in T}\left(\alpha \varepsilon_{t,\alpha}^{+}+(1-\alpha)\varepsilon_{t,\alpha}^{-}\right) &  \\
-\mbox{s.t. } & \varepsilon_{t,\alpha}^{+}-\varepsilon_{t,\alpha}^{-}=y_{t}- \beta_{0}^\alpha - (\beta^{\alpha})^T x_{t}, & \qquad\forall t \in T_\tau,\forall \alpha \in A,\\
-& \varepsilon_{t,\alpha}^+,\varepsilon_{t,\alpha}^- \geq 0, & \qquad\forall t \in T_\tau,\forall \alpha \in A,\\\label{eq:non-crossing-constraint-sim}
-& q_t^{\alpha} \leq q_t^{\alpha'}, & \qquad \forall t \in T_\tau, \forall \alpha, \alpha' \in A, \alpha < \alpha', 
+\label{eq:non-crossing-quantiles1}
+\min_{\beta_{0\alpha},\beta_\alpha,\varepsilon_{t,\alpha}^{+}, \varepsilon_{t,\alpha}^{-}} &  \sum_{\alpha \in A} \sum_{t \in T}\left(\alpha \varepsilon_{t,\alpha}^{+}+(1-\alpha)\varepsilon_{t,\alpha}^{-}\right) & \label{eq:linear-opt-1} \\
+\mbox{s.t. } & \varepsilon_{t,\alpha}^{+}-\varepsilon_{t,\alpha}^{-}=y_{t} - \beta_{0\alpha} - \beta_{\alpha}^T x_{t}, & \qquad\forall t \in T_\tau,\forall \alpha \in A,\\
+& \varepsilon_{t,\alpha}^+,\varepsilon_{t,\alpha}^- \geq 0, & \qquad\forall t \in T_\tau,\forall \alpha \in A,\\ \label{eq:non-crossing-constraint}
+& q_{\alpha}(x_t) \leq q_{\alpha'}(x_t), & \qquad \forall t \in T_\tau, \forall (\alpha, \alpha') \in A \times A,  \alpha < \alpha', 
 \end{eqnarray}
 
-In this work, we didn't explore the addition of terms other than the terms $y_t$ past lags. For example, we could include functions of $y_{t-p}$, such as $log(y_{t-p})$ or $exp(y_{t-p})$. We leave such inclusion for further works. 
+
+When solving problem (\ref{eq:linear-opt-1})-(\ref{eq:non-crossing-constraint}), the sequence $\{ q_\alpha \}_{\alpha \in A}$ is fully defined by the values of $\beta^*_{0\alpha}$ and $\beta^*_\alpha$, for every $\alpha$.
+
+%In this work, we didn't explore the addition of terms other than the terms $y_t$ past lags. For example, we could include functions of $y_{t-p}$, such as $log(y_{t-p})$ or $exp(y_{t-p})$. We leave such inclusion for further works. 
 
