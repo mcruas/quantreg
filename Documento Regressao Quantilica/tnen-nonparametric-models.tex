@@ -1,9 +1,9 @@
 \subsection{Quantile Autoregression with a nonparametric approach}
 \label{sec:npqar}
 
-Fitting a linear estimator for the Quantile Auto Regression isn't appropriate  when nonlinearity is present in the data. This nonlinearity may produce a linear estimator that underestimates the quantile for a chunk of data while overestimating for the other chunk. To prevent this issue from occurring we propose a modification which we let the prediction $\mathcal{Q}_{y_t|y_{t-1}}(\alpha)$ adjust freely to the data and its nonlinearities. To prevent overfitting and smoothen our predictor, we include a penalty on its roughness by including the $\ell_1$ norm of its second derivative. For more information on the $\ell_1$ norm acting as a filter, one can refer to \cite{kim2009ell_1}.
+Fitting a linear estimator for the Quantile Auto Regression isn't appropriate  when nonlinearity is present in the data. This nonlinearity may produce a linear estimator that underestimates the quantile for a chunk of data while overestimating for the other chunk. To prevent this issue from occurring we propose a modification which we let the prediction $q_\alpha(x_t)$ adjust freely to the data and its nonlinearities. To prevent overfitting and smoothen our predictor, we include a penalty on its roughness by including the $\ell_1$ norm of its second derivative. For more information on the $\ell_1$ norm acting as a filter, one can refer to \cite{kim2009ell_1}.
 
-
+This time, as opposed to when employing linear models, we don't suppose any functional form for $q_\alpha(x_t)$. This forces us to build each $q_\alpha$ differently: instead of finding a set of parameters that fully defines the function, we find a value for $q_\alpha(x_t)$ at each instant $t$. On the optimization problem, we will find optimal values for a variable $q_{\alpha t} \in \mathbb{R}$, each consisting of a single point. The sequence of $\{ q^*_{\alpha t} \} $ will provide a discretization for the full function $\hat{q}_\alpha(x_t)$, which can be found by interpolating these points.
 
 % notação estatística de ordem. com x^(0)
 
@@ -11,28 +11,29 @@ Let $\{\tilde{y}_t \}_{t=1}^n$ be the sequence of observations in time $t$. Now,
 $$\tilde{x}^{(p+1)} \leq \tilde{x}^{(p+2)} \leq \dots \leq \tilde{x}^{(n)},$$ 
 we can then define $\{x_i\}_{i=1}^{n-p} = \{\tilde{x}^{(t)} \}_{t=p+1}^{n}$ and $\{y_i\}_{i=1}^{n-p} = \{\tilde{y}^{(t)} \}_{t=p+1}^{n}$ and $T' = \{2,\dots, n-p-1\}$. As we need the second difference of $q_i$, $I$ has to be shortened by two elements.
 
-
 Our optimization model to estimate the nonparametric quantile is as follows:
 \begin{equation}
 \begin{split}
-\mathcal{Q}_{y_\tau|y_{\tau-1}}^\alpha(\tau) =\underset{q_{t}}{\arg\min}\sum_{t\in T'} \left( \alpha |y_{t}-q_{t}|^{+} + (1-\alpha)|y_{t}-q_{t}|^{-}\right) \\ +\lambda  \sum_{t\in T'}|D_{x_t}^{2}q_{t}|,
+\hat{q}_\alpha(x_t) =\underset{q_{\alpha t}}{\arg\min}\sum_{t\in T'} \left( \alpha |y_{t}-q_{\alpha t}|^{+} + (1-\alpha)|y_{t}-q_{\alpha t}|^{-}\right) \\ +\lambda  \sum_{t\in T'}|D_{x_t}^{2}q_{\alpha t}|,
 \end{split}
 \end{equation}
 where $D^2 q_t$ is the second derivative of the $q_t$ function, calculated as follows:
 \begin{equation*}
-D_{x_{t}}^{2}q_{t}=\frac{\left(\frac{q_{t+1}-q_{t}}{x_{t+1}-x_{t}}\right)-\left(\frac{q_{t}-q_{t-1}}{x_{t}-x_{t-1}}\right)}{x_{t+1}-2x_{t} + x_{t-1}}.
+D_{x_{t}}^{2}q_{\alpha t}=\frac{\left(\frac{q_{\alpha t+1}-q_{\alpha t}}{x_{t+1}-x_{t}}\right)-\left(\frac{q_{\alpha t}-q_{\alpha t-1}}{x_{t}-x_{t-1}}\right)}{x_{t+1}-2x_{t} + x_{t-1}}.
 \end{equation*}
-The first part on the objective function is the usual quantile regression condition for $\{q_t\}$. The second part is the $\ell_1$-filter. The purpose of a filter is to control the amount of variation for our estimator $q_t$. When no penalty is employed we would always get $q_t = y_t$. On the other hand, when $\lambda \rightarrow \infty$, our estimator approaches the linear quantile regression. 
+The first part on the objective function is the usual quantile regression condition for $\{q_t\}$. The second part is the $\ell_1$-filter. The purpose of a filter is to control the amount of variation for our estimator $q_t$. When no penalty is employed we would always get $q_{\alpha t} = y_t$, for any given $\alpha$. On the other hand, when $\lambda \rightarrow \infty$, our estimator approaches the linear quantile regression. 
 
 The full model can be rewritten as a LP problem as bellow:
 \begin{eqnarray}
-\min_{q_{t}} & \sum_{t=1}^{n}\left(\alpha\delta_{t}^{+}+(1-\alpha)\delta_{t}^{-}\right)+\lambda\sum_{t \in T'}\xi_{t}\\
-s.t. & \delta_{t}^{+}-\delta_{t}^{-}=y_{t}-q_{t}, & \qquad\forall t\in\{3,\dots,n-1\},\\
- & D_{t}=\left(\frac{q_{t+1}-q_{t}}{x_{t+1}-x_{t}}\right)-\left(\frac{q_{t}-q_{t-1}}{x_{t}-x_{t-1}}\right) & \qquad\forall t\in\{3,\dots,n-1\},\\
- & \xi_{t}\geq D_{t}, & \qquad\forall t\in\{3,\dots,n-1\},\\
- & \xi_{t}\geq-D_{t}, & \qquad\forall t\in\{3,\dots,n-1\},\\
- & \delta_{t}^{+},\delta_{t}^{-},\xi_{t}\geq0, & \qquad\forall t\in\{3,\dots,n-1\}.
-\end{eqnarray}
+\min_{q_{\alpha t},\delta^+_t, \delta_t^-, \xi_t} & \sum_{\alpha \in A} \sum_{t \in T'}\left(\alpha\delta_{t}^{+}+(1-\alpha)\delta_{t}^{-}\right)+\lambda\sum_{t \in T'}\xi_{t}\\
+s.t. & \delta_{t}^{+}-\delta_{t}^{-}=y_{t}-q_{\alpha t}, & \qquad\forall t \in T',\forall \alpha \in A,\\
+ & D_{t}=\left(\frac{q_{\alpha t+1}-q_{\alpha t}}{x_{t+1}-x_{t}}\right)-\left(\frac{q_{\alpha t}-q_{\alpha t-1}}{x_{t}-x_{t-1}}\right) & \qquad\forall t \in T',\forall \alpha \in A,\\
+ & \xi_{t}\geq D_{t}, & \qquad\forall t \in T',\forall \alpha \in A,\\
+ & \xi_{t}\geq-D_{t}, & \qquad\forall t \in T',\forall \alpha \in A,\\
+ & \delta_{t}^{+},\delta_{t}^{-},\xi_{t}\geq0, & \qquad\forall t \in T',\forall \alpha \in A,\\
+  & q_{\alpha}(x_t) \leq q_{\alpha'}(x_t), & \qquad \forall t \in T', \forall (\alpha, \alpha') \in A \times A,  \alpha < \alpha', 
+  \end{eqnarray}
+
 
 The output of our optimization problem is a sequence of ordered points $\{(x_t, q_t)\}_{t \in T}$. The next step is to interpolate these points in order to provide an estimation for any other value of $x$. To address this issue, we propose using a B-splines interpolation, that will be developed in another study.
 
@@ -75,15 +76,6 @@ Figure \ref{fig:npqar-results} shows the quantile estimation for a few different
   \caption{Quantile estimations for a few different values of $\lambda$. The quantiles represented here are $\alpha = (5\%, 10\%, 25\%, 50\%, 75\%, 90\%, 95\%)$. When $\lambda = 0.1$, on the upper left, we clarly see a overfitting on the estimations. The other extreme case is also shown, when $\lambda=200$ the nonparametric estimator converges to the linear model.}
   \label{fig:npqar-results}
 \end{figure}
-
-
-When estimating quantiles for a few different values of $\alpha$, however, sometimes we find them overlapping each other, which we call crossing quantiles. This effect can be seen in figure \ref{fig:npqar-cross}, where the 95\%-quantile crosses over the 90\%-quantile. To prevent this, we can include a non-crossing constraint:
-\begin{equation}
-q_i^{\alpha} \leq q_i^{\alpha'}, \quad \forall i \in I, \alpha < \alpha'.
-\end{equation}
-This means that when $\alpha'$ is a higher quantile than $\alpha$, then the values from the $\alpha'$-quantile must be bigger than those of the $\alpha$-quantile for each and every point.
-
-As a result of this nonparametric estimation, we are able to establish a relation between $y_t$ and $y_{t-p}$ in a way that the model adjusts itself automatically to the present nonlinearities. For this, we only have to supply a numeric value for $\lambda$. This approach, however, have yet some issues do be discussed. 
 
 The first issue is how to select an appropriate value for $\lambda$. A simple way is to do it by inspection, which means to test many different values and pick the one that suits best our needs by looking at them. The other alternative is to use a metric to which we can select the best tune. We can achieve this by using a cross-validation method, for example.
 

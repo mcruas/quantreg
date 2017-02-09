@@ -7,7 +7,7 @@
 # - o nome dos arquivos
 tic()
 n = 1000
-using JuMP, DataFrames, Plots, RCall, Interpolations, Dierckx #, Distributions
+using JuMP, DataFrames, Plots, RCall, Interpolations, Dierckx, NullableArrays #, Distributions
 gr()
 usesolver = "mosek"    # Escolher entre os valores 'mosek' ou 'gurobi'
 # cd("/home/marcelo/Dropbox/Pesquisa Doutorado/Paper NPQuantile/RegressãoQuantílica_STREET")
@@ -20,19 +20,19 @@ include(pwd()*"/RegressãoQuantílica_STREET/par-multi.jl")
 R"
 # serie = arima.sim(n = n, list(ar = c(0.9,-0.2), ma = NULL),
 #           sd = sqrt(0.1796))
-source('R/biblioteca-funcoes-npquantile.R')
+source('R/Documento 2/carrega-dados-eolica.R')
 
-ipak(c('readxl', 'dplyr', 'lattice'))
-dados <- read_excel(path = 'Dados Climaticos/Solar-tubarao/tubarao solar.xlsx')[,1:6]
-dados_filtrados <- dados %>% select(yt0, yt1, hora, mes) %>% as.matrix
+# ipak(c('readxl', 'dplyr', 'lattice'))
+# dados <- read_excel(path = 'Dados Climaticos/Solar-tubarao/tubarao solar.xlsx')[,1:6]
+# dados_filtrados <- dados %>% select(yt0, yt1, hora, mes) %>% as.matrix
 # boxplot(yt0 ~ hora, data = dados.filtrados, col = 2)
 "
 
-@rget serie dados_filtrados
-serie
-plot(serie)
+@rget yt0 yt1 hora mes
+yt0 = yt0.values
+yt1 = yt1.values
+serie = yt0
 
-dados_filtrados[1,1] + 4.
 
 max_sim= 10
 n_cenarios = 100
