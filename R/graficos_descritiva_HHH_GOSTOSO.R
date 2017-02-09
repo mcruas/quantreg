@@ -32,9 +32,9 @@ boxplot(bd.mes.a.mes,col =2, ylab = "Mean MW", main = "Icaraizinho monthly data 
 dev.off()
 
 
-meltdf = melt(bd.mes.a.mes); colnames(meltdf) = c("Year", "Month", "Mean MW")
 
 require(reshape2); require(ggplot2)
+meltdf = melt(bd.mes.a.mes); colnames(meltdf) = c("Year", "Month", "Mean MW")
 ggplot(data = meltdf, aes(x=Month, y=`Mean MW`)) +
   geom_boxplot(aes(fill=Month)) + theme(legend.position="none") + xlab("")
 
@@ -47,7 +47,7 @@ print(xtable(bd.mes.a.mes), type = "latex", file = "Documento Regressao Quantili
 
 ## scatterplot mensal em icaraizinho (vento)
 library(latex2exp)
-pdf("Documento Regressao Quantilica/Figuras/Icaraizinho/scatterplot.pdf", width = 4, height = 4)
+pdf("Documento Regressao Quantilica/Figuras/Icaraizinho/scatterplot.pdf", width = 3, height = 3)
 # x11()
 qplot(bd[-1,],head(bd,-1)) + xlab(TeX("y_{t-1}")) + ylab(TeX("y_t")) + ggtitle("Icaraizinho monthly data")
 dev.off()
@@ -57,11 +57,10 @@ dev.off()
 
 ################# Mesmo gráficos com série solar
 library(readxl); library(dplyr)
-bd2 <- read_excel("Dados Climaticos/Solar-tubarao/tubarao solar.xlsx")[, 1:8] %>% select(yt0, yt1,mes)
+bd2 <- read_excel("Dados Climaticos/Solar-tubarao/tubarao solar.xlsx") %>% select(yt0, yt1,hora)
 
 pdf("Documento Regressao Quantilica/Figuras/Solar-exemplos/tubarao-boxplot.pdf")
-boxplot(yt0 ~ mes, data = bd2, col = 2, names = c("Jan","Feb","Mar","Apr",
-                          "May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"), ylab = "Mean MW",
+boxplot(yt0 ~ hora, data = bd2, col = 2, names = 0:23, ylab = "Mean MW",
                           main = "Tubarão hourly data boxplot")
 dev.off()
 serie = bd2[[1]]
