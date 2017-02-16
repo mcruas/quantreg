@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2017.1.23)  9 FEB 2017 13:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2017.1.23)  15 FEB 2017 15:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -724,26 +724,67 @@ Package: geometry 2010/09/12 v5.6 Page Geometry
 \Gm@layoutvoffset=\dimen187
 \Gm@dimlist=\toks47
 )
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tabulary/tabulary.sty
+Package: tabulary 2014/06/11 v0.10 tabulary package (DPC)
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
+Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
+\col@sep=\dimen188
+\extrarowheight=\dimen189
+\NC@list=\toks48
+\extratabsurround=\skip66
+\backup@length=\skip67
+)
+\TY@count=\count144
+\TY@linewidth=\dimen190
+\tymin=\dimen191
+\tymax=\dimen192
+\TY@tablewidth=\dimen193
+)
+(/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2016/04/27 v1.618033 publication quality tables
+\heavyrulewidth=\dimen194
+\lightrulewidth=\dimen195
+\cmidrulewidth=\dimen196
+\belowrulesep=\dimen197
+\belowbottomsep=\dimen198
+\aboverulesep=\dimen199
+\abovetopsep=\dimen256
+\cmidrulesep=\dimen257
+\cmidrulekern=\dimen258
+\defaultaddspace=\dimen259
+\@cmidla=\count145
+\@cmidlb=\count146
+\@aboverulesep=\dimen260
+\@belowrulesep=\dimen261
+\@thisruleclass=\count147
+\@lastruleclass=\count148
+\@thisrulewidth=\dimen262
+)
 
 Class scrartcl Warning: Usage of package `fancyhdr' together
 (scrartcl)              with a KOMA-Script class is not recommended.
 (scrartcl)              I'd suggest to use 
 (scrartcl)              package `scrlayer-scrpage'.
 (scrartcl)              Nevertheless, using requested
-(scrartcl)              package `fancyhdr' on input line 22.
+(scrartcl)              package `fancyhdr' on input line 27.
 
 (/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
-\fancy@headwidth=\skip66
-\f@ncyO@elh=\skip67
-\f@ncyO@erh=\skip68
-\f@ncyO@olh=\skip69
-\f@ncyO@orh=\skip70
-\f@ncyO@elf=\skip71
-\f@ncyO@erf=\skip72
-\f@ncyO@olf=\skip73
-\f@ncyO@orf=\skip74
+\fancy@headwidth=\skip68
+\f@ncyO@elh=\skip69
+\f@ncyO@erh=\skip70
+\f@ncyO@olh=\skip71
+\f@ncyO@orh=\skip72
+\f@ncyO@elf=\skip73
+\f@ncyO@erf=\skip74
+\f@ncyO@olf=\skip75
+\f@ncyO@orf=\skip76
 ) (./main.aux
-(./tnen-introduction.aux) (./tnen-distribuicao-acumulada.aux
+(./tnen-simbolos.aux) (./tnen-introduction.aux)
+(./tnen-distribuicao-acumulada.aux
 
 LaTeX Warning: Label `eq:non-crossing-quantiles1' multiply defined.
 
@@ -753,34 +794,34 @@ LaTeX Warning: Label `eq:non-crossing-constraint' multiply defined.
 ) (./tnen-simulation.aux))
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count144
-\scratchdimen=\dimen188
+\scratchcounter=\count149
+\scratchdimen=\dimen263
 \scratchbox=\box43
-\nofMPsegments=\count145
-\nofMParguments=\count146
-\everyMPshowfont=\toks48
-\MPscratchCnt=\count147
-\MPscratchDim=\dimen189
-\MPnumerator=\count148
-\makeMPintoPDFobject=\count149
-\everyMPtoPDFconversion=\toks49
+\nofMPsegments=\count150
+\nofMParguments=\count151
+\everyMPshowfont=\toks49
+\MPscratchCnt=\count152
+\MPscratchDim=\dimen264
+\MPnumerator=\count153
+\makeMPintoPDFobject=\count154
+\everyMPtoPDFconversion=\toks50
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
 
@@ -802,7 +843,7 @@ e
 File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
 )
 \AtBeginShipoutBox=\box44
-Package hyperref Info: Link coloring OFF on input line 60.
+Package hyperref Info: Link coloring OFF on input line 65.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
@@ -810,11 +851,11 @@ Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count150
+\c@section@level=\count155
 )
-LaTeX Info: Redefining \ref on input line 60.
-LaTeX Info: Redefining \pageref on input line 60.
-LaTeX Info: Redefining \nameref on input line 60.
+LaTeX Info: Redefining \ref on input line 65.
+LaTeX Info: Redefining \pageref on input line 65.
+LaTeX Info: Redefining \nameref on input line 65.
 
 (./main.out) (./main.out)
 \@outlinefile=\write4
@@ -861,40 +902,50 @@ Package geometry Warning: The marginal notes overrun the paper.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Try loading font information for OT1+bch on input line 63.
+LaTeX Font Info:    Try loading font information for OT1+bch on input line 68.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1bch.fd
 File: ot1bch.fd 2004/10/18 font definitions for OT1/bch.
 )
 (/usr/share/texlive/texmf-dist/tex/latex/ucs/data/uni-0.def
 File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 63.
+LaTeX Font Info:    Try loading font information for U+msa on input line 68.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 63.
+LaTeX Font Info:    Try loading font information for U+msb on input line 68.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 63.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 68.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <8> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 63.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 68.
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <6> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 63.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 68.
  [1
 
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+\openout2 = `tnen-simbolos.aux'.
+
+ (./tnen-simbolos.tex
+Overfull \hbox (184.34906pt too wide) in paragraph at lines 4--35
+ [] 
+ []
+
+) [2
+
+]
 \openout2 = `tnen-introduction.aux'.
 
  (./tnen-introduction.tex
-<./Figuras/Icaraizinho/icaraizinho-boxplot.pdf, id=44, 505.89pt x 505.89pt>
+<./Figuras/Icaraizinho/icaraizinho-boxplot.pdf, id=54, 505.89pt x 505.89pt>
 File: ./Figuras/Icaraizinho/icaraizinho-boxplot.pdf Graphic file (type pdf)
 
 <use ./Figuras/Icaraizinho/icaraizinho-boxplot.pdf>
@@ -902,7 +953,7 @@ Package pdftex.def Info: ./Figuras/Icaraizinho/icaraizinho-boxplot.pdf used on
 input line 50.
 (pdftex.def)             Requested size: 217.66214pt x 217.66739pt.
 
-<./Figuras/Solar-exemplos/tubarao-boxplot.pdf, id=45, 505.89pt x 505.89pt>
+<./Figuras/Solar-exemplos/tubarao-boxplot.pdf, id=55, 505.89pt x 505.89pt>
 File: ./Figuras/Solar-exemplos/tubarao-boxplot.pdf Graphic file (type pdf)
 
 <use ./Figuras/Solar-exemplos/tubarao-boxplot.pdf>
@@ -910,90 +961,95 @@ Package pdftex.def Info: ./Figuras/Solar-exemplos/tubarao-boxplot.pdf used on i
 nput line 56.
 (pdftex.def)             Requested size: 217.66214pt x 217.66739pt.
 
-<Figuras/Icaraizinho/scatterplot.pdf, id=46, 216.81pt x 216.81pt>
+<Figuras/Icaraizinho/scatterplot.pdf, id=56, 361.35pt x 361.35pt>
 File: Figuras/Icaraizinho/scatterplot.pdf Graphic file (type pdf)
 
 <use Figuras/Icaraizinho/scatterplot.pdf>
 Package pdftex.def Info: Figuras/Icaraizinho/scatterplot.pdf used on input line
  72.
-(pdftex.def)             Requested size: 217.66214pt x 217.67291pt.
+(pdftex.def)             Requested size: 217.66214pt x 217.66078pt.
 
-<Figuras/Solar-exemplos/scatterplot.pdf, id=47, 216.81pt x 216.81pt>
+<Figuras/Solar-exemplos/scatterplot.pdf, id=57, 361.35pt x 361.35pt>
 File: Figuras/Solar-exemplos/scatterplot.pdf Graphic file (type pdf)
 
 <use Figuras/Solar-exemplos/scatterplot.pdf>
 Package pdftex.def Info: Figuras/Solar-exemplos/scatterplot.pdf used on input l
 ine 75.
-(pdftex.def)             Requested size: 217.66214pt x 217.67291pt.
- [2
+(pdftex.def)             Requested size: 217.66214pt x 217.66078pt.
+ [3
+
 
  <./Figuras/Icaraizinho/icaraizinho-boxplot.pdf> <./Figuras/Solar-exemplos/tuba
-rao-boxplot.pdf>] [3 <./Figuras/Icaraizinho/scatterplot.pdf> <./Figuras/Solar-e
+rao-boxplot.pdf>] [4 <./Figuras/Icaraizinho/scatterplot.pdf> <./Figuras/Solar-e
 xemplos/scatterplot.pdf>]
-<./Figuras/npqar/icaraizinho-crossing-200.pdf, id=104, 542.025pt x 542.025pt>
+<./Figuras/npqar/icaraizinho-crossing-200.pdf, id=112, 542.025pt x 542.025pt>
 File: ./Figuras/npqar/icaraizinho-crossing-200.pdf Graphic file (type pdf)
 
 <use ./Figuras/npqar/icaraizinho-crossing-200.pdf>
 Package pdftex.def Info: ./Figuras/npqar/icaraizinho-crossing-200.pdf used on i
-nput line 128.
+nput line 130.
 (pdftex.def)             Requested size: 290.2211pt x 290.23276pt.
- [4 <./Figuras/npqar/icaraizinho-crossing-200.pdf>]) [5]
+ [5 <./Figuras/npqar/icaraizinho-crossing-200.pdf>]) [6]
 \openout2 = `tnen-distribuicao-acumulada.aux'.
 
  (./tnen-distribuicao-acumulada.tex
-(./tnen-linear-models.tex [6
+(./tnen-linear-models.tex [7
 
 
-]) (./tnen-nonparametric-models.tex [7]
-<Figuras/npqar/icaraizinho-crossing-01.pdf, id=164, 542.025pt x 542.025pt>
+]) (./tnen-nonparametric-models.tex [8]
+Overfull \hbox (11.5786pt too wide) in alignment at lines 32--46
+ [][][] []
+ []
+
+<Figuras/npqar/icaraizinho-crossing-01.pdf, id=172, 542.025pt x 542.025pt>
 File: Figuras/npqar/icaraizinho-crossing-01.pdf Graphic file (type pdf)
 
 <use Figuras/npqar/icaraizinho-crossing-01.pdf>
 Package pdftex.def Info: Figuras/npqar/icaraizinho-crossing-01.pdf used on inpu
-t line 48.
+t line 59.
 (pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
 
-<Figuras/npqar/icaraizinho-crossing-03.pdf, id=165, 542.025pt x 542.025pt>
+<Figuras/npqar/icaraizinho-crossing-03.pdf, id=173, 542.025pt x 542.025pt>
 File: Figuras/npqar/icaraizinho-crossing-03.pdf Graphic file (type pdf)
 
 <use Figuras/npqar/icaraizinho-crossing-03.pdf>
 Package pdftex.def Info: Figuras/npqar/icaraizinho-crossing-03.pdf used on inpu
-t line 52.
+t line 63.
 (pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
 
-<Figuras/npqar/icaraizinho-crossing-1.pdf, id=166, 542.025pt x 542.025pt>
+<Figuras/npqar/icaraizinho-crossing-1.pdf, id=174, 542.025pt x 542.025pt>
 File: Figuras/npqar/icaraizinho-crossing-1.pdf Graphic file (type pdf)
 
 <use Figuras/npqar/icaraizinho-crossing-1.pdf>
 Package pdftex.def Info: Figuras/npqar/icaraizinho-crossing-1.pdf used on input
- line 56.
+ line 67.
 (pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
 
-<Figuras/npqar/icaraizinho-crossing-3.pdf, id=167, 542.025pt x 542.025pt>
+<Figuras/npqar/icaraizinho-crossing-3.pdf, id=175, 542.025pt x 542.025pt>
 File: Figuras/npqar/icaraizinho-crossing-3.pdf Graphic file (type pdf)
 
 <use Figuras/npqar/icaraizinho-crossing-3.pdf>
 Package pdftex.def Info: Figuras/npqar/icaraizinho-crossing-3.pdf used on input
- line 63.
+ line 74.
 (pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
 
-<Figuras/npqar/icaraizinho-crossing-10.pdf, id=168, 542.025pt x 542.025pt>
+<Figuras/npqar/icaraizinho-crossing-10.pdf, id=176, 542.025pt x 542.025pt>
 File: Figuras/npqar/icaraizinho-crossing-10.pdf Graphic file (type pdf)
 
 <use Figuras/npqar/icaraizinho-crossing-10.pdf>
 Package pdftex.def Info: Figuras/npqar/icaraizinho-crossing-10.pdf used on inpu
-t line 67.
+t line 78.
 (pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
 
-<Figuras/npqar/icaraizinho-crossing-200.pdf, id=169, 542.025pt x 542.025pt>
+<Figuras/npqar/icaraizinho-crossing-200.pdf, id=177, 542.025pt x 542.025pt>
 File: Figuras/npqar/icaraizinho-crossing-200.pdf Graphic file (type pdf)
 
 <use Figuras/npqar/icaraizinho-crossing-200.pdf>
 Package pdftex.def Info: Figuras/npqar/icaraizinho-crossing-200.pdf used on inp
-ut line 71.
+ut line 82.
 (pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
-)) [8] [9 <./Figuras/npqar/icaraizinho-crossing-01.pdf> <./Figuras/npqar/icarai
-zinho-crossing-03.pdf
+)) [9] [10 <./Figuras/npqar/icaraizinho-crossing-01.pdf> <./Figuras/npqar/icara
+izinho-crossing-03.pdf
 
 pdfTeX warning: /usr/bin/pdflatex (file ./Figuras/npqar/icaraizinho-crossing-03
 .pdf): PDF inclusion: multiple pdfs with page group included in a single page
@@ -1017,70 +1073,71 @@ pdfTeX warning: /usr/bin/pdflatex (file ./Figuras/npqar/icaraizinho-crossing-20
 \openout2 = `tnen-simulation.aux'.
 
  (./tnen-simulation.tex
-<Figuras/grafico-quantis-fx.pdf, id=272, 796.9775pt x 597.23125pt>
+<Figuras/grafico-quantis-fx.pdf, id=281, 796.9775pt x 597.23125pt>
 File: Figuras/grafico-quantis-fx.pdf Graphic file (type pdf)
 
 <use Figuras/grafico-quantis-fx.pdf>
-Package pdftex.def Info: Figuras/grafico-quantis-fx.pdf used on input line 53.
+Package pdftex.def Info: Figuras/grafico-quantis-fx.pdf used on input line 51.
 (pdftex.def)             Requested size: 338.58636pt x 253.72423pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-) [10
+) [11
 
 
-] [11 <./Figuras/grafico-quantis-fx.pdf>] (./main.bbl) [12
+] [12 <./Figuras/grafico-quantis-fx.pdf>] (./main.bbl) [13
 
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 74.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 74.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 80.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 80.
  (./main.aux
-(./tnen-introduction.aux) (./tnen-distribuicao-acumulada.aux)
-(./tnen-simulation.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 74.
+(./tnen-simbolos.aux) (./tnen-introduction.aux)
+(./tnen-distribuicao-acumulada.aux) (./tnen-simulation.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 80.
 \snap@out=\write5
 \openout5 = `main.dep'.
 
 
 Dependency list written on main.dep.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 74.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 80.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 9EB81FC5B9B8B489D3D5EF64A63E3427;467.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 74.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 80.
  ) 
 Here is how much of TeX's memory you used:
- 21505 strings out of 493013
- 401365 string characters out of 6135682
- 567236 words of memory out of 5000000
- 24583 multiletter control sequences out of 15000+600000
+ 21896 strings out of 493013
+ 405920 string characters out of 6135682
+ 572619 words of memory out of 5000000
+ 24953 multiletter control sequences out of 15000+600000
  16471 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  73i,18n,79p,8844b,692s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/sha
 re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/font
-s/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
-9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (12 pages, 544944 bytes).
+live/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on main.pdf (13 pages, 546837 bytes).
 PDF statistics:
- 380 PDF objects out of 1000 (max. 8388607)
- 296 compressed objects within 3 object streams
- 49 named destinations out of 1000 (max. 500000)
+ 393 PDF objects out of 1000 (max. 8388607)
+ 306 compressed objects within 4 object streams
+ 50 named destinations out of 1000 (max. 500000)
  121 words of extra memory for PDF output out of 10000 (max. 10000000)
 

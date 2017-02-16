@@ -32,6 +32,11 @@ source('R/Documento 2/carrega-dados-eolica.R')
 yt0 = yt0.values
 yt1 = yt1.values
 serie = yt0
+nbins = 50
+p1 = histogram(yt0[hora .== 11], yaxis = ((0,100),0:10:100) , xaxis=((0,1200),0:100:1000), nbins = nbins)
+p2 = histogram(yt0[hora .== 15], yaxis = ((0,100),0:10:100) , xaxis=((0,1200),0:100:1000), nbins = nbins)
+
+
 
 
 max_sim= 10
@@ -77,7 +82,7 @@ for s in 1:n_cenarios, tau in n+2:n+max_sim
   # (step 2)
   X_tau = [Y[tau-1,s] ; Y[tau-2,s]] #não é generico. nao aceitar.
   # betas0, betas = rq(y,X, Alphas)
-  Q_hat = (betas0 + X_tau' * betas)[1,:]
+  Q_hat = (betas0 + X_tau' * betas)[1,:]  # Q_hat guarda uma sequência de pontos para serem utilizados
 
   # (step 4)
   unif = rand(1)

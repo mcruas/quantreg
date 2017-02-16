@@ -28,7 +28,8 @@ bd.mes.a.mes
 colnames(bd.mes.a.mes) = c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
 rownames(bd.mes.a.mes) = 1981:2011
 pdf("Documento Regressao Quantilica/Figuras/Icaraizinho/icaraizinho-boxplot.pdf")
-boxplot(bd.mes.a.mes,col =2, ylab = "Mean MW", main = "Icaraizinho monthly data boxplot")
+boxplot(bd.mes.a.mes,col =2, ylab = "Mean MW", main = "Icaraizinho monthly data boxplot",
+        xlab = "Months")
 dev.off()
 
 
@@ -47,27 +48,34 @@ print(xtable(bd.mes.a.mes), type = "latex", file = "Documento Regressao Quantili
 
 ## scatterplot mensal em icaraizinho (vento)
 library(latex2exp)
-pdf("Documento Regressao Quantilica/Figuras/Icaraizinho/scatterplot.pdf", width = 3, height = 3)
+sizeplots = 5
+pdf("Documento Regressao Quantilica/Figuras/Icaraizinho/scatterplot.pdf", width = sizeplots, height = sizeplots)
 # x11()
-qplot(bd[-1,],head(bd,-1)) + xlab(TeX("y_{t-1}")) + ylab(TeX("y_t")) + ggtitle("Icaraizinho monthly data")
+# qplot(bd[-1,],head(bd,-1)) + xlab(TeX("y_{t-1}")) + ylab(TeX("y_t")) + ggtitle("Icaraizinho monthly data")
+plot(bd[-1,],head(bd,-1)[,1], xlab = (TeX("y_{t-1}")), ylab = (TeX("y_t")), 
+     main = ("Icaraizinho monthly data"), pch = 20)
 dev.off()
+
 
 
 
 
 ################# Mesmo gráficos com série solar
 library(readxl); library(dplyr)
-bd2 <- read_excel("Dados Climaticos/Solar-tubarao/tubarao solar.xlsx") %>% select(yt0, yt1,hora)
-
+bd2a <- read_excel("Dados Climaticos/Solar-tubarao/tubarao solar.xlsx") %>% select(yt0, yt1,hora)
+bd2 <- bd2a %>% filter(yt0 > 0)
+horas <- sort(unique(bd2$hora))
 pdf("Documento Regressao Quantilica/Figuras/Solar-exemplos/tubarao-boxplot.pdf")
-boxplot(yt0 ~ hora, data = bd2, col = 2, names = 0:23, ylab = "Mean MW",
+boxplot(yt0 ~ hora, data = bd2, col = 2, names = horas, ylab = "Mean MW", xlab = "Hours",
                           main = "Tubarão hourly data boxplot")
 dev.off()
 serie = bd2[[1]]
 
-pdf("Documento Regressao Quantilica/Figuras/Solar-exemplos/scatterplot.pdf", width = 3, height = 3)
+pdf("Documento Regressao Quantilica/Figuras/Solar-exemplos/scatterplot.pdf", width = sizeplots, height = sizeplots)
 # x11()
-qplot(bd2$yt0,bd2$yt1) + xlab(TeX("y_{t-1}")) + ylab(TeX("y_t")) + ggtitle("Tubarão hourly data")
+# qplot(bd2$yt0,bd2$yt1) + xlab(TeX("y_{t-1}")) + ylab(TeX("y_t")) + ggtitle("Tubarão hourly data")
+plot(bd2$yt0,bd2$yt1, xlab = (TeX("y_{t-1}")), ylab = (TeX("y_t")), 
+     main = ("Tubarão hourly data"), pch = 20)
 dev.off()
 
 # bd.mes.a.mes <- bd %>% group_by(mes) %>% summarise(blau = mean(yt0, na.rm = TRUE))

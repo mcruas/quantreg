@@ -37,8 +37,7 @@ To estimate $\hat{Q}_{y_{\tau}}$, we first define a discrete quantile function $
 
 This process is described in more details on section \ref{sec:estimating-distribution}. 
 
-
-
+qualquer coisa
 
 \item Once we have a distribution for $y_{n+1}$, we can generate $S$ different simulated values, drawn from the distribution function $\hat{F}_{y_{n+1}} = \hat{Q}^{-1}_{y_{\tau}}$, derived from the quantile function found by doing steps 2 and 3. 
 Let $X$ be a random variable with uniform distribution over the interval $[0,1]$. By using results from the Probability Integral Transform, we know that the random variable $F^{-1}_{y_{n+1}}(X)$ has the same distribution as $y_{n+1}$. So, by drawing a sample of size $S$ from $X$ and applying the quantile function $Q_{y_{n+1}}(\alpha)$, we have our sample of size $K$ for $y_{n+1}$.

@@ -14,30 +14,41 @@ we can then define $\{x_i\}_{i=1}^{n-p} = \{\tilde{x}^{(t)} \}_{t=p+1}^{n}$ and 
 Our optimization model to estimate the nonparametric quantile is as follows:
 \begin{equation}
 \begin{split}
-\hat{q}_\alpha(x_t) =\underset{q_{\alpha t}}{\arg\min}\sum_{t\in T'} \left( \alpha |y_{t}-q_{\alpha t}|^{+} + (1-\alpha)|y_{t}-q_{\alpha t}|^{-}\right) \\ +\lambda  \sum_{t\in T'}|D_{x_t}^{2}q_{\alpha t}|,
+\hat{q}_\alpha(x_t) =\underset{q_{\alpha t}}{\arg\min}\sum_{t\in T'} \left( \alpha |y_{t}-q_{\alpha t}|^{+} + (1-\alpha)|y_{t}-q_{\alpha t}|^{-}\right) \\ +\lambda_1  \sum_{t\in T'}|D_{x_t}^{1}q_{\alpha t}| +\lambda_2  \sum_{t\in T'}|D_{x_t}^{2}q_{\alpha t}|,
 \end{split}
 \end{equation}
-where $D^2 q_t$ is the second derivative of the $q_t$ function, calculated as follows:
+where $D^1 q_t$ and $D^2 q_t$ are the first and second derivatives of the $q_\alpha(x_t)$ function, calculated as follows:
 \begin{equation*}
-D_{x_{t}}^{2}q_{\alpha t}=\frac{\left(\frac{q_{\alpha t+1}-q_{\alpha t}}{x_{t+1}-x_{t}}\right)-\left(\frac{q_{\alpha t}-q_{\alpha t-1}}{x_{t}-x_{t-1}}\right)}{x_{t+1}-2x_{t} + x_{t-1}}.
+D_{x_{t}}^{2}q_{\alpha t}=\frac{\left(\frac{q_{\alpha t+1}-q_{\alpha t}}{x_{t+1}-x_{t}}\right)-\left(\frac{q_{\alpha t}-q_{\alpha t-1}}{x_{t}-x_{t-1}}\right)}{x_{t+1}-2x_{t} + x_{t-1}},
 \end{equation*}
-The first part on the objective function is the usual quantile regression condition for $\{q_t\}$. The second part is the $\ell_1$-filter. The purpose of a filter is to control the amount of variation for our estimator $q_t$. When no penalty is employed we would always get $q_{\alpha t} = y_t$, for any given $\alpha$. On the other hand, when $\lambda \rightarrow \infty$, our estimator approaches the linear quantile regression. 
+
+
+\begin{equation*}
+D^{1}_{t \alpha }=\frac{q_{\alpha t+1}-q_{\alpha t}}{x_{t+1}-x_{t}}.
+\end{equation*}
+The first part on the objective function is the usual quantile regression condition for $\{q_{t\alpha}\}_{\alpha \in A}$. The second part is the $\ell_1$-filter. The purpose of a filter is to control the amount of variation for our estimator $q_\alpha(x_t)$. When no penalty is employed we would always get $q_{\alpha t} = y_t$, for any given $\alpha$. On the other hand, when $\lambda \rightarrow \infty$, our estimator approaches the linear quantile regression. 
 
 The full model can be rewritten as a LP problem as bellow:
 \begin{eqnarray}
-\min_{q_{\alpha t},\delta^+_t, \delta_t^-, \xi_t} & \sum_{\alpha \in A} \sum_{t \in T'}\left(\alpha\delta_{t}^{+}+(1-\alpha)\delta_{t}^{-}\right)+\lambda\sum_{t \in T'}\xi_{t}\\
-s.t. & \delta_{t}^{+}-\delta_{t}^{-}=y_{t}-q_{\alpha t}, & \qquad\forall t \in T',\forall \alpha \in A,\\
- & D_{t}=\left(\frac{q_{\alpha t+1}-q_{\alpha t}}{x_{t+1}-x_{t}}\right)-\left(\frac{q_{\alpha t}-q_{\alpha t-1}}{x_{t}-x_{t-1}}\right) & \qquad\forall t \in T',\forall \alpha \in A,\\
- & \xi_{t}\geq D_{t}, & \qquad\forall t \in T',\forall \alpha \in A,\\
- & \xi_{t}\geq-D_{t}, & \qquad\forall t \in T',\forall \alpha \in A,\\
- & \delta_{t}^{+},\delta_{t}^{-},\xi_{t}\geq0, & \qquad\forall t \in T',\forall \alpha \in A,\\
-  & q_{\alpha}(x_t) \leq q_{\alpha'}(x_t), & \qquad \forall t \in T', \forall (\alpha, \alpha') \in A \times A,  \alpha < \alpha', 
+\min_{q_{\alpha t},\delta^+_{t}, \delta_t^-, \xi_t} & \sum_{\alpha \in A} \sum_{t \in T'}\left(\alpha\delta_{t \alpha }^{+}+(1-\alpha)\delta_{t \alpha }^{-}\right) & \\
+& \qquad \qquad \qquad \qquad \qquad + \lambda_1\sum_{t \in T'}\gamma_{t \alpha } + \lambda_2\sum_{t \in T'}\xi_{t \alpha } & \nonumber \\
+s.t. & \delta_{t}^{+}-\delta_{t \alpha }^{-}=y_{t}-q_{t \alpha }, & \qquad\forall t \in T',\forall \alpha \in A,\\
+   & D^{1}_{t \alpha }=\frac{q_{\alpha t+1}-q_{\alpha t}}{x_{t+1}-x_{t}},
+    & \qquad\forall t \in T',\forall \alpha \in A,\\   
+ & D^{2}_{t \alpha }=\frac{\left(\frac{q_{\alpha t+1}-q_{\alpha t}}{x_{t+1}-x_{t}}\right)-\left(\frac{q_{\alpha t}-q_{\alpha t-1}}{x_{t}-x_{t-1}}\right)}{x_{t+1}-2x_{t} + x_{t-1}}.
+  & \qquad\forall t \in T',\forall \alpha \in A,\\
+ & \gamma_{t \alpha}\geq D^1_{t \alpha }, & \qquad\forall t \in T',\forall \alpha \in A,\\
+  & \gamma_{t \alpha}\geq-D^1_{t \alpha}, & \qquad\forall t \in T',\forall \alpha \in A,\\
+  & \xi_{t \alpha}\geq D^2_{t \alpha }, & \qquad\forall t \in T',\forall \alpha \in A,\\
+ & \xi_{t \alpha}\geq-D^2_{t \alpha}, & \qquad\forall t \in T',\forall \alpha \in A,\\
+ & \delta_{t \alpha}^{+},\delta_{t \alpha}^{-},\gamma_{t \alpha}, \xi_{t \alpha}\geq0, & \qquad\forall t \in T',\forall \alpha \in A,\\
+  & q_{t \alpha} \leq q_{t \alpha'}, & \qquad \forall t \in T', \forall (\alpha, \alpha') \in A \times A, \alpha < \alpha', 
   \end{eqnarray}
 
 
-The output of our optimization problem is a sequence of ordered points $\{(x_t, q_t)\}_{t \in T}$. The next step is to interpolate these points in order to provide an estimation for any other value of $x$. To address this issue, we propose using a B-splines interpolation, that will be developed in another study.
+The output of our optimization problem is a sequence of ordered points $\{(x_t, q_{t \alpha})\}_{t \in T}$, for all $\alpha \in A$. The next step is to interpolate these points in order to provide an estimation for any other value of $x_t$. To address this issue, we propose using a linear interpolation, that will be developed in another study. Note that $q_{t \alpha}$ is a variable that represents only one point of the $\alpha$-quantile function $q_\alpha(x_t)$. 
 
-The quantile estimation is done for different values of $\lambda$. By using different levels of penalization on the second difference, the estimation can be more or less adaptive to the fluctuation. It is important to notice that the usage of the $\ell_1$-norm as penalty leads to a piecewise linear solution $q_t$. % Referenciar?
+The quantile estimation is done for different values of $\lambda$. By using different levels of penalization on the second difference, the estimation can be more or less adaptive to the fluctuation. It is important to notice that the usage of the $\ell_1$-norm as penalty leads to a piecewise linear solution $q_{t \alpha}$. % Referenciar?
 Figure \ref{fig:npqar-results} shows the quantile estimation for a few different values of $\lambda$. 
 
 \begin{figure}[htp]
