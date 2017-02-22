@@ -1,6 +1,4 @@
-\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
-\BOOKMARK [1][-]{section.2}{Estimating distribution function from quantile regressions}{}% 2
-\BOOKMARK [2][-]{subsection.2.1}{Linear Models for the Quantile Autoregression}{section.2}% 3
-\BOOKMARK [2][-]{subsection.2.2}{Quantile Autoregression with a nonparametric approach}{section.2}% 4
-\BOOKMARK [1][-]{section.3}{Simulation}{}% 5
-\BOOKMARK [2][-]{subsection.3.1}{Simulating for a seasonal time series}{section.3}% 6
+\BOOKMARK [1][-]{section.1}{Estimating distribution function from quantile regressions}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Linear Models for the Quantile Autoregression}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Quantile Autoregression with a nonparametric approach}{section.1}% 3
+\BOOKMARK [2][-]{subsection.1.3}{A comparison between both approaches}{section.1}% 4

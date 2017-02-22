@@ -1,0 +1,12 @@
+PWD /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica
+INPUT /etc/texmf/web2c/texmf.cnf
+INPUT /usr/share/texmf/web2c/texmf.cnf
+INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
+INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
+INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-introduction.tex
+OUTPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-introduction.log
+INPUT /usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
+OUTPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-introduction.pdf
+INPUT /var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map

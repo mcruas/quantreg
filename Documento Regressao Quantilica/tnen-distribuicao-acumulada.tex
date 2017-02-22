@@ -1,0 +1,83 @@
+\section{Estimating distribution function from quantile regressions}
+\label{sec:estimating-distribution}
+
+In many applications where a time series model is employed, we often consider the innovations' distribution as known. Take, for example, the AR(p) model:
+$$y_{t}=c+\varepsilon_{t}+\sum_{i=1}^{p}\phi_{i}y_{t-1}$$
+In this model, errors $\varepsilon_t$ are assumed to have normal distribution with zero mean. 
+
+When we are dealing with meteorological time series, however, we can't always assume normality. In these cases, one can either find a distribution that has a better fit to the data or have a nonparametric method to estimate the distribution directly from the available data.
+
+In a time series framework, where a time series $y_t$ is given by a linear model of its regressors $x_t$
+$$y_t = \beta^T x_t + \varepsilon_t,$$
+we propose to estimate the $k$-step ahead distribution of $y_t$ with a nonparametric approach.
+Let an empirical $\alpha$-quantile $\hat{q}_\alpha \in \mathcal{Q}$ be a functional belonging to a functional space. In any given $t$, we can estimate the sequence of quantiles $\{ q_{\alpha}(x_t) \}_{\alpha \in A}$ by solving the problem defined on equations (\ref{eq:non-crossing-quantiles1})-(\ref{eq:non-crossing-constraint}). 
+ After evaluating this sequence, by making equal 
+\begin{equation}
+\hat{Q}_{y_t|X}(\alpha) = \hat{q}_\alpha(x_t), \qquad \forall \alpha \in A,
+\end{equation}
+we have a set of size $|A|$ of values to define the discrete function over the first argument $\hat{Q}_{y_t|x_t}(\alpha,X=x_t): A \times \mathbb{R}^d \rightarrow \mathbb{R}$. The goal of having function $\hat{Q}$ is to use it as base to construct the estimated quantile function $\hat{Q}'_{y_t|X=x_t}(\alpha,x_t): [0,1] \times \mathbb{R}^d \rightarrow \mathbb{R}$. 
+
+A problem arises for the distribution extremities, because when $\alpha = 0$ or $\alpha = 1$, the optimization problem becomes unbounded. In order to find values for $\hat{Q}(\alpha,x_t)$ when $\alpha \in \{0,1\}$, we chose to linearly extrapolate its values. %completar com explicação de extrapolação
+Note that as $A \subset [0,1]$, the domain of $\hat{Q}$ is also a subset of the domain of $\hat{Q}'$. 
+The estimative of $\hat{Q}'$ is done by interpolating points of $\hat{Q}$ over the interval $[0,1]$.
+Thus, the distribution found for $\hat{y}_{\tau}$ is nonparametric, as no previous assumptions are made about its shape, and its form is fully recovered by the data we have.
+
+
+We investigate two different approaches for $Q_{y_t}$ by the functional structure of each individual $q_\alpha(x_t)$.
+In section \ref{sec:linear-models}, we explore the case where the individual quantiles $q_\alpha(x_t)$ are a linear function of its arguments:
+\begin{equation}
+\hat{q}_\alpha(x_t) = \beta_{0,\alpha} +   \beta_\alpha^T x_t,
+\label{eq:fun-quantile}
+\end{equation}
+where $\beta^\alpha$ is a vector of coefficients for the explanatory variables.
+
+In section \ref{sec:npqar} we introduce a Nonparametric Quantile Autoregressive model with a $\ell_{1}$-penalty term, in order to properly simulate densities for several $\alpha$-quantiles. In this nonparametric approach we don't assume any form for $q_\alpha(x_t)$, but rather let the function adjust to the data. To prevent overfitting, the $\ell_1$ penalty for the second derivative (approximated by the second difference of the ordered observations) is included in the objective function. The result of this optimization problem is that each $q_\alpha(x_t)$ will be a function with finite second derivative.
+
+In order to find good estimates for $Q_{y_{t}}(\alpha)$ when $\alpha$ approaches 0 or 1, as well as performing interpolation on the values that were not directly estimated, we can either use a kernel smoothing function, splines, linear approximation, or any other method. 
+\textbf{This will be developed later.}
+
+
+\input{tnen-linear-models}
+
+\input{tnen-nonparametric-models}
+
+
+\subsection{A comparison between both approaches}
+
+The last two sections introduced two different strategies to arrive in a Quantile Function $Q_{y_t|X}$. But what are the differences between using one method or the other? 
+
+To provide a comparison between both approaches, we estimate a quantile function to predict the one-step ahead quantile function. We use as explanatory variable only the last observation $y_{t-1}$. Both 
+
+
+\begin{figure}
+  \centering
+  \begin{minipage}[t]{\linewidth}
+    \centering
+    \begin{minipage}[t]{0.45\linewidth}
+      \centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/quantile-linear-scatter}
+    \end{minipage}
+    \begin{minipage}[t]{0.45\linewidth}
+      \centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/quantile-nonpar-scatter}
+    \end{minipage}
+  \end{minipage}
+  \caption{Estimated $\alpha$-quantiles. On the left using a linear model and using a nonparametric approach on the right.}
+  \label{fig:scatterplot-alphaquantiles}
+\end{figure}
+
+
+
+
+\begin{figure}
+  \centering
+  \begin{minipage}[t]{\linewidth}
+    \centering
+    \begin{minipage}[t]{0.45\linewidth}
+      \centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/quantile-linear}
+    \end{minipage}
+    \begin{minipage}[t]{0.45\linewidth}
+      \centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/quantile-nonpar}
+    \end{minipage}
+  \end{minipage}
+  \caption{Estimated quantile functions, for different values of $y_{t-1}$. On the left using a linear model and using a nonparametric approach on the right.}
+  \label{fig:scatterplot-alphaquantiles}
+\end{figure}
