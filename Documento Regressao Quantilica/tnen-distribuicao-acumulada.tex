@@ -46,8 +46,11 @@ In order to find good estimates for $Q_{y_{t}}(\alpha)$ when $\alpha$ approaches
 
 The last two sections introduced two different strategies to arrive in a Quantile Function $Q_{y_t|X}$. But what are the differences between using one method or the other? 
 
-To provide a comparison between both approaches, we estimate a quantile function to predict the one-step ahead quantile function. We use as explanatory variable only the last observation $y_{t-1}$. Both 
+To provide a comparison between both approaches, we estimate a quantile function to predict the one-step ahead quantile function. We use as explanatory variable only the last observation $y_{t-1}$ - so $x_t = y_{t-1}$ - and estimate $\hat{q}_\alpha(y_{t-1})$, for every $\alpha \in \{0.05, 0.1, \dots, 0.9, 0.95 \}$. The result of both methods is shown on Figure \ref{fig:scatterplot-alphaquantiles}.
 
+While the linear model produces $\alpha$-quantile functions which are linear by imposition, on the nonparametric model the $\alpha$-quantiles are flexible enough to form a hull on the data and adapt to its nonlinearities. The difference between the estimated quantile functions $\hat{Q}_{y_t|y_{t-1}}$ on both methods are shown on Figure \ref{fig:scatterplot-alphaquantiles}.
+
+It is also important to test how the choice of the set $A$ affects the estimated quantile function. We experimented with two different sizes of $A$. In one of them, a dense grid of probabilities is used:   $A=\{0.005, 0.01, \dots, 0.99, 0.995 \}$, consisting of 199 elements. On the other only 19 elements are used to produce the quantile function ($A=\{0.05, 0.1, \dots, 0.9, 0.95 \}$).
 
 \begin{figure}
   \centering
@@ -60,7 +63,7 @@ To provide a comparison between both approaches, we estimate a quantile function
       \centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/quantile-nonpar-scatter}
     \end{minipage}
   \end{minipage}
-  \caption{Estimated $\alpha$-quantiles. On the left using a linear model and using a nonparametric approach on the right.}
+  \caption{Estimated $\alpha$-quantiles. On the left using a linear model and using a nonparametric approach (using $\lambda = 3$) on the right.}
   \label{fig:scatterplot-alphaquantiles}
 \end{figure}
 
@@ -79,5 +82,20 @@ To provide a comparison between both approaches, we estimate a quantile function
     \end{minipage}
   \end{minipage}
   \caption{Estimated quantile functions, for different values of $y_{t-1}$. On the left using a linear model and using a nonparametric approach on the right.}
-  \label{fig:scatterplot-alphaquantiles}
+  \label{fig:quantiles-vs-xt}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{minipage}[t]{\linewidth}
+		\centering
+		\begin{minipage}[t]{0.45\linewidth}
+			\centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/quantile-vs-alphas-linear}
+		\end{minipage}
+		\begin{minipage}[t]{0.45\linewidth}
+			\centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/quantile-vs-alphas-nonpar}
+		\end{minipage}
+	\end{minipage}
+	\caption{Sensitivity to different choices of set $A$. On the left, we have the estimated quantiles for the linear model, while on the right for the nonparametric model. On both, the red line shows the quantile function estimated with $A=\{0.005, 0.01, \dots, 0.99, 0.995 \}$, consisting of 199 elements. The blue line is the estimated quantile function when $A=\{0.05, 0.1, \dots, 0.9, 0.95 \}$, consisting of only 19 elements.}
+	\label{fig:quantiles-vs-xt}
 \end{figure}
