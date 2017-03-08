@@ -46,6 +46,8 @@ lambdas = [0.01, 0.03, 0.1, 0.3, 1, 3, 10]
 #lambdas = [50]
 lambdas = [100]
 
+
+
 ###################### Leitura a partir do R #################
 caminho_arquivo = "../Dados Climaticos/Solar-$localidade/$localidade.xlsx" # caminho do arquivo contendo os dados
 @rput hora caminho_arquivo
@@ -147,7 +149,7 @@ m = Model(solver = solvfunc)
 	end
 	# oplot(x,y, "r.")
 	# savefig("icaraizinho-crossing-" * string(lambda) * ".pdf")
-
+  return thetasoptMat
 #savefig("sem ccruzar quantile.pdf")
 end # Fim do laço dos lambdas
 

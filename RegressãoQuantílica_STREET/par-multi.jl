@@ -16,7 +16,7 @@
 # matrix (n x q) of regressors (X).
 # The function returns coefficients for the following model
 #   y = beta0 + X * beta
-function rq(y::Array{Float64}, X::Array{Float64,2}, Alphas)
+function rq_linear(y::Array{Float64}, X::Array{Float64,2}, Alphas, non_cross = true)
 
     Alf = 1:length(Alphas)
 
@@ -32,7 +32,9 @@ function rq(y::Array{Float64}, X::Array{Float64,2}, Alphas)
   	@objective(m, Min, sum(Alphas[j] * ɛ_tmais[i, j] + (1-Alphas[j]) *ɛ_tmenos[i, j] for i = T, j = Alf ))
 
   	########## Evitar cruzamento de quantis
-  	@constraint(m, evita_cross[i = T, j = 2:length(Alphas)], β0[j] + sum(β[q,j] * X[i,q] for q = Q) >= β0[j-1] + sum(β[q,j-1] * X[i,q] for q = Q))
+    if non_cross
+  	   @constraint(m, evita_cross[i = T, j = 2:length(Alphas)], β0[j] + sum(β[q,j] * X[i,q] for q = Q) >= β0[j-1] + sum(β[q,j-1] * X[i,q] for q = Q))
+     end
 
   		# Dar valores ao ɛ_tmais e ao ɛ_tmenos
   	@constraint(m, epsilons[i = T, j = Alf], ɛ_tmais[i,j] - ɛ_tmenos[i,j] == y[i] - β0[j] - sum(β[q,j] * X[i,q] for q = Q))
@@ -57,7 +59,7 @@ function rq(y::Array{Float64}, X::Array{Float64,2}, Alphas)
 end
 
 # This function calculates the value from an estimated quantile function
-# alpha is the probability to be calculated ; Q_hat the empirical quantiles ;
+# alpha is the probability to be calculated ; Q_hat the empirical quantiles for a given x_t ;
 # Alphas is a vector of which probabilities
 function Q(alpha, Q_hat::Array{Float64}, Alphas::Array{Float64})
 
@@ -75,6 +77,15 @@ function Q(alpha, Q_hat::Array{Float64}, Alphas::Array{Float64})
   return ponto
 
 end
+
+function Estimar_Q_hat_par(y,x, Alphas, x_new; non_cross = true)
+  betas0, betas = rq_linear(y,X, Alphas, non_cross); # coeficientes do modelo linear
+  Q_hat = (betas0 + x_new * betas)[1,:];
+  return Q_hat
+end
+
+# Estimar_Q_hat_par(y,x, Alphas, x_new)
+
 
 # betas0, betas = rq(y,x, Alphas)
 #

@@ -11,12 +11,162 @@
 # include("RegressãoQuantílica_STREET/funcoes_npqar.jl")
 # using JuMP, DataFrames, Plots, RCall, Interpolations #, Distributions
 
+# tmp = [rand(5) ["a", "b", "c", "d" ,"e"]]
+# sort(tmp, by)
+# sortrows(tmp, by=x->(x[1]))
+
+# scatter(x,y)
+
+
+# lambda2 = 10
+# This function receives a vector of dimension 1 as y and a
+# vector of regressors (X).
+# The function returns coefficients for the following model
+#   q_alpha =
+function rq_np(y::Array{Float64}, x::Array{Float64}, Alphas, lambda1 = NaN, lambda2 = NaN; range_data = NaN, non_cross = true)
+
+    Alf = 1:length(Alphas)
+    n = size(y)[1]
+    # ensures that (x_i,y_i) are ordered in terms of x, so that the algorithm can work ; it also
+    # adds a residual to ensure that there are no infinite derivatives
+    tmp = [(x .+ rand(n) * 0.0001 ) y];
+    tmp = sortrows(tmp, by=x->(x[1]));
+    x = tmp[:,1];
+    y = tmp[:,2];
+
+    if any(!isnan(range_data))
+      incluir = (y .< range_data[2]) .* (x .< range_data[2]) .* (range_data[1] .< y) .* (range_data[1] .< x)
+      x = x[incluir]
+      y = y[incluir]
+    end
+
+    n = size(y)[1] # updates n, in case some values were cut
+    T = 1:n
+    nQ = size(x)[1]
+
+    p = 1 # uses only one lag
+    # takes a time series and transforms its lags
+
+    n = length(x)
+    I = (p+2):(n-1)
+    I2 = 1:n
+    Alf = 1:length(Alphas)
+    m = Model(solver = solvfunc)
+
+    	@variable(m, delta_mais[I, Alf] >= 0)
+    	@variable(m, delta_menos[I, Alf] >= 0)
+    	@variable(m, theta[1:n, Alf])
+      @variable(m, gamma[I2, Alf])
+    	@variable(m, xi[I2, Alf])
+
+    	@objective(m, Min, sum(Alphas[j] *  delta_mais[i, j] + (1-Alphas[j]) *
+    						delta_menos[i, j] for i = I, j = Alf ) + lambda2 * sum(xi[i, j] for i=I, j = Alf) +
+                lambda1 * sum(gamma[i, j] for i=I, j = Alf))
+
+
+    	# Defines expressions
+      @expression(m, D1_theta[i=3:n, j=Alf],
+         (theta[i,j]-theta[i-1,j])/(x[i]-x[i-1]) )
+       @expression(m, D2_theta[i=3:n, j=Alf],
+         ( ( (theta[i,j]-theta[i-1,j])/(x[i]-x[i-1]) - (theta[i-1,j]-theta[i-2,j])/(x[i-1]-x[i-2]) ) / (x[i]-2*x[i-1]+x[i-2]) ))
+
+
+         # D1_theta ser igual ao valor absoluta da primeira diferenca de theta
+      @constraint(m, absolut_posit_1[i = 3:n, j = Alf], gamma[i,j] >= D1_theta[i, j] )
+      @constraint(m, absolut_negat_1[i = 3:n, j = Alf], gamma[i,j] >= - D1_theta[i,j])
+
+
+         # D2_theta ser igual ao valor absoluta da segunda diferenca de theta
+  		@constraint(m, absolut_posit_2[i = 3:n, j = Alf], xi[i,j] >= D2_theta[i, j] )
+  		@constraint(m, absolut_negat_2[i = 3:n, j = Alf], xi[i,j] >= - D2_theta[i,j])
+
+
+
+
+
+    	########## Evitar cruzamento de quantis
+      if non_cross
+    	   @constraint(m, evita_cross[i = 1:n, j = 2:length(Alphas)], theta[i,j] >= theta[i,j-1])
+       end
+
+    		# Dar valores ao delta_mais e delta_menos
+    	@constraint(m, deltas[i = I, j = Alf], delta_mais[i,j] - delta_menos[i,j] == y[i] - theta[i,j])
+
+    	status = solve(m)
+
+      thetasopt = getvalue(theta)
+
+      thetasoptMat = zeros(n, length(Alphas))
+      for i in 1:n , j in 1:length(Alphas)
+    	  thetasoptMat[i,j] = thetasopt[i,j]
+    	end
+
+    	# scatter(x,y, xlabel = "y_{t-1}", ylabel = "y_t", title = "Lambda $(lambda2)",  leg = false)
+    	# for alf in 1:length(Alphas)
+    	# 	# print(alf)
+    	# 	plot!(x[I],thetasoptMat[I,alf], linewidth = 2)
+    	# end
+      # plot!()
+      return thetasoptMat, x, y
+end
+
+
+# thetas = rq_np(y,x, Alphas, 10)
+
+
+
+
+# This function calculates the value from an estimated quantile function
+# alpha is the probability to be calculated ; Q_hat the empirical quantiles ;
+# Alphas is a vector of which probabilities
+function Q(alpha, Q_hat::Array{Float64}, Alphas::Array{Float64})
+
+  ## First step is to define the value of Q(0) and Q(1)
+  Q_0 = 2* Q_hat[1] - Q_hat[2]
+  Q_fim = 2*Q_hat[end] - Q_hat[end-1]
+  # scatter([0; Alphas; 1] ,
+         #  [Q_0 ; Q_hat ; Q_fim], k = 1)
+
+  ## Creates a Spline object
+  sp1 = Spline1D([0; Alphas; 1] ,
+                 [ Q_0 ; Q_hat ; Q_fim], k = 1)
+  ponto = evaluate(sp1, alpha)
+  # scatter!([valor],[ponto])
+  return ponto
+
+end
+
+
+function Estimar_Q_hat_np(y,x, Alphas, lambda1, lambda2, x_new; degree_splines = 2 , non_cross = true)
+  thetas, x_ord, y_ord = rq_np(y,x,Alphas, lambda1, lambda2, non_cross = non_cross)
+  Q_hat = zeros(length(Alphas))
+  for col_alpha in 1:length(Alphas)
+    sp1 = Spline1D( x_ord , thetas[:,col_alpha] , k = degree_splines)
+    Q_hat[col_alpha] = evaluate(sp1, x_new)
+  end
+  return Q_hat
+end
+
+
+function Estimar_Q_hat_np2(y,x, Alphas, lambda1, lambda2, x_new; degree_splines = 2 , non_cross = true)
+  print(non_cross)
+  # thetas, x_ord, y_ord = rq_np(y,x,Alphas, lambda1, lambda2, non_cross)
+  # Q_hat = zeros(length(Alphas))
+  # for col_alpha in 1:length(Alphas)
+  #   sp1 = Spline1D( x_ord , thetas[:,col_alpha] , k = degree_splines)
+  #   Q_hat[col_alpha] = evaluate(sp1, x_new)
+  # end
+  # return Q_hat
+end
+
+
+
 
 # This function receives a vector of dimension 1 as y and a
 # matrix (n x q) of regressors (X).
 # The function returns coefficients for the following model
 #   y = beta0 + X * beta
-function rq(y::Array{Float64}, X::Array{Float64,2}, Alphas)
+function rq_par(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_cross = true)
 
     Alf = 1:length(Alphas)
 
@@ -32,7 +182,9 @@ function rq(y::Array{Float64}, X::Array{Float64,2}, Alphas)
   	@objective(m, Min, sum(Alphas[j] * ɛ_tmais[i, j] + (1-Alphas[j]) *ɛ_tmenos[i, j] for i = T, j = Alf ))
 
   	########## Evitar cruzamento de quantis
-  	@constraint(m, evita_cross[i = T, j = 2:length(Alphas)], β0[j] + sum(β[q,j] * X[i,q] for q = Q) >= β0[j-1] + sum(β[q,j-1] * X[i,q] for q = Q))
+    if non_cross
+  	   @constraint(m, evita_cross[i = T, j = 2:length(Alphas)], β0[j] + sum(β[q,j] * X[i,q] for q = Q) >= β0[j-1] + sum(β[q,j-1] * X[i,q] for q = Q))
+     end
 
   		# Dar valores ao ɛ_tmais e ao ɛ_tmenos
   	@constraint(m, epsilons[i = T, j = Alf], ɛ_tmais[i,j] - ɛ_tmenos[i,j] == y[i] - β0[j] - sum(β[q,j] * X[i,q] for q = Q))
@@ -56,33 +208,9 @@ function rq(y::Array{Float64}, X::Array{Float64,2}, Alphas)
     return betas0opt', betasopt
 end
 
-# This function calculates the value from an estimated quantile function
-# alpha is the probability to be calculated ; Q_hat the empirical quantiles ;
-# Alphas is a vector of which probabilities
-function Q(alpha, Q_hat::Array{Float64}, Alphas::Array{Float64})
 
-  ## First step is to define the falue of Q(0) and Q(1)
-  Q_0 = 2* Q_hat[1] - Q_hat[2]
-  Q_fim = 2*Q_hat[end] - Q_hat[end-1]
-  # scatter([0; Alphas; 1] ,
-         #  [Q_0 ; Q_hat ; Q_fim], k = 1)
-
-  ## Creates a Spline object
-  sp1 = Spline1D([0; Alphas; 1] ,
-                 [ Q_0 ; Q_hat ; Q_fim], k = 2)
-  ponto = evaluate(sp1, alpha)
-  # scatter!([valor],[ponto])
-  return ponto
-
+function Estimar_Q_hat_par(y,x, Alphas, x_new; non_cross = true)
+  betas0, betas = rq_par(y,X, Alphas, non_cross = non_cross); # coeficientes do modelo linear
+  Q_hat = (betas0 + x_new * betas)[1,:];
+  return Q_hat
 end
-
-# betas0, betas = rq(y,x, Alphas)
-#
-#
-# @rput betas0 betas x y Alphas
-# R"plot(x[,1],y)
-#
-#  for (alf in 1:length(Alphas)) {
-#       abline(a = betas0[alf],b= betas[1 , alf])
-#    }
-# "

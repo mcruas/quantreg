@@ -19,7 +19,7 @@ cd(homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/")
 # cd("C:/Users/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/RegressãoQuantílica_STREET")
 # pwd()
 include(pwd()*"/RegressãoQuantílica_STREET/funcoes_npqar.jl")
-include(pwd()*"/RegressãoQuantílica_STREET/par-multi.jl")
+include(pwd()*"/RegressãoQuantílica_STREET/npar-multi-funcoes.jl")
 
 ################################################################
 ############# Carregar dados ###################################
@@ -38,11 +38,15 @@ include(pwd()*"/RegressãoQuantílica_STREET/par-multi.jl")
 # serie
 # plot(serie)
 
-serie = readcsv("Dados Climaticos/Enas/enas sudeste 1931-2014.csv"); nomeserie = "enasudeste"
+serie = readcsv("Dados Climaticos/icaraizinho.csv"); nomeserie = "icaraizinho"
+# serie = readcsv("Dados Climaticos/Enas/enas sudeste 1931-2014.csv"); nomeserie = "enasudeste"
 serie = serie ./ 100
 max_sim= 10;
 n_cenarios = 100;
 n_tmp = length(serie); # keeps size of series before cutting them
+
+
+
 
 
 ############################################################
@@ -50,10 +54,14 @@ n_tmp = length(serie); # keeps size of series before cutting them
 
 # Does adaptation for a AR(2) model
 
+max_lag = 1
 X = [rand(n_tmp-2) serie[2:n_tmp-1] serie[1:n_tmp-2]] # X = [y_t-1 y_t-2]
 X = [serie[2:n_tmp-1] serie[1:n_tmp-2]]
 
-y = serie[3:n_tmp]
+X = zeros(length(1:n_tmp-1),1)
+X[:,1] = serie[1:n_tmp-1]
+
+y = serie[max_lag + 1:n_tmp]
 
 n = length(y)
 T = 1:n
@@ -69,11 +77,29 @@ tau = n +1
 
 
 ### Step 2
-X_tau = [y[tau-1] ; y[tau-2]] #não é generico. nao aceitar.
+X_tau = [y[tau-1]] #não é generico. nao aceitar.
 
-betas0, betas = rq(y,X, Alphas)
-# plot(betas')
-Q_hat = (betas0 + X_tau' * betas)[1,:]
+if mode_distribution == "par"
+  Q_hat = Estimar_Q_hat_par(y,X,Alphas, X_tau)
+else mode_distribution == "np"
+  Q_hat = Estimar_Q_hat_np(y,X[:,1],Alphas, 0, 100, X_tau)
+end
+
+
+######################## TMP
+
+rq_np(y,X[:,1],Alphas, 0, 100)
+
+Q_hat = Estimar_Q_hat_np(y,X[:,1],Alphas, 0, 100, X_tau)
+
+thetas, x_ord, y_ord = rq_np(y,X[:,1],Alphas, 0, 100)
+Q_hat = zeros(length(Alphas))
+for col_alpha in 1:length(Alphas)
+  sp1 = Spline1D( x_ord , thetas[:,col_alpha] , k = degree_splines)
+  Q_hat[col_alpha] = evaluate(sp1, x_new)
+end
+return Q_hat
+###########################
 
 ### Step 3
 unif = rand(n_cenarios)
