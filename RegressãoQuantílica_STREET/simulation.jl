@@ -11,7 +11,7 @@ mode_distribution = "par"   # choose between "par" for parametric
 
 tic()
 n = 1000
-using JuMP, DataFrames, Plots, RCall, Interpolations, Dierckx #, Distributions
+using JuMP, DataFrames, Distributions, Plots, RCall, Interpolations, Dierckx #, Distributions
 gr()
 usesolver = "mosek"    # Escolher entre os valores 'mosek' ou 'gurobi'
 # cd("/home/marcelo/Dropbox/Pesquisa Doutorado/Paper NPQuantile/RegressãoQuantílica_STREET")
@@ -38,10 +38,10 @@ include(pwd()*"/RegressãoQuantílica_STREET/npar-multi-funcoes.jl")
 # serie
 # plot(serie)
 
-serie = readcsv("Dados Climaticos/icaraizinho.csv"); nomeserie = "icaraizinho"
-# serie = readcsv("Dados Climaticos/Enas/enas sudeste 1931-2014.csv"); nomeserie = "enasudeste"
+# serie = readcsv("Dados Climaticos/icaraizinho.csv"); nomeserie = "icaraizinho"
+serie = readcsv("Dados Climaticos/Enas/enas sudeste 1931-2014.csv"); nomeserie = "enasudeste"
 serie = serie ./ 100
-max_sim= 10;
+max_sim= 100;
 n_cenarios = 100;
 n_tmp = length(serie); # keeps size of series before cutting them
 
@@ -66,7 +66,7 @@ y = serie[max_lag + 1:n_tmp]
 n = length(y)
 T = 1:n
 
-Alphas = collect(0.005:0.005:0.995)
+Alphas = collect(0.05:0.05:0.95)
 
 Y = [ y * ones(1,n_cenarios);
       zeros(max_sim,n_cenarios)]
@@ -81,24 +81,57 @@ X_tau = [y[tau-1]] #não é generico. nao aceitar.
 
 if mode_distribution == "par"
   Q_hat = Estimar_Q_hat_par(y,X,Alphas, X_tau)
-else mode_distribution == "np"
-  Q_hat = Estimar_Q_hat_np(y,X[:,1],Alphas, 0, 100, X_tau)
+else
+  Q_hat = Estimar_Q_hat_np(y,X[:,1],Alphas, 0, 300, x_new)
 end
 
 
+
+
+###################################################
 ######################## TMP
 
-rq_np(y,X[:,1],Alphas, 0, 100)
-
-Q_hat = Estimar_Q_hat_np(y,X[:,1],Alphas, 0, 100, X_tau)
-
-thetas, x_ord, y_ord = rq_np(y,X[:,1],Alphas, 0, 100)
-Q_hat = zeros(length(Alphas))
-for col_alpha in 1:length(Alphas)
-  sp1 = Spline1D( x_ord , thetas[:,col_alpha] , k = degree_splines)
-  Q_hat[col_alpha] = evaluate(sp1, x_new)
-end
-return Q_hat
+# rq_np(y,X[:,1],Alphas, 0, 100)
+#
+# Q_hat = Estimar_Q_hat_np(y,X[:,1],Alphas, 0, 100, X_tau)
+#
+# thetas, x_ord, y_ord = rq_np(y,X[:,1],Alphas, 0, 100)
+#
+#
+# Q_hat = Estimar_Q_hat_par(y,X,Alphas, x_new)
+# plot(Q_hat)
+# Q_hat = Estimar_Q_hat_np(y,X[:,1],Alphas, lambda1, lambda2, x_new,
+#                           range_data = range_data,  non_cross = non_cross)
+# plot!(Q_hat)
+# #
+# x = X[:,1]
+# non_cross= true
+# lambda1 = 0; lambda2 = 300
+# range_data = NaN
+# degree_splines = 2
+# x_new = 500
+#
+# thetas, x_ord, y_ord = rq_np(y,x,Alphas, lambda1, lambda2,
+#   range_data = range_data,  non_cross = non_cross)
+# Q_hat = zeros(length(Alphas))
+# for col_alpha in 1:length(Alphas)
+#   sp1 = Spline1D( x_ord , thetas[:,col_alpha] , k = degree_splines)
+#   Q_hat[col_alpha] = evaluate(sp1, x_new)
+# end
+#
+# tic()
+# thetas, x_ord, y_ord = rq_np(y,x,Alphas, lambda1, lambda2,
+#   range_data = range_data,  non_cross = non_cross)
+# scatter(x_ord, y_ord, leg = false)
+# plot!(x_ord ,thetas)
+# toc()
+#
+# Q_hat = zeros(length(Alphas))
+# for col_alpha in 1:length(Alphas)
+#   sp1 = Spline1D( x_ord , thetas[:,col_alpha] , k = degree_splines)
+#   Q_hat[col_alpha] = evaluate(sp1, x_new)
+# end
+# return Q_hat
 ###########################
 
 ### Step 3
@@ -110,7 +143,7 @@ Y[tau, :] = y_simulated
 for s in 1:n_cenarios, tau in n+2:n+max_sim
 
   # (step 2)
-  X_tau = [Y[tau-1,s] ; Y[tau-2,s]] #não é generico. nao aceitar.
+  X_tau = [Y[tau-1,s]] #não é generico. nao aceitar.
   # betas0, betas = rq(y,X, Alphas)
   Q_hat = (betas0 + X_tau' * betas)[1,:]
 

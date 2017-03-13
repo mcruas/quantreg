@@ -90,7 +90,7 @@ where $F_Y$ is the distribution function of random variable $Y$ and $\alpha \in 
 
 Let $(\Omega, \mathcal{F}, P)$ be a probability space. The conditional quantile function can be found as the result of the following optimization problem:
 \begin{eqnarray}
-Q_{Y|X}(\alpha,x)\quad & \in\quad\underset{q_\alpha(\cdot)}{\text{arg min}}\, &
+Q_{Y|X}(\alpha, \cdot)\quad & \in\quad\underset{q_\alpha(\cdot)}{\text{arg min}}\, &
 (1-\alpha)\int_{\omega \in \Omega}|Y(w)-q_\alpha(X(w))|^{-}P(dw) \label{eq:optim-continuous}
  \\ & & + (\alpha)\int_{\omega \in \Omega}|Y(w)-q_\alpha(X(w))|^{+}P(dw) \nonumber
 \end{eqnarray}
@@ -98,29 +98,31 @@ Q_{Y|X}(\alpha,x)\quad & \in\quad\underset{q_\alpha(\cdot)}{\text{arg min}}\, &
 \begin{equation}
   q_\alpha  \in \mathcal{Q},
 \end{equation}
-where $A$ is a set containing a sequence of probabilities  $\alpha_i$ such that $0 < \alpha_1 < \alpha_2 < \dots < \alpha_Q < 1$. This set represents a finite discretization of the interval $[0,1]$. These values must be close enough so that $Q_{Y|X}(\alpha)$ has a precise representation. The argument of optimization problem described on equation \ref{eq:optim-continuous} is the function $q_\alpha$, which belongs to a function space $\mathcal{Q}$. We might have different assumptions for the space $\mathcal{Q}$, depending on the type of function we want to find for $q_\alpha$. A few properties, however, must be achieved by our choice. The conditional quantile function $Q_{Y|X}(\alpha)$ must be monotone on $\alpha$, and its first derivative must be limited.
+ The argument of optimization problem described on equation \ref{eq:optim-continuous} is the function $q_\alpha$, which belongs to a function space $\mathcal{Q}$. We might have different assumptions for the space $\mathcal{Q}$, depending on the type of function we want to find for $q_\alpha$. A few properties, however, must be achieved by our choice. The conditional quantile function $Q_{Y|X}(\alpha)$ must be monotone on $\alpha$, and its first derivative must be limited.
 
 In this work, we use the sample quantile,  where we calculate the optimization based on a finite number of observations, instead of integrating over all domain of random variable $Y$. For the specific case where the random variable is a time series $y_t$, quantiles are estimated from a $n$ size sample of observations of $y_t$ and a explanatory variable $x_t$ for each $t$, such that our random sample is formed by the sequence $\{y_t,x_t \}_{t=1}^n$. To estimate the $\alpha$-quantile from a sample, we change \ref{eq:optim-continuous} for the following optimization problem:
 \begin{equation}
-\hat{Q}_{Y|X}(\alpha,x)\quad \in\quad\underset{q_\alpha(\cdot)}{\text{arg min}}\,\sum_{t=1}^{n}\alpha|y_{t}-q_\alpha(x_t)|^{+}+\sum_{t=1}^{n}(1-\alpha)|y_{t}-q_\alpha(x_t)|^{-},
+\hat{Q}_{Y|X}(\alpha, \cdot)\quad \in\quad\underset{q_\alpha(\cdot)}{\text{arg min}}\,\sum_{t \in T}\alpha|y_{t}-q_\alpha(\cdot)|^{+}+\sum_{t \in T}(1-\alpha)|y_{t}-q_\alpha(\cdot)|^{-},
 \label{eq:linear-model}
 \end{equation}
 \begin{equation}
   q_\alpha  \in \mathcal{Q},
 \end{equation}
-where $q_\alpha(x_t)$ is the estimated quantile value at a given time $t$ and $|x|^+=\max\{0,x\}$ and $|x|^-=-\min\{0,x\}$. The solution from the above problem is an estimator $\hat{Q}_{Y|X}$ for the quantile function $Q_{Y|X}$.
+where $T = \{0, \dots, n \}$, $|x|^+=\max\{0,x\}$ and $|x|^-=-\min\{0,x\}$. The solution from the above problem is an estimator $\hat{Q}_{Y|X}$ for the quantile function $Q_{Y|X}$.
 
-To model this problem as a Linear Programming problem, thus being able to use a modern solver to fit our model,  we create variables $\varepsilon^+_t$ e $\varepsilon^-_t$ to represent $|y-q(x_t)|^+$ and $|y-q(x_t)|^-$, respectively. The optimal argument $q_\alpha^*(\cdot)$ on the Linear Programming problem \ref{eq:qar-general} is the estimated $\alpha$-quantile for the given random sample.
+To model this problem as a Linear Programming problem, thus being able to use a modern solver to fit our model,  we create variables $\varepsilon^+_t$ e $\varepsilon^-_t$ to represent $|y-q(\cdot)|^+$ and $|y-q(\cdot)|^-$, respectively. The optimal argument $q_\alpha^*(\cdot)$ on the Linear Programming problem \ref{eq:qar-general} is the estimated $\alpha$-quantile for the given random sample.
 \begin{equation}
-\begin{aligned}\min_{q_\alpha (\cdot),\varepsilon_{t}^{+}, \varepsilon_{t}^{-}} & \sum_{t=1}^{n}\left(\alpha \varepsilon_{t}^{+}+(1-\alpha)\varepsilon_{t}^{-}\right) & \\
-\mbox{s.t. } & \varepsilon_{t}^{+}-\varepsilon_{t}^{-}=y_{t}-q_\alpha(x_{t}), & \qquad\forall t \in \{1,\dots,n\},\\
-& \varepsilon_t^+,\varepsilon_t^- \geq 0, & \qquad \forall t \in \{1,\dots,n\}.
+\begin{aligned}\min_{q_\alpha (\cdot),\varepsilon_{t}^{+}, \varepsilon_{t}^{-}} & \sum_{t \in T}\left(\alpha \varepsilon_{t}^{+}+(1-\alpha)\varepsilon_{t}^{-}\right) & \\
+\mbox{s.t. } & \varepsilon_{t}^{+}-\varepsilon_{t}^{-}=y_{t}-q_\alpha(x_t), & \qquad\forall t \in T,\\
+& \varepsilon_t^+,\varepsilon_t^- \geq 0, & \qquad \forall t \in T.
 \end{aligned}
 \label{eq:qar-general}
 \end{equation}
 
+Let $A$ be a set containing a sequence of probabilities  $\alpha_i$ such that $0 < \alpha_1 < \alpha_2 < \dots < \alpha_Q < 1$. This set represents a finite discretization of the interval $[0,1]$. These values must be close enough so that $Q_{Y|X}$ has a precise representation. 
+
 One of our goals with quantile regression is to estimate a quantile function $\hat{Q}_{Y|X}$ of a given real valued random variable $X$ from a sequence of quantiles $q_{\alpha_1}(x_t) \leq q_{\alpha_2}(x_t) \leq \dots \leq q_{\alpha_{|A|}}(x_t)$, with $0 < \alpha_1 < \alpha_2 < \dots < \alpha_{|A|} < 1$, for any given $t$.
-The process of fitting $\hat{Q}_Y$ is by mapping every $\alpha_i$ with its estimated quantile $\hat{q}_{\alpha_i}(x_t)$.
+The process of fitting $\hat{Q}_{Y|X}$ is by mapping every $\alpha_i$ with its estimated quantile $\hat{q}_{\alpha_i}(x_t)$.
 When this sequence of chosen $\alpha_i$ is thin enough, we have a good approximation of $Q_{Y|X}$.
 Thus, the distribution found for $Y$ is nonparametric, as no previous assumptions are made about its shape, and its form is fully recovered by the data we have.
 
@@ -132,13 +134,13 @@ A typical problem, however, arises when working with quantile regression. When q
 	\label{fig:crossing-quantiles}
 \end{figure}
 
- Let $T_n = \{1, 2, \dots, n\}$. In order to estimate all quantiles simultaneously, the new objective function will be the sum of all individual objective functions, as well as include all constraints from all individual problems. The only difference is the inclusion of an equation to guarantee that quantiles won't cross. When modifying problem \ref{eq:qar-general} to account for all quantiles, we have the following new problem:
+In order to estimate all quantiles simultaneously, the new objective function will be the sum of all individual objective functions, as well as include all constraints from all individual problems. The only difference is the inclusion of an equation to guarantee that quantiles won't cross.  When modifying problem \ref{eq:qar-general} to account for all quantiles, we have the following new problem:
 \begin{eqnarray}
 \label{eq:non-crossing-quantiles1}
-\min_{q_\alpha(\cdot),\varepsilon_{t,\alpha}^{+}, \varepsilon_{t,\alpha}^{-}} &  \sum_{\alpha \in A} \sum_{t \in T_n}\left(\alpha \varepsilon_{t,\alpha}^{+}+(1-\alpha)\varepsilon_{t,\alpha}^{-}\right) &  \\
-\mbox{s.t. } & \varepsilon_{t,\alpha}^{+}-\varepsilon_{t,\alpha}^{-}=y_{t}-q_\alpha(x_{t}), & \qquad\forall t \in T_\tau,\forall \alpha \in A,\\
-& \varepsilon_{t,\alpha}^+,\varepsilon_{t,\alpha}^- \geq 0, & \qquad\forall t \in T_\tau,\forall \alpha \in A,\\\label{eq:non-crossing-constraint}
-& q_{\alpha}(x_t) \leq q_{\alpha'}(x_t), & \qquad \forall t \in T_\tau, \forall (\alpha, \alpha') \in AxA,  \alpha' \geq \alpha,
+\{q^*_{\alpha}(\cdot)\}_{\alpha \in A}  \in \underset{{q_\alpha(\cdot),\varepsilon_{t \alpha}^{+}, \varepsilon_{t \alpha}^{-}}}{\text{arg min}}_ &  \sum_{\alpha \in A} \sum_{t \in T}\left(\alpha \varepsilon_{t \alpha}^{+}+(1-\alpha)\varepsilon_{t \alpha}^{-}\right) &  \\
+\mbox{s.t. } & \varepsilon_{t \alpha}^{+}-\varepsilon_{t \alpha}^{-}=y_{t}-q_\alpha(x_{t}), & \qquad\forall t \in T_\tau,\forall \alpha \in A,\\
+& \varepsilon_{t \alpha}^+,\varepsilon_{t \alpha}^- \geq 0, & \qquad\forall t \in T_\tau,\forall \alpha \in A,\\\label{eq:non-crossing-constraint}
+& q_{\alpha}(x_t) \leq q_{\alpha'}(x_t), & \qquad \forall t \in T_\tau, \forall (\alpha, \alpha') \in A \times A,  \alpha' \geq \alpha,\nonumber\\
 \end{eqnarray}
 where constraint \ref{eq:non-crossing-constraint} assures that no lower quantile will have a bigger value than a higher quantile.
 

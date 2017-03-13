@@ -111,6 +111,89 @@ function rq_np(y::Array{Float64}, x::Array{Float64}, Alphas, lambda1 = NaN, lamb
 end
 
 
+# Difference between rq_np and rq_np2 is that rq_np2 doesnt include the first derivative
+# lambda1 is kept to
+function rq_np2(y::Array{Float64}, x::Array{Float64}, Alphas, lambda1 = NaN, lambda2 = NaN; range_data = NaN, non_cross = true)
+
+    Alf = 1:length(Alphas)
+    n = size(y)[1]
+    # ensures that (x_i,y_i) are ordered in terms of x, so that the algorithm can work ; it also
+    # adds a residual to ensure that there are no infinite derivatives
+    tmp = [(x .+ rand(n) * 0.0001 ) y];
+    tmp = sortrows(tmp, by=x->(x[1]));
+    x = tmp[:,1];
+    y = tmp[:,2];
+
+    if any(!isnan(range_data))
+      incluir = (y .< range_data[2]) .* (x .< range_data[2]) .* (range_data[1] .< y) .* (range_data[1] .< x)
+      x = x[incluir]
+      y = y[incluir]
+    end
+
+    n = size(y)[1] # updates n, in case some values were cut
+    T = 1:n
+    nQ = size(x)[1]
+
+    p = 1 # uses only one lag
+    # takes a time series and transforms its lags
+
+    n = length(x)
+    I = (p+2):(n-1)
+    I2 = 1:n
+    Alf = 1:length(Alphas)
+    m = Model(solver = solvfunc)
+
+    	@variable(m, delta_mais[I, Alf] >= 0)
+    	@variable(m, delta_menos[I, Alf] >= 0)
+    	@variable(m, theta[1:n, Alf])
+    	@variable(m, xi[I2, Alf])
+
+    	@objective(m, Min, sum(Alphas[j] *  delta_mais[i, j] + (1-Alphas[j]) *
+    						delta_menos[i, j] for i = I, j = Alf ) + lambda2 * sum(xi[i, j] for i=I, j = Alf))
+
+
+
+    	# Defines expressions
+       @expression(m, D2_theta[i=3:n, j=Alf],
+         ( ( (theta[i,j]-theta[i-1,j])/(x[i]-x[i-1]) - (theta[i-1,j]-theta[i-2,j])/(x[i-1]-x[i-2]) ) / (x[i]-2*x[i-1]+x[i-2]) ))
+
+         # D2_theta ser igual ao valor absoluta da segunda diferenca de theta
+  		@constraint(m, absolut_posit_2[i = 3:n, j = Alf], xi[i,j] >= D2_theta[i, j] )
+  		@constraint(m, absolut_negat_2[i = 3:n, j = Alf], xi[i,j] >= - D2_theta[i,j])
+
+
+
+
+
+    	########## Evitar cruzamento de quantis
+      if non_cross
+    	   @constraint(m, evita_cross[i = 1:n, j = 2:length(Alphas)], theta[i,j] >= theta[i,j-1])
+       end
+
+    		# Dar valores ao delta_mais e delta_menos
+    	@constraint(m, deltas[i = I, j = Alf], delta_mais[i,j] - delta_menos[i,j] == y[i] - theta[i,j])
+
+    	status = solve(m)
+
+      thetasopt = getvalue(theta)
+
+      thetasoptMat = zeros(n, length(Alphas))
+      for i in 1:n , j in 1:length(Alphas)
+    	  thetasoptMat[i,j] = thetasopt[i,j]
+    	end
+
+    	# scatter(x,y, xlabel = "y_{t-1}", ylabel = "y_t", title = "Lambda $(lambda2)",  leg = false)
+    	# for alf in 1:length(Alphas)
+    	# 	# print(alf)
+    	# 	plot!(x[I],thetasoptMat[I,alf], linewidth = 2)
+    	# end
+      # plot!()
+      return thetasoptMat, x, y
+end
+
+
+
+
 # thetas = rq_np(y,x, Alphas, 10)
 
 
@@ -136,9 +219,23 @@ function Q(alpha, Q_hat::Array{Float64}, Alphas::Array{Float64})
 
 end
 
+# Recebe como input a série, variaveis explicativas, Alphas e um novo valor de X
+# Faz a estimação e calcula os valores de Q_hat na discretização dada por Alphas
+function Estimar_Q_hat_np(y,x, Alphas, lambda1, lambda2, x_new; degree_splines = 2 , range_data = NaN, non_cross = true)
+  thetas, x_ord, y_ord = rq_np(y,x,Alphas, lambda1, lambda2, non_cross = non_cross, range_data = range_data)
+  Q_hat = zeros(length(Alphas))
+  for col_alpha in 1:length(Alphas)
+    sp1 = Spline1D( x_ord , thetas[:,col_alpha] , k = degree_splines)
+    Q_hat[col_alpha] = evaluate(sp1, x_new)
+  end
+  return Q_hat
+end
 
-function Estimar_Q_hat_np(y,x, Alphas, lambda1, lambda2, x_new; degree_splines = 2 , non_cross = true)
-  thetas, x_ord, y_ord = rq_np(y,x,Alphas, lambda1, lambda2, non_cross = non_cross)
+# Recebe como input os valores estimados de betas, betas0 e o novo valor de x
+# Para estimar os valores dos coeficientes, utilizar a função rq_par, abaixo:
+# thetas, x_ord, y_ord = rq_np(y,x,Alphas, lambda1, lambda2, non_cross = non_cross, range_data = range_data)
+function Estimar_Q_hat_np2(x_ord, thetas, Alphas, x_new; degree_splines = 2)
+
   Q_hat = zeros(length(Alphas))
   for col_alpha in 1:length(Alphas)
     sp1 = Spline1D( x_ord , thetas[:,col_alpha] , k = degree_splines)
@@ -148,16 +245,6 @@ function Estimar_Q_hat_np(y,x, Alphas, lambda1, lambda2, x_new; degree_splines =
 end
 
 
-function Estimar_Q_hat_np2(y,x, Alphas, lambda1, lambda2, x_new; degree_splines = 2 , non_cross = true)
-  print(non_cross)
-  # thetas, x_ord, y_ord = rq_np(y,x,Alphas, lambda1, lambda2, non_cross)
-  # Q_hat = zeros(length(Alphas))
-  # for col_alpha in 1:length(Alphas)
-  #   sp1 = Spline1D( x_ord , thetas[:,col_alpha] , k = degree_splines)
-  #   Q_hat[col_alpha] = evaluate(sp1, x_new)
-  # end
-  # return Q_hat
-end
 
 
 
@@ -208,9 +295,21 @@ function rq_par(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_cross = true
     return betas0opt', betasopt
 end
 
-
+# Recebe como input a série, variaveis explicativas, Alphas e um novo valor de X
+# Faz a estimação e calcula os valores de Q_hat na discretização dada por Alphas
 function Estimar_Q_hat_par(y,x, Alphas, x_new; non_cross = true)
   betas0, betas = rq_par(y,X, Alphas, non_cross = non_cross); # coeficientes do modelo linear
   Q_hat = (betas0 + x_new * betas)[1,:];
   return Q_hat
 end
+
+# Recebe como input os valores estimados de betas, betas0 e o novo valor de x
+# Para estimar os valores dos coeficientes, utilizar a função rq_par, abaixo:
+#     betas0, betas = rq_par(y,X, Alphas, non_cross = non_cross)
+function Estimar_Q_hat_par2(betas0,betas, x_new)
+  Q_hat = (betas0 + x_new * betas)[1,:];
+  return Q_hat
+end
+
+
+# function Plotar_quantis(x,y,thetas, )

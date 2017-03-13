@@ -6,7 +6,13 @@
 
 ################# Gráficos linear #####################
 vetor_x = [-1 0 1 2 3 10] ; n = 100
-limx = 1500; limy = 2000;
+X_tau = 500 # Qual o valor de X utilizado para a previsão
+limx = 1500; limy = 2000; # para ENA sudeste
+# limx = 55; limy = 55; # para icaraizinho
+vetor_X_tau = collect(200:50:700) # para ENA sudeste
+# x_new = 30 # para icaraizinho
+x_new = 500 # ENA sudeste
+
 using JuMP, DataFrames, Plots, RCall, Interpolations, LaTeXStrings, Dierckx #, Distributions
 
 
@@ -20,7 +26,7 @@ cd(pasta_trabalho)
 ############# Carregar dados em R ########################
 pwd();
 include(pwd()*"/RegressãoQuantílica_STREET/funcoes_npqar.jl");
-include(pwd()*"/RegressãoQuantílica_STREET/par-multi.jl");
+# include(pwd()*"/RegressãoQuantílica_STREET/par-multi.jl");
 include(pwd()*"/RegressãoQuantílica_STREET/npar-multi-funcoes.jl");
 n = 100;
 # @rput n pasta_trabalho;
@@ -43,8 +49,8 @@ n = 100;
 ############# Carregar dados ###################################
 
 
-serie = readcsv("Dados Climaticos/icaraizinho.csv"); nomeserie = "icaraizinho"
-# serie = readcsv("Dados Climaticos/Enas/enas sudeste 1931-2014.csv"); nomeserie = "enasudeste"
+# serie = readcsv("Dados Climaticos/icaraizinho.csv"); nomeserie = "icaraizinho"
+serie = readcsv("Dados Climaticos/Enas/enas sudeste 1931-2014.csv"); nomeserie = "enasudeste"
 serie = serie ./ 100
 max_sim= 10;
 n_cenarios = 100;
@@ -80,35 +86,35 @@ Y = [ y * ones(1,n_cenarios);
 #######################################################
 
 ######### Teste diferentes Alphas
-X_tau = 10000
+
 gr()
 alpha_plot = collect(0:0.001:1);
 Pouco_Alphas = collect(0.05:0.05:0.95);
-betas0, betas = rq_linear(y,X, Pouco_Alphas); # coeficientes do modelo linear
+betas0, betas = rq_par(y,X, Pouco_Alphas); # coeficientes do modelo linear
 Q_hat_pouco_alpha = (betas0 + X_tau' * betas)[1,:];
 q_plot = Q(alpha_plot, Q_hat_pouco_alpha, Pouco_Alphas)
 plot(alpha_plot, q_plot,ylabel = "Q_{y_{t}|y_{t-1}}", xlabel = "\\alpha",  leg = false, grid = false) # ylim = (0,limy)
 
 
 Mto_Alphas = collect(0.005:0.005:0.995);
-betas0, betas = rq_linear(y,X, Mto_Alphas); # coeficientes do modelo linear
+betas0, betas = rq_par(y,X, Mto_Alphas); # coeficientes do modelo linear
 Q_hat_mto_alpha = (betas0 + X_tau' * betas)[1,:];
 q_plot = Q(alpha_plot, Q_hat_mto_alpha, Mto_Alphas)
 plot!(alpha_plot, q_plot)
 
 # Pouco_Alphas = collect(0.07:0.1:0.97);
-# betas0, betas = rq_linear(y,X, Pouco_Alphas); # coeficientes do modelo linear
+# betas0, betas = rq_par(y,X, Pouco_Alphas); # coeficientes do modelo linear
 # Q_hat_pouco_alpha = (betas0 + X_tau' * betas)[1,:];
 # q_plot = Q(alpha_plot, Q_hat_pouco_alpha, Pouco_Alphas)
 # plot!(alpha_plot, q_plot)
 #
 # Pouco_Alphas = collect(0.05:0.1:0.95);
-# betas0, betas = rq_linear(y,X, Pouco_Alphas); # coeficientes do modelo linear
+# betas0, betas = rq_par(y,X, Pouco_Alphas); # coeficientes do modelo linear
 # Q_hat_pouco_alpha = (betas0 + X_tau' * betas)[1,:];
 # q_plot = Q(alpha_plot, Q_hat_pouco_alpha, Pouco_Alphas)
 # plot!(alpha_plot, q_plot)
 plot!()
-savefig("Documento Regressao Quantilica/Figuras/regressao-quantilica/quantile-vs-alphas-linear.pdf")
+savefig("Documento Regressao Quantilica/Figuras/regressao-quantilica/$nomeserie-quantile-vs-alphas-linear.pdf")
 
 
 ############ Gráficos dos quantis
@@ -132,10 +138,9 @@ savefig("Documento Regressao Quantilica/Figuras/regressao-quantilica/quantile-vs
 ########## Gráficos de Q com a variação do X para modelo linear
 gr()
 
-vetor_X_tau = collect(10:5:40)
 alpha_plot = collect(0:0.001:1);
 Alphas = collect(0.05:0.05:0.95);
-betas0, betas = rq_linear(y,X, Alphas, true); # coeficientes do modelo linear
+betas0, betas = rq_par(y,X, Alphas, non_cross = true); # coeficientes do modelo linear
 plot(leg = false, ylabel = "Q_{y_{t}|y_{t-1}}", xlabel = "\\alpha", ylim = (0,limy), grid = false)
 for i in 1:length(vetor_X_tau)
   X_i = [vetor_X_tau[i]]
@@ -145,14 +150,14 @@ for i in 1:length(vetor_X_tau)
 end
 plot!()
 
-savefig("Documento Regressao Quantilica/Figuras/regressao-quantilica/quantile-linear.pdf")
+savefig("Documento Regressao Quantilica/Figuras/regressao-quantilica/$nomeserie-quantile-linear.pdf")
 
 
 ############ Scatterplot com os quantis com modelo paramétrico
 scatter(X, y, leg = false, xlabel = "y_{t-1}", ylabel = "y_t", xlim = (0,limx), ylim= (0,limy), grid = false)
 range_x = collect(minimum(X):0.01:maximum(X))
 plot!(range_x, (betas0' * ones(length(range_x))'  + betas' * range_x')')
-savefig("Documento Regressao Quantilica/Figuras/regressao-quantilica/quantile-linear-scatter.pdf")
+savefig("Documento Regressao Quantilica/Figuras/regressao-quantilica/$nomeserie-quantile-linear-scatter.pdf")
 
 # X_i = [vetor_X_tau[1]]
 
@@ -167,14 +172,16 @@ savefig("Documento Regressao Quantilica/Figuras/regressao-quantilica/quantile-li
 
 ########## Gráficos de Q com a variação de X para modelo não-paramétrico
 
-Alphas = collect(0.05:0.05:0.95);
-thetas, x_ord, y_ord = rq_np(y,x,Alphas,1, 10, true)
+Alphas = collect(0.25:0.05:0.975);
+lambda2=100
+thetas, x_ord, y_ord = rq_np(y,x,Alphas,0, lambda2, non_cross = true)
 
 
 # Finds Q_hat given a new value of x
-x_new = 30
+
 Q_hat = zeros(length(Alphas))
-plot(leg = false, ylabel = "Q_{y_{t}|y_{t-1}}", xlabel = "\\alpha", title = "", ylim = (0,limy), grid=false)
+plot(leg = false, ylabel = "Q_{y_{t}|y_{t-1}}", xlabel = "\\alpha", ylim = (0,limy), grid=false,
+      title = "Quantile functions when using x in\n $vetor_X_tau")
 for x_new in vetor_X_tau
   for col_alpha in 1:length(Alphas)
     sp1 = Spline1D( x_ord , thetas[:,col_alpha] , k = 2)
@@ -188,29 +195,26 @@ for x_new in vetor_X_tau
 end
 plot!()
 
-savefig("Documento Regressao Quantilica/Figuras/regressao-quantilica/quantile-nonpar.pdf")
+savefig("Documento Regressao Quantilica/Figuras/regressao-quantilica/$nomeserie-quantile-nonpar-lambda$lambda2.pdf")
 
 
 
 scatter(x,y, leg = false, xlabel = "y_{t-1}", ylabel = "y_t", xlims = (0,limx), ylim= (0,limy), grid = false)
 plot!(sort(x) ,thetas)
-savefig("Documento Regressao Quantilica/Figuras/regressao-quantilica/quantile-nonpar-scatter.pdf")
 
+savefig("Documento Regressao Quantilica/Figuras/regressao-quantilica/$nomeserie-quantile-nonpar-scatter-lambda$lambda2.pdf")
 
 ######################## Formato de Q variando granularidade de A
-x_new = 10000
+
 Q_hat = zeros(length(Alphas))
 
-plot(leg = false, ylabel = "Q_{y_{t}|y_{t-1}}", xlabel = "\\alpha", title = "", ylim = (0,limy), grid=false)
 
 Alphas = collect(0.05:0.05:0.95);
-thetas, x_ord, y_ord = rq_np(y,x,Alphas, 0, 10, true)
-for col_alpha in 1:length(Alphas)
-  sp1 = Spline1D( x_ord , thetas[:,col_alpha] , k = 2)
-  Q_hat[col_alpha] = evaluate(sp1, x_new)
-end
+thetas, x_ord, y_ord = rq_np(y,x,Alphas, 0, 10, non_cross = true)
+Q_hat = Estimar_Q_hat_np2(x_ord, thetas, Alphas, x_new)
 # Finds the whole distribution for a sequence of values
 q_plot = Q(alpha_plot, Q_hat, Alphas)
+plot(leg = false, ylabel = "Q_{y_{t}|y_{t-1}}", xlabel = "\\alpha", title = "", ylim = (0,limy), grid=false)
 plot!(alpha_plot, q_plot)
 
 Alphas = collect(0.005:0.005:0.995);
@@ -220,16 +224,16 @@ Alphas = collect(0.005:0.005:0.995);
 #   sp1 = Spline1D( x_ord , thetas[:,col_alpha] , k = 2)
 #   Q_hat[col_alpha] = evaluate(sp1, x_new)
 # end
-Q_hat  = Estimar_Q_hat_np(y,x,Alphas, 0,10,x_new)
-q_plot = Q(alpha_plot, Q_hat, Alphas)
-plot!(alpha_plot, q_plot)
+# Q_hat  = Estimar_Q_hat_np(y,x,Alphas, 0,10,x_new)
+# q_plot = Q(alpha_plot, Q_hat, Alphas)
+# plot!(alpha_plot, q_plot)
 
 
 # Finds the whole distribution for a sequence of values
 q_plot = Q(alpha_plot, Q_hat, Alphas)
 plot!(alpha_plot, q_plot)
 
-savefig("Documento Regressao Quantilica/Figuras/regressao-quantilica/quantile-vs-alphas-nonpar.pdf")
+savefig("Documento Regressao Quantilica/Figuras/regressao-quantilica/$nomeserie-quantile-vs-alphas-nonpar.pdf")
 
 
 
@@ -238,7 +242,10 @@ plot!()
 #############################################################################
 ######################## Gráficos do quantis (scatterplot) não-paramétrico variando os lambdas
 
-Alphas = [0.01, 0.05, 0.25, 0.5, 0.75, 0.95, 0.99];
+# Alphas = [0.01, 0.05, 0.25, 0.5, 0.75, 0.95, 0.99]; string_quantis = "poucosquantis"
+Alphas = collect(0.0255:0.05:0.975); string_quantis = "muitosquantis"
+push!(Alphas, 0.99); unshift!(Alphas, 0.01)
+
 # lambdas1 = [0.1, 0.3, 1, 3, 10, 200]
 lambdas1 = [0]
 
@@ -247,29 +254,30 @@ lambdas1 = [0]
 # nomes = ["01", "03", "1", "3", "10", "200"]
 
 # lambdas2 para utilizar com a Ena sudeste
-lambdas2 = [0.1, 0.3, 1, 3, 10, 200]
-nomes = ["01", "03", "1", "3", "10", "200"]
+lambdas2 = [10, 100, 200, 500, 1500]
+nomes = ["10", "100", "200", "500", "1500"]
 
 
 for i in 1:length(lambdas1), j in 1:length(lambdas2)
   lambda1 = lambdas1[i]
   lambda2 = lambdas2[j]
-  thetas, x_ord, y_ord = rq_np(y,x,Alphas, lambda1, lambda2, true)
+  print(lambda2)
+  thetas, x_ord, y_ord = rq_np(y,x,Alphas, lambda1, lambda2, non_cross = true)
   scatter(x,y, leg = false, xlabel = "y_{t-1}", ylabel = "y_t", xlim = (0,limx), ylim= (0,limy), grid = false)
   plot!(sort(x) ,thetas)
-  # savefig("Documento Regressao Quantilica/Figuras/regressao-quantilica/$nomeserie-crossing-" * nomes[j] * ".pdf")
+  savefig("Documento Regressao Quantilica/Figuras/regressao-quantilica/$nomeserie-crossing-" * nomes[j] * string_quantis * ".pdf")
 end
 
 
 
-pyplot()
-lambda1= 0
-lambda2 = 10000
-thetas, x_ord, y_ord = rq_np(y,x,Alphas, lambda1, lambda2, range_data = [0, 15000])
-scatter(x_ord,y_ord, leg = false, xlabel = "y_{t-1}", ylabel = "y_t", grid = false,  xlim = (0,limx), ylim= (0,limy))
-plot!(sort(x_ord) ,thetas)
+# pyplot()
+# lambda1= 0
+# lambda2 = 10000
+# thetas, x_ord, y_ord = rq_np(y,x,Alphas, lambda1, lambda2, range_data = [0, 15000])
+# scatter(x_ord,y_ord, leg = false, xlabel = "y_{t-1}", ylabel = "y_t", grid = false,  xlim = (0,limx), ylim= (0,limy))
+# plot!(x_ord ,thetas)
 
 
-if any(!isnan(range_data))
-  print("hey")
-end
+# if any(!isnan(range_data))
+#   print("hey")
+# end
