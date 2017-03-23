@@ -1,5 +1,11 @@
 \begin{thebibliography}{1}
 
+\bibitem{belloni2009least}
+Alexandre Belloni and Victor Chernozhukov.
+\newblock Least squares after model selection in high-dimensional sparse
+  models.
+\newblock 2009.
+
 \bibitem{bertsimas2015best}
 Dimitris Bertsimas, Angela King, and Rahul Mazumder.
 \newblock Best subset selection via a modern optimization lens.
@@ -14,5 +20,15 @@ Seung-Jean Kim, Kwangmoo Koh, Stephen Boyd, and Dimitry Gorinevsky.
 Roger Koenker.
 \newblock {\em Quantile regression}.
 \newblock Number~38. Cambridge university press, 2005.
+
+\bibitem{li2012l1}
+Youjuan Li and Ji~Zhu.
+\newblock L1-norm quantile regression.
+\newblock {\em Journal of Computational and Graphical Statistics}, 2012.
+
+\bibitem{machado1993robust}
+Jose~AF Machado.
+\newblock Robust model selection and m-estimation.
+\newblock {\em Econometric Theory}, 9:478--493, 1993.
 
 \end{thebibliography}

@@ -129,7 +129,7 @@ Thus, the distribution found for $Y$ is nonparametric, as no previous assumption
 A typical problem, however, arises when working with quantile regression. When quantiles are estimated independently, it is possible to find $q_{\alpha}(x_t) > q_{\alpha'}(x_t)$, for a given $t$, when $\alpha_1 < \alpha_2$. An example can be seen on Figure \ref{fig:crossing-quantiles}, where quantiles $\alpha = 0.95$ and $\alpha = 0.9$ cross. This problem, called \textit{crossing quantiles}, can be prevented by estimating all quantiles with a single minimization problem.
 \begin{figure}
 	\centering
-	\includegraphics[width=0.6\linewidth]{./Figuras/npqar/icaraizinho-crossing-200}
+	\includegraphics[width=0.6\linewidth]{./Figuras/regressao-quantilica/icaraizinho-quantile-linear-scatter-crossing}
 	\caption{Linear quantile estimator with crossing quantiles for $\alpha = 0.95$ and $\alpha = 0.9$}
 	\label{fig:crossing-quantiles}
 \end{figure}
@@ -137,10 +137,10 @@ A typical problem, however, arises when working with quantile regression. When q
 In order to estimate all quantiles simultaneously, the new objective function will be the sum of all individual objective functions, as well as include all constraints from all individual problems. The only difference is the inclusion of an equation to guarantee that quantiles won't cross.  When modifying problem \ref{eq:qar-general} to account for all quantiles, we have the following new problem:
 \begin{eqnarray}
 \label{eq:non-crossing-quantiles1}
-\{q^*_{\alpha}(\cdot)\}_{\alpha \in A}  \in \underset{{q_\alpha(\cdot),\varepsilon_{t \alpha}^{+}, \varepsilon_{t \alpha}^{-}}}{\text{arg min}}_ &  \sum_{\alpha \in A} \sum_{t \in T}\left(\alpha \varepsilon_{t \alpha}^{+}+(1-\alpha)\varepsilon_{t \alpha}^{-}\right) &  \\
-\mbox{s.t. } & \varepsilon_{t \alpha}^{+}-\varepsilon_{t \alpha}^{-}=y_{t}-q_\alpha(x_{t}), & \qquad\forall t \in T_\tau,\forall \alpha \in A,\\
-& \varepsilon_{t \alpha}^+,\varepsilon_{t \alpha}^- \geq 0, & \qquad\forall t \in T_\tau,\forall \alpha \in A,\\\label{eq:non-crossing-constraint}
-& q_{\alpha}(x_t) \leq q_{\alpha'}(x_t), & \qquad \forall t \in T_\tau, \forall (\alpha, \alpha') \in A \times A,  \alpha' \geq \alpha,\nonumber\\
+\{q^*_{\alpha}(\cdot)\}_{\alpha \in A}  \in \underset{q_\alpha(\cdot),\varepsilon_{t \alpha}^{+}, \varepsilon_{t \alpha}^-}{\text{arg min}} &  \sum_{\alpha \in A} \sum_{t \in T}\left(\alpha \varepsilon_{t \alpha}^++(1-\alpha)\varepsilon_{t \alpha}^{-}\right) &  \\
+\mbox{s.t. } & \varepsilon_{t \alpha}^{+}-\varepsilon_{t \alpha}^{-}=y_{t}-q_\alpha(x_{t}), & \qquad\forall t \in T,\forall \alpha \in A,\\
+& \varepsilon_{t \alpha}^+,\varepsilon_{t \alpha}^- \geq 0, & \qquad\forall t \in T,\forall \alpha \in A,\\\label{eq:non-crossing-constraint}
+& q_{\alpha}(x_t) \leq q_{\alpha'}(x_t), & \qquad \forall t \in T, \forall (\alpha, \alpha') \in A \times A,  \alpha' \geq \alpha,\nonumber\\
 \end{eqnarray}
 where constraint \ref{eq:non-crossing-constraint} assures that no lower quantile will have a bigger value than a higher quantile.
 

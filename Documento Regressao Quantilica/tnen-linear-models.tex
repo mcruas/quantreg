@@ -13,7 +13,7 @@ When we choose $q_\alpha(x_t)$ to be a linear function
 we can substitute it on problem \ref{eq:qar-general}, getting the following LP problem:
 \begin{equation}
 \begin{aligned}
- \underset{\beta_0,\beta,\varepsilon_{t}^{+},\varepsilon_{t}^{-}}{\text{min}}\, & \sum_{t \in T}\left(\alpha\varepsilon_{t}^{+}+(1-\alpha)\varepsilon_{t}^{-}\right) \\
+ \underset{\beta_0,\beta,\varepsilon_{t}^{+},\varepsilon_{t}^{-}}{\text{min}} & \sum_{t \in T}\left(\alpha\varepsilon_{t}^{+}+(1-\alpha)\varepsilon_{t}^{-}\right) \\
 \mbox{s.t. } & \varepsilon_{t}^{+}-\varepsilon_{t}^{-}=y_{t} - \beta_0 - \beta^T x_{t},\qquad\forall t\in\{1,\dots,n\},\\
 & \varepsilon_t^+,\varepsilon_t^- \geq 0, \qquad \forall t \in \{1,\dots,n\}.
 \end{aligned}
@@ -24,15 +24,16 @@ To solve the crossing quantile issue discussed earlier, we employ a minimization
 
 
 \begin{eqnarray}
-\label{eq:non-crossing-quantiles1}
+\label{eq:non-crossing-quantiles1par}
 \min_{\beta_{0\alpha},\beta_\alpha,\varepsilon_{t\alpha}^{+}, \varepsilon_{t\alpha}^{-}} &  \sum_{\alpha \in A} \sum_{t \in T}\left(\alpha \varepsilon_{t \alpha}^{+}+(1-\alpha)\varepsilon_{t \alpha}^{-}\right) & \label{eq:linear-opt-1} \\
-\mbox{s.t. } & \varepsilon_{t \alpha}^{+}-\varepsilon_{t \alpha}^{-}=y_{t} - \beta_{0\alpha} - \beta_{\alpha}^T x_{t}, & \qquad\forall t \in T_\tau,\forall \alpha \in A,\\
-& \varepsilon_{t\alpha}^+,\varepsilon_{t\alpha}^- \geq 0, & \qquad\forall t \in T_\tau,\forall \alpha \in A,\\ \label{eq:non-crossing-constraint}
-& q_{\alpha}(x_t) \leq q_{\alpha'}(x_t), & \qquad \forall t \in T_\tau, \forall (\alpha, \alpha') \in A \times A,  \alpha < \alpha', 
+\mbox{s.t. } & \varepsilon_{t \alpha}^{+}-\varepsilon_{t \alpha}^{-}=y_{t} - \beta_{0\alpha} - \beta_{\alpha}^T x_{t}, & \qquad\forall t \in T,\forall \alpha \in A,\\
+& \varepsilon_{t\alpha}^+,\varepsilon_{t\alpha}^- \geq 0, & \qquad\forall t \in T,\forall \alpha \in A,\\ \label{eq:non-crossing-constraintpar}
+& \beta_{0\alpha} + \beta_{\alpha}^T x_{t} \leq \beta_{0\alpha'} + \beta_{\alpha'}^T x_{t}, & \qquad \forall t \in T, \forall (\alpha, \alpha') \in A \times A,  \alpha < \alpha', 
 \end{eqnarray}
 
 
 When solving problem (\ref{eq:linear-opt-1})-(\ref{eq:non-crossing-constraint}), the sequence $\{ q_\alpha \}_{\alpha \in A}$ is fully defined by the values of $\beta^*_{0\alpha}$ and $\beta^*_\alpha$, for every $\alpha$.
 
 %In this work, we didn't explore the addition of terms other than the terms $y_t$ past lags. For example, we could include functions of $y_{t-p}$, such as $log(y_{t-p})$ or $exp(y_{t-p})$. We leave such inclusion for further works. 
+
 

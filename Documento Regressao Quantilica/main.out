@@ -3,5 +3,14 @@
 \BOOKMARK [2][-]{subsection.2.1}{Linear Models for the Quantile Autoregression}{section.2}% 3
 \BOOKMARK [2][-]{subsection.2.2}{Quantile Autoregression with a nonparametric approach}{section.2}% 4
 \BOOKMARK [2][-]{subsection.2.3}{A comparison between both approaches}{section.2}% 5
-\BOOKMARK [1][-]{section.3}{Simulation}{}% 6
-\BOOKMARK [2][-]{subsection.3.1}{Simulating for a seasonal time series}{section.3}% 7
+\BOOKMARK [2][-]{subsection.2.4}{Testing convergence}{section.2}% 6
+\BOOKMARK [1][-]{section.3}{Model Selection}{}% 7
+\BOOKMARK [2][-]{subsection.3.1}{Best subset selection with Mixed Integer Programming}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.2}{Best subset selection with a 1 penalty}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.3}{Simulation Study}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.4}{Model selection}{section.3}% 11
+\BOOKMARK [1][-]{section.4}{Simulation}{}% 12
+\BOOKMARK [1][-]{section.5}{Appendices}{}% 13
+\BOOKMARK [2][-]{subsection.5.1}{Proof of quantiles as an optimization problem}{section.5}% 14
+\BOOKMARK [2][-]{subsection.5.2}{MIP coefficients tables}{section.5}% 15
+\BOOKMARK [2][-]{subsection.5.3}{Simulation study tables}{section.5}% 16

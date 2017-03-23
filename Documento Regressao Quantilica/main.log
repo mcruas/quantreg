@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2017.1.23)  13 MAR 2017 10:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2017.1.23)  22 MAR 2017 14:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -786,15 +786,19 @@ Class scrartcl Warning: Usage of package `fancyhdr' together
 (./tnen-simbolos.aux) (./tnen-introduction.aux)
 (./tnen-distribuicao-acumulada.aux
 
-LaTeX Warning: Label `eq:non-crossing-quantiles1' multiply defined.
-
-
-LaTeX Warning: Label `eq:non-crossing-constraint' multiply defined.
-
-
 LaTeX Warning: Label `fig:quantiles-vs-xt' multiply defined.
 
-) (./tnen-simulation.aux))
+) (./tnen-model-selection.aux
+
+LaTeX Warning: Label `fig:npqar-cross' multiply defined.
+
+
+LaTeX Warning: Label `fig:npqar-results' multiply defined.
+
+
+LaTeX Warning: Label `fig:npqar-cross' multiply defined.
+
+) (./tnen-simulation.aux) (./tnen-anexos.aux))
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 65.
@@ -948,7 +952,7 @@ Overfull \hbox (184.34906pt too wide) in paragraph at lines 4--33
 \openout2 = `tnen-introduction.aux'.
 
  (./tnen-introduction.tex
-<./Figuras/Icaraizinho/icaraizinho-boxplot.pdf, id=58, 505.89pt x 505.89pt>
+<./Figuras/Icaraizinho/icaraizinho-boxplot.pdf, id=94, 505.89pt x 505.89pt>
 File: ./Figuras/Icaraizinho/icaraizinho-boxplot.pdf Graphic file (type pdf)
 
 <use ./Figuras/Icaraizinho/icaraizinho-boxplot.pdf>
@@ -956,7 +960,7 @@ Package pdftex.def Info: ./Figuras/Icaraizinho/icaraizinho-boxplot.pdf used on
 input line 50.
 (pdftex.def)             Requested size: 217.66214pt x 217.66739pt.
 
-<./Figuras/Solar-exemplos/tubarao-boxplot.pdf, id=59, 505.89pt x 505.89pt>
+<./Figuras/Solar-exemplos/tubarao-boxplot.pdf, id=95, 505.89pt x 505.89pt>
 File: ./Figuras/Solar-exemplos/tubarao-boxplot.pdf Graphic file (type pdf)
 
 <use ./Figuras/Solar-exemplos/tubarao-boxplot.pdf>
@@ -964,7 +968,7 @@ Package pdftex.def Info: ./Figuras/Solar-exemplos/tubarao-boxplot.pdf used on i
 nput line 56.
 (pdftex.def)             Requested size: 217.66214pt x 217.66739pt.
 
-<Figuras/Icaraizinho/scatterplot.pdf, id=60, 361.35pt x 361.35pt>
+<Figuras/Icaraizinho/scatterplot.pdf, id=96, 361.35pt x 361.35pt>
 File: Figuras/Icaraizinho/scatterplot.pdf Graphic file (type pdf)
 
 <use Figuras/Icaraizinho/scatterplot.pdf>
@@ -972,7 +976,7 @@ Package pdftex.def Info: Figuras/Icaraizinho/scatterplot.pdf used on input line
  72.
 (pdftex.def)             Requested size: 217.66214pt x 217.66078pt.
 
-<Figuras/Solar-exemplos/scatterplot.pdf, id=61, 361.35pt x 361.35pt>
+<Figuras/Solar-exemplos/scatterplot.pdf, id=97, 361.35pt x 361.35pt>
 File: Figuras/Solar-exemplos/scatterplot.pdf Graphic file (type pdf)
 
 <use Figuras/Solar-exemplos/scatterplot.pdf>
@@ -985,206 +989,292 @@ ine 75.
  <./Figuras/Icaraizinho/icaraizinho-boxplot.pdf> <./Figuras/Solar-exemplos/tuba
 rao-boxplot.pdf>] [4 <./Figuras/Icaraizinho/scatterplot.pdf> <./Figuras/Solar-e
 xemplos/scatterplot.pdf>]
-<./Figuras/npqar/icaraizinho-crossing-200.pdf, id=117, 542.025pt x 542.025pt>
-File: ./Figuras/npqar/icaraizinho-crossing-200.pdf Graphic file (type pdf)
+<./Figuras/regressao-quantilica/icaraizinho-quantile-linear-scatter-crossing.pd
+f, id=153, 602.25pt x 401.5pt>
+File: ./Figuras/regressao-quantilica/icaraizinho-quantile-linear-scatter-crossi
+ng.pdf Graphic file (type pdf)
 
-<use ./Figuras/npqar/icaraizinho-crossing-200.pdf>
-Package pdftex.def Info: ./Figuras/npqar/icaraizinho-crossing-200.pdf used on i
-nput line 132.
-(pdftex.def)             Requested size: 290.2211pt x 290.23276pt.
-
-! Missing { inserted.
-<to be read again> 
-                   }
-l.140 ...silon_{t \alpha}^{-}}}{\text{arg min}}_ &
-                                                    \sum_{\alpha \in A} \sum...
-A left brace was mandatory here, so I've put one in.
-You might want to delete and/or insert some corrections
-so that I will find a matching right brace soon.
-(If you're confused by all this, try typing `I}' now.)
-
-! Missing } inserted.
-<inserted text> 
-                }
-l.140 ...silon_{t \alpha}^{-}}}{\text{arg min}}_ &
-                                                    \sum_{\alpha \in A} \sum...
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-[5 <./Figuras/npqar/icaraizinho-crossing-200.pdf>]) [6]
+<use ./Figuras/regressao-quantilica/icaraizinho-quantile-linear-scatter-crossin
+g.pdf>
+Package pdftex.def Info: ./Figuras/regressao-quantilica/icaraizinho-quantile-li
+near-scatter-crossing.pdf used on input line 132.
+(pdftex.def)             Requested size: 290.2211pt x 193.48973pt.
+) [5 <./Figuras/regressao-quantilica/icaraizinho-quantile-linear-scatter-crossi
+ng.pdf>]
 \openout2 = `tnen-distribuicao-acumulada.aux'.
 
+ (./tnen-distribuicao-acumulada.tex (./tnen-linear-models.tex
+[6
 
-(./tnen-distribuicao-acumulada.tex (./tnen-linear-models.tex [7
 
-
-])
-(./tnen-nonparametric-models.tex [8]
+]) (./tnen-nonparametric-models.tex [7]
 Overfull \hbox (13.40356pt too wide) in alignment at lines 32--46
  [][][] []
  []
 
 
-! LaTeX Error: File `Figuras/regressao-quantilica/icaraizinho-crossing-01' not 
-found.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.61 ...ressao-quantilica/icaraizinho-crossing-01}
-                                                  
-I could not locate the file with any of these extensions:
-.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPEG,.JBIG2,.JB2,.eps
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! LaTeX Error: File `Figuras/regressao-quantilica/icaraizinho-crossing-03' not 
-found.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.65 ...ressao-quantilica/icaraizinho-crossing-03}
-                                                  
-I could not locate the file with any of these extensions:
-.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPEG,.JBIG2,.JB2,.eps
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! LaTeX Error: File `Figuras/regressao-quantilica/icaraizinho-crossing-1' not f
-ound.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.69 ...gressao-quantilica/icaraizinho-crossing-1}
-                                                  
-I could not locate the file with any of these extensions:
-.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPEG,.JBIG2,.JB2,.eps
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! LaTeX Error: File `Figuras/regressao-quantilica/icaraizinho-crossing-3' not f
-ound.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.76 ...gressao-quantilica/icaraizinho-crossing-3}
-                                                  
-I could not locate the file with any of these extensions:
-.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPEG,.JBIG2,.JB2,.eps
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! LaTeX Error: File `Figuras/regressao-quantilica/icaraizinho-crossing-10' not 
-found.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.80 ...ressao-quantilica/icaraizinho-crossing-10}
-                                                  
-I could not locate the file with any of these extensions:
-.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPEG,.JBIG2,.JB2,.eps
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! LaTeX Error: File `Figuras/regressao-quantilica/icaraizinho-crossing-200' not
- found.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.84 ...essao-quantilica/icaraizinho-crossing-200}
-                                                  
-I could not locate the file with any of these extensions:
-.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPEG,.JBIG2,.JB2,.eps
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-) [9]
-<Figuras/regressao-quantilica/quantile-linear-scatter.pdf, id=186, 602.25pt x 4
+<Figuras/regressao-quantilica/icaraizinho-crossing-01.pdf, id=195, 602.25pt x 4
 01.5pt>
-File: Figuras/regressao-quantilica/quantile-linear-scatter.pdf Graphic file (ty
+File: Figuras/regressao-quantilica/icaraizinho-crossing-01.pdf Graphic file (ty
 pe pdf)
- <use Figuras/regressao-quantilica/quantile-linear-scatter.pdf>
-Package pdftex.def Info: Figuras/regressao-quantilica/quantile-linear-scatter.p
-df used on input line 60.
-(pdftex.def)             Requested size: 217.66214pt x 145.10963pt.
+ <use Figuras/regressao-quantilica/icaraizinho-crossing-01.pdf>
+Package pdftex.def Info: Figuras/regressao-quantilica/icaraizinho-crossing-01.p
+df used on input line 61.
+(pdftex.def)             Requested size: 193.47581pt x 128.98499pt.
 
-<Figuras/regressao-quantilica/quantile-nonpar-scatter.pdf, id=187, 602.25pt x 4
+<Figuras/regressao-quantilica/icaraizinho-crossing-03.pdf, id=196, 602.25pt x 4
 01.5pt>
-File: Figuras/regressao-quantilica/quantile-nonpar-scatter.pdf Graphic file (ty
+File: Figuras/regressao-quantilica/icaraizinho-crossing-03.pdf Graphic file (ty
 pe pdf)
- <use Figuras/regressao-quantilica/quantile-nonpar-scatter.pdf>
-Package pdftex.def Info: Figuras/regressao-quantilica/quantile-nonpar-scatter.p
-df used on input line 63.
+ <use Figuras/regressao-quantilica/icaraizinho-crossing-03.pdf>
+Package pdftex.def Info: Figuras/regressao-quantilica/icaraizinho-crossing-03.p
+df used on input line 65.
+(pdftex.def)             Requested size: 193.47581pt x 128.98499pt.
+
+<Figuras/regressao-quantilica/icaraizinho-crossing-1.pdf, id=197, 602.25pt x 40
+1.5pt>
+File: Figuras/regressao-quantilica/icaraizinho-crossing-1.pdf Graphic file (typ
+e pdf)
+ <use Figuras/regressao-quantilica/icaraizinho-crossing-1.pdf>
+Package pdftex.def Info: Figuras/regressao-quantilica/icaraizinho-crossing-1.pd
+f used on input line 69.
+(pdftex.def)             Requested size: 193.47581pt x 128.98499pt.
+
+<Figuras/regressao-quantilica/icaraizinho-crossing-3.pdf, id=198, 602.25pt x 40
+1.5pt>
+File: Figuras/regressao-quantilica/icaraizinho-crossing-3.pdf Graphic file (typ
+e pdf)
+ <use Figuras/regressao-quantilica/icaraizinho-crossing-3.pdf>
+Package pdftex.def Info: Figuras/regressao-quantilica/icaraizinho-crossing-3.pd
+f used on input line 76.
+(pdftex.def)             Requested size: 193.47581pt x 128.98499pt.
+
+<Figuras/regressao-quantilica/icaraizinho-crossing-10.pdf, id=199, 602.25pt x 4
+01.5pt>
+File: Figuras/regressao-quantilica/icaraizinho-crossing-10.pdf Graphic file (ty
+pe pdf)
+ <use Figuras/regressao-quantilica/icaraizinho-crossing-10.pdf>
+Package pdftex.def Info: Figuras/regressao-quantilica/icaraizinho-crossing-10.p
+df used on input line 80.
+(pdftex.def)             Requested size: 193.47581pt x 128.98499pt.
+
+<Figuras/regressao-quantilica/icaraizinho-crossing-200.pdf, id=200, 602.25pt x 
+401.5pt>
+File: Figuras/regressao-quantilica/icaraizinho-crossing-200.pdf Graphic file (t
+ype pdf)
+ <use Figuras/regressao-quantilica/icaraizinho-crossing-200.pdf>
+Package pdftex.def Info: Figuras/regressao-quantilica/icaraizinho-crossing-200.
+pdf used on input line 84.
+(pdftex.def)             Requested size: 193.47581pt x 128.98499pt.
+)
+[8] [9 <./Figuras/regressao-quantilica/icaraizinho-crossing-01.pdf> <./Figuras/
+regressao-quantilica/icaraizinho-crossing-03.pdf> <./Figuras/regressao-quantili
+ca/icaraizinho-crossing-1.pdf> <./Figuras/regressao-quantilica/icaraizinho-cros
+sing-3.pdf> <./Figuras/regressao-quantilica/icaraizinho-crossing-10.pdf> <./Fig
+uras/regressao-quantilica/icaraizinho-crossing-200.pdf>]
+<Figuras/regressao-quantilica/icaraizinho-quantile-linear-scatter.pdf, id=235, 
+602.25pt x 401.5pt>
+File: Figuras/regressao-quantilica/icaraizinho-quantile-linear-scatter.pdf Grap
+hic file (type pdf)
+
+<use Figuras/regressao-quantilica/icaraizinho-quantile-linear-scatter.pdf>
+Package pdftex.def Info: Figuras/regressao-quantilica/icaraizinho-quantile-line
+ar-scatter.pdf used on input line 59.
 (pdftex.def)             Requested size: 217.66214pt x 145.10963pt.
 
-<Figuras/regressao-quantilica/quantile-linear.pdf, id=188, 602.25pt x 401.5pt>
-File: Figuras/regressao-quantilica/quantile-linear.pdf Graphic file (type pdf)
+<Figuras/regressao-quantilica/icaraizinho-quantile-nonpar-scatter-lambda30.pdf,
+ id=236, 602.25pt x 401.5pt>
+File: Figuras/regressao-quantilica/icaraizinho-quantile-nonpar-scatter-lambda30
+.pdf Graphic file (type pdf)
 
-<use Figuras/regressao-quantilica/quantile-linear.pdf>
-Package pdftex.def Info: Figuras/regressao-quantilica/quantile-linear.pdf used 
-on input line 78.
+<use Figuras/regressao-quantilica/icaraizinho-quantile-nonpar-scatter-lambda30.
+pdf>
+Package pdftex.def Info: Figuras/regressao-quantilica/icaraizinho-quantile-nonp
+ar-scatter-lambda30.pdf used on input line 62.
 (pdftex.def)             Requested size: 217.66214pt x 145.10963pt.
 
-<Figuras/regressao-quantilica/quantile-nonpar.pdf, id=189, 602.25pt x 401.5pt>
-File: Figuras/regressao-quantilica/quantile-nonpar.pdf Graphic file (type pdf)
-
-<use Figuras/regressao-quantilica/quantile-nonpar.pdf>
-Package pdftex.def Info: Figuras/regressao-quantilica/quantile-nonpar.pdf used 
-on input line 81.
+<Figuras/regressao-quantilica/icaraizinho-quantile-linear.pdf, id=237, 602.25pt
+ x 401.5pt>
+File: Figuras/regressao-quantilica/icaraizinho-quantile-linear.pdf Graphic file
+ (type pdf)
+ <use Figuras/regressao-quantilica/icaraizinho-quantile-linear.pdf>
+Package pdftex.def Info: Figuras/regressao-quantilica/icaraizinho-quantile-line
+ar.pdf used on input line 77.
 (pdftex.def)             Requested size: 217.66214pt x 145.10963pt.
 
-<Figuras/regressao-quantilica/quantile-vs-alphas-linear.pdf, id=190, 602.25pt x
- 401.5pt>
-File: Figuras/regressao-quantilica/quantile-vs-alphas-linear.pdf Graphic file (
-type pdf)
- <use Figuras/regressao-quantilica/quantile-vs-alphas-linear.pdf>
-Package pdftex.def Info: Figuras/regressao-quantilica/quantile-vs-alphas-linear
-.pdf used on input line 93.
+<Figuras/regressao-quantilica/icaraizinho-quantile-nonpar-lambda30.pdf, id=238,
+ 602.25pt x 401.5pt>
+File: Figuras/regressao-quantilica/icaraizinho-quantile-nonpar-lambda30.pdf Gra
+phic file (type pdf)
+
+<use Figuras/regressao-quantilica/icaraizinho-quantile-nonpar-lambda30.pdf>
+Package pdftex.def Info: Figuras/regressao-quantilica/icaraizinho-quantile-nonp
+ar-lambda30.pdf used on input line 80.
 (pdftex.def)             Requested size: 217.66214pt x 145.10963pt.
 
+<Figuras/regressao-quantilica/icaraizinho-quantile-vs-alphas-linear.pdf, id=239
+, 602.25pt x 401.5pt>
+File: Figuras/regressao-quantilica/icaraizinho-quantile-vs-alphas-linear.pdf Gr
+aphic file (type pdf)
 
-! LaTeX Error: File `Figuras/regressao-quantilica/quantile-vs-alphas-nonpar' no
-t found.
+<use Figuras/regressao-quantilica/icaraizinho-quantile-vs-alphas-linear.pdf>
+Package pdftex.def Info: Figuras/regressao-quantilica/icaraizinho-quantile-vs-a
+lphas-linear.pdf used on input line 92.
+(pdftex.def)             Requested size: 217.66214pt x 145.10963pt.
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.96 ...ssao-quantilica/quantile-vs-alphas-nonpar}
-                                                  
-I could not locate the file with any of these extensions:
-.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPEG,.JBIG2,.JB2,.eps
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+<Figuras/regressao-quantilica/icaraizinho-quantile-vs-alphas-nonpar.pdf, id=240
+, 602.25pt x 401.5pt>
+File: Figuras/regressao-quantilica/icaraizinho-quantile-vs-alphas-nonpar.pdf Gr
+aphic file (type pdf)
 
-) [10 <./Figuras/regressao-quantilica/quantile-linear-scatter.pdf> <./Figuras/r
-egressao-quantilica/quantile-nonpar-scatter.pdf>] [11 <./Figuras/regressao-quan
-tilica/quantile-linear.pdf> <./Figuras/regressao-quantilica/quantile-nonpar.pdf
-> <./Figuras/regressao-quantilica/quantile-vs-alphas-linear.pdf>]
+<use Figuras/regressao-quantilica/icaraizinho-quantile-vs-alphas-nonpar.pdf>
+Package pdftex.def Info: Figuras/regressao-quantilica/icaraizinho-quantile-vs-a
+lphas-nonpar.pdf used on input line 95.
+(pdftex.def)             Requested size: 217.66214pt x 145.10963pt.
+
+[10 <./Figuras/regressao-quantilica/icaraizinho-quantile-linear-scatter.pdf> <.
+/Figuras/regressao-quantilica/icaraizinho-quantile-nonpar-scatter-lambda30.pdf>
+ <./Figuras/regressao-quantilica/icaraizinho-quantile-linear.pdf> <./Figuras/re
+gressao-quantilica/icaraizinho-quantile-nonpar-lambda30.pdf>]
+<Figuras/convergencia-dist/Convergence.pdf, id=265, 602.25pt x 401.5pt>
+File: Figuras/convergencia-dist/Convergence.pdf Graphic file (type pdf)
+
+<use Figuras/convergencia-dist/Convergence.pdf>
+Package pdftex.def Info: Figuras/convergencia-dist/Convergence.pdf used on inpu
+t line 119.
+(pdftex.def)             Requested size: 290.2211pt x 193.48973pt.
+) [11 <./Figuras/regressao-quantilica/icaraizinho-quantile-vs-alphas-linear.pdf
+> <./Figuras/regressao-quantilica/icaraizinho-quantile-vs-alphas-nonpar.pdf> <.
+/Figuras/convergencia-dist/Convergence.pdf>]
+\openout2 = `tnen-model-selection.aux'.
+
+ (./tnen-model-selection.tex
+Overfull \hbox (13.86394pt too wide) in paragraph at lines 20--21
+[]\OT1/cmr/m/n/10.95 We ran this op-ti-miza-tion for each value of $\OML/cmm/m/
+it/10.95 K \OMS/cmsy/m/n/10.95 2 f\OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; [] 
+; \OT1/cmr/m/n/10.95 12\OMS/cmsy/m/n/10.95 g$ \OT1/cmr/m/n/10.95 and quan-tiles
+ $\OML/cmm/m/it/10.95  \OMS/cmsy/m/n/10.95 2 f\OT1/cmr/m/n/10.95 0\OML/cmm/m/i
+t/10.95 :\OT1/cmr/m/n/10.95 05\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 0\OML/cm
+m/m/it/10.95 :\OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 0\OM
+L/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 5\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 
+0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 9\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10
+.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 95\OMS/cmsy/m/n/10.95 g$\OT1/cmr/m
+/n/10.95 .
+ []
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 30.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\ell' on input line 30.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `subscript' on input line 30.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 30.
+
+[12
+
+
+]
+<Figuras/selecao-lasso/par-sellasso-005.pdf, id=305, 542.025pt x 542.025pt>
+File: Figuras/selecao-lasso/par-sellasso-005.pdf Graphic file (type pdf)
+
+<use Figuras/selecao-lasso/par-sellasso-005.pdf>
+Package pdftex.def Info: Figuras/selecao-lasso/par-sellasso-005.pdf used on inp
+ut line 66.
+(pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
+
+<Figuras/selecao-lasso/par-sellasso-01.pdf, id=306, 542.025pt x 542.025pt>
+File: Figuras/selecao-lasso/par-sellasso-01.pdf Graphic file (type pdf)
+
+<use Figuras/selecao-lasso/par-sellasso-01.pdf>
+Package pdftex.def Info: Figuras/selecao-lasso/par-sellasso-01.pdf used on inpu
+t line 69.
+(pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
+
+<Figuras/selecao-lasso/par-sellasso-05.pdf, id=307, 542.025pt x 542.025pt>
+File: Figuras/selecao-lasso/par-sellasso-05.pdf Graphic file (type pdf)
+
+<use Figuras/selecao-lasso/par-sellasso-05.pdf>
+Package pdftex.def Info: Figuras/selecao-lasso/par-sellasso-05.pdf used on inpu
+t line 72.
+(pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
+
+<Figuras/selecao-lasso/par-sellasso-09.pdf, id=308, 542.025pt x 542.025pt>
+File: Figuras/selecao-lasso/par-sellasso-09.pdf Graphic file (type pdf)
+
+<use Figuras/selecao-lasso/par-sellasso-09.pdf>
+Package pdftex.def Info: Figuras/selecao-lasso/par-sellasso-09.pdf used on inpu
+t line 78.
+(pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
+
+<Figuras/selecao-lasso/par-sellasso-095.pdf, id=309, 542.025pt x 542.025pt>
+File: Figuras/selecao-lasso/par-sellasso-095.pdf Graphic file (type pdf)
+
+<use Figuras/selecao-lasso/par-sellasso-095.pdf>
+Package pdftex.def Info: Figuras/selecao-lasso/par-sellasso-095.pdf used on inp
+ut line 81.
+(pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
+ [13] [14 <./Figuras/selecao-lasso/par-sellasso-005.pdf> <./Figuras/selecao-las
+so/par-sellasso-01.pdf
+
+pdfTeX warning: /usr/bin/pdflatex (file ./Figuras/selecao-lasso/par-sellasso-01
+.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+> <./Figuras/selecao-lasso/par-sellasso-05.pdf
+
+pdfTeX warning: /usr/bin/pdflatex (file ./Figuras/selecao-lasso/par-sellasso-05
+.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+> <./Figuras/selecao-lasso/par-sellasso-09.pdf
+
+pdfTeX warning: /usr/bin/pdflatex (file ./Figuras/selecao-lasso/par-sellasso-09
+.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+> <./Figuras/selecao-lasso/par-sellasso-095.pdf
+
+pdfTeX warning: /usr/bin/pdflatex (file ./Figuras/selecao-lasso/par-sellasso-09
+5.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+>] [15] <Figuras/SIC005.pdf, id=415, 433.62pt x 325.215pt>
+File: Figuras/SIC005.pdf Graphic file (type pdf)
+
+<use Figuras/SIC005.pdf>
+Package pdftex.def Info: Figuras/SIC005.pdf used on input line 195.
+(pdftex.def)             Requested size: 193.47581pt x 145.10976pt.
+ <Figuras/SIC01.pdf, id=416, 433.62pt x 325.215pt>
+File: Figuras/SIC01.pdf Graphic file (type pdf)
+
+<use Figuras/SIC01.pdf>
+Package pdftex.def Info: Figuras/SIC01.pdf used on input line 198.
+(pdftex.def)             Requested size: 193.47581pt x 145.10976pt.
+ <Figuras/SIC05.pdf, id=417, 433.62pt x 325.215pt>
+File: Figuras/SIC05.pdf Graphic file (type pdf)
+
+<use Figuras/SIC05.pdf>
+Package pdftex.def Info: Figuras/SIC05.pdf used on input line 201.
+(pdftex.def)             Requested size: 193.47581pt x 145.10976pt.
+ <Figuras/SIC09.pdf, id=418, 433.62pt x 325.215pt>
+File: Figuras/SIC09.pdf Graphic file (type pdf)
+
+<use Figuras/SIC09.pdf>
+Package pdftex.def Info: Figuras/SIC09.pdf used on input line 207.
+(pdftex.def)             Requested size: 193.47581pt x 145.10976pt.
+ <Figuras/SIC095.pdf, id=419, 433.62pt x 325.215pt>
+File: Figuras/SIC095.pdf Graphic file (type pdf)
+
+<use Figuras/SIC095.pdf>
+Package pdftex.def Info: Figuras/SIC095.pdf used on input line 210.
+(pdftex.def)             Requested size: 193.47581pt x 145.10976pt.
+) [16] [17 <./Figuras/SIC005.pdf> <./Figuras/SIC01.pdf> <./Figuras/SIC05.pdf> <
+./Figuras/SIC09.pdf> <./Figuras/SIC095.pdf>]
 \openout2 = `tnen-simulation.aux'.
 
 
 (./tnen-simulation.tex
-<Figuras/grafico-quantis-fx.pdf, id=229, 796.9775pt x 597.23125pt>
+<Figuras/grafico-quantis-fx.pdf, id=498, 796.9775pt x 597.23125pt>
 File: Figuras/grafico-quantis-fx.pdf Graphic file (type pdf)
 
 <use Figuras/grafico-quantis-fx.pdf>
@@ -1194,61 +1284,103 @@ Package pdftex.def Info: Figuras/grafico-quantis-fx.pdf used on input line 51.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-) [12
+<Figuras/simulation/enasudeste-np.pdf, id=499, 602.25pt x 401.5pt>
+File: Figuras/simulation/enasudeste-np.pdf Graphic file (type pdf)
+
+<use Figuras/simulation/enasudeste-np.pdf>
+Package pdftex.def Info: Figuras/simulation/enasudeste-np.pdf used on input lin
+e 64.
+(pdftex.def)             Requested size: 217.66214pt x 145.10963pt.
+
+<Figuras/simulation/enasudeste-par.pdf, id=500, 602.25pt x 401.5pt>
+File: Figuras/simulation/enasudeste-par.pdf Graphic file (type pdf)
+
+<use Figuras/simulation/enasudeste-par.pdf>
+Package pdftex.def Info: Figuras/simulation/enasudeste-par.pdf used on input li
+ne 67.
+(pdftex.def)             Requested size: 217.66214pt x 145.10963pt.
+) [18
 
 
-] [13 <./Figuras/grafico-quantis-fx.pdf>] (./main.bbl) [14
+] [19 <./Figuras/grafico-quantis-fx.pdf> <./Figuras/simulation/enasudeste-np.pd
+f> <./Figuras/simulation/enasudeste-par.pdf>]
+\openout2 = `tnen-anexos.aux'.
+
+ (./tnen-anexos.tex
+(./Tabelas/table-betas-selecaointeira-alpha-005.tex)
+(./Tabelas/table-betas-selecaointeira-alpha-01.tex)
+(./Tabelas/table-betas-selecaointeira-alpha-05.tex)
+(./Tabelas/table-betas-selecaointeira-alpha-09.tex)
+(./Tabelas/table-betas-selecaointeira-alpha-095.tex)
+(./Tabelas/tabela-icaraizinho.tex) [20
+
+
+] (./Tabelas/simulation-ar-rmse-005.tex)
+(./Tabelas/simulation-ar-rmse-01.tex) (./Tabelas/simulation-ar-rmse-05.tex)
+(./Tabelas/simulation-ar-rmse-09.tex) (./Tabelas/simulation-ar-rmse-095.tex)
+(./Tabelas/simulation-ar-auto-005.tex) (./Tabelas/simulation-ar-auto-01.tex)
+(./Tabelas/simulation-ar-auto-05.tex) (./Tabelas/simulation-ar-auto-09.tex)
+(./Tabelas/simulation-ar-auto-095.tex)
+(./Tabelas/simulation-ar-intercept-005.tex) [21] [22] [23] [24] [25]
+(./Tabelas/simulation-ar-intercept-01.tex)
+(./Tabelas/simulation-ar-intercept-05.tex)
+(./Tabelas/simulation-ar-intercept-09.tex)
+(./Tabelas/simulation-ar-intercept-095.tex)) [26
+
+] [27] (./main.bbl) [28
 
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 80.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 80.
- (./main.aux
-(./tnen-simbolos.aux) (./tnen-introduction.aux)
-(./tnen-distribuicao-acumulada.aux) (./tnen-simulation.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 80.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 82.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 82.
+
+(./main.aux (./tnen-simbolos.aux) (./tnen-introduction.aux)
+(./tnen-distribuicao-acumulada.aux) (./tnen-model-selection.aux)
+(./tnen-simulation.aux) (./tnen-anexos.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 82.
 \snap@out=\write5
 \openout5 = `main.dep'.
 
 
 Dependency list written on main.dep.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 80.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 82.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: FFDD583C6B8D942D0D0657A3B1A6951F;552.
+(rerunfilecheck)             Checksum: 7FFB63F18B6D484155F8781A485EBB9E;1191.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 80.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 82.
  ) 
 Here is how much of TeX's memory you used:
- 21918 strings out of 493013
- 406303 string characters out of 6135682
- 573214 words of memory out of 5000000
- 24952 multiletter control sequences out of 15000+600000
- 16471 words of font info for 62 fonts, out of 8000000 for 9000
+ 22317 strings out of 493013
+ 419316 string characters out of 6135682
+ 650557 words of memory out of 5000000
+ 25202 multiletter control sequences out of 15000+600000
+ 17708 words of font info for 67 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 73i,18n,79p,8844b,688s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/tex
+ 73i,18n,79p,8844b,692s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (14 pages, 2952944 bytes).
+cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on main.pdf (28 pages, 1699354 bytes).
 PDF statistics:
- 341 PDF objects out of 1000 (max. 8388607)
- 279 compressed objects within 3 object streams
- 55 named destinations out of 1000 (max. 500000)
- 124 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 726 PDF objects out of 1000 (max. 8388607)
+ 589 compressed objects within 6 object streams
+ 122 named destinations out of 1000 (max. 500000)
+ 296 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -51,7 +51,7 @@ The output of our optimization problem is a sequence of ordered points $\{(x_t, 
 The quantile estimation is done for different values of $\lambda$. By using different levels of penalization on the second difference, the estimation can be more or less adaptive to the fluctuation. It is important to notice that the usage of the $\ell_1$-norm as penalty leads to a piecewise linear solution $q_{t \alpha}$. % Referenciar?
 Figure \ref{fig:npqar-results} shows the quantile estimation for a few different values of $\lambda$. 
 
-
+	
 % Para os gráficos antigos, usar a pasta /npqar/
 \begin{figure}[htp]
   \centering
@@ -59,30 +59,30 @@ Figure \ref{fig:npqar-results} shows the quantile estimation for a few different
     \centering
     \begin{minipage}[t]{\linewidth}
       \centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/icaraizinho-crossing-01}
-      \subcaption{$\lambda = 0.1$}
+      \subcaption{$\lambda_1 = 0, \, \lambda_2 = 0.1$}
     \end{minipage}
     \begin{minipage}[b]{\linewidth}
       \centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/icaraizinho-crossing-03}
-      \subcaption{$\lambda = 0.3$}
+      \subcaption{$\lambda_1 = 0, \, \lambda_2 = 0.3$}
     \end{minipage}
      \begin{minipage}[b]{\linewidth}
       \centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/icaraizinho-crossing-1}
-      \subcaption{$\lambda = 1$}
+      \subcaption{$\lambda_1 = 0, \, \lambda_2 = 1$}
      \end{minipage}
   \end{minipage}
   \begin{minipage}[t]{0.4\linewidth}
     \centering
     \begin{minipage}[t]{\linewidth}
       \centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/icaraizinho-crossing-3}
-      \subcaption{$\lambda = 3$}
+      \subcaption{$\lambda_1 = 0, \, \lambda_2 = 3$}
     \end{minipage}
     \begin{minipage}[b]{\linewidth}
       \centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/icaraizinho-crossing-10}
-      \subcaption{$\lambda = 10$}
+      \subcaption{$\lambda_1 = 0, \, \lambda_2 = 10$}
     \end{minipage}
      \begin{minipage}[b]{\linewidth}
       \centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/icaraizinho-crossing-200}
-      \subcaption{$\lambda = 150$}
+      \subcaption{$\lambda_1 = 0, \, \lambda_2 = 200$}
       \label{fig:npqar-cross}
      \end{minipage}
   \end{minipage}

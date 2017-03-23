@@ -119,16 +119,59 @@
   *{file}   {./Figuras/Solar-exemplos/tubarao-boxplot.pdf}{0000/00/00 v0.0}
   *{file}   {Figuras/Icaraizinho/scatterplot.pdf}{0000/00/00 v0.0}
   *{file}   {Figuras/Solar-exemplos/scatterplot.pdf}{0000/00/00 v0.0}
-  *{file}   {./Figuras/npqar/icaraizinho-crossing-200.pdf}{0000/00/00 v0.0}
+  *{file}   {./Figuras/regressao-quantilica/icaraizinho-quantile-linear-scatter-crossing.pdf}{0000/00/00 v0.0}
   *{file}   {tnen-distribuicao-acumulada.tex}{0000/00/00 v0.0}
   *{file}   {tnen-linear-models.tex}{0000/00/00 v0.0}
   *{file}   {tnen-nonparametric-models.tex}{0000/00/00 v0.0}
-  *{file}   {Figuras/regressao-quantilica/quantile-linear-scatter.pdf}{0000/00/00 v0.0}
-  *{file}   {Figuras/regressao-quantilica/quantile-nonpar-scatter.pdf}{0000/00/00 v0.0}
-  *{file}   {Figuras/regressao-quantilica/quantile-linear.pdf}{0000/00/00 v0.0}
-  *{file}   {Figuras/regressao-quantilica/quantile-nonpar.pdf}{0000/00/00 v0.0}
-  *{file}   {Figuras/regressao-quantilica/quantile-vs-alphas-linear.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/regressao-quantilica/icaraizinho-crossing-01.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/regressao-quantilica/icaraizinho-crossing-03.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/regressao-quantilica/icaraizinho-crossing-1.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/regressao-quantilica/icaraizinho-crossing-3.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/regressao-quantilica/icaraizinho-crossing-10.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/regressao-quantilica/icaraizinho-crossing-200.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/regressao-quantilica/icaraizinho-quantile-linear-scatter.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/regressao-quantilica/icaraizinho-quantile-nonpar-scatter-lambda30.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/regressao-quantilica/icaraizinho-quantile-linear.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/regressao-quantilica/icaraizinho-quantile-nonpar-lambda30.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/regressao-quantilica/icaraizinho-quantile-vs-alphas-linear.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/regressao-quantilica/icaraizinho-quantile-vs-alphas-nonpar.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/convergencia-dist/Convergence.pdf}{0000/00/00 v0.0}
+  *{file}   {tnen-model-selection.tex}{0000/00/00 v0.0}
+  *{file}   {Figuras/selecao-lasso/par-sellasso-005.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/selecao-lasso/par-sellasso-01.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/selecao-lasso/par-sellasso-05.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/selecao-lasso/par-sellasso-09.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/selecao-lasso/par-sellasso-095.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/SIC005.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/SIC01.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/SIC05.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/SIC09.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/SIC095.pdf}{0000/00/00 v0.0}
   *{file}   {tnen-simulation.tex}{0000/00/00 v0.0}
   *{file}   {Figuras/grafico-quantis-fx.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/simulation/enasudeste-np.pdf}{0000/00/00 v0.0}
+  *{file}   {Figuras/simulation/enasudeste-par.pdf}{0000/00/00 v0.0}
+  *{file}   {tnen-anexos.tex}{0000/00/00 v0.0}
+  *{file}   {Tabelas/table-betas-selecaointeira-alpha-005.tex}{0000/00/00 v0.0}
+  *{file}   {Tabelas/table-betas-selecaointeira-alpha-01.tex}{0000/00/00 v0.0}
+  *{file}   {Tabelas/table-betas-selecaointeira-alpha-05.tex}{0000/00/00 v0.0}
+  *{file}   {Tabelas/table-betas-selecaointeira-alpha-09.tex}{0000/00/00 v0.0}
+  *{file}   {Tabelas/table-betas-selecaointeira-alpha-095.tex}{0000/00/00 v0.0}
+  *{file}   {Tabelas/tabela-icaraizinho.tex}{0000/00/00 v0.0}
+  *{file}   {Tabelas/simulation-ar-rmse-005.tex}{0000/00/00 v0.0}
+  *{file}   {Tabelas/simulation-ar-rmse-01.tex}{0000/00/00 v0.0}
+  *{file}   {Tabelas/simulation-ar-rmse-05.tex}{0000/00/00 v0.0}
+  *{file}   {Tabelas/simulation-ar-rmse-09.tex}{0000/00/00 v0.0}
+  *{file}   {Tabelas/simulation-ar-rmse-095.tex}{0000/00/00 v0.0}
+  *{file}   {Tabelas/simulation-ar-auto-005.tex}{0000/00/00 v0.0}
+  *{file}   {Tabelas/simulation-ar-auto-01.tex}{0000/00/00 v0.0}
+  *{file}   {Tabelas/simulation-ar-auto-05.tex}{0000/00/00 v0.0}
+  *{file}   {Tabelas/simulation-ar-auto-09.tex}{0000/00/00 v0.0}
+  *{file}   {Tabelas/simulation-ar-auto-095.tex}{0000/00/00 v0.0}
+  *{file}   {Tabelas/simulation-ar-intercept-005.tex}{0000/00/00 v0.0}
+  *{file}   {Tabelas/simulation-ar-intercept-01.tex}{0000/00/00 v0.0}
+  *{file}   {Tabelas/simulation-ar-intercept-05.tex}{0000/00/00 v0.0}
+  *{file}   {Tabelas/simulation-ar-intercept-09.tex}{0000/00/00 v0.0}
+  *{file}   {Tabelas/simulation-ar-intercept-095.tex}{0000/00/00 v0.0}
   *{file}   {main.bbl}    {0000/00/00 v0.0}
 }

@@ -2,18 +2,19 @@
 \label{sec:estimating-distribution}
 
 In many applications where a time series model is employed, we often consider the innovations' distribution as known. Take, for example, the AR(p) model:
-$$y_{t}=c+\varepsilon_{t}+\sum_{i=1}^{p}\phi_{i}y_{t-1}$$
+$$Y=c+\sum_{i=1}^{p}\phi_{i}X_i+\varepsilon_{t},$$
+where $X_i$ is a past value of random variable $Y$.
 In this model, errors $\varepsilon_t$ are assumed to have normal distribution with zero mean. 
 
-When we are dealing with meteorological time series, however, we can't always assume normality. In these cases, one can either find a distribution that has a better fit to the data or have a nonparametric method to estimate the distribution directly from the available data.
+When we are dealing with natural resources data, however, we can't always assume normality. In these cases, one can either find a distribution that has a better fit to the data or have a nonparametric method to estimate the distribution directly from the available data.
 
 In a time series framework, where a time series $y_t$ is given by a linear model of its regressors $x_t$
-$$y_t = \beta^T x_t + \varepsilon_t,$$
-we propose to estimate the $k$-step ahead distribution of $y_t$ with a nonparametric approach.
+$$Y_t = \beta^T X_t + \varepsilon_t,$$
+we propose to estimate the $k$-step ahead distribution of $Y_t$ with a nonparametric approach.
 Let an empirical $\alpha$-quantile $\hat{q}_\alpha \in \mathcal{Q}$ be a functional belonging to a functional space. In any given $t$, we can estimate the sequence of quantiles $\{ q_{\alpha}(x_t) \}_{\alpha \in A}$ by solving the problem defined on equations (\ref{eq:non-crossing-quantiles1})-(\ref{eq:non-crossing-constraint}). 
  After evaluating this sequence, by making equal 
 \begin{equation}
-\hat{Q}_{y_t|X}(\alpha) = \hat{q}_\alpha(x_t), \qquad \forall \alpha \in A,
+\hat{Q}_{y_t|X=x_t}(\alpha) = \hat{q}_\alpha(x_t), \qquad \forall \alpha \in A,
 \end{equation}
 we have a set of size $|A|$ of values to define the discrete function over the first argument $\hat{Q}_{y_t|x_t}(\alpha,X=x_t): A \times \mathbb{R}^d \rightarrow \mathbb{R}$. The goal of having function $\hat{Q}$ is to use it as base to construct the estimated quantile function $\hat{Q}'_{y_t|X=x_t}(\alpha,x_t): [0,1] \times \mathbb{R}^d \rightarrow \mathbb{R}$. 
 
@@ -34,8 +35,6 @@ where $\beta^\alpha$ is a vector of coefficients for the explanatory variables.
 In section \ref{sec:npqar} we introduce a Nonparametric Quantile Autoregressive model with a $\ell_{1}$-penalty term, in order to properly simulate densities for several $\alpha$-quantiles. In this nonparametric approach we don't assume any form for $q_\alpha(x_t)$, but rather let the function adjust to the data. To prevent overfitting, the $\ell_1$ penalty for the second derivative (approximated by the second difference of the ordered observations) is included in the objective function. The result of this optimization problem is that each $q_\alpha(x_t)$ will be a function with finite second derivative.
 
 In order to find good estimates for $Q_{y_{t}}(\alpha)$ when $\alpha$ approaches 0 or 1, as well as performing interpolation on the values that were not directly estimated, we can either use a kernel smoothing function, splines, linear approximation, or any other method. 
-\textbf{This will be developed later.}
-
 
 \input{tnen-linear-models}
 
@@ -57,13 +56,13 @@ It is also important to test how the choice of the set $A$ affects the estimated
   \begin{minipage}[t]{\linewidth}
     \centering
     \begin{minipage}[t]{0.45\linewidth}
-      \centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/quantile-linear-scatter}
+      \centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/icaraizinho-quantile-linear-scatter}
     \end{minipage}
     \begin{minipage}[t]{0.45\linewidth}
-      \centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/quantile-nonpar-scatter}
+      \centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/icaraizinho-quantile-nonpar-scatter-lambda30}
     \end{minipage}
   \end{minipage}
-  \caption{Estimated $\alpha$-quantiles. On the left using a linear model and using a nonparametric approach (using $\lambda = 3$) on the right.}
+  \caption{Estimated $\alpha$-quantiles. On the left using a linear model and using a nonparametric approach (using $\lambda = 100$) on the right.}
   \label{fig:scatterplot-alphaquantiles}
 \end{figure}
 
@@ -75,10 +74,10 @@ It is also important to test how the choice of the set $A$ affects the estimated
   \begin{minipage}[t]{\linewidth}
     \centering
     \begin{minipage}[t]{0.45\linewidth}
-      \centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/quantile-linear}
+      \centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/icaraizinho-quantile-linear}
     \end{minipage}
     \begin{minipage}[t]{0.45\linewidth}
-      \centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/quantile-nonpar}
+      \centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/icaraizinho-quantile-nonpar-lambda30}
     \end{minipage}
   \end{minipage}
   \caption{Estimated quantile functions, for different values of $y_{t-1}$. On the left using a linear model and using a nonparametric approach on the right.}
@@ -90,12 +89,34 @@ It is also important to test how the choice of the set $A$ affects the estimated
 	\begin{minipage}[t]{\linewidth}
 		\centering
 		\begin{minipage}[t]{0.45\linewidth}
-			\centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/quantile-vs-alphas-linear}
+			\centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/icaraizinho-quantile-vs-alphas-linear}
 		\end{minipage}
 		\begin{minipage}[t]{0.45\linewidth}
-			\centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/quantile-vs-alphas-nonpar}
+			\centering     \includegraphics[width=\textwidth]{Figuras/regressao-quantilica/icaraizinho-quantile-vs-alphas-nonpar}
 		\end{minipage}
 	\end{minipage}
 	\caption{Sensitivity to different choices of set $A$. On the left, we have the estimated quantiles for the linear model, while on the right for the nonparametric model. On both, the red line shows the quantile function estimated with $A=\{0.005, 0.01, \dots, 0.99, 0.995 \}$, consisting of 199 elements. The blue line is the estimated quantile function when $A=\{0.05, 0.1, \dots, 0.9, 0.95 \}$, consisting of only 19 elements.}
 	\label{fig:quantiles-vs-xt}
+\end{figure}
+
+
+
+\subsection{Testing convergence}
+
+In this computational exercise, we simulated the following stochastic process:
+\begin{equation}
+Y_t = \rho Y_{t-1}+ \varepsilon_t,\qquad \varepsilon_t \sim LogNormal(\mu,\sigma^2),
+\end{equation}
+to test how fast the estimated quantile function $\hat{Q}'_{Y|X}$ converges to the real $Q_{Y|X}$, using the parametric approach. An error metric defined as 
+\begin{equation}
+\sum_{\alpha \in A} | \hat{Q}'_{Y|X}(\alpha) - Q_{Y|X}(\alpha) |
+\end{equation}
+is measured for different values of size of data.
+The result is shown on figure \ref{fig:convergence}.
+
+
+\begin{figure}
+			\centering     \includegraphics[width=0.6 \textwidth]{Figuras/convergencia-dist/Convergence}
+	\caption{Converge of estimated quantile function to true quantile, for a LogNormal distribution}
+	\label{fig:convergence}
 \end{figure}
