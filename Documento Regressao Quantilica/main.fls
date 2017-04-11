@@ -4,7 +4,7 @@ INPUT /usr/share/texmf/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
 INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
 INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/main.tex
-OUTPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/main.log
+OUTPUT main.log
 INPUT /usr/share/texlive/texmf-dist/tex/latex/snapshot/snapshot.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/snapshot/snapshot.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/koma-script/scrartcl.cls
@@ -211,19 +211,72 @@ INPUT /usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty
+INPUT /usr/share/texlive/texmf-dist/tex/latex/pgfplots/pgfplots.sty
+INPUT /usr/share/texlive/texmf-dist/tex/latex/pgfplots/pgfplots.sty
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.revision.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.revision.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-luatex.def
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotscore.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/sys/pgfplotssysgeneric.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/libs/pgfplotslibrary.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldpgfsupp_loader.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryfpu.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryfpu.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryfpu.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldpgfsupp_pgflibraryfpu.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldpgfsupp_pgfmathfloat.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotsutil.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsliststructure.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsliststructureext.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsarray.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsmatrix.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/numtable/pgfplotstableshared.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsdeque.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotsbinary.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotsbinary.data.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotsutil.verb.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/libs/pgflibrarypgfplots.surfshading.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/sys/pgflibrarypgfplots.surfshading.pgfsys-pdftex.def
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/sys/pgflibrarypgfplots.surfshading.pgfsys-pdftex.def
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotscolormap.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotscolor.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotsstackedplots.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotsplothandlers.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotsmeshplothandler.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotsmeshplotimage.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.scaling.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotscoordprocessing.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.errorbars.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.markers.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotsticks.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.paths.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarydecorations.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarydecorations.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduledecorations.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarydecorations.pathmorphing.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarydecorations.pathmorphing.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrarydecorations.pathmorphing.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrarydecorations.pathmorphing.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarydecorations.pathreplacing.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarydecorations.pathreplacing.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrarydecorations.pathreplacing.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrarydecorations.pathreplacing.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryplotmarks.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryplotmarks.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryplotmarks.code.tex
+INPUT /usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryplotmarks.code.tex
 INPUT /usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/main.aux
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/main.aux
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-simbolos.aux
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-simbolos.aux
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-introduction.aux
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-introduction.aux
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-distribuicao-acumulada.aux
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-distribuicao-acumulada.aux
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-simulation.aux
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-simulation.aux
-OUTPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/main.aux
+INPUT main.aux
+INPUT main.aux
+INPUT tnen-model-selection2.aux
+INPUT tnen-model-selection2.aux
+INPUT tnen-simulation.aux
+INPUT tnen-simulation.aux
+INPUT tnen-anexos.aux
+INPUT tnen-anexos.aux
+OUTPUT main.aux
 INPUT /usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 INPUT /usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 INPUT /usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
@@ -238,14 +291,14 @@ INPUT /usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 INPUT /usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 INPUT /usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/main.out
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/main.out
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/main.out
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/main.out
-OUTPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/main.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/main.out
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/main.out
-OUTPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/main.out
+INPUT main.out
+INPUT main.out
+INPUT main.out
+INPUT main.out
+OUTPUT main.pdf
+INPUT ./main.out
+INPUT ./main.out
+OUTPUT main.out
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmss10.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
@@ -300,81 +353,93 @@ INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam5.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5.tfm
 INPUT /var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map
-OUTPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-simbolos.aux
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-simbolos.tex
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-simbolos.tex
-OUTPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-introduction.aux
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-introduction.tex
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-introduction.tex
+OUTPUT tnen-model-selection2.aux
+INPUT tnen-model-selection2.tex
+INPUT tnen-model-selection2.tex
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/./Figuras/Icaraizinho/icaraizinho-boxplot.pdf
-INPUT ./Figuras/Icaraizinho/icaraizinho-boxplot.pdf
-INPUT ./Figuras/Icaraizinho/icaraizinho-boxplot.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/./Figuras/Solar-exemplos/tubarao-boxplot.pdf
-INPUT ./Figuras/Solar-exemplos/tubarao-boxplot.pdf
-INPUT ./Figuras/Solar-exemplos/tubarao-boxplot.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/Icaraizinho/scatterplot.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/Icaraizinho/scatterplot.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/Icaraizinho/scatterplot.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/Solar-exemplos/scatterplot.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/Solar-exemplos/scatterplot.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/Solar-exemplos/scatterplot.pdf
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/./Figuras/npqar/icaraizinho-crossing-200.pdf
-INPUT ./Figuras/npqar/icaraizinho-crossing-200.pdf
-INPUT ./Figuras/npqar/icaraizinho-crossing-200.pdf
-OUTPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-distribuicao-acumulada.aux
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-distribuicao-acumulada.tex
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-distribuicao-acumulada.tex
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmex10.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-linear-models.tex
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-linear-models.tex
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-nonparametric-models.tex
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-nonparametric-models.tex
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/npqar/icaraizinho-crossing-01.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/npqar/icaraizinho-crossing-01.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/npqar/icaraizinho-crossing-01.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/npqar/icaraizinho-crossing-03.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/npqar/icaraizinho-crossing-03.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/npqar/icaraizinho-crossing-03.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/npqar/icaraizinho-crossing-1.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/npqar/icaraizinho-crossing-1.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/npqar/icaraizinho-crossing-1.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/npqar/icaraizinho-crossing-3.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/npqar/icaraizinho-crossing-3.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/npqar/icaraizinho-crossing-3.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/npqar/icaraizinho-crossing-10.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/npqar/icaraizinho-crossing-10.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/npqar/icaraizinho-crossing-10.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/npqar/icaraizinho-crossing-200.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/npqar/icaraizinho-crossing-200.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/npqar/icaraizinho-crossing-200.pdf
-OUTPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-simulation.aux
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-simulation.tex
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-simulation.tex
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/grafico-quantis-fx.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/grafico-quantis-fx.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/Figuras/grafico-quantis-fx.pdf
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/main.bbl
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/main.bbl
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/main.aux
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-simbolos.aux
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-simbolos.aux
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-introduction.aux
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-introduction.aux
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-distribuicao-acumulada.aux
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-distribuicao-acumulada.aux
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-simulation.aux
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/tnen-simulation.aux
-OUTPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/main.dep
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/main.out
-INPUT /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/main.out
+INPUT Figuras/selecao-lasso/par-sellasso-005.pdf
+INPUT ./Figuras/selecao-lasso/par-sellasso-005.pdf
+INPUT ./Figuras/selecao-lasso/par-sellasso-005.pdf
+INPUT Figuras/selecao-lasso/par-sellasso-01.pdf
+INPUT ./Figuras/selecao-lasso/par-sellasso-01.pdf
+INPUT ./Figuras/selecao-lasso/par-sellasso-01.pdf
+INPUT Figuras/selecao-lasso/par-sellasso-05.pdf
+INPUT ./Figuras/selecao-lasso/par-sellasso-05.pdf
+INPUT ./Figuras/selecao-lasso/par-sellasso-05.pdf
+INPUT Figuras/selecao-lasso/par-sellasso-09.pdf
+INPUT ./Figuras/selecao-lasso/par-sellasso-09.pdf
+INPUT ./Figuras/selecao-lasso/par-sellasso-09.pdf
+INPUT Figuras/selecao-lasso/par-sellasso-095.pdf
+INPUT ./Figuras/selecao-lasso/par-sellasso-095.pdf
+INPUT ./Figuras/selecao-lasso/par-sellasso-095.pdf
+INPUT Figuras/SIC005.pdf
+INPUT ./Figuras/SIC005.pdf
+INPUT ./Figuras/SIC005.pdf
+INPUT Figuras/SIC01.pdf
+INPUT ./Figuras/SIC01.pdf
+INPUT ./Figuras/SIC01.pdf
+INPUT Figuras/SIC05.pdf
+INPUT ./Figuras/SIC05.pdf
+INPUT ./Figuras/SIC05.pdf
+INPUT Figuras/SIC09.pdf
+INPUT ./Figuras/SIC09.pdf
+INPUT ./Figuras/SIC09.pdf
+INPUT Figuras/SIC095.pdf
+INPUT ./Figuras/SIC095.pdf
+INPUT ./Figuras/SIC095.pdf
+OUTPUT tnen-simulation.aux
+INPUT tnen-simulation.tex
+INPUT tnen-simulation.tex
+INPUT Figuras/grafico-quantis-fx.pdf
+INPUT ./Figuras/grafico-quantis-fx.pdf
+INPUT ./Figuras/grafico-quantis-fx.pdf
+INPUT Figuras/simulation/enasudeste-np.pdf
+INPUT ./Figuras/simulation/enasudeste-np.pdf
+INPUT ./Figuras/simulation/enasudeste-np.pdf
+INPUT Figuras/simulation/enasudeste-par.pdf
+INPUT ./Figuras/simulation/enasudeste-par.pdf
+INPUT ./Figuras/simulation/enasudeste-par.pdf
+OUTPUT tnen-anexos.aux
+INPUT tnen-anexos.tex
+INPUT tnen-anexos.tex
+INPUT Tabelas/table-betas-selecaointeira-alpha-005.tex
+INPUT Tabelas/table-betas-selecaointeira-alpha-005.tex
+INPUT Tabelas/table-betas-selecaointeira-alpha-01.tex
+INPUT Tabelas/table-betas-selecaointeira-alpha-01.tex
+INPUT Tabelas/table-betas-selecaointeira-alpha-05.tex
+INPUT Tabelas/table-betas-selecaointeira-alpha-05.tex
+INPUT Tabelas/table-betas-selecaointeira-alpha-09.tex
+INPUT Tabelas/table-betas-selecaointeira-alpha-09.tex
+INPUT Tabelas/table-betas-selecaointeira-alpha-095.tex
+INPUT Tabelas/table-betas-selecaointeira-alpha-095.tex
+INPUT Tabelas/tabela-icaraizinho.tex
+INPUT Tabelas/tabela-icaraizinho.tex
+INPUT main.bbl
+INPUT main.bbl
+INPUT main.aux
+INPUT tnen-model-selection2.aux
+INPUT tnen-model-selection2.aux
+INPUT tnen-simulation.aux
+INPUT tnen-simulation.aux
+INPUT tnen-anexos.aux
+INPUT tnen-anexos.aux
+OUTPUT main.dep
+INPUT ./main.out
+INPUT ./main.out
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
-INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
+INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
@@ -387,4 +452,3 @@ INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb
-INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb

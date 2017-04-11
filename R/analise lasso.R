@@ -1,3 +1,6 @@
+#### Este código lê as tabelas fornecidas pelas otimizações do LASSO e MIP (para
+#### seleção das variáveis da regressão quantílica) e exibe um gráfico de tudo
+
 
 # Functions ---------------------------------------------------------------
 
@@ -34,8 +37,7 @@ lagmatrix <- function(x, lags) {
 
 
 
-
-library(stringr); library(ggfortify)
+library(stringr); library(ggfortify); library(rjulia)
 tabela <- read.csv("RegressãoQuantílica_STREET/table-betas-sellassonorm-alpha-095.csv", header = FALSE)
 destino <- "Documento Regressao Quantilica/Figuras/"
 icaraizinho <- read.csv("RegressãoQuantílica_STREET/icaraizinho.csv", header = FALSE)[,1]
@@ -76,7 +78,13 @@ arquivos.tabelas.mip <- str_c(pasta.origem,nomes)
 # lambdas = exp(seq(-2,10,0.3))  # Lasso sem normalizar
 lambdas = exp(seq(-2,9,0.1))
 
-i=5
+
+matriz_com_lags =  lagmatrix(icaraizinho, 12)
+matriz_correlacao = cor(matriz_com_lags)
+
+
+
+i=1
 for (i in 1:length(arquivos.tabelas.lasso)) {
   tabela <- read.table(arquivos.tabelas.lasso[i], header = FALSE, sep = ",")
   nvar <- colSums(abs(tabela) > 0.000000000001)
@@ -145,14 +153,34 @@ for (i in 1:length(arquivos.tabelas.lasso)) {
   }
   
   distance <- rep(0, maxK)
+  distance2 <- rep(0,maxK)
   for(k in 1:maxK) {
     index.sol <- keep.best.K.i[k]
     if (is.na(index.sol)) {
       distance[k] <- NA    
     } else {
       beta.lasso <- tabela[keep.best.K.i[k]]
-      beta.mip <- tabela.mip[k]  
-      distance[k] <- 1/(2*k) * sum(abs((abs(beta.lasso) > epsilon) - (abs(beta.mip) > epsilon)))
+      beta.mip <- tabela.mip[k]
+      sel_lasso <- (abs(beta.lasso) > epsilon)[-1] # variables that keep which covariates are selecret
+      sel_mip <- (abs(beta.mip) > epsilon)[-1]
+      distance[k] <- 1/(2*k) * sum(abs(sel_lasso - sel_mip))
+
+      #### Chama código em Júlia para fazer a otimização
+      julia_init()
+      r2j(matriz_correlacao, "rho")
+      r2j(sel_lasso, "sel_lasso")
+      r2j(sel_mip, "sel_mip")
+      # r2j(arquivo_procedimento, "arquivo_procedimento")
+      # Código júlia
+      # julia_void_eval("print(sel_mip, sel_lasso)")
+      julia_void_eval("using JuMP, Gurobi;\\
+                      @show  pwd()
+                      include(\"R/procedure_distancia.jl\");\\
+                      @show rho
+                      distancia, matriz_delta = procedure_distancia(sel_lasso, sel_mip, rho);")
+      saidas <- j2r("(distancia, matriz_delta)")              
+      distance2[k] <- saidas[[1]]
+      
     }
   }
   
@@ -163,38 +191,48 @@ for (i in 1:length(arquivos.tabelas.lasso)) {
   ## add extra space to right margin of plot within frame
   par(mar=c(5, 4, 4, 6) + 0.1)
   limits=c(min(keep.sic.mip),max(keep.sic.lasso[keep.best.K.i], na.rm = TRUE))
-  
-  
-  plot(distance, xlab="", ylab="", ylim=c(0,1), 
+
+
+  plot(distance2, xlab="", ylab="", ylim=c(0,1),
        axes=FALSE, type="h", col=rgb(0, 1, 0,0.5), lwd=10)
   axis(4, ylim=c(0,1), las=1)
-  
+
   par(new=TRUE)
-  
+
   ## Plot first set of data and draw its axis
-  plot(keep.sic.mip , axes=FALSE, ylim=limits, ylab = "", 
-       xlab = "", main = str_c("alpha = ", alpha))
-  points(keep.sic.lasso[keep.best.K.i], pch=3, col=2)
-  legend(x="topright", c("MIP","Post-Lasso","Distance"), pch=c(1,3,15), col=c(1,2,rgb(0, 1, 0,0.5)))  
+  ## Mark the best points of both MIP and LASSO
+  i.best.lasso <- which.min(keep.sic.lasso[keep.best.K.i])
+  i.best.mip <- which.min(keep.sic.mip)
+  
+  plot(keep.sic.mip , axes=FALSE, ylim=limits, ylab = "",
+       xlab = "", main = str_c("alpha = ", alpha), col = 4)
+  # points(keep.sic.mip)
+  points(i.best.mip, keep.sic.mip[i.best.mip], col = 2)
+  points(keep.sic.lasso[keep.best.K.i], pch=3, col=4)
+  points(i.best.lasso, keep.sic.lasso[keep.best.K.i][i.best.lasso], pch = 3, col = 2)
+  
+  
+  legend(x="topright", c("MIP","Post-Lasso","Distance"), pch=c(1,3,15), col=c(4,4,rgb(0, 1, 0,0.5)))
   axis(2, ylim=limits,col="black",las=1)  ## las=1 makes horizontal labels
   mtext("Schwarz Information Criteria",side=2,line=2.5)
   box()
+
   
   ## Allow a second plot on the same graph
-  
+
   ## Plot the second plot and put axis scale on right
   ## a little farther out (line=4) to make room for labels
-  mtext("Distance",side=4,col=1,line=4) 
+  mtext("Distance",side=4,col=1,line=4)
   # axis(4, ylim=c(0,1), col="red",col.axis="red",las=1)
-  
+
   yLabels <- seq(0.2, 0.8, 0.2)
-  
+
   ## Draw the time axis
   axis(1,1:maxK)
-  mtext("K (Number of covariates included)",side=1,col="black",line=2.5)  
+  mtext("K (Number of covariates included)",side=1,col="black",line=2.5)
   dev.off()
   ########### end plot ################
-  
+
   
 }
 
@@ -238,3 +276,13 @@ for (i in 1:length(arquivos.tabelas.lasso)) {
 # 
 # 
 # 
+# 
+# tabela
+# 
+# library(rjulia)
+# r2j(tabela, "table")
+# julia_eval("tmp = pwd(); x = 1")
+# tmp = j2r("tmp")
+# tmp
+# 
+

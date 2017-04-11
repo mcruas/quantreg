@@ -11,18 +11,6 @@ When we choose $q_\alpha(x_t)$ to be a linear function
 \hat{q}_\alpha(x_t) = \beta_{0\alpha} + \beta_\alpha^T x_t
 \end{equation}
 we can substitute it on problem \ref{eq:qar-general}, getting the following LP problem:
-\begin{equation}
-\begin{aligned}
- \underset{\beta_0,\beta,\varepsilon_{t}^{+},\varepsilon_{t}^{-}}{\text{min}} & \sum_{t \in T}\left(\alpha\varepsilon_{t}^{+}+(1-\alpha)\varepsilon_{t}^{-}\right) \\
-\mbox{s.t. } & \varepsilon_{t}^{+}-\varepsilon_{t}^{-}=y_{t} - \beta_0 - \beta^T x_{t},\qquad\forall t\in\{1,\dots,n\},\\
-& \varepsilon_t^+,\varepsilon_t^- \geq 0, \qquad \forall t \in \{1,\dots,n\}.
-\end{aligned}
-\label{eq:qar-lp}
-\end{equation}
-
-To solve the crossing quantile issue discussed earlier, we employ a minimization problem with all quantiles at the same time and adding the non crossing constraints. The new optimization problem is shown below:
-
-
 \begin{eqnarray}
 \label{eq:non-crossing-quantiles1par}
 \min_{\beta_{0\alpha},\beta_\alpha,\varepsilon_{t\alpha}^{+}, \varepsilon_{t\alpha}^{-}} &  \sum_{\alpha \in A} \sum_{t \in T}\left(\alpha \varepsilon_{t \alpha}^{+}+(1-\alpha)\varepsilon_{t \alpha}^{-}\right) & \label{eq:linear-opt-1} \\

@@ -1,4 +1,4 @@
-\section{Model Selection}
+\section{Regularization}
 
 In the following sections we present two ways of doing regularization and selecting the best model for estimating the quantile function. In the first, we use a Mixed Integer optimization problem (MIP) to find the best subset among all choices of covariates. The second is by using the a LASSO-type technique, by penalizing the $\ell_1$-norm of the regressors, thus shrinking the size of coefficients towards zero.  
 
@@ -7,17 +7,29 @@ In the following sections we present two ways of doing regularization and select
 
 In this part, we investigate the usage of Mixed Integer Programming to select which variables are included in the model, up to a limit of inclusions imposed \textit{a priori}. The optimization problem is described below:
 \begin{eqnarray}
- \underset{\beta_{0\alpha},\beta_\alpha,z_{p \alpha} \varepsilon_{t \alpha}^{+},\varepsilon_{t \alpha}^{-}}{\text{min}} & \sum_{\alpha \in A} \sum_{t\in T}\left(\alpha\varepsilon_{t}^{+}+(1-\alpha)\varepsilon_{t}^{-}\right) \\
-\mbox{s.t } & \varepsilon_{t}^{+}-\varepsilon_{t \alpha}^{-}=y_{t}-\beta_{0 \alpha}-\sum_{p=1}^{P}\beta_{p \alpha}x_{t,p},& \qquad\forall t \in T ,\forall \alpha \in A, \label{linear1}\\
-& \varepsilon_{t \alpha}^{+},\varepsilon_{t \alpha}^{-}\geq0,&\qquad\forall t \in T ,\forall \alpha \in A, \label{linear2}\\
-& - M_U z_{p \alpha} \leq \beta_{p \alpha} \leq M_U z_{p \alpha},&\qquad\forall p\in\{1,\dots,P\}, \label{linear3}\\
-& \sum_{p=1}^P z_{p \alpha} \leq K, & \qquad \forall \alpha \in A, \label{linear4}\\
-& z_{p \alpha} \in \{0,1\},&\qquad\forall p\in\{1,\dots,P\}, \forall \alpha \in A. \label{eq:linear5}\\
-& \beta_{0\alpha} + \beta_{\alpha}^T x_{t} \leq \beta_{0\alpha'} + \beta_{\alpha'}^T x_{t}, & \qquad \forall t \in T, \forall (\alpha, \alpha') \in A \times A,  \alpha < \alpha',\nonumber\\ 
+ \underset{\beta_{0\alpha},\beta_\alpha,z_{p \alpha} \varepsilon_{t \alpha}^{+},\varepsilon_{t \alpha}^{-}}{\text{min}} & \sum_{\alpha \in A} \sum_{t\in T}\left(\alpha\varepsilon_{t \alpha}^{+}+(1-\alpha)\varepsilon_{t\alpha}^{-}\right) \label{eq:mip0} \\
+\mbox{s.t } & \varepsilon_{t}^{+}-\varepsilon_{t \alpha}^{-}=y_{t}-\beta_{0 \alpha}-\sum_{p=1}^{P}\beta_{p \alpha}x_{t,p},& \qquad\forall t \in T ,\forall \alpha \in A, \label{eq:mip1}\\
+& \varepsilon_{t \alpha}^{+},\varepsilon_{t \alpha}^{-}\geq0,&\qquad\forall t \in T ,\forall \alpha \in A, \label{eq:mip2}\\
+& - M z_{p \alpha} \leq \beta_{p \alpha} \leq M z_{p \alpha},&\qquad\forall p\in\{1,\dots,P\}, \label{eq:mip3}\\
+& \sum_{p=1}^P z_{p \alpha} \leq K, & \qquad \forall \alpha \in A, \label{eq:mip4}\\
+& z_{p \alpha} \in \{0,1\},&\qquad\forall p\in\{1,\dots,P\}, \forall \alpha \in A. \label{eq:mip5}\\
+& \beta_{0\alpha} + \beta_{\alpha}^T x_{t} \leq \beta_{0\alpha'} + \beta_{\alpha'}^T x_{t}, & \qquad \forall t \in T, \forall (\alpha, \alpha') \in A \times A,  \alpha < \alpha',\nonumber\\ \label{eq:mip6}
 \end{eqnarray}
-The objective function and constraints (\ref{linear2}) and (\ref{linear3}) are those from the standard linear quantile regression. The other constraints implement the process of regularization, forcing a maximum of $K$ variables to be included. By (\ref{linear3}), variable $z_{p \alpha}$ is a binary that assumes 1 when the coefficient $\beta_p$ is included. $M_U$ is chosen in order to guarantee that $M_U \geq \|\hat{\beta}\|_{\infty}$. The solution given by $\beta_0$ and $\beta$ will be the best linear quantile regression with $K$ nonzero coefficients. 
+The objective function and constraints (\ref{eq:mip2}) and (\ref{eq:mip3}) are those from the standard linear quantile regression. The other constraints implement the process of regularization, forcing a maximum of $K$ variables to be included. By (\ref{eq:mip3}), variable $z_{p \alpha}$ is a binary that assumes 1 when the coefficient $\beta_p$ is included. $M$ is chosen in order to guarantee that $M \geq \|\hat{\beta}\|_{\infty}$. The solution given by $\beta_0$ and $\beta$ will be the best linear quantile regression with $K$ nonzero coefficients. 
 
-We ran this optimization for each value of $K \in \{1, \dots, 12\}$ and quantiles $\alpha \in \{0.05, 0.1, 0.5, 0.9, 0.95\}$. We could see that for all quantiles the 12\textsuperscript{th} lag was the one included when $K=1$. When $K=2$, the 1\textsuperscript{st} lag was always included, sometimes with $\beta_{12}$, some others with $\beta_4$ and once with $\beta_{11}$. These 4 lags that were present until now are the only ones selected when $K=3$. For $K=4$, those same four lags were selected for three quantiles (0.05, 0.1 and 0.5), but for the others (0.9 and 0.95) we have $\beta_6$, $\beta_7$ and $\beta_9$ also as selected. From now on, the inclusion of more lags represent a lower increase in the fit of the quantile regression. The estimated coefficient values for all $K$'s are available in the appendices section. 
+{
+    \def\OldComma{,}
+    \catcode`\,=13
+    \def,{%
+      \ifmmode%
+        \OldComma\discretionary{}{}{}%
+      \else%
+        \OldComma%
+      \fi%
+    }%
+We ran this optimization on the icaraizinho dataset for each value of $K \in \{0, 1, \dots, 12\}$ and quantiles $\alpha \in \{0.05, 0.1, 0.5, 0.9, 0.95\}$. The full results table can be accessed on section \ref{sec:mipcoefficients}. For all quantiles the 12\textsuperscript{th} lag was the one included when $K=1$. When $K=2$, the 1\textsuperscript{st} lag was always included, sometimes with $\beta_{12}$, some others with $\beta_4$ and once with $\beta_{11}$. These 4 lags that were present until now are the only ones selected when $K=3$. For $K=4$, those same four lags were selected for three quantiles (0.05, 0.1 and 0.5), but for the others (0.9 and 0.95) we have $\beta_6$, $\beta_7$ and $\beta_9$ also as selected. From now on, the inclusion of more lags represent a lower increase in the fit of the quantile regression. The estimated coefficient values for all $K$'s are available in the appendices section. 
+}
+
 
 %\begin{figure}
 %	\centering
@@ -25,6 +37,23 @@ We ran this optimization for each value of $K \in \{1, \dots, 12\}$ and quantile
 %	\caption{Linear Quantile Regression when only $y_{t-1}$ is used as explanatory variable}
 %	\label{fig:icaraizinho-crossing-200}
 %\end{figure}
+
+\subsubsection*{Defining groups for variables}
+
+Consider the optimization problem defined on (\ref{eq:mip0})-(\ref{eq:mip6}). Equation (\ref{eq:mip3}) permits a different subset for each $\alpha$-quantile, whose function is defined by a set of $K$ variables. For two similar probabilities $\alpha$ and $\alpha'$, it is not plausible that their chosen model be too different, which is allowed with the previous optimization model.
+
+To address this issue, we propose to divide all $\alpha \in A$ into groups. The collection $G$ of all groups $g$ form a partition of $A$, so each $\alpha$ belongs to only one group $g$. 
+The subset of selected variables must be the same for all $\alpha$ in the same group. To model this properties as constraints, we use the following equations and inequalities:
+\begin{eqnarray}
+&z_{p \alpha} := 2 - ( 1-z_{pg}) - I_{g\alpha}& \\
+& \sum\limits_{g \in G} I_{g\alpha} = 1, & \forall \alpha \in A,\label{eq:mipgrupa} \\
+& -Mz_{p \alpha}  \leq  \beta_{p \alpha} \leq M z_{p \alpha}, & \forall p \in P, \quad \forall \alpha \in A, \quad \forall g \in G, \label{eq:mipgrupb} \\
+&z_{pg} \in \{0,1\},& \forall p \in P, \quad \forall g \in G, 
+\end{eqnarray}
+where $G$ is a set of group index and $z_{pg}$ is a binary variable that equals 1 iff variable $p$ is included on group $g$ model and $I_{g\alpha}$ equals 1 iff $\alpha$ belongs to group $g$.
+The logic behind constraint \ref{eq:mipgrupb} is that 
+$$\text{If }z_{pg} = 0 \text{ and }I_{g\alpha} =1 \text{ then } \beta_{p \alpha = 0}. $$
+This means that if probability $\alpha$ belongs to group $g$ but variable $p$ is not selected to be among
 
 
 \subsection{Best subset selection with a $\ell_1$ penalty}
@@ -50,7 +79,7 @@ where the regressors $x_{t,p}$ used are its lags. In order to represent the abov
 \\
 & \xi_{p}\geq-\beta_{p \alpha},&\forall p\in\{1,\dots,P\}, \forall \alpha \in A,  \nonumber \\ \label{l1-qar-4}
 \end{eqnarray}
-Once again, this model is built upon the standard linear programming model for the quantile regression (equation \ref{eq:qar-lp}). 
+This model is built upon the standard linear programming model for the quantile regression (equation \ref{eq:qar-lp}). 
 On the above formulation, the $\ell_1$ norm of equation (\ref{eq:l1-qar-optim}) is substituted by the sum of $\xi_p$, which represents the absolute value of $\beta_p$. The link between variables $\xi_p$ and $\beta_p$ is made by constraints (\ref{l1-qar-3}) and (\ref{l1-qar-4}). Note that the linear coefficient $\beta_0$ is not included in the penalization, as the sum of penalties on the objective function \ref{eq:obj-lasso}.
 
 For such estimation to produce good results, however, each variable must have the same relative weight in comparison with one another. So, before solving the optimization problem, we normalize all variables to have mean $\mu = 0$ and variance $\sigma^2 = 1$. For the vector of observations for each covariate (that in our problem represents is a vector of observations of lags $y_{t-p}$), we apply the transformation $\tilde{y}_{t-p,i} = (y_{t-p,i} - \bar{y}_{t-p}) / \sigma_{t-p}$, where $\bar{y}_{t-p}$ is the $p$-lag mean and $\sigma_{t-p}$ the $p$-lag standard deviation. We use the $\tilde{y}_{t-p,i}$ series to estimate the coefficients. Once done that, we multiply each coefficient for its standard deviation to get the correct coefficient: $\beta_i = \tilde{\beta}_i \dot \sigma_{t-p}$.
@@ -88,101 +117,62 @@ For low values of $\lambda$, the penalty is small and thus we have a model where
 
 It is important to mention that even though we have coefficients that are estimated by this method, we don't use them directly. Instead, the nonzero coefficients will be the only covariates used as explanatory variables of a regular quantile autoregression, solved by the linear programming problem \ref{eq:qar-lp}. In summary, the optimization in equation \ref{eq:l1-qar-optim} acts as a variable selection for the subsequent estimation, which is normally called the post-lasso estimation \cite{belloni2009least}.
 
-We are interested, finally, in finding the post-lasso coefficients $\beta_\lambda^*$, which is the solution of the optimization problem given below:
-\begin{equation}
-\begin{aligned} \beta_\lambda^{*} = \argmin_{\beta_0,\beta,\varepsilon_{t}^{+},\varepsilon_{t}^{-}} & \sum_{t=1}^{n}\left(\alpha\varepsilon_{t}^{+}+(1-\alpha)\varepsilon_{t}^{-}\right)\\
-\mbox{s.t. } & \varepsilon_{t}^{+}-\varepsilon_{t}^{-}=y_{t} - \beta_0 - \sum_{p\in L_\lambda} \beta_p x_{t,p},\qquad\forall t\in\{1,\dots,n\},\\
-& \varepsilon_t^+,\varepsilon_t^- \geq 0, \qquad \forall t \in \{1,\dots,n\}.
-\end{aligned}
-\label{eq:post-lasso}
-\end{equation}
-Note that only a subset of the $P$ covariates will have nonzero values, which are given by the set 
+In this estimation made \textit{a posteriori}, only a subset of the $P$ covariates will have nonzero values, which are given by the set 
 \begin{equation*}
 L_\lambda = \{ p \; | \; p \in \{ 1,\dots,P \}, \; |\beta^{*LASSO}_{\lambda,p}| \neq 0  \}.
 \end{equation*}
 Hence, we have that
 $$\beta^{*LASSO}_{\lambda,p} = 0 \iff \beta^{*}_{\lambda,p} = 0.$$
-
-
-\subsection{Simulation Study}
-\label{sec:simulation-ar1}
-If we knew an autoregressive process true model
-\[
-y_t = \phi_0 + \sum_{p=1}^{P} \phi_p y_{t-p} + \varepsilon_t,
-\]
-and knew the error distribution, we could estimate the one-step ahead quantile as the sum $\hat{y}_{t+1} + t_{\alpha}$, where $t_\alpha$ is the $\alpha$-quantile for the error distribution. This means that we would be able to use all developments made on conditional mean estimation and simply add an error to estimate quantiles. 
-
-However, that is not the case. When working with quantile estimation for real data we don't know the generating process exactly. Using a quantile regression model provides us a good solution even without making assumptions about the error distribution. 
-
-We propose simulating an AR(1) model
+The post-lasso coefficients $\beta_\lambda^*$ are the solution from the optimization problem given below:
 \begin{equation}
-y_t = \phi_0 +  \phi y_{t-1} + \varepsilon_t,\qquad \varepsilon_t \sim N(0, \sigma_\varepsilon^2),	
-\label{eq:sim-true-model}
+\begin{aligned} (\hat{\sigma}_{\lambda}^{*},\beta_{\lambda}^{*})\overset{(obj,var)}{\longleftarrow} \min_{\beta_0,\beta,\varepsilon_{t}^{+},\varepsilon_{t}^{-}} & \sum_{t \in T}\left(\alpha\varepsilon_{t}^{+}+(1-\alpha)\varepsilon_{t}^{-}\right) \\
+\mbox{s.t. } & \varepsilon_{t}^{+}-\varepsilon_{t}^{-}=y_{t} - \beta_0 - \sum_{p\in L_\lambda} \beta_p x_{t,p},& \forall t\in T,\\
+& \varepsilon_t^+,\varepsilon_t^- \geq 0, & \forall t \in T.
+\end{aligned}
+\label{eq:post-lasso}
 \end{equation}
-and test two approaches to predict the one-step ahead quantile. On the first one, we consider known the process true model, given on equation \ref{eq:sim-true-model}. Thus, our task is to estimate values for $\hat{\phi}_0$, $\hat{\phi}$ and $\hat{\sigma}_\epsilon^2$. In order to calculate the one-step ahead $\alpha$-quantile, we need to compute
-\begin{equation}
-\hat{q}^{AR}_\alpha(x_t) = \hat{y}_{t+1|t} + z_\alpha \hat{\sigma}_\varepsilon,
-\end{equation}
-where $\hat{y}_{t+1|t} = \hat{\phi}_0 + \hat{\phi} y_{t}$ stands for the one-step ahead conditional mean and $z_\alpha = F^{-1}(\alpha)$, where $F$ is the gaussian distribution function.
+The variable $\hat{\sigma}_{\lambda}^{*}$ receives the value of the objective function on its optimal solution.
 
-On the second approach, we fit a quantile regression by solving problem \ref{eq:qar-lp}. The solution of this optimization problem are coefficients $\hat{\beta}_0$ and $\hat{\beta}$. In order to find the one-step ahead $\alpha$-quantile, we use the following expression:
-\begin{equation}
-\hat{q}^{QR}_\alpha(x_t) = \hat{\beta}_0 + \hat{\beta} y_{t}.
-\end{equation}
-Note that in both approaches we have one intercept term ($z_\alpha \sigma_\varepsilon + {\phi}_0$ and $\beta_0$) and a coefficient for the first lag ($\phi$ and $\beta$). 
-
-We generate data according to equation \ref{eq:sim-true-model}, with different values for $\phi$ (0.25, 0.5, 0.7 and 0.9) and different signal to noise ratios (0.01, 0.05, 0.1, 0.5, 1). We use the signal to noise ratio (RSN) to form the error variance such that $\sigma_e^2 = \dfrac{\phi_0}{1-\phi} \cdot RSN$. This experiment was run with samples of size $n=20000$. The first half was used to fit coefficients and the second half was used as testing set, on which forecasting was done.
-
-Our first goal is then to evaluate the ability of these two approaches to predict the one-step ahead $\alpha$-quantile for a few selected $\alpha$'s. We define the model $m$ forecasting error $\varepsilon_t^m$ as the quantity 
-\begin{equation}
-\varepsilon_{t \alpha}^m = \hat{q}^{m}_\alpha(x_t) - q_\alpha(x_t) = \hat{q}^{m}_\alpha(x_t) - \phi_0 - \phi y_{t-1} - z_\alpha \sigma_\epsilon.
-\end{equation}
-We use the Root Mean Squared Error (RMSE) to evaluate forecasting performance, which is defined for the model $m$ as follows:
-\begin{equation}
-RMSE^m = \sqrt{ \frac{1}{n-1} \sum_{i=2}^{n} \left( \varepsilon_{t \alpha}^m \right)^2}
-\end{equation}
-
-On section \ref{sec:simulation-tables}, we show a comparison of RMSE for both approaches. To compare them, we compute their RMSE ratio
-\begin{equation}
-R^{Q/A} = \dfrac{RMSE^{QR}}{RMSE^{AR}}.
-\end{equation}
-If $R^{Q/A}$ is smaller than 1, it means that the quantile regression approach performed better in terms of RMSE than the conditional mean based on autoregressive models approach.
-
-Once simulations are executed, we notice forecasting errors are similar for both approaches. The exception being when $\phi$ is large (0.9) and the noise is small ($RSN = 0.01$). In those cases, quantile regression performed on average 10\% better than when using the conditional mean approach.
-We also provide tables showing differences for the estimated autoregressive and intercept coefficients on section \ref{sec:simulation-tables}.
 
 \subsection{Model selection}
 
-On sections \ref{sec:best-subset-mip} and \ref{sec:best-subset-ell1}, we presented ways of doing regularization. But regularization can be done with different levels of parsimony. For example, we can select a different number $K$ of variables to be included in the best subset selection via MIP or choose different values of $\lambda$ for the $\ell_1$ penalty. Each of these choices leads to a different model, so one needs to know how to select the best one among the options we have. One way of achieving this is by using an information criteria to guide our decision. 
-
-An information criteria summarizes two aspects. One of them refers to how well the model fits the in-sample observations. The other part penalizes the quantity of covariates used in the model. By penalizing how big our model is, we prevent overfitting from happening. So, in order to enter the model, the covariate must supply enough goodness of fit.
-In \cite{machado1993robust}, it is presented a variation of the Schwarz criteria for M-estimators that includes quantile regression. The Schwarz Information Criteria (SIC) adapted to the quantile autoregression case is presented below:
-\begin{align} 
-\begin{split}
-SIC(j) = n \log(\hat{\sigma}_{j})+\frac{1}{2}p_{j}\log n,\label{eq:SIC}
-\end{split}					
-\end{align}
-where $\hat{\sigma}_{j}= \frac{1}{n} \sum_{t=1}^{n} \rho_{\alpha}(y_{t}-x^{T}_{t}\hat{\beta}_{n}(\alpha))$, $\rho_\alpha(\cdot)$  is the penalization function and $p_{j}$ the $j$\textsuperscript{th} model's dimension. This procedure leads to a consistent model selection if the model is well specified. 
-
+On sections \ref{sec:best-subset-mip} and \ref{sec:best-subset-ell1}, we presented ways of doing regularization. But regularization can be done with different levels of parsimony. For example, we can select a different number $K$ of variables to be included in the best subset selection via MIP or choose different values of $\lambda$ for the $\ell_1$ penalty. Each of these choices leads to a different model, so one needs to know how to select the best one among the options we have. 
 
 % % % Métrica
 
-Optimizing a LP problem is many times faster than a similar-sized MIP problem. One of our goals is to test whether a solution of a model with a $\ell_1$-norm can approximate well a solution given by the MIP problem. We propose an experiment that is described as follows. First, we calculate the quantity $k(\lambda)$ of nonzero coefficients, for each given lambda:
+Optimizing a LP problem is many times faster than a similar-sized MIP problem. One of our goals is to test whether a solution of a model with a $\ell_1$-norm can approximate well a solution given by the MIP problem. We propose an experiment that is described as follows. First, we calculate the quantity $\| \beta^*_\lambda \|_0$ of nonzero coefficients, for each given lambda, for the LASSO estimations.
+Then, for each number $K$ of total nonzero coefficients ($K$ ranging from 0 until 12, where 0 means that only the intercept is included), there will be a penalty $\lambda^*_K$ which minimizes the errors from the quantile regression's objective function (given on equation (\ref{eq:post-lasso})):
 \begin{equation}
-k_\lambda = \| \beta^*_\lambda \|_0.
+\lambda^*_K = \argmin_\lambda \left\lbrace \left.  \hat{\sigma}_{\lambda}^{*} \quad  \right| \, \| \beta^*_\lambda \|_0 = K \right\rbrace.
 \end{equation}
-Then, for each number $K$ of total nonzero coefficients (from 1 until 13, where 1 means that only the intercept is included), there will be a penalty $\lambda^*_K$ which minimizes the SIC:
-\begin{equation}
-\lambda^*_K = \argmin_\lambda \left\lbrace  SIC\left( k_\lambda \right)  | \, k_\lambda = K \right\rbrace.
-\end{equation}
-Thus, we can compare the SIC of the best lasso fit where exactly $K$ variables are selected with the SIC selected by the MIP problem, also with $K$ variables selected.
+We, then, define the set $L_K^{m}$, which contains all nonzero indexes, for a given $K$, of method $m$.
+Thus, we can compare the best lasso fit where exactly $K$ variables are selected with the best fit given by the MIP problem, also with $K$ variables selected.
 
-To help us view the difference of results between both methods, we define a distance metric $d$ between the subset of coefficients chosen by each one of them. Let 
-\begin{equation}
-d(\beta^*_{MIP(K)}, \beta^*_{\lambda^*_K}) =  \frac{1}{2K} \sum_{p=1}^P { \left| I(\beta^*_{MIP(K),p}) - I( \beta^*_{\lambda^*_K,p}) \right| }, 
-\label{eq:distance}
-\end{equation}
-where $I$ is an indicator function such that $I(x) = 0$ if $x = 0$ and $I(x)=1$ otherwise. 
+As the MIP solution is the exact solution for the problem, while the LASSO solution is an approximation, we use the former as a \textit{benchmarking} for the quality of the latter solution. To help us view the difference of results between both methods, we define a similarity metric $d$ between the subset of coefficients chosen by each one of them. It is desirable that the lasso solution be as related with the MIP solution as possible.
+The similarity is calculated as the solution of the following optimization problem
+\begin{eqnarray}
+d(\beta^*_{MIP(K)}, \beta^*_{\lambda^*_K}) =	\max_{0\leq\delta_{ij}\leq1} & \sum\sum_{j} \delta_{ij} |\rho_{ij}|\\
+	\text{s.t.} & \sum_{j}\delta_{ij}=1 & \forall i\in L_{K}^{MIP},\\
+	& \sum_{i}\delta_{ij}=1 & \forall j\in L_{K}^{LASSO},
+\end{eqnarray}
+where $\rho_{ij}$ is the correlation between variables $i$ and $j$ and $\delta_{ij} = 1$ means that the selected variable $i$ from the set $L_k^{MIP}$ is associated with the variable $j$ from set $L_k^{LASSO}$, and the constraints guarantee that each variable is related with only one other variable. 
+When $d = 1$, both solutions are equal, and the LASSO method was able to select the best subset among the available possibilities.
+% % % Trocar o sigma da função objetivo.
+
+
+
+
+% % % recolocar no texto
+As seen before, we have one best solution for each desired $K$. The question that arises now is how to select the ideal number of variables to use.
+One way of achieving this is by using an information criteria to guide our decision. 
+An information criteria summarizes two aspects. One of them refers to how well the model fits the in-sample observations. The other part penalizes the quantity of covariates used in the model. By penalizing how big our model is, we prevent overfitting from happening. So, in order for a covariate to be included in the model, it must supply enough goodness of fit.
+In \cite{machado1993robust}, it is presented a variation of the Schwarz criteria for M-estimators that includes quantile regression. The Schwarz Information Criteria (SIC), adapted to the quantile autoregression case, is presented below:
+\begin{align} 
+\begin{split}
+SIC(m) = n \log(\hat{\sigma}^*)+\frac{1}{2}K\log n,\label{eq:SIC}
+\end{split}					
+\end{align}
+where $K$ is the model's dimension. This procedure leads to a consistent model selection if the model is well specified. 
 
 Figure \ref{fig:comparison-lm-results} shows the results of these experiments for quantiles $\alpha \in \{0.05, 0.1, 0.5, 0.9, 0.95\}$. The results point us that for small values of $K$ the distance between coefficients is bigger and where we observe the biggest differences between the SIC values. The minimum SIC value for the MIP problem is usually found between 4 and 6 variables in the model.
 
@@ -214,4 +204,5 @@ Figure \ref{fig:comparison-lm-results} shows the results of these experiments fo
 	\caption{Comparison of SIC between a solution with Lasso as a variable selector and the best subset selection with MIP. The bars represent the distance $d$ as defined by equation \ref{eq:distance}. \\ (*) When the distance is zero, it means that the same variables are selected from both methods for a given $k$. Thus, in these cases we have the same SIC for both of them.}
 	\label{fig:comparison-lm-results}
 \end{figure}
+
 

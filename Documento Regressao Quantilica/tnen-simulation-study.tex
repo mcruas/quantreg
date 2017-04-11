@@ -1,0 +1,49 @@
+%% Retirado temporariamente do texto
+
+
+\subsection{Simulation Study}
+\label{sec:simulation-ar1}
+If we knew an autoregressive process true model
+\[
+y_t = \phi_0 + \sum_{p=1}^{P} \phi_p y_{t-p} + \varepsilon_t,
+\]
+and knew the error distribution, we could estimate the one-step ahead quantile as the sum $\hat{y}_{t+1} + t_{\alpha}$, where $t_\alpha$ is the $\alpha$-quantile for the error distribution. This means that we would be able to use all developments made on conditional mean estimation and simply add an error to estimate quantiles. 
+
+However, that is not the case. When working with quantile estimation for real data we don't know the generating process exactly. Using a quantile regression model provides us a good solution even without making assumptions about the error distribution. 
+
+We propose simulating an AR(1) model
+\begin{equation}
+y_t = \phi_0 +  \phi y_{t-1} + \varepsilon_t,\qquad \varepsilon_t \sim N(0, \sigma_\varepsilon^2),	
+\label{eq:sim-true-model}
+\end{equation}
+and test two approaches to predict the one-step ahead quantile. On the first one, we consider known the process true model, given on equation \ref{eq:sim-true-model}. Thus, our task is to estimate values for $\hat{\phi}_0$, $\hat{\phi}$ and $\hat{\sigma}_\epsilon^2$. In order to calculate the one-step ahead $\alpha$-quantile, we need to compute
+\begin{equation}
+\hat{q}^{AR}_\alpha(x_t) = \hat{y}_{t+1|t} + z_\alpha \hat{\sigma}_\varepsilon,
+\end{equation}
+where $\hat{y}_{t+1|t} = \hat{\phi}_0 + \hat{\phi} y_{t}$ stands for the one-step ahead conditional mean and $z_\alpha = F^{-1}(\alpha)$, where $F$ is the gaussian distribution function.
+
+On the second approach, we fit a quantile regression by solving problem \ref{eq:qar-lp}. The solution of this optimization problem are coefficients $\hat{\beta}_0$ and $\hat{\beta}$. In order to find the one-step ahead $\alpha$-quantile, we use the following expression:
+\begin{equation}
+\hat{q}^{QR}_\alpha(x_t) = \hat{\beta}_0 + \hat{\beta} y_{t}.
+\end{equation}
+Note that in both approaches we have one intercept term ($z_\alpha \sigma_\varepsilon + {\phi}_0$ and $\beta_0$) and a coefficient for the first lag ($\phi$ and $\beta$). 
+
+We generate data according to equation \ref{eq:sim-true-model}, with different values for $\phi$ (0.25, 0.5, 0.7 and 0.9) and different signal to noise ratios (0.01, 0.05, 0.1, 0.5, 1). We use the signal to noise ratio (RSN) to form the error variance such that $\sigma_e^2 = \dfrac{\phi_0}{1-\phi} \cdot RSN$. This experiment was run with samples of size $n=20000$. The first half was used to fit coefficients and the second half was used as testing set, on which forecasting was done.
+
+Our first goal is then to evaluate the ability of these two approaches to predict the one-step ahead $\alpha$-quantile for a few selected $\alpha$'s. We define the model $m$ forecasting error $\varepsilon_t^m$ as the quantity 
+\begin{equation}
+\varepsilon_{t \alpha}^m = \hat{q}^{m}_\alpha(x_t) - q_\alpha(x_t) = \hat{q}^{m}_\alpha(x_t) - \phi_0 - \phi y_{t-1} - z_\alpha \sigma_\epsilon.
+\end{equation}
+We use the Root Mean Squared Error (RMSE) to evaluate forecasting performance, which is defined for the model $m$ as follows:
+\begin{equation}
+RMSE^m = \sqrt{ \frac{1}{n-1} \sum_{i=2}^{n} \left( \varepsilon_{t \alpha}^m \right)^2}
+\end{equation}
+
+On section \ref{sec:simulation-tables}, we show a comparison of RMSE for both approaches. To compare them, we compute their RMSE ratio
+\begin{equation}
+R^{Q/A} = \dfrac{RMSE^{QR}}{RMSE^{AR}}.
+\end{equation}
+If $R^{Q/A}$ is smaller than 1, it means that the quantile regression approach performed better in terms of RMSE than the conditional mean based on autoregressive models approach.
+
+Once simulations are executed, we notice forecasting errors are similar for both approaches. The exception being when $\phi$ is large (0.9) and the noise is small ($RSN = 0.01$). In those cases, quantile regression performed on average 10\% better than when using the conditional mean approach.
+We also provide tables showing differences for the estimated autoregressive and intercept coefficients on section \ref{sec:simulation-tables}.

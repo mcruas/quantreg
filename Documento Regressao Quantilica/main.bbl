@@ -6,20 +6,10 @@ Alexandre Belloni and Victor Chernozhukov.
   models.
 \newblock 2009.
 
-\bibitem{bertsimas2015best}
-Dimitris Bertsimas, Angela King, and Rahul Mazumder.
-\newblock Best subset selection via a modern optimization lens.
-\newblock {\em arXiv preprint arXiv:1507.03133}, 2015.
-
-\bibitem{kim2009ell_1}
-Seung-Jean Kim, Kwangmoo Koh, Stephen Boyd, and Dimitry Gorinevsky.
-\newblock $\ell_1$ trend filtering.
-\newblock {\em SIAM review}, 51(2):339--360, 2009.
-
-\bibitem{koenker2005quantile}
-Roger Koenker.
-\newblock {\em Quantile regression}.
-\newblock Number~38. Cambridge university press, 2005.
+\bibitem{efroymson1960multiple}
+MA~Efroymson.
+\newblock Multiple regression analysis.
+\newblock {\em Mathematical methods for digital computers}, 1:191--203, 1960.
 
 \bibitem{li2012l1}
 Youjuan Li and Ji~Zhu.

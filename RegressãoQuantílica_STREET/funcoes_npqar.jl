@@ -118,16 +118,23 @@ function dict2vec(a)
   end
 end
 
+
+
 # receives a vector x and a number of lags do make de matrix
 function lagmatrix(x, lags)
   n = length(x)
-  I = (lags+1):(n)
-  x_estim = zeros(n-lags, lags)
-  for i in 1:lags
-    x_estim[:,i] = x[I - i]
+  if typeof(lags) == UnitRange{Int64}
+    lags = collect(lags)
+  end
+  n_lags = size(lags)[1]
+  I = lags[end]+1:n
+  x_estim = zeros(size(I)[1], n_lags)
+  for i in 1:n_lags
+    x_estim[:,i] = x[I - lags[i]]
   end
   return x_estim
 end
+
 
 
 function normalize_matrix(x)

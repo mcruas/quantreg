@@ -1,4 +1,4 @@
-using Winston, DataFrames, RCall
+using DataFrames, RCall
 
 cd("/home/marcelo/Dropbox/Pesquisa Doutorado/Paper NPQuantile/R/ICARAIZINHO")
 # cd("/home/mcruas/Dropbox/Pesquisa Doutorado/Paper NPQuantile/RegressãoQuantílica_STREET")

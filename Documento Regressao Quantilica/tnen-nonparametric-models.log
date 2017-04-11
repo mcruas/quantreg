@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.11.9)  22 FEB 2017 17:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2017.1.23)  31 MAR 2017 15:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **tnen-nonparametric-models.tex
 (./tnen-nonparametric-models.tex
-LaTeX2e <2011/06/27>
-Babel <3.9h> and hyphenation patterns for 78 languages loaded.
+LaTeX2e <2016/03/31> patch level 3
+Babel <3.9r> and hyphenation patterns for 83 language(s) loaded.
 ! Undefined control sequence.
 l.1 \subsection
                {Quantile Autoregression with a nonparametric approach}
@@ -981,8 +981,6 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no n in font nullfont!
 Missing character: There is no c in font nullfont!
 Missing character: There is no e in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no f in font nullfont!
 Missing character: There is no w in font nullfont!
 Missing character: There is no i in font nullfont!
 Missing character: There is no l in font nullfont!
@@ -1015,10 +1013,14 @@ Missing character: There is no r in font nullfont!
 Missing character: There is no t in font nullfont!
 Missing character: There is no h in font nullfont!
 Missing character: There is no e in font nullfont!
-Missing character: There is no f in font nullfont!
+Missing character: There is no q in font nullfont!
 Missing character: There is no u in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
 Missing character: There is no l in font nullfont!
-Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
 Missing character: There is no f in font nullfont!
 Missing character: There is no u in font nullfont!
 Missing character: There is no n in font nullfont!
@@ -1106,8 +1108,8 @@ Overfull \hbox (7.67015pt too wide) in paragraph at lines 6--7
  []
 
 
-Overfull \hbox (23.18376pt too wide) in paragraph at lines 6--7
-\OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 q[]\OMS/cmsy/m/n/10 g$
+Overfull \hbox (40.28534pt too wide) in paragraph at lines 6--7
+\OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 q[]\OMS/cmsy/m/n/10 g[]$
  []
 
 
@@ -1519,66 +1521,6 @@ Missing character: There is no a in font nullfont!
 Missing character: There is no n in font nullfont!
 Missing character: There is no d in font nullfont!
 Missing character: There is no . in font nullfont!
-Missing character: There is no A in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no w in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no c in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no f in font nullfont!
-Missing character: There is no f in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no c in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no f in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no b in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no b in font nullfont!
-Missing character: There is no y in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no w in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no l in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no m in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no . in font nullfont!
 
 Overfull \hbox (45.41579pt too wide) in paragraph at lines 11--13
     $\OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 x[]\OMS/cmsy/m/n/10 g[] \OT1/cmr/m/n/10
@@ -1618,17 +1560,7 @@ Overfull \hbox (12.80905pt too wide) in paragraph at lines 11--13
 
 
 Overfull \hbox (10.00003pt too wide) in paragraph at lines 11--13
-\OT1/cmr/m/n/10 1\OMS/cmsy/m/n/10 g$
- []
-
-
-Overfull \hbox (7.79341pt too wide) in paragraph at lines 11--13
-\OML/cmm/m/it/10 q[]$
- []
-
-
-Overfull \hbox (5.18054pt too wide) in paragraph at lines 11--13
-\OML/cmm/m/it/10 I$
+\OT1/cmr/m/n/10 1\OMS/cmsy/m/n/10 g$ 
  []
 
 
@@ -2290,8 +2222,8 @@ Overfull \hbox (6.43404pt too wide) in paragraph at lines 27--30
  []
 
 
-Overfull \hbox (18.61108pt too wide) in paragraph at lines 27--30
-\OML/cmm/m/it/10 ^^U \OMS/cmsy/m/n/10 !
+Overfull \hbox (23.09721pt too wide) in paragraph at lines 27--30
+\OML/cmm/m/it/10 ^^U[] \OMS/cmsy/m/n/10 !
  []
 
 
@@ -2364,7 +2296,7 @@ Overfull \hbox (20.0pt too wide) in paragraph at lines 31--32
  []
 
 
-Overfull \hbox (334.50652pt too wide) in alignment at lines 32--46
+Overfull \hbox (336.17314pt too wide) in alignment at lines 32--46
  [][][] []
  []
 
@@ -2737,7 +2669,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.51 T
-      he quantile estimation is done for different values of $\lambda$. By u...
+      he quantile estimation is done for different values of $\lambda_2$. By...
 
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -3063,8 +2995,8 @@ Overfull \hbox (20.0pt too wide) in paragraph at lines 51--53
  []
 
 
-Overfull \hbox (5.83336pt too wide) in paragraph at lines 51--53
-\OML/cmm/m/it/10 ^^U$
+Overfull \hbox (10.31949pt too wide) in paragraph at lines 51--53
+\OML/cmm/m/it/10 ^^U[]$
  []
 
 
@@ -3206,11 +3138,10 @@ Missing character: There is no n in font nullfont!
 Missing character: There is no g in font nullfont!
 Missing character: There is no - in font nullfont!
 Missing character: There is no 0 in font nullfont!
-Missing character: There is no . in font nullfont!
 Missing character: There is no 1 in font nullfont!
 ! Undefined control sequence.
 l.62       \subcaption
-                      {$\lambda = 0.1$}
+                      {$\lambda_1 = 0, \, \lambda_2 = 0.1$}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -3218,8 +3149,13 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Overfull \hbox (16.38887pt too wide) in paragraph at lines 61--63
- \OML/cmm/m/it/10 ^^U \OT1/cmr/m/n/10 = 
+Overfull \hbox (20.875pt too wide) in paragraph at lines 61--63
+ \OML/cmm/m/it/10 ^^U[] \OT1/cmr/m/n/10 = 
+ []
+
+
+Overfull \hbox (31.98605pt too wide) in paragraph at lines 61--63
+ \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 ;  ^^U[] \OT1/cmr/m/n/10 = 
  []
 
 
@@ -3316,11 +3252,10 @@ Missing character: There is no n in font nullfont!
 Missing character: There is no g in font nullfont!
 Missing character: There is no - in font nullfont!
 Missing character: There is no 0 in font nullfont!
-Missing character: There is no . in font nullfont!
 Missing character: There is no 3 in font nullfont!
 ! Undefined control sequence.
 l.66       \subcaption
-                      {$\lambda = 0.3$}
+                      {$\lambda_1 = 0, \, \lambda_2 = 0.3$}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -3328,8 +3263,13 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Overfull \hbox (16.38887pt too wide) in paragraph at lines 65--67
- \OML/cmm/m/it/10 ^^U \OT1/cmr/m/n/10 = 
+Overfull \hbox (20.875pt too wide) in paragraph at lines 65--67
+ \OML/cmm/m/it/10 ^^U[] \OT1/cmr/m/n/10 = 
+ []
+
+
+Overfull \hbox (31.98605pt too wide) in paragraph at lines 65--67
+ \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 ;  ^^U[] \OT1/cmr/m/n/10 = 
  []
 
 
@@ -3426,11 +3366,9 @@ Missing character: There is no n in font nullfont!
 Missing character: There is no g in font nullfont!
 Missing character: There is no - in font nullfont!
 Missing character: There is no 1 in font nullfont!
-Missing character: There is no . in font nullfont!
-Missing character: There is no 0 in font nullfont!
 ! Undefined control sequence.
 l.70       \subcaption
-                      {$\lambda = 1$}
+                      {$\lambda_1 = 0, \, \lambda_2 = 1$}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -3438,8 +3376,13 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Overfull \hbox (16.38887pt too wide) in paragraph at lines 69--71
- \OML/cmm/m/it/10 ^^U \OT1/cmr/m/n/10 = 
+Overfull \hbox (20.875pt too wide) in paragraph at lines 69--71
+ \OML/cmm/m/it/10 ^^U[] \OT1/cmr/m/n/10 = 
+ []
+
+
+Overfull \hbox (31.98605pt too wide) in paragraph at lines 69--71
+ \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 ;  ^^U[] \OT1/cmr/m/n/10 = 
  []
 
 
@@ -3536,11 +3479,9 @@ Missing character: There is no n in font nullfont!
 Missing character: There is no g in font nullfont!
 Missing character: There is no - in font nullfont!
 Missing character: There is no 3 in font nullfont!
-Missing character: There is no . in font nullfont!
-Missing character: There is no 0 in font nullfont!
 ! Undefined control sequence.
 l.77       \subcaption
-                      {$\lambda = 3$}
+                      {$\lambda_1 = 0, \, \lambda_2 = 3$}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -3548,8 +3489,13 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Overfull \hbox (16.38887pt too wide) in paragraph at lines 76--78
- \OML/cmm/m/it/10 ^^U \OT1/cmr/m/n/10 = 
+Overfull \hbox (20.875pt too wide) in paragraph at lines 76--78
+ \OML/cmm/m/it/10 ^^U[] \OT1/cmr/m/n/10 = 
+ []
+
+
+Overfull \hbox (31.98605pt too wide) in paragraph at lines 76--78
+ \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 ;  ^^U[] \OT1/cmr/m/n/10 = 
  []
 
 
@@ -3647,11 +3593,9 @@ Missing character: There is no g in font nullfont!
 Missing character: There is no - in font nullfont!
 Missing character: There is no 1 in font nullfont!
 Missing character: There is no 0 in font nullfont!
-Missing character: There is no . in font nullfont!
-Missing character: There is no 0 in font nullfont!
 ! Undefined control sequence.
 l.81       \subcaption
-                      {$\lambda = 10$}
+                      {$\lambda_1 = 0, \, \lambda_2 = 10$}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -3659,8 +3603,13 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Overfull \hbox (16.38887pt too wide) in paragraph at lines 80--82
- \OML/cmm/m/it/10 ^^U \OT1/cmr/m/n/10 = 
+Overfull \hbox (20.875pt too wide) in paragraph at lines 80--82
+ \OML/cmm/m/it/10 ^^U[] \OT1/cmr/m/n/10 = 
+ []
+
+
+Overfull \hbox (31.98605pt too wide) in paragraph at lines 80--82
+ \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 ;  ^^U[] \OT1/cmr/m/n/10 = 
  []
 
 
@@ -3759,11 +3708,9 @@ Missing character: There is no - in font nullfont!
 Missing character: There is no 2 in font nullfont!
 Missing character: There is no 0 in font nullfont!
 Missing character: There is no 0 in font nullfont!
-Missing character: There is no . in font nullfont!
-Missing character: There is no 0 in font nullfont!
 ! Undefined control sequence.
 l.85       \subcaption
-                      {$\lambda = 150$}
+                      {$\lambda_1 = 0, \, \lambda_2 = 200$}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -3771,13 +3718,18 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Overfull \hbox (16.38887pt too wide) in paragraph at lines 84--87
- \OML/cmm/m/it/10 ^^U \OT1/cmr/m/n/10 = 
+Overfull \hbox (20.875pt too wide) in paragraph at lines 84--87
+ \OML/cmm/m/it/10 ^^U[] \OT1/cmr/m/n/10 = 
+ []
+
+
+Overfull \hbox (31.98605pt too wide) in paragraph at lines 84--87
+ \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 ;  ^^U[] \OT1/cmr/m/n/10 = 
  []
 
 
 Overfull \hbox (15.00005pt too wide) in paragraph at lines 84--87
- \OT1/cmr/m/n/10 150$ 
+ \OT1/cmr/m/n/10 200$ 
  []
 
 
@@ -3788,7 +3740,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.89   \caption
-               {Quantile estimations for a few different values of $\lambda$...
+               {Quantile estimations for a few different values of $\lambda_...
 
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -3890,12 +3842,6 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no , in font nullfont!
 Missing character: There is no w in font nullfont!
 Missing character: There is no e in font nullfont!
-Missing character: There is no c in font nullfont!
-Missing character: There is no l in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no l in font nullfont!
-Missing character: There is no y in font nullfont!
 Missing character: There is no s in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no e in font nullfont!
@@ -4033,8 +3979,8 @@ Overfull \hbox (20.0pt too wide) in paragraph at lines 56--92
  []
 
 
-Overfull \hbox (5.83336pt too wide) in paragraph at lines 56--92
-\OML/cmm/m/it/10 ^^U$
+Overfull \hbox (10.31949pt too wide) in paragraph at lines 56--92
+\OML/cmm/m/it/10 ^^U[]$
  []
 
 
@@ -4051,8 +3997,8 @@ m/n/10 95%)$
  []
 
 
-Overfull \hbox (16.38887pt too wide) in paragraph at lines 56--92
-\OML/cmm/m/it/10 ^^U \OT1/cmr/m/n/10 =
+Overfull \hbox (20.875pt too wide) in paragraph at lines 56--92
+\OML/cmm/m/it/10 ^^U[] \OT1/cmr/m/n/10 =
  []
 
 
@@ -4061,8 +4007,8 @@ Overfull \hbox (12.77782pt too wide) in paragraph at lines 56--92
  []
 
 
-Overfull \hbox (16.38887pt too wide) in paragraph at lines 56--92
-\OML/cmm/m/it/10 ^^U \OT1/cmr/m/n/10 =
+Overfull \hbox (20.875pt too wide) in paragraph at lines 56--92
+\OML/cmm/m/it/10 ^^U[] \OT1/cmr/m/n/10 =
  []
 
 
@@ -4760,11 +4706,11 @@ Overfull \hbox (20.0pt too wide) in paragraph at lines 95--96
 
  
 Here is how much of TeX's memory you used:
- 18 strings out of 493304
- 340 string characters out of 6139871
- 62880 words of memory out of 5000000
- 3576 multiletter control sequences out of 15000+600000
+ 18 strings out of 493013
+ 341 string characters out of 6135682
+ 65264 words of memory out of 5000000
+ 3661 multiletter control sequences out of 15000+600000
  3948 words of font info for 15 fonts, out of 8000000 for 9000
- 957 hyphenation exceptions out of 8191
- 18i,9n,21p,715b,121s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 1141 hyphenation exceptions out of 8191
+ 18i,9n,21p,715b,123s stack positions out of 5000i,500n,10000p,200000b,80000s
 !  ==> Fatal error occurred, no output PDF file produced!

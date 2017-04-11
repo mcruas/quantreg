@@ -23,6 +23,9 @@
 # vector of regressors (X).
 # The function returns coefficients for the following model
 #   q_alpha =
+using JuMP
+
+
 function rq_np(y::Array{Float64}, x::Array{Float64}, Alphas, lambda1 = NaN, lambda2 = NaN; range_data = NaN, non_cross = true)
 
     Alf = 1:length(Alphas)
@@ -33,6 +36,8 @@ function rq_np(y::Array{Float64}, x::Array{Float64}, Alphas, lambda1 = NaN, lamb
     tmp = sortrows(tmp, by=x->(x[1]));
     x = tmp[:,1];
     y = tmp[:,2];
+
+    # range_data = NaN
 
     if any(!isnan(range_data))
       incluir = (y .< range_data[2]) .* (x .< range_data[2]) .* (range_data[1] .< y) .* (range_data[1] .< x)
@@ -262,7 +267,7 @@ function rq_par(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_cross = true
     Q = 1:size(X)[2]
 
     m = Model(solver = solvfunc)
-  	@variable(m, ɛ_tmais[T, Alf] >= 0)
+  	@variable(m, ɛ_tmais[T, Alf] >= 0) 
   	@variable(m, ɛ_tmenos[T, Alf] >= 0)
   	@variable(m, β[Q, Alf])
   	@variable(m, β0[Alf])
@@ -294,6 +299,145 @@ function rq_par(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_cross = true
 
     return betas0opt', betasopt
 end
+
+
+function rq_par_mip(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_cross = true, max_K = NaN, TimeLimit = NaN, MIPGap = NaN)
+
+    Alf = 1:length(Alphas)
+    M = 2
+    n = size(y)[1]
+    T = 1:n
+    Q = 1:size(X)[2]
+
+    if isnan(max_K)
+      max_K = size(X)[2]
+    end
+
+    m = Model(solver = GurobiSolver(MIPGap = MIPGap, TimeLimit = TimeLimit))
+  	@variable(m, ɛ_tmais[T, Alf] >= 0)
+  	@variable(m, ɛ_tmenos[T, Alf] >= 0)
+  	@variable(m, β[Q, Alf])
+  	@variable(m, β0[Alf])
+    @variable(m, z[Q, Alf], Bin)
+
+
+    @objective(m, Min, sum(Alphas[j] * ɛ_tmais[i, j] + (1-Alphas[j]) *ɛ_tmenos[i, j] for i = T, j = Alf ))
+
+  	########## Evitar cruzamento de quantis
+    if non_cross
+  	   @constraint(m, evita_cross[i = T, j = 2:length(Alphas)], β0[j] + sum(β[q,j] * X[i,q] for q = Q) >= β0[j-1] + sum(β[q,j-1] * X[i,q] for q = Q))
+     end
+
+  		# Dar valores ao ɛ_tmais e ao ɛ_tmenos
+  	 @constraint(m, epsilons[i = T, j = Alf], ɛ_tmais[i,j] - ɛ_tmenos[i,j] == y[i] - β0[j] - sum(β[q,j] * X[i,q] for q = Q))
+
+     # Restringir a estimação a no máximo K valores
+     @constraint(m, range_beta_inf[i = Q, a = Alf], - M * z[i,a] <= β[i,a])
+     @constraint(m, range_beta_sup[i = Q, a = Alf], β[i,a] <= M * z[i,a])
+
+     # Permite que no máximo max_K seja escolhido no modelo
+     @constraint(m, max_var[a = Alf], sum(z[i,a] for i = Q) <= max_K)
+
+
+
+  	status = solve(m)
+
+  	tmp_betas0opt = getvalue(β0)
+    tmp_betasopt = getvalue(β)
+
+    ## Transform both variables into an array
+    betasopt = zeros(size(X)[2], length(Alphas))
+    betas0opt = zeros(length(Alphas))
+    for q in 1:size(X)[2] , j in 1:length(Alphas)
+      betasopt[q,j] = tmp_betasopt[q,j]
+    end
+    for j in 1:length(Alphas)
+      betas0opt[j] = tmp_betas0opt[j]
+    end
+
+
+    return betas0opt', betasopt
+end
+
+
+
+# max_K = 3; TimeLimit = 60; Grupos = 3; MIPGap = 0.0; non_cross = true
+
+
+function rq_par_mip_grupos(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_cross = true, max_K = NaN, TimeLimit = NaN, MIPGap = NaN, Grupos = NaN)
+
+    Alf = 1:length(Alphas)
+    M = 10
+    n = size(y)[1]
+    T = 1:n
+    P = size(X)[2]
+
+    if isnan(max_K)
+      max_K = size(X)[2]
+    end
+
+    if isnan(Grupos)
+      G = size(X)[2]
+    else
+      G = Grupos
+    end
+
+    m = Model(solver = GurobiSolver(MIPGap = MIPGap, TimeLimit = TimeLimit))
+  	@variable(m, ɛ_tmais[T, Alf] >= 0)
+  	@variable(m, ɛ_tmenos[T, Alf] >= 0)
+  	@variable(m, β[1:P, Alf])
+  	@variable(m, β0[Alf])
+    @variable(m, z[1:P, 1:G], Bin)
+    @variable(m, I[1:P, Alf], Bin)
+
+
+    @objective(m, Min, sum(Alphas[j] * ɛ_tmais[i, j] + (1-Alphas[j]) *ɛ_tmenos[i, j] for i = T, j = Alf ))
+
+
+  	########## Evitar cruzamento de quantis
+    if non_cross
+  	   @constraint(m, evita_cross[i = T, j = 2:length(Alphas)], β0[j] + sum(β[p,j] * X[i,p] for p = 1:P) >= β0[j-1] + sum(β[p,j-1] * X[i,p] for p = 1:P))
+     end
+
+  		# Dar valores ao ɛ_tmais e ao ɛ_tmenos
+  	 @constraint(m, epsilons[i = T, j = Alf], ɛ_tmais[i,j] - ɛ_tmenos[i,j] == y[i] - β0[j] - sum(β[p,j] * X[i,p] for p = 1:P))
+
+     # Restringir a estimação a no máximo K valores
+    #  @constraint(m, range_beta_inf[p = 1:P, a = Alf, g = 1:G], β[p,a] <= M*(2 - (1-z[p,g]) - I[g,a]) )
+
+     @constraint(m, range_beta_inf[p = 1:P, a = Alf, g = 1:G], β[p,a] <= M*(2 - (1-z[p,g]) - I[g,a]) )
+     @constraint(m, range_beta_sup[p = 1:P, a = Alf, g = 1:G],  - M*(2 - (1-z[p,g]) - I[g,a]) <= β[p,a]  )
+
+     # Permite que no máximo max_K seja escolhido no modelo
+     @constraint(m, max_var[g = 1:G], sum(z[p,g] for p = 1:P) <= max_K)
+
+     # Permite que um alpha pertença a apenas 1 Grupo
+     @constraint(m, pertence_grupo[a = Alf], sum(I[g,a] for g = 1:G) == 1)
+
+
+
+  	status = solve(m)
+
+  	tmp_betas0opt = getvalue(β0)
+    tmp_betasopt = getvalue(β)
+    # objetivo = getobjective()
+    ## Transform both variables into an array
+    betasopt = zeros(size(X)[2], length(Alphas))
+    betas0opt = zeros(length(Alphas))
+    for q in 1:size(X)[2] , j in 1:length(Alphas)
+      betasopt[q,j] = tmp_betasopt[q,j]
+    end
+    for j in 1:length(Alphas)
+      betas0opt[j] = tmp_betas0opt[j]
+    end
+
+
+    return betas0opt', betasopt
+end
+
+
+
+
 
 # Recebe como input a série, variaveis explicativas, Alphas e um novo valor de X
 # Faz a estimação e calcula os valores de Q_hat na discretização dada por Alphas
