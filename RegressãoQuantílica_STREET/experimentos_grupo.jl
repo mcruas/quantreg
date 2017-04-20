@@ -1,3 +1,6 @@
+# for max_K in [4,5,2,6,1]
+#   include(homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/RegressãoQuantílica_STREET/experimentos_grupo.jl")
+# end
 # include(homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/RegressãoQuantílica_STREET/experimentos_grupo.jl")
 
 #######################################################
@@ -18,6 +21,7 @@ using JuMP, DataFrames, Plots, Interpolations, LaTeXStrings, Dierckx #, Distribu
 usesolver = "gurobi"    # Escolher entre os valores 'mosek' ou 'gurobi'
 # cd("/home/marcelo/Dropbox/Pesquisa Doutorado/Paper NPQuantile/RegressãoQuantílica_STREET")
 pasta_trabalho = homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/"
+# max_K = 4
 cd(pasta_trabalho)
 
 #####################################################
@@ -38,7 +42,7 @@ n = 100;
 # # dados <- read_excel(path = 'Dados Climaticos/Solar-tubarao/tubarao solar.xlsx')[,1:6]
 # # dados_filtrados <- dados %>% select(yt0, yt1, hora, mes) %>% as.matrix
 # # boxplot(yt0 ~ hora, data = dados.filtrados, col = 2)
-# "
+# 
 #
 # @rget serie dados_filtrados
 # serie = dados_filtrados[:,1].values;
@@ -48,7 +52,6 @@ n = 100;
 
 # para icaraizinho
 serie = readcsv("Dados Climaticos/icaraizinho.csv"); nomeserie = "icaraizinho"; x_new = 30
-vetor_X_tau = collect(10:8:42)
 # serie = readcsv("Dados Climaticos/Enas/enas sudeste 1931-2014.csv"); nomeserie = "enasudeste"; serie = serie ./ 100; x_new = 500 # ENA Sudeste
 # vetor_X_tau = collect(200:50:700) # para ENA sudeste
 
@@ -65,12 +68,12 @@ n_tmp = length(serie); # keeps size of series before cutting them
 
 # X = Array{Float64,2} # AR(1)
 tmp = serie[2:n_tmp-1];   # this is done so that X has two dimensions, instead of 1.
-X = zeros(Float64,length(tmp),1);
+X =zeros(Float64,length(tmp),1);
 X[:,1] = tmp;
 x = X[:,1]
 
 y = serie[3:n_tmp];
-n = length(y);
+n = length(y);55
 T = 1:n;
 
 # X_lags = lagmatrix(serie,0:2)
@@ -83,7 +86,7 @@ T = 1:n;
 limx = isnan(limx) ? maximum(serie) : limx
 limy = isnan(limy) ? maximum(serie) : limy
 
-plot(serie)
+# plot(serie)
 
 
 ################################################################################################
@@ -92,12 +95,54 @@ plot(serie)
 X_lags = lagmatrix(serie,0:12)
 Alphas = [0.05,0.1,0.25,0.5,0.75,0.9,0.95]
 Alphas = vcat(collect(0.005:0.005:0.05), collect(0.1:0.05:0.9), collect(0.95:0.005:0.995))
-TimeLimit = 600
+TimeLimit = 200
+vetor_TimeLimit = [200]
+vetor_Grupos = [1]
 
-betas0, betas = rq_par_mip(X_lags[:,1], X_lags[:, 2:end], Alphas; non_cross = true, max_K = 3, TimeLimit = TimeLimit, MIPGap = 0.00)
+vetor_max_K = [4,5,6,2,1] 
+vetor_TimeLimit = [200, 600, 1800, 5400]
+vetor_Grupos = [1,2,3,10]
+pyplot()
+for max_K in vetor_max_K
+    results = zeros(length(vetor_TimeLimit)*(length(vetor_Grupos)+1), 3); i = 1 # i keeps the row to write on results
+    pasta_escrita = "RegressãoQuantílica_STREET/BetasMIP/K$max_K"
+    for TimeLimit in vetor_TimeLimit  
+        betas0, betas, obj, status = rq_par_mip(X_lags[:,1], X_lags[:, 2:end], Alphas; non_cross = true, max_K = max_K, TimeLimit = TimeLimit, MIPGap = 0.00)
+        writecsv("$pasta_escrita/Betas GAll $TimeLimit.csv", [betas0 ; betas])
+        results[i,:] = [length(Alphas), TimeLimit, obj] ; i += 1
+        heatmap(betas .== 0, title = "GAll $TimeLimit - $obj")
+        savefig("$pasta_escrita/Heatmap GAll $TimeLimit.png")
+        # close(fig)
+    end
 
-betas0, betas = rq_par_mip_grupos(X_lags[:,1], X_lags[:, 2:end], Alphas;
-          non_cross = true, max_K = 3, TimeLimit = TimeLimit, MIPGap = 0.00, Grupos = 1)
+    for TimeLimit in vetor_TimeLimit, Grupos in vetor_Grupos  
+        betas0, betas, obj = rq_par_mip_grupos(X_lags[:,1], X_lags[:, 2:end], Alphas;
+            non_cross = true, max_K = max_K, TimeLimit = TimeLimit, MIPGap = 0.00, Grupos = Grupos)
+        writecsv("$pasta_escrita/Betas G$Grupos $TimeLimit.csv", [betas0 ; betas])
+        results[i,:] = [Grupos, TimeLimit, obj] ; i += 1
+        heatmap(betas .== 0, title = "GAll $TimeLimit - $obj")
+        savefig("$pasta_escrita/Heatmap G$Grupos $TimeLimit.png")
+    end
 
-heatmap(Alphas, betas .== 0)
-savefig("Coeficientes MIP apos 6000s.pdf")
+    
+    writecsv("$pasta_escrita/results.csv", results)
+end
+
+max_K = 3
+
+Grupos = 2
+for Grupos in vetor_Grupos
+    betas0, betas, obj, status = rq_par_mip(X_lags[:,1], X_lags[:, 2:end], Alphas; non_cross = true, max_K = max_K, TimeLimit = 36000, MIPGap = 0.00)
+    
+    betas0, betas, obj, status = rq_par_mip_grupos(X_lags[:,1], X_lags[:, 2:end], Alphas;
+       non_cross = true, max_K = max_K, TimeLimit = 36000, MIPGap = 0.00, Grupos = Grupos)
+end
+
+
+    betas0, betas, obj, status = rq_par_mip_grupos_rampa(X_lags[:,1], X_lags[:, 2:end], Alphas;
+       non_cross = true, max_K = max_K, TimeLimit = 36000, MIPGap = 0.00, Grupos = Grupos)
+
+# heatmap(Alphas, betas .== 0)
+# savefig("Coeficientes MIP apos 6000s.pdf")
+
+# status == :Blau? 2 : status == :Optimal? 1 : 0
