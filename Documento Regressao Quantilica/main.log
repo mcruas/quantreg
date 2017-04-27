@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2017.1.23)  20 APR 2017 13:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2017.1.23)  20 APR 2017 15:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1265,17 +1265,8 @@ ncia-dist/Convergence.pdf>]
 (./tnen-model-selection2.tex [12
 
 
-]
-Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
-ine 63.
- [13]
-
-LaTeX Warning: Reference `eq:qar-lp' on page 14 undefined on input line 109.
-
-
-LaTeX Warning: Reference `eq:qar-lp' on page 14 undefined on input line 128.
-
-<Figuras/selecao-lasso/par-sellasso-005.pdf, id=320, 542.025pt x 542.025pt>
+] [13]
+<Figuras/selecao-lasso/par-sellasso-005.pdf, id=322, 542.025pt x 542.025pt>
 File: Figuras/selecao-lasso/par-sellasso-005.pdf Graphic file (type pdf)
 
 <use Figuras/selecao-lasso/par-sellasso-005.pdf>
@@ -1283,7 +1274,7 @@ Package pdftex.def Info: Figuras/selecao-lasso/par-sellasso-005.pdf used on inp
 ut line 153.
 (pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
 
-<Figuras/selecao-lasso/par-sellasso-01.pdf, id=321, 542.025pt x 542.025pt>
+<Figuras/selecao-lasso/par-sellasso-01.pdf, id=323, 542.025pt x 542.025pt>
 File: Figuras/selecao-lasso/par-sellasso-01.pdf Graphic file (type pdf)
 
 <use Figuras/selecao-lasso/par-sellasso-01.pdf>
@@ -1291,7 +1282,7 @@ Package pdftex.def Info: Figuras/selecao-lasso/par-sellasso-01.pdf used on inpu
 t line 156.
 (pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
 
-<Figuras/selecao-lasso/par-sellasso-05.pdf, id=322, 542.025pt x 542.025pt>
+<Figuras/selecao-lasso/par-sellasso-05.pdf, id=324, 542.025pt x 542.025pt>
 File: Figuras/selecao-lasso/par-sellasso-05.pdf Graphic file (type pdf)
 
 <use Figuras/selecao-lasso/par-sellasso-05.pdf>
@@ -1299,7 +1290,7 @@ Package pdftex.def Info: Figuras/selecao-lasso/par-sellasso-05.pdf used on inpu
 t line 159.
 (pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
 
-<Figuras/selecao-lasso/par-sellasso-09.pdf, id=323, 542.025pt x 542.025pt>
+<Figuras/selecao-lasso/par-sellasso-09.pdf, id=325, 542.025pt x 542.025pt>
 File: Figuras/selecao-lasso/par-sellasso-09.pdf Graphic file (type pdf)
 
 <use Figuras/selecao-lasso/par-sellasso-09.pdf>
@@ -1307,7 +1298,7 @@ Package pdftex.def Info: Figuras/selecao-lasso/par-sellasso-09.pdf used on inpu
 t line 165.
 (pdftex.def)             Requested size: 193.47581pt x 193.47472pt.
 
-<Figuras/selecao-lasso/par-sellasso-095.pdf, id=324, 542.025pt x 542.025pt>
+<Figuras/selecao-lasso/par-sellasso-095.pdf, id=326, 542.025pt x 542.025pt>
 File: Figuras/selecao-lasso/par-sellasso-095.pdf Graphic file (type pdf)
 
 <use Figuras/selecao-lasso/par-sellasso-095.pdf>
@@ -1331,31 +1322,31 @@ pdfTeX warning: /usr/bin/pdflatex (file ./Figuras/selecao-lasso/par-sellasso-09
 
 pdfTeX warning: /usr/bin/pdflatex (file ./Figuras/selecao-lasso/par-sellasso-09
 5.pdf): PDF inclusion: multiple pdfs with page group included in a single page
->] <Figuras/SIC005.pdf, id=414, 433.62pt x 325.215pt>
+>] <Figuras/SIC005.pdf, id=415, 433.62pt x 325.215pt>
 File: Figuras/SIC005.pdf Graphic file (type pdf)
  <use Figuras/SIC005.pdf>
 Package pdftex.def Info: Figuras/SIC005.pdf used on input line 228.
 (pdftex.def)             Requested size: 193.47581pt x 145.10976pt.
 
-<Figuras/SIC01.pdf, id=415, 433.62pt x 325.215pt>
+<Figuras/SIC01.pdf, id=416, 433.62pt x 325.215pt>
 File: Figuras/SIC01.pdf Graphic file (type pdf)
  <use Figuras/SIC01.pdf>
 Package pdftex.def Info: Figuras/SIC01.pdf used on input line 231.
 (pdftex.def)             Requested size: 193.47581pt x 145.10976pt.
 
-<Figuras/SIC05.pdf, id=416, 433.62pt x 325.215pt>
+<Figuras/SIC05.pdf, id=417, 433.62pt x 325.215pt>
 File: Figuras/SIC05.pdf Graphic file (type pdf)
  <use Figuras/SIC05.pdf>
 Package pdftex.def Info: Figuras/SIC05.pdf used on input line 234.
 (pdftex.def)             Requested size: 193.47581pt x 145.10976pt.
 
-<Figuras/SIC09.pdf, id=417, 433.62pt x 325.215pt>
+<Figuras/SIC09.pdf, id=418, 433.62pt x 325.215pt>
 File: Figuras/SIC09.pdf Graphic file (type pdf)
  <use Figuras/SIC09.pdf>
 Package pdftex.def Info: Figuras/SIC09.pdf used on input line 240.
 (pdftex.def)             Requested size: 193.47581pt x 145.10976pt.
 
-<Figuras/SIC095.pdf, id=418, 433.62pt x 325.215pt>
+<Figuras/SIC095.pdf, id=419, 433.62pt x 325.215pt>
 File: Figuras/SIC095.pdf Graphic file (type pdf)
  <use Figuras/SIC095.pdf>
 Package pdftex.def Info: Figuras/SIC095.pdf used on input line 243.
@@ -1427,43 +1418,39 @@ Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 83.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 02E04870C526EE150F357B50D2BA0CFB;1024.
 
-LaTeX Warning: There were undefined references.
-
-
 LaTeX Warning: There were multiply-defined labels.
 
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 83.
  ) 
 Here is how much of TeX's memory you used:
- 31891 strings out of 493013
- 742495 string characters out of 6135682
+ 31829 strings out of 493013
+ 741043 string characters out of 6135682
  1104791 words of memory out of 5000000
- 34707 multiletter control sequences out of 15000+600000
- 16471 words of font info for 62 fonts, out of 8000000 for 9000
+ 34649 multiletter control sequences out of 15000+600000
+ 16163 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  73i,18n,100p,8844b,692s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/sh
-are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (23 pages, 1695343 bytes).
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on main.pdf (23 pages, 1684782 bytes).
 PDF statistics:
- 650 PDF objects out of 1000 (max. 8388607)
- 532 compressed objects within 6 object streams
- 98 named destinations out of 1000 (max. 500000)
+ 646 PDF objects out of 1000 (max. 8388607)
+ 529 compressed objects within 6 object streams
+ 95 named destinations out of 1000 (max. 500000)
  280 words of extra memory for PDF output out of 10000 (max. 10000000)
 

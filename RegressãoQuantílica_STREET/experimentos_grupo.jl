@@ -100,47 +100,56 @@ vetor_TimeLimit = [200]
 vetor_Grupos = [1]
 
 vetor_max_K = [4,5,6,2,1] 
-vetor_TimeLimit = [200, 600, 1800, 5400]
+# vetor_TimeLimit = [100, 150, 1800, 5400]
+global times = [100,150, 300, 80, Inf] # Times that a new solution must be  ; leave Inf at the end
+global check = zeros(length(times)) # Whether a 
+
 vetor_Grupos = [1,2,3,10]
-pyplot()
-for max_K in vetor_max_K
-    results = zeros(length(vetor_TimeLimit)*(length(vetor_Grupos)+1), 3); i = 1 # i keeps the row to write on results
-    pasta_escrita = "RegressãoQuantílica_STREET/BetasMIP/K$max_K"
-    for TimeLimit in vetor_TimeLimit  
-        betas0, betas, obj, status = rq_par_mip(X_lags[:,1], X_lags[:, 2:end], Alphas; non_cross = true, max_K = max_K, TimeLimit = TimeLimit, MIPGap = 0.00)
-        writecsv("$pasta_escrita/Betas GAll $TimeLimit.csv", [betas0 ; betas])
-        results[i,:] = [length(Alphas), TimeLimit, obj] ; i += 1
-        heatmap(betas .== 0, title = "GAll $TimeLimit - $obj")
-        savefig("$pasta_escrita/Heatmap GAll $TimeLimit.png")
-        # close(fig)
-    end
-
-    for TimeLimit in vetor_TimeLimit, Grupos in vetor_Grupos  
-        betas0, betas, obj = rq_par_mip_grupos(X_lags[:,1], X_lags[:, 2:end], Alphas;
-            non_cross = true, max_K = max_K, TimeLimit = TimeLimit, MIPGap = 0.00, Grupos = Grupos)
-        writecsv("$pasta_escrita/Betas G$Grupos $TimeLimit.csv", [betas0 ; betas])
-        results[i,:] = [Grupos, TimeLimit, obj] ; i += 1
-        heatmap(betas .== 0, title = "GAll $TimeLimit - $obj")
-        savefig("$pasta_escrita/Heatmap G$Grupos $TimeLimit.png")
-    end
-
-    
-    writecsv("$pasta_escrita/results.csv", results)
-end
-
 max_K = 3
-
 Grupos = 2
-for Grupos in vetor_Grupos
-    betas0, betas, obj, status = rq_par_mip(X_lags[:,1], X_lags[:, 2:end], Alphas; non_cross = true, max_K = max_K, TimeLimit = 36000, MIPGap = 0.00)
+gr()
+
+y=X_lags[:,1]; X=X_lags[:, 2:end]; non_cross = true; max_K = max_K; TimeLimit = 200; MIPGap = 0.00; Grupos = Grupos
+# for max_K in vetor_max_K
+#     results = zeros(length(vetor_TimeLimit)*(length(vetor_Grupos)+1), 3); i = 1 # i keeps the row to write on results
+#     pasta_escrita = "RegressãoQuantílica_STREET/BetasMIP/K$max_K"
+#     for TimeLimit in vetor_TimeLimit  
+#         betas0, betas, obj, status = rq_par_mip(X_lags[:,1], X_lags[:, 2:end], Alphas; non_cross = true, max_K = max_K, TimeLimit = TimeLimit, MIPGap = 0.00)
+#         writecsv("$pasta_escrita/Betas GAll $TimeLimit.csv", [betas0 ; betas])
+#         results[i,:] = [length(Alphas), TimeLimit, obj] ; i += 1
+#         heatmap(betas .== 0, title = "GAll $TimeLimit - $obj")
+#         savefig("$pasta_escrita/Heatmap GAll $TimeLimit.png")
+#         # close(fig)
+#     end
+
+#     for TimeLimit in vetor_TimeLimit, Grupos in vetor_Grupos  
+#         betas0, betas, obj = rq_par_mip_grupos(X_lags[:,1], X_lags[:, 2:end], Alphas;
+#             non_cross = true, max_K = max_K, TimeLimit = TimeLimit, MIPGap = 0.00, Grupos = Grupos)
+#         writecsv("$pasta_escrita/Betas G$Grupos $TimeLimit.csv", [betas0 ; betas])
+#         results[i,:] = [Grupos, TimeLimit, obj] ; i += 1
+#         heatmap(betas .== 0, title = "GAll $TimeLimit - $obj")
+#         savefig("$pasta_escrita/Heatmap G$Grupos $TimeLimit.png")
+#     end
+
     
-    betas0, betas, obj, status = rq_par_mip_grupos(X_lags[:,1], X_lags[:, 2:end], Alphas;
-       non_cross = true, max_K = max_K, TimeLimit = 36000, MIPGap = 0.00, Grupos = Grupos)
-end
+#     writecsv("$pasta_escrita/results.csv", results)
+# end
 
 
-    betas0, betas, obj, status = rq_par_mip_grupos_rampa(X_lags[:,1], X_lags[:, 2:end], Alphas;
-       non_cross = true, max_K = max_K, TimeLimit = 36000, MIPGap = 0.00, Grupos = Grupos)
+# for Grupos in vetor_Grupos
+#     betas0, betas, obj, status = rq_par_mip(X_lags[:,1], X_lags[:, 2:end], Alphas; non_cross = true, max_K = max_K, TimeLimit = 36000, MIPGap = 0.00)
+    
+#     betas0, betas, obj, status = rq_par_mip_grupos(X_lags[:,1], X_lags[:, 2:end], Alphas;
+#        non_cross = true, max_K = max_K, TimeLimit = 36000, MIPGap = 0.00, Grupos = Grupos)
+# end
+TimeLimit = 200
+include(pwd()*"/RegressãoQuantílica_STREET/npar-multi-funcoes.jl");
+ betas0_rampa, betas_rampa, obj_rampa, status_rampa, solution = rq_par_mip_grupos_rampa(X_lags[:,1], X_lags[:, 2:end], Alphas;
+   non_cross = true, max_K = max_K, TimeLimit = TimeLimit, MIPGap = 0.00, Grupos = Grupos)
+# 
+    # betas0_grupos, betas_grupos, obj_grupos, status_grupos = rq_par_mip_grupos(X_lags[:,1], X_lags[:, 2:end], Alphas;
+    #    non_cross = true, max_K = max_K, TimeLimit = 900, MIPGap = 0.00, Grupos = Grupos)
+
 
 # heatmap(Alphas, betas .== 0)
 # savefig("Coeficientes MIP apos 6000s.pdf")

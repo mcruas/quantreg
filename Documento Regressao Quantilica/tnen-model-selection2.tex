@@ -60,23 +60,23 @@ This means that if covariate $p$ belongs to group $g$, this covariate is not amo
 Note that variable $z_{p \alpha}$ behaves differently that when we are not considering groups. This means that if probability $\alpha$ belongs to group $g$ but variable $p$ is not selected to be among the ones of group $g$, than $\beta_{p\alpha}$ is zero.
 Equation (\ref{mipgrupzpa}) defines $z_{p\alpha}$ to simplify the problem.
 
-\todo[inline]{Colocar resultados dos experimentos MILP-Grupos vs. MILP depois de concluídos. Se resultados de grupos com rampa forem bons, incluír aqui mais uma seção.}
-
-\subsubsection*{Defining groups for variables where each group consists of probabilities in sequence}
-
-\begin{eqnarray}
-\underset{\beta_{0\alpha},\beta_\alpha,z_{p \alpha} \varepsilon_{t \alpha}^{+},\varepsilon_{t \alpha}^{-}}{\text{min}} & \sum_{\alpha \in A} \sum_{t\in T}\left(\alpha\varepsilon_{t \alpha}^{+}+(1-\alpha)\varepsilon_{t\alpha}^{-}\right) \label{eq:mipgr0} \\
-\mbox{s.t } & \varepsilon_{t \alpha}^{+}-\varepsilon_{t \alpha}^{-}=y_{t}-\beta_{0 \alpha}-\sum_{p=1}^{P}\beta_{p \alpha}x_{t,p},& \qquad\forall t \in T ,\forall \alpha \in A, \label{eq:mipgr1}\\
-& \varepsilon_{t \alpha}^{+},\varepsilon_{t \alpha}^{-}\geq0,&\qquad\forall t \in T ,\forall \alpha \in A, \label{eq:mipgr2}\\
-& - M z_{p \alpha} \leq \beta_{p \alpha} \leq M z_{p \alpha},&\qquad \forall \alpha \in A, \forall p\in\{1,\dots,P\}, \label{eq:mipgr3}\\
-& \sum_{p=1}^P z_{p \alpha} \leq K, & \qquad \forall \alpha \in A, \label{eq:mipgr4}\\
-& z_{p \alpha} \in \{0,1\},&\qquad \forall \alpha \in A, \forall p\in\{1,\dots,P\}, \label{eq:mipgr5}\\
-& \beta_{0\alpha} + \beta_{\alpha}^T x_{t} \leq \beta_{0\alpha'} + \beta_{\alpha'}^T x_{t}, & \qquad \forall t \in T, \forall (\alpha, \alpha') \in A \times A,  \alpha < \alpha',\nonumber\\ \label{eq:mipgr6} \\
-& z_{p\alpha} - z_{p\alpha+1} \leq m_{p\alpha}, & \qquad \forall \alpha \in A', \qquad \forall p \in P  \\
-& \sum_{\alpha \in A'} r_\alpha \leq |G| - 1 
-\label{eq:mipgr} \\
-\end{eqnarray}
-where $A' = A\setminus \{|A|\}$
+%\todo[inline]{Colocar resultados dos experimentos MILP-Grupos vs. MILP depois de concluídos. Se resultados de grupos com rampa forem bons, incluír aqui mais uma seção.}
+%
+%\subsubsection*{Defining groups for variables where each group consists of probabilities in sequence}
+%
+%\begin{eqnarray}
+%\underset{\beta_{0\alpha},\beta_\alpha,z_{p \alpha} \varepsilon_{t \alpha}^{+},\varepsilon_{t \alpha}^{-}}{\text{min}} & \sum_{\alpha \in A} \sum_{t\in T}\left(\alpha\varepsilon_{t \alpha}^{+}+(1-\alpha)\varepsilon_{t\alpha}^{-}\right) \label{eq:mipgr0} \\
+%\mbox{s.t } & \varepsilon_{t \alpha}^{+}-\varepsilon_{t \alpha}^{-}=y_{t}-\beta_{0 \alpha}-\sum_{p=1}^{P}\beta_{p \alpha}x_{t,p},& \qquad\forall t \in T ,\forall \alpha \in A, \label{eq:mipgr1}\\
+%& \varepsilon_{t \alpha}^{+},\varepsilon_{t \alpha}^{-}\geq0,&\qquad\forall t \in T ,\forall \alpha \in A, \label{eq:mipgr2}\\
+%& - M z_{p \alpha} \leq \beta_{p \alpha} \leq M z_{p \alpha},&\qquad \forall \alpha \in A, \forall p\in\{1,\dots,P\}, \label{eq:mipgr3}\\
+%& \sum_{p=1}^P z_{p \alpha} \leq K, & \qquad \forall \alpha \in A, \label{eq:mipgr4}\\
+%& z_{p \alpha} \in \{0,1\},&\qquad \forall \alpha \in A, \forall p\in\{1,\dots,P\}, \label{eq:mipgr5}\\
+%& \beta_{0\alpha} + \beta_{\alpha}^T x_{t} \leq \beta_{0\alpha'} + \beta_{\alpha'}^T x_{t}, & \qquad \forall t \in T, \forall (\alpha, \alpha') \in A \times A,  \alpha < \alpha',\nonumber\\ \label{eq:mipgr6} \\
+%& z_{p\alpha} - z_{p\alpha+1} \leq m_{p\alpha}, & \qquad \forall \alpha \in A', \qquad \forall p \in P  \\
+%& \sum_{\alpha \in A'} r_\alpha \leq |G| - 1 
+%\label{eq:mipgr} \\
+%\end{eqnarray}
+%where $A' = A\setminus \{|A|\}$
 
 \subsection{Best subset selection with LASSO}
 \label{sec:best-subset-ell1}
@@ -106,7 +106,7 @@ After the process of normalization, we can rewrite problem \ref{eq:l1-qar-optim}
 \\
 & \xi_{p\alpha}\geq-\beta_{p \alpha},&\forall p\in P, \forall \alpha \in A.  \label{l1-qar-4}
 \end{eqnarray}
-This model is built upon the standard linear programming model for the quantile regression (equation \ref{eq:qar-lp}). 
+This model is built upon the standard linear programming model for the quantile regression (\ref{eq:linear-opt-1})-(\ref{eq:linear-opt-ult}). 
 On the above formulation, the $\ell_1$ norm of equation (\ref{eq:l1-qar-optim}) is substituted by the sum of $\xi_p$, which represents the absolute value of $\beta_{p\alpha}$. The link between variables $\xi_p$ and $\beta_{p\alpha}$ is made by constraints (\ref{l1-qar-3}) and (\ref{l1-qar-4}). Note that the linear coefficient $\beta_{0\alpha}$ is not included in the penalization, as the sum of penalties on the objective function \ref{eq:obj-lasso}.
 
 % % % % % % % % Esse trecho deve ser usado quando os coeficientes do lasso forem utilizados, e não apenas o lasso sendo um seletor de variáveis % % % % % % % % %
@@ -125,7 +125,7 @@ On the above formulation, the $\ell_1$ norm of equation (\ref{eq:l1-qar-optim}) 
 For low values of $\lambda$, the penalty over the size of coefficients is small. Because of that, the output of problem (\ref{eq:obj-lasso})-(\ref{l1-qar-4}) is a model where most coefficients have nonzero value. On the other hand, when the penalty on $\| \beta_\alpha \|_1$ is big, many covariates will have zero valued coefficients. When $\lambda$ approaches infinity, one has a constant model. 
 For instance, the penalty isn't applied to the linear coefficient $\beta_{0\alpha}$. 
 
-Even though we have coefficients that are estimated by this method, we don't use them directly. In fact, the LASSO coefficients are biased, so it is employed only as a variable selector. As so, the nonzero coefficient covariates will be the input of a unrestricted quantile regression problem, as in the linear programming problem \ref{eq:qar-lp}. 
+Even though we have coefficients that are estimated by this method, we don't use them directly. In fact, the LASSO coefficients are biased, so it is employed only as a variable selector. As so, the nonzero coefficient covariates will be the input of a unrestricted quantile regression problem, as in the linear programming problem (\ref{eq:linear-opt-1})-(\ref{eq:linear-opt-ult}). 
 The set of selected indexes are given by
 \begin{equation*}
 L_\lambda = \{ p \; | \; p \in \{ 1,\dots,P \}, \; |\beta^{*LASSO}_{\lambda,p}| \neq 0  \}.

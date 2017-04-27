@@ -26,6 +26,19 @@
 using JuMP
 
 
+# function Plotar_quantis(x,y,thetas, )
+type Registros
+  tempo::Float64
+  Status::String
+  objetivo::Float64
+  grupos::Float64
+  K::Float64
+  betas::Array{Float64,2}
+  beta0::Array{Float64,1}
+end
+
+
+
 function rq_np(y::Array{Float64}, x::Array{Float64}, Alphas, lambda1 = NaN, lambda2 = NaN; range_data = NaN, non_cross = true)
 
     Alf = 1:length(Alphas)
@@ -437,11 +450,37 @@ function rq_par_mip_grupos(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_c
     return betas0opt', betasopt, objectiveValue, status
 end
 
+function solution2matrix(x)
+    sizes = JuMP.size(x)
+    tmp = zeros(sizes)
+    for q in 1:sizes[1] , j in 1:sizes[2]
+      tmp[q,j] = x[q,j]
+    end
+    return tmp
+end
+
+
+############################### Functions to keep BB data #################
+# function infocallback(cb)
+#     push!(solutionvalues, solution2matrix(JuMP.getvalue(β)))
+# end
+
+type NodeData
+        time::Float64  # in seconds since the epoch
+         beta::Array{Float64,2}
+         beta0::Vector{Float64}
+         bestbound::Float64
+         obj::Float64
+end
+
+
+###########################################################################
+
+# y=X_lags[:,1]; X=X_lags[:, 2:end]; non_cross = true; max_K = max_K; TimeLimit = 200; MIPGap = 0.00; Grupos = Grupos
 
 
 
-
-function rq_par_mip_grupos_rampa(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_cross = true, max_K = NaN, TimeLimit = NaN, MIPGap = NaN, Grupos = NaN)
+function rq_par_mip_grupos_rampa(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_cross = true, max_K = NaN, TimeLimit = NaN, MIPGap = NaN, Grupos = NaN, Save = NaN)
 
     Alf = 1:length(Alphas)
     Alfm = 1:length(Alphas)-1 # it is the same indexes of Alpha but without the last observation.
@@ -464,7 +503,7 @@ function rq_par_mip_grupos_rampa(y::Array{Float64}, X::Array{Float64,2}, Alphas;
     m = Model(solver = GurobiSolver(MIPGap = MIPGap, TimeLimit = TimeLimit))
   	@variable(m, ɛ_tmais[T, Alf] >= 0)
   	@variable(m, ɛ_tmenos[T, Alf] >= 0)
-  	@variable(m, β[1:P, Alf])
+    @variable(m, β[1:P, Alf])
   	@variable(m, β0[Alf])
     @variable(m, z[1:P, Alf], Bin)
     @variable(m, ϕ[1:P, Alfm] >= 0)  # m_α,p indicates the absolute value of z_α,p 
@@ -495,27 +534,46 @@ function rq_par_mip_grupos_rampa(y::Array{Float64}, X::Array{Float64,2}, Alphas;
 
 
      # Limitar número de rampas
-     @constraint(m, n_rampa[a = Alfm], sum(ϕ[p,a] for p = 1:P) <= r[a]*M)
+    @constraint(m, n_rampa[a = Alfm], sum(ϕ[p,a] for p = 1:P) <= r[a]*M)
 
 
      # Limitar número de rampas
-     @constraint(m, max_rampas, sum(r[a] for a = Alfm) <= G - 1)
-
-     # Permite que no máximo max_K seja escolhido no modelo
-     @constraint(m, max_var[a = Alf], sum(z[i,a] for i = Q) <= max_K)
-
+    @constraint(m, max_rampas, sum(r[a] for a = Alfm) <= G - 1)
 
      # Coloca |z_pa+1 - z_pa| em phi
-     @constraint(m, phi_positivo[p = 1:P, a = Alfm], z[p,a+1] - z[p,a]  <= ϕ[p,a] )
-     @constraint(m, phi_negativo[p = 1:P, a = Alf],  - z[p,a+1] + z[p,a]  <= ϕ[p,a]  )
+    @constraint(m, phi_positivo[p = 1:P, a = Alfm], z[p,a+1] - z[p,a]  <= ϕ[p,a] )
+    @constraint(m, phi_negativo[p = 1:P, a = Alfm],  - z[p,a+1] + z[p,a]  <= ϕ[p,a]  )
 
 
 
-  	status = solve(m)
+    global solutionvalues = NodeData[]
 
-  	tmp_betas0opt = getvalue(β0)
+    function infocallback(cb)
+        # println(a - time())
+        i = find(check .== 0)[1]
+        # println ("Tempo $(time()-a) e $(times[i])")
+        if time()-a > times[i]
+            obj       = MathProgBase.cbgetobj(cb)
+            bestbound = MathProgBase.cbgetbestbound(cb)
+            beta = JuMP.getvalue(β).innerArray
+            beta0 = JuMP.getvalue(β0).innerArray
+              JuMP.getobjectivevalue
+            # push!(bbdata2, NodeData(obj,bestbound))
+            # push!(solutionvalues, NodeData(time()-a,rand(5,5),rand(5),bestbound, obj))
+            push!(solutionvalues, NodeData(time()-a,beta,beta0,bestbound, obj))
+            check[i] = 1
+        end
+    end
+
+    addinfocallback(m, infocallback, when = :Intermediate)
+
+    global a = time()
+  	@time status = solve(m)
+
+  	# tmp_betas0opt = getvalue(β0)
     tmp_betasopt = getvalue(β)
     objectiveValue = getobjectivevalue(m)
+    solvetime = getsolvetime(m)
     # objetivo = getobjective()
     ## Transform both variables into an array
     betasopt = zeros(size(X)[2], length(Alphas))
@@ -528,7 +586,7 @@ function rq_par_mip_grupos_rampa(y::Array{Float64}, X::Array{Float64,2}, Alphas;
     end
 
 
-    return betas0opt', betasopt, objectiveValue, status
+    return betas0opt', betasopt, objectiveValue, status, solutionvalues
 
 end
 
@@ -551,4 +609,4 @@ function Estimar_Q_hat_par2(betas0,betas, x_new)
 end
 
 
-# function Plotar_quantis(x,y,thetas, )
+
