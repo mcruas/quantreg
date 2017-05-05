@@ -1,0 +1,1838 @@
+#LyX file created by tex2lyx 2.2
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin /home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/Documento Regressao Quantilica/
+\textclass article
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Regularization
+\end_layout
+
+\begin_layout Standard
+When dealing with many candidates to use as covariates, one has to deal with the problem of selecting a subset of variables to use in constructing the model. This means that the vector of coefficients 
+\begin_inset Formula $\beta_\alpha = [ \beta_{1 \alpha} \cdots \beta_{P\alpha} ]$
+\end_inset
+
+ should not have all nonzero values. There are many ways of selecting a subset of variables among. A classic approaches for this problem is the Stepwise algorithm 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "efroymson1960multiple"
+
+\end_inset
+
+, which includes variables in sequence.
+\end_layout
+
+\begin_layout Standard
+The approach we use in of doing regularization and selecting the best model for estimating the quantile function. At first, we use a Mixed Integer Linear Programming optimization problem (MILP) to find the best subset among all choices of covariates. The second way is by using a LASSO-type technique, which consists in penalizing the 
+\begin_inset Formula $\ell_1$
+\end_inset
+
+-norm of regressors, thus shrinking the size of estimated coefficients towards zero.
+\end_layout
+
+\begin_layout Subsection
+Best subset selection with MILP
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:best-subset-mip"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this part, we investigate the usage of MILP to select which variables are included in the model, up to a limit of inclusions imposed 
+\shape italic
+a priori
+\shape default
+. We establish that only 
+\begin_inset Formula $K$
+\end_inset
+
+ coefficients 
+\begin_inset Formula $\beta_{p\alpha}$
+\end_inset
+
+ may have nonzero values, for each quantile 
+\begin_inset Formula $\alpha$
+\end_inset
+
+. We model this assumption with binary variables 
+\begin_inset Formula $z_{p\alpha}$
+\end_inset
+
+, which indicates whether 
+\begin_inset Formula $\beta_{p\alpha}$
+\end_inset
+
+ is included or not. The optimization problem is described below: 
+\begin_inset Formula \begin{eqnarray}
+ \underset{\beta_{0\alpha},\beta_\alpha,z_{p \alpha} \varepsilon_{t \alpha}^{+},\varepsilon_{t \alpha}^{-}}{\text{min}} & \sum_{\alpha \in A} \sum_{t\in T}\left(\alpha\varepsilon_{t \alpha}^{+}+(1-\alpha)\varepsilon_{t\alpha}^{-}\right) \label{eq:mip0} \\
+\mbox{s.t } & \varepsilon_{t \alpha}^{+}-\varepsilon_{t \alpha}^{-}=y_{t}-\beta_{0 \alpha}-\sum_{p=1}^{P}\beta_{p \alpha}x_{t,p},& \qquad\forall t \in T ,\forall \alpha \in A, \label{eq:mip1}\\
+& \varepsilon_{t \alpha}^{+},\varepsilon_{t \alpha}^{-}\geq0,&\qquad\forall t \in T ,\forall \alpha \in A, \label{eq:mip2}\\
+& - M z_{p \alpha} \leq \beta_{p \alpha} \leq M z_{p \alpha},&\qquad\forall p\in\{1,\dots,P\}, \label{eq:mip3}\\
+& \sum_{p=1}^P z_{p \alpha} \leq K, & \qquad \forall \alpha \in A, \label{eq:mip4}\\
+& z_{p \alpha} \in \{0,1\},&\qquad\forall p\in\{1,\dots,P\}, \forall \alpha \in A. \label{eq:mip5}\\
+& \beta_{0\alpha} + \beta_{\alpha}^T x_{t} \leq \beta_{0\alpha'} + \beta_{\alpha'}^T x_{t}, & \qquad \forall t \in T, \forall (\alpha, \alpha') \in A \times A,  \alpha < \alpha',\nonumber\\ \label{eq:mip6}
+\end{eqnarray}
+\end_inset
+
+The objective function and constraints (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mip1"
+
+\end_inset
+
+) and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mip2"
+
+\end_inset
+
+) are those from the standard linear quantile regression. The other constraints implement the process of regularization, forcing a maximum of 
+\begin_inset Formula $K$
+\end_inset
+
+ variables to be included in the model. By (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mip3"
+
+\end_inset
+
+), variable 
+\begin_inset Formula $z_{p \alpha}$
+\end_inset
+
+ is a binary that assumes 1 when the coefficient 
+\begin_inset Formula $\beta_{p \alpha}$
+\end_inset
+
+ is included. 
+\begin_inset Formula $M$
+\end_inset
+
+ is chosen in order to guarantee that 
+\begin_inset Formula $M \geq \|\hat{\beta_\alpha}\|_{\infty}$
+\end_inset
+
+. The solution given by 
+\begin_inset Formula $\beta_{0\alpha}^*$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta_\alpha^* = [ \beta_{1 \alpha}^* \cdots \beta_{P\alpha}^* ]$
+\end_inset
+
+ will be the best linear 
+\begin_inset Formula $\alpha$
+\end_inset
+
+-quantile regression with 
+\begin_inset Formula $K$
+\end_inset
+
+ nonzero coefficients.
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset FormulaMacro
+\def\OldComma {,}
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+catcode
+\end_layout
+
+\end_inset
+
+`
+\begin_inset space \thinspace{}
+
+\end_inset
+
+=13 
+\begin_inset FormulaMacro
+\def\, {%
+		\ifmmode%
+		\OldComma\discretionary{}{}{}%
+		\else%
+		\OldComma%
+		\fi%
+	}
+\end_inset
+
+We ran this optimization on the Icaraizinho dataset for each value of 
+\begin_inset Formula $K \in \{0, 1, \dots, 12\}$
+\end_inset
+
+ and quantiles 
+\begin_inset Formula $\alpha \in \{0.05, 0.1, 0.5, 0.9, 0.95\}$
+\end_inset
+
+. The full results table can be accessed on section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:mipcoefficients"
+
+\end_inset
+
+. For all quantiles the 12
+\begin_inset script superscript
+
+\begin_layout Plain Layout
+th
+\end_layout
+
+\end_inset
+
+ lag was the one included when 
+\begin_inset Formula $K=1$
+\end_inset
+
+. When 
+\begin_inset Formula $K=2$
+\end_inset
+
+, the 1
+\begin_inset script superscript
+
+\begin_layout Plain Layout
+st
+\end_layout
+
+\end_inset
+
+ lag was always included, sometimes with 
+\begin_inset Formula $\beta_{12}$
+\end_inset
+
+, some others with 
+\begin_inset Formula $\beta_4$
+\end_inset
+
+ and once with 
+\begin_inset Formula $\beta_{11}$
+\end_inset
+
+. These 4 lags that were present until now are the only ones selected when 
+\begin_inset Formula $K=3$
+\end_inset
+
+. For 
+\begin_inset Formula $K=4$
+\end_inset
+
+, those same four lags were selected for three quantiles (0.05, 0.1 and 0.5), but for the others (0.9 and 0.95) we have 
+\begin_inset Formula $\beta_6$
+\end_inset
+
+, 
+\begin_inset Formula $\beta_7$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta_9$
+\end_inset
+
+ also as selected. From now on, the inclusion of more lags represent a lower increase in the fit of the quantile regression. The estimated coefficient values for all 
+\begin_inset Formula $K$
+\end_inset
+
+'s are available in the appendices section. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Defining groups for variables
+\end_layout
+
+\begin_layout Standard
+Consider the optimization problem defined on (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mip0"
+
+\end_inset
+
+)-(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mip6"
+
+\end_inset
+
+). Equation (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mip3"
+
+\end_inset
+
+) permits a different subset for each 
+\begin_inset Formula $\alpha$
+\end_inset
+
+-quantile, whose function is defined by a set of 
+\begin_inset Formula $K$
+\end_inset
+
+ variables. For two similar probabilities 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha'$
+\end_inset
+
+, it is not plausible that their chosen model be too different (for example, for the 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ quantile one selects 
+\begin_inset Formula $\beta_{1\alpha}$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta_{4\alpha}$
+\end_inset
+
+ and for the 
+\begin_inset Formula $\alpha'$
+\end_inset
+
+ quantile one selects 
+\begin_inset Formula $\beta_{2\alpha}$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta_{5\alpha}$
+\end_inset
+
+), which is allowed by the previous optimization model.
+\end_layout
+
+\begin_layout Standard
+To address this issue, we propose to divide all 
+\begin_inset Formula $\alpha \in A$
+\end_inset
+
+ into groups. The collection 
+\begin_inset Formula $G$
+\end_inset
+
+ of all groups 
+\begin_inset Formula $g$
+\end_inset
+
+ form a partition of 
+\begin_inset Formula $A$
+\end_inset
+
+, and each 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ will belong to exactly one group 
+\begin_inset Formula $g$
+\end_inset
+
+. The subset of selected covariates must be the same for all 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ in the same group 
+\begin_inset Formula $g$
+\end_inset
+
+. To model these properties as constraints, we use the following equations and inequalities, that take the place of inequality 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mip3"
+
+\end_inset
+
+ on the optimization problem: 
+\begin_inset Formula \begin{eqnarray}
+&z_{p \alpha} := 2 - ( 1-z_{pg}) - I_{g\alpha}& \\
+& \sum\limits_{g \in G} I_{g\alpha} = 1, & \forall \alpha \in A,\label{eq:mipgrupa} \\
+& -Mz_{p \alpha}  \leq  \beta_{p \alpha} \leq M z_{p \alpha}, & \forall p \in P, \quad \forall \alpha \in A, \quad \forall g \in G, \label{eq:mipgrupb} \\
+& I_{g\alpha}, z_{pg} \in \{0,1\},& \forall p \in P, \quad \forall g \in G, 
+\end{eqnarray}
+\end_inset
+
+where 
+\begin_inset Formula $G$
+\end_inset
+
+ is a set of group index and 
+\begin_inset Formula $z_{pg}$
+\end_inset
+
+ is a binary variable that equals 1 iff covariate 
+\begin_inset Formula $p$
+\end_inset
+
+ is included on group 
+\begin_inset Formula $g$
+\end_inset
+
+ and 
+\begin_inset Formula $I_{g\alpha}$
+\end_inset
+
+ equals 1 iff 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ belongs to group 
+\begin_inset Formula $g$
+\end_inset
+
+. The logic behind constraint 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mipgrupb"
+
+\end_inset
+
+ is that 
+\begin_inset Formula \[\text{If }z_{pg} = 0 \text{ and }I_{g\alpha} =1 \text{ then } \beta_{p \alpha = 0}. \]
+\end_inset
+
+Note that variable 
+\begin_inset Formula $z_{p \alpha}$
+\end_inset
+
+ behaves differently that when we are not considering groups This means that if probability 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ belongs to group 
+\begin_inset Formula $g$
+\end_inset
+
+ but variable 
+\begin_inset Formula $p$
+\end_inset
+
+ is not selected to be among
+\end_layout
+
+\begin_layout Subsection
+Best subset selection with a 
+\begin_inset Formula $\ell_1$
+\end_inset
+
+ penalty
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:best-subset-ell1"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Another way of doing regularization is including the 
+\begin_inset Formula $\ell_1$
+\end_inset
+
+-norm of the coefficients on the objective function. The advantage of this method is that coefficients are shrunk towards zero, and only some of them will have nonzero coefficients. The lower the imposed penalty (
+\begin_inset Formula $\lambda$
+\end_inset
+
+) on the 
+\begin_inset Formula $\ell_1$
+\end_inset
+
+-norm, more variables are included in the model. This is the same strategy of the LASSO methodology, and its usage for the quantile regression is discussed in 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "li2012l1"
+
+\end_inset
+
+. The proposed optimization problem to be solved is:
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Formula \begin{equation}
+\underset{\beta_{0\alpha},\beta_\alpha}{\text{min}} \sum_{t \in T}\alpha|y_{t}-q_\alpha(x_t)|^{+}+ \sum_{t \in T}(1-\alpha)|y_{t}-q_\alpha(x_t)|^{-}+\lambda\|\beta_\alpha\|_{1}
+\label{eq:l1-qar-optim}
+\end{equation}
+\end_inset
+
+
+\begin_inset Formula \[
+q_\alpha(x_t)=\beta_{0}-\sum_{p=1}^{P}\beta_{p}x_{t,p},
+\]
+\end_inset
+
+where the regressors 
+\begin_inset Formula $x_{t,p}$
+\end_inset
+
+ used are its lags. In order to represent the above problem to be solved with linear programming solver, we restructure the problem as below: 
+\begin_inset Formula \begin{eqnarray}
+\beta_\lambda^{*LASSO} = \underset{\beta_{0},\beta,\varepsilon_{t \alpha}^{+},\varepsilon_{t \alpha}^{-}}{\text{arg min}} & \sum_{\alpha \in A} \sum_{t \in T}\left(\alpha\varepsilon_{t \alpha}^{+}+(1-\alpha)\varepsilon_{t \alpha}^{-}\right)+\lambda\sum_{p=1}^{P}\mbox{\ensuremath{\xi}}_{p} \label{eq:obj-lasso} \\
+\mbox{s.t. } & \varepsilon_{t \alpha}^{+}-\varepsilon_{t \alpha}^{-}=y_{t}-\beta_{0}-\sum_{p=1}^{P}\beta_{p}x_{t,p},&\forall t\in T,\\
+& \varepsilon_{t \alpha}^{+},\varepsilon_{t \alpha}^{-}\geq0,&\forall t \in T, \forall \alpha \in A\\
+& \xi_{p}\geq\beta_{p \alpha},&\forall p\in\{1,\dots,P\}, \forall \alpha \in A  \nonumber\\ \label{l1-qar-3}
+\\
+& \xi_{p}\geq-\beta_{p \alpha},&\forall p\in\{1,\dots,P\}, \forall \alpha \in A,  \nonumber \\ \label{l1-qar-4}
+\end{eqnarray}
+\end_inset
+
+This model is built upon the standard linear programming model for the quantile regression (equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:qar-lp"
+
+\end_inset
+
+). On the above formulation, the 
+\begin_inset Formula $\ell_1$
+\end_inset
+
+ norm of equation (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:l1-qar-optim"
+
+\end_inset
+
+) is substituted by the sum of 
+\begin_inset Formula $\xi_p$
+\end_inset
+
+, which represents the absolute value of 
+\begin_inset Formula $\beta_p$
+\end_inset
+
+. The link between variables 
+\begin_inset Formula $\xi_p$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta_p$
+\end_inset
+
+ is made by constraints (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "l1-qar-3"
+
+\end_inset
+
+) and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "l1-qar-4"
+
+\end_inset
+
+). Note that the linear coefficient 
+\begin_inset Formula $\beta_0$
+\end_inset
+
+ is not included in the penalization, as the sum of penalties on the objective function 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:obj-lasso"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For such estimation to produce good results, however, each variable must have the same relative weight in comparison with one another. So, before solving the optimization problem, we normalize all variables to have mean 
+\begin_inset Formula $\mu = 0$
+\end_inset
+
+ and variance 
+\begin_inset Formula $\sigma^2 = 1$
+\end_inset
+
+. For the vector of observations for each covariate (that in our problem represents is a vector of observations of lags 
+\begin_inset Formula $y_{t-p}$
+\end_inset
+
+), we apply the transformation 
+\begin_inset Formula $\tilde{y}_{t-p,i} = (y_{t-p,i} - \bar{y}_{t-p}) / \sigma_{t-p}$
+\end_inset
+
+, where 
+\begin_inset Formula $\bar{y}_{t-p}$
+\end_inset
+
+ is the 
+\begin_inset Formula $p$
+\end_inset
+
+-lag mean and 
+\begin_inset Formula $\sigma_{t-p}$
+\end_inset
+
+ the 
+\begin_inset Formula $p$
+\end_inset
+
+-lag standard deviation. We use the 
+\begin_inset Formula $\tilde{y}_{t-p,i}$
+\end_inset
+
+ series to estimate the coefficients. Once done that, we multiply each coefficient for its standard deviation to get the correct coefficient: 
+\begin_inset Formula $\beta_i = \tilde{\beta}_i \sigma_{t-p}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For low values of 
+\begin_inset Formula $\lambda$
+\end_inset
+
+, the penalty is small and thus we have a model where all coefficients have a nonzero value. On the other hand, while 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ is increased the coefficients shrink towards zero; in the limit we have a constant model. For instance, we don't penalize the linear coefficient 
+\begin_inset Formula $\beta_0$
+\end_inset
+
+. For the same quantiles values 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ we experimented on section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:best-subset-mip"
+
+\end_inset
+
+ (
+\begin_inset Formula $\alpha \in \{0.05, 0.1, 0.5, 0.9, 0.95\}$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Box Frameless
+position "t"
+hor_pos "l"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "40line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+
+\begin_layout Plain Layout
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Box Frameless
+position "t"
+hor_pos "l"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+
+\begin_layout Plain Layout
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename Figuras/selecao-lasso/par-sellasso-005.pdf
+	width 100text%
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "b"
+hor_pos "l"
+has_inner_box 1
+inner_pos "b"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+
+\begin_layout Plain Layout
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename Figuras/selecao-lasso/par-sellasso-01.pdf
+	width 100text%
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "b"
+hor_pos "l"
+has_inner_box 1
+inner_pos "b"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+
+\begin_layout Plain Layout
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename Figuras/selecao-lasso/par-sellasso-05.pdf
+	width 100text%
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "l"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "40line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+
+\begin_layout Plain Layout
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Box Frameless
+position "b"
+hor_pos "l"
+has_inner_box 1
+inner_pos "b"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+
+\begin_layout Plain Layout
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename Figuras/selecao-lasso/par-sellasso-09.pdf
+	width 100text%
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "b"
+hor_pos "l"
+has_inner_box 1
+inner_pos "b"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+
+\begin_layout Plain Layout
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename Figuras/selecao-lasso/par-sellasso-095.pdf
+	width 100text%
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:npqar-cross"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Coefficients path for a few different values of 
+\begin_inset Formula $\alpha$
+\end_inset
+
+-quantiles. 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ is presented in a 
+\begin_inset Formula $\log_{10}$
+\end_inset
+
+ scale, to make visualization easier.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:npqar-results"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It is important to mention that even though we have coefficients that are estimated by this method, we don't use them directly. Instead, the nonzero coefficients will be the only covariates used as explanatory variables of a regular quantile autoregression, solved by the linear programming problem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:qar-lp"
+
+\end_inset
+
+. In summary, the optimization in equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:l1-qar-optim"
+
+\end_inset
+
+ acts as a variable selection for the subsequent estimation, which is normally called the post-LASSO estimation 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "belloni2009least"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In this estimation made 
+\shape italic
+a posteriori
+\shape default
+, only a subset of the 
+\begin_inset Formula $P$
+\end_inset
+
+ covariates will have nonzero values, which are given by the set 
+\begin_inset Formula \begin{equation*}
+L_\lambda = \{ p \; | \; p \in \{ 1,\dots,P \}, \; |\beta^{*LASSO}_{\lambda,p}| \neq 0  \}.
+\end{equation*}
+\end_inset
+
+Hence, we have that 
+\begin_inset Formula \[\beta^{*LASSO}_{\lambda,p} = 0 \iff \beta^{*}_{\lambda,p} = 0.\]
+\end_inset
+
+The post-lasso coefficients 
+\begin_inset Formula $\beta_\lambda^*$
+\end_inset
+
+ are the solution from the optimization problem given below: 
+\begin_inset Formula \begin{equation}
+\begin{aligned} (\hat{\sigma}_{\lambda}^{*},\beta_{\lambda}^{*})\overset{(obj,var)}{\longleftarrow} \min_{\beta_0,\beta,\varepsilon_{t}^{+},\varepsilon_{t}^{-}} & \sum_{t \in T}\left(\alpha\varepsilon_{t}^{+}+(1-\alpha)\varepsilon_{t}^{-}\right) \\
+\mbox{s.t. } & \varepsilon_{t}^{+}-\varepsilon_{t}^{-}=y_{t} - \beta_0 - \sum_{p\in L_\lambda} \beta_p x_{t,p},& \forall t\in T,\\
+& \varepsilon_t^+,\varepsilon_t^- \geq 0, & \forall t \in T.
+\end{aligned}
+\label{eq:post-lasso}
+\end{equation}
+\end_inset
+
+The variable 
+\begin_inset Formula $\hat{\sigma}_{\lambda}^{*}$
+\end_inset
+
+ receives the value of the objective function on its optimal solution.
+\end_layout
+
+\begin_layout Subsection
+Model selection
+\end_layout
+
+\begin_layout Standard
+On sections 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:best-subset-mip"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:best-subset-ell1"
+
+\end_inset
+
+, we presented two ways of doing regularization. Nonetheless, regularization can be done with different levels of parsimony. For example, one can select a different number 
+\begin_inset Formula $K$
+\end_inset
+
+ of variables to be included in the best subset selection via MILP or choose different values of 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ for the 
+\begin_inset Formula $\ell_1$
+\end_inset
+
+ penalty. Each of these choices may lead to a different model, and th .........
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% % % MÃ©trica
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Solving a LP problem is much faster than a similar-sized MILP problem. One of our goals is to test whether a solution of a model with a 
+\begin_inset Formula $\ell_1$
+\end_inset
+
+-norm can approximate well a solution given by the MILP problem. We propose an experiment that is described as follows. First, we calculate the quantity 
+\begin_inset Formula $\| \beta^*_\lambda \|_0$
+\end_inset
+
+ of nonzero coefficients, for each given lambda, for the LASSO estimations. Then, for each number 
+\begin_inset Formula $K$
+\end_inset
+
+ of total nonzero coefficients, there will be a penalty 
+\begin_inset Formula $\lambda^*_K$
+\end_inset
+
+ which minimizes the errors from the quantile regression's objective function (given on equation (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:post-lasso"
+
+\end_inset
+
+)): 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+todo
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+(
+\begin_inset Formula $K$
+\end_inset
+
+ ranging from 0 until 12, where 0 means that only the intercept is included)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Formula \begin{equation}
+\lambda^*_K = \argmin_\lambda \left\lbrace \left.  \hat{\sigma}_{\lambda}^{*} \quad  \right| \, \| \beta^*_\lambda \|_0 = K \right\rbrace.
+\end{equation}
+\end_inset
+
+We, then, define the set 
+\begin_inset Formula $L_K^{m}$
+\end_inset
+
+, which contains all nonzero indexes, for a given 
+\begin_inset Formula $K$
+\end_inset
+
+, of method 
+\begin_inset Formula $m$
+\end_inset
+
+. Thus, we can compare the best lasso fit where exactly 
+\begin_inset Formula $K$
+\end_inset
+
+ variables are selected with the best fit given by the MILP problem, also with 
+\begin_inset Formula $K$
+\end_inset
+
+ variables selected.
+\end_layout
+
+\begin_layout Standard
+As the MILP solution is the exact solution for the problem, while the LASSO solution is an approximation, we use the former as a 
+\shape italic
+benchmarking
+\shape default
+ for the quality of the latter solution. To help us view the difference of results between both methods, we define a similarity metric 
+\begin_inset Formula $d$
+\end_inset
+
+ between the subset of coefficients chosen by each one of them. It is desirable that the LASSO solution be as related with the MILP solution as possible. The similarity is calculated as the solution of the following optimization problem 
+\begin_inset Formula \begin{eqnarray}
+d(\beta^*_{MILP(K)}, \beta^*_{\lambda^*_K}) =	1 - \max_{0\leq\delta_{ij}\leq1} & \sum\sum_{j} \delta_{ij} |\rho_{ij}| \label{eq:metricad0} \\
+\text{s.t.} & \sum_{j}\delta_{ij}=1 & \forall i\in L_{K}^{MILP},\\
+& \sum_{i}\delta_{ij}=1 & \forall j\in L_{K}^{LASSO},\\
+& \delta_{i,j} = 0, & \forall i \in \overline{L}_{K}^{MILP}, \forall j \in \{1,\dots,P\},\\
+& \delta_{i,j} = 0, & \forall j \in \overline{L}_{K}^{LASSO}, \forall i \in \{1,\dots,P\},\label{eq:metricad4}
+\end{eqnarray}
+\end_inset
+
+where 
+\begin_inset Formula $\rho_{ij}$
+\end_inset
+
+ is the correlation between variables 
+\begin_inset Formula $i$
+\end_inset
+
+ and 
+\begin_inset Formula $j$
+\end_inset
+
+ and 
+\begin_inset Formula $\delta_{ij} = 1$
+\end_inset
+
+ means that the selected variable 
+\begin_inset Formula $i$
+\end_inset
+
+ from the set 
+\begin_inset Formula $L_k^{MILP}$
+\end_inset
+
+ is associated with the variable 
+\begin_inset Formula $j$
+\end_inset
+
+ from set 
+\begin_inset Formula $L_k^{LASSO}$
+\end_inset
+
+, and the constraints guarantee that each variable is related with only one other variable. The set 
+\begin_inset Formula $\overline{L}_K^{m}$
+\end_inset
+
+ represents the variable indexes 
+\begin_inset Formula $\{1,\dots,P\} \backslash {L}_K^{m}$
+\end_inset
+
+ for the method 
+\begin_inset Formula $m$
+\end_inset
+
+ which are not present in 
+\begin_inset Formula ${L}_K^{m}$
+\end_inset
+
+. When 
+\begin_inset Formula $d = 0$
+\end_inset
+
+, both solutions are equal, and the LASSO method was able to select the best subset among the available possibilities. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% % % Trocar o sigma da funÃ§Ã£o objetivo.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% % % recolocar no texto
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+As seen before, we have a best solution for each desired 
+\begin_inset Formula $K$
+\end_inset
+
+. The question that arises now is how to select the ideal number of variables to use. One way of achieving this is by using an information criteria to guide our decision. An information criteria summarizes two aspects. One of them refers to how well the model fits the in-sample observations. The other part penalizes the quantity of covariates used in the model. By penalizing how big our model is, we prevent overfitting from happening. So, in order for a covariate to be included in the model, it must supply enough goodness of fit. In 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "machado1993robust"
+
+\end_inset
+
+, it is presented a variation of the Schwarz criteria for M-estimators that includes quantile regression. The Schwarz Information Criteria (SIC), adapted to the quantile autoregression case, is presented below: 
+\begin_inset Formula \begin{align} 
+\begin{split}
+SIC(m) = n \log(\hat{\sigma}^*)+\frac{1}{2}K\log n,\label{eq:SIC}
+\end{split}					
+\end{align}
+\end_inset
+
+where 
+\begin_inset Formula $K$
+\end_inset
+
+ is the model's dimension. This procedure leads to a consistent model selection if the model is well specified.
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:comparison-lm-results"
+
+\end_inset
+
+ shows the results of these experiments for quantiles 
+\begin_inset Formula $\alpha \in \{0.05, 0.1, 0.5, 0.9, 0.95\}$
+\end_inset
+
+. The results point us that for small values of 
+\begin_inset Formula $K$
+\end_inset
+
+ the distance between coefficients is bigger and where we observe the biggest differences between the SIC values. In this experiment, the minimum SIC value for the MILP problem is usually found between 4 and 6 variables in the model.
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Box Frameless
+position "t"
+hor_pos "l"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "40line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+
+\begin_layout Plain Layout
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Box Frameless
+position "t"
+hor_pos "l"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+
+\begin_layout Plain Layout
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename Figuras/SIC005.pdf
+	width 100text%
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "b"
+hor_pos "l"
+has_inner_box 1
+inner_pos "b"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+
+\begin_layout Plain Layout
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename Figuras/SIC01.pdf
+	width 100text%
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "b"
+hor_pos "l"
+has_inner_box 1
+inner_pos "b"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+
+\begin_layout Plain Layout
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename Figuras/SIC05.pdf
+	width 100text%
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "l"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "40line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+
+\begin_layout Plain Layout
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Box Frameless
+position "b"
+hor_pos "l"
+has_inner_box 1
+inner_pos "b"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+
+\begin_layout Plain Layout
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename Figuras/SIC09.pdf
+	width 100text%
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "b"
+hor_pos "l"
+has_inner_box 1
+inner_pos "b"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+
+\begin_layout Plain Layout
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename Figuras/SIC095.pdf
+	width 100text%
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:npqar-cross"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+ 
+\series bold
+REVER: Comparison of SIC values between a solution with LASSO as a variable selector and the best subset selection with MILP
+\series default
+. The Information Criteria is displayed on the y-axis, while the number of variables included is shown on the x-axis. Both solutions of the MILP and the best LASSO for a given 
+\begin_inset Formula $K$
+\end_inset
+
+ are The bars represent the distance 
+\begin_inset Formula $d$
+\end_inset
+
+ as defined on problem (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:metricad0"
+
+\end_inset
+
+)-(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:metricad4"
+
+\end_inset
+
+). 
+\begin_inset Newline newline
+\end_inset
+
+ (*) When the distance is zero, it means that the same variables are selected from both methods for a given 
+\begin_inset Formula $K$
+\end_inset
+
+. Thus, in these cases we have the same SIC for both of them.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:comparison-lm-results"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

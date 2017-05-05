@@ -1,0 +1,14 @@
+- adicionar ruído nas observaçõs( + rand() * 0.0001) objetivo de não haver múltiplos valores com o mesmo x
+- colocar y_{t-1} ; ou y_t0 e y_t1; na primeira coluna o x, e na segunda o y
+- Preencher os seguintes valores:
+	- y_t0: o x
+	- y_t1: o y
+	- month
+	- day
+	- hour
+	- date
+	- y_t0jit: o x com ruído
+	- y_t1jit: o y com ruído
+- deletar ultima observação
+- ordenar em ordem do y_t0jit
+- tirar os valores zerados (ou não?)
