@@ -128,6 +128,7 @@ for (i in 1:length(arquivos.tabelas.lasso)) {
 
   # For each number of variable, finds the one with the best SIC for the post-LASSO
   keep.best.K.i <- rep(0, maxK)
+  k = 1
   for (k in 1:maxK) {
     i.k <- which(nvar == (k+1))
     if (length(i.k)==0) { # if there is no estimation with k values, puts NA
@@ -154,6 +155,7 @@ for (i in 1:length(arquivos.tabelas.lasso)) {
   
   distance <- rep(0, maxK)
   distance2 <- rep(0,maxK)
+  k = 5
   for(k in 1:maxK) {
     index.sol <- keep.best.K.i[k]
     if (is.na(index.sol)) {
@@ -164,20 +166,25 @@ for (i in 1:length(arquivos.tabelas.lasso)) {
       sel_lasso <- (abs(beta.lasso) > epsilon)[-1] # variables that keep which covariates are selecret
       sel_mip <- (abs(beta.mip) > epsilon)[-1]
       distance[k] <- 1/(2*k) * sum(abs(sel_lasso - sel_mip))
-
+      
+      L_mip = which(sel_mip)
+      L_lasso = which(sel_lasso)
       #### Chama código em Júlia para fazer a otimização
       julia_init()
       r2j(matriz_correlacao, "rho")
-      r2j(sel_lasso, "sel_lasso")
-      r2j(sel_mip, "sel_mip")
+      r2j(L_mip, "L_mip")
+      r2j(L_lasso, "L_lasso")
       # r2j(arquivo_procedimento, "arquivo_procedimento")
       # Código júlia
-      # julia_void_eval("print(sel_mip, sel_lasso)")
+      julia_void_eval("print(convert(Array{Int64,1},L_lasso))")
+      julia_void_eval("@show size(L_lasso)[1]")
+      
       julia_void_eval("using JuMP, Gurobi;\\
-                      @show  pwd()
-                      include(\"R/procedure_distancia.jl\");\\
-                      @show rho
-                      distancia, matriz_delta = procedure_distancia(sel_lasso, sel_mip, rho);")
+                      @show  pwd();\\
+                      include(\"R/procedure_distancia_R.jl\");\\
+                      @show rho;\\
+L_lasso = convert(Array{Int64,1},L_lasso); L_mip = convert(Array{Int64,1},L_mip);\\
+      distancia, matriz_delta = procedure_distancia(L_lasso, L_mip, rho);") #                
       saidas <- j2r("(distancia, matriz_delta)")              
       distance2[k] <- saidas[[1]]
       

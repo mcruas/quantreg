@@ -14,7 +14,7 @@ In this part, we investigate the usage of MILP to select which variables are inc
 This assumption is modeled with binary variables $z_{p\alpha}$, which indicates whether $\beta_{p\alpha}$ is included or not.
 The optimization problem that incorporates this idea is described below:
 \begin{eqnarray}
- \underset{\beta_{0\alpha},\beta_\alpha,z_{p \alpha} \varepsilon_{t \alpha}^{+},\varepsilon_{t \alpha}^{-}}{\text{min}} & \sum_{\alpha \in A} \sum_{t\in T}\left(\alpha\varepsilon_{t \alpha}^{+}+(1-\alpha)\varepsilon_{t\alpha}^{-}\right) \label{eq:mip0} \\
+ \underset{\beta_{0\alpha},\beta_\alpha,z_{p \alpha}, \varepsilon_{t \alpha}^{+},\varepsilon_{t \alpha}^{-}}{\text{min}} & \sum_{\alpha \in A} \sum_{t\in T}\left(\alpha\varepsilon_{t \alpha}^{+}+(1-\alpha)\varepsilon_{t\alpha}^{-}\right) \label{eq:mip0} \\
 \mbox{s.t } & \varepsilon_{t \alpha}^{+}-\varepsilon_{t \alpha}^{-}=y_{t}-\beta_{0 \alpha}-\sum_{p=1}^{P}\beta_{p \alpha}x_{t,p},& \qquad\forall t \in T ,\forall \alpha \in A, \label{eq:mip1}\\
 & \varepsilon_{t \alpha}^{+},\varepsilon_{t \alpha}^{-}\geq0,&\qquad\forall t \in T ,\forall \alpha \in A, \label{eq:mip2}\\
 & - M z_{p \alpha} \leq \beta_{p \alpha} \leq M z_{p \alpha},&\qquad \forall \alpha \in A, \forall p\in P, \label{eq:mip3}\\
@@ -48,9 +48,9 @@ Consider the optimization problem defined on (\ref{eq:mip0})-(\ref{eq:mip6}). Eq
 To address this issue, we propose to divide all $\alpha \in A$ into groups. The collection $G$ of all groups $g$ form a partition of $A$, and each $\alpha$ will belong to exactly one group $g$. 
 The subset of selected covariates must be the same for all $\alpha$ in the same group $g$. To model these properties as constraints, we use the following equations and inequalities, that take the place of inequality \ref{eq:mip3} on the optimization problem:
 \begin{eqnarray}
-&z_{p \alpha} := 2 - ( 1-z_{pg}) - I_{g\alpha}& \label{mipgrupzpa} \\
+&z_{p \alpha g} := 2 - ( 1-z_{pg}) - I_{g\alpha}& \label{mipgrupzpa} \\
 & \sum\limits_{g \in G} I_{g\alpha} = 1, & \forall \alpha \in A,\label{eq:mipgrupa} \\
-& -Mz_{p \alpha}  \leq  \beta_{p \alpha} \leq M z_{p \alpha}, & \forall p \in P, \quad \forall \alpha \in A, \quad \forall g \in G, \label{eq:mipgrupb} \\
+& -Mz_{p \alpha g}  \leq  \beta_{p \alpha g} \leq M z_{p \alpha g}, & \forall p \in P, \quad \forall \alpha \in A, \quad \forall g \in G, \label{eq:mipgrupb} \\
 & I_{g\alpha}, z_{pg} \in \{0,1\},& \forall p \in P, \quad \forall g \in G, 
 \end{eqnarray}
 where $G$ is a set of group index and $z_{pg}$ is a binary variable that equals 1 iff covariate $p$ is included on group $g$ and $I_{g\alpha}$ equals 1 iff probability $\alpha$ belongs to group $g$. 
@@ -60,12 +60,22 @@ This means that if covariate $p$ belongs to group $g$, this covariate is not amo
 Note that variable $z_{p \alpha}$ behaves differently that when we are not considering groups. This means that if probability $\alpha$ belongs to group $g$ but variable $p$ is not selected to be among the ones of group $g$, than $\beta_{p\alpha}$ is zero.
 Equation (\ref{mipgrupzpa}) defines $z_{p\alpha}$ to simplify the problem.
 
-%\todo[inline]{Colocar resultados dos experimentos MILP-Grupos vs. MILP depois de concluídos. Se resultados de grupos com rampa forem bons, incluír aqui mais uma seção.}
+\todo[inline]{Colocar resultados dos experimentos MILP-Grupos vs. MILP depois de concluídos. Se resultados de grupos com rampa forem bons, incluír aqui mais uma seção.}
 %
 %\subsubsection*{Defining groups for variables where each group consists of probabilities in sequence}
+%%
+%Each groups $g \in G$, as defined on the last section, may be any combination of probabilities $\alpha$, such that they don't be in sequence. Figure \ref{fig:heatmap-exemplo-grupos} shows an example of 
+%
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=0.4\linewidth]{Figuras/betas-mip/heatmap-exemplo-grupos}
+%	\caption{}
+%	\label{fig:heatmap-exemplo-grupos}
+%\end{figure}
+%
 %
 %\begin{eqnarray}
-%\underset{\beta_{0\alpha},\beta_\alpha,z_{p \alpha} \varepsilon_{t \alpha}^{+},\varepsilon_{t \alpha}^{-}}{\text{min}} & \sum_{\alpha \in A} \sum_{t\in T}\left(\alpha\varepsilon_{t \alpha}^{+}+(1-\alpha)\varepsilon_{t\alpha}^{-}\right) \label{eq:mipgr0} \\
+%\underset{\beta_{0\alpha},\beta_\alpha,z_{p \alpha}, \phi_{p \alpha}, \varepsilon_{t \alpha}^{+},\varepsilon_{t \alpha}^{-}}{\text{min}} & \sum_{\alpha \in A} \sum_{t\in T}\left(\alpha\varepsilon_{t \alpha}^{+}+(1-\alpha)\varepsilon_{t\alpha}^{-}\right) \label{eq:mipgr0} \\
 %\mbox{s.t } & \varepsilon_{t \alpha}^{+}-\varepsilon_{t \alpha}^{-}=y_{t}-\beta_{0 \alpha}-\sum_{p=1}^{P}\beta_{p \alpha}x_{t,p},& \qquad\forall t \in T ,\forall \alpha \in A, \label{eq:mipgr1}\\
 %& \varepsilon_{t \alpha}^{+},\varepsilon_{t \alpha}^{-}\geq0,&\qquad\forall t \in T ,\forall \alpha \in A, \label{eq:mipgr2}\\
 %& - M z_{p \alpha} \leq \beta_{p \alpha} \leq M z_{p \alpha},&\qquad \forall \alpha \in A, \forall p\in\{1,\dots,P\}, \label{eq:mipgr3}\\
@@ -128,10 +138,10 @@ For instance, the penalty isn't applied to the linear coefficient $\beta_{0\alph
 Even though we have coefficients that are estimated by this method, we don't use them directly. In fact, the LASSO coefficients are biased, so it is employed only as a variable selector. As so, the nonzero coefficient covariates will be the input of a unrestricted quantile regression problem, as in the linear programming problem (\ref{eq:linear-opt-1})-(\ref{eq:linear-opt-ult}). 
 The set of selected indexes are given by
 \begin{equation*}
-L_\lambda = \{ p \; | \; p \in \{ 1,\dots,P \}, \; |\beta^{*LASSO}_{\lambda,p}| \neq 0  \}.
+L_\lambda = \{ p \in \{ 1,\dots,P \} | \; |\beta^{*LASSO}_{\lambda,p}| \neq 0  \}.
 \end{equation*}
-Hence, we have that
-$$\beta^{*LASSO}_{\lambda,p} = 0 \iff \beta^{*}_{\lambda,p} = 0.$$
+Hence, we have that, for each $p \in \{ 1,\dots,P \}$,
+$$\beta^{*LASSO}_{\lambda,p} = 0 \Longrightarrow \beta^{*}_{\lambda,p} = 0.$$
 The post-lasso coefficients $\beta_\lambda^*$ are the solution from the optimization problem given below:
 \begin{equation}
 \begin{aligned} (obj_{\lambda}^{*},\beta_{\lambda}^{*})\overset{(obj,var)}{\longleftarrow} \min_{\beta_0,\beta,\varepsilon_{t}^{+},\varepsilon_{t}^{-}} & \sum_{t \in T}\left(\alpha\varepsilon_{t}^{+}+(1-\alpha)\varepsilon_{t}^{-}\right) \\
@@ -144,7 +154,7 @@ The variable $obj_{\lambda}^{*}$ receives the value of the objective function on
 In summary, the optimization in equation \ref{eq:l1-qar-optim} acts as a variable selection for the subsequent estimation, which is normally called the post-LASSO estimation \cite{belloni2009least}.
 
 
-For the same quantiles values $\alpha$ we experimented on section \ref{sec:best-subset-mip} ($\alpha \in \{0.05, 0.1, 0.5, 0.9, 0.95\}$), we estimate the post-LASSO (from now on, we call it just LASSO, for simplicity). Figure \ref{fig:lasso-results} shows the path of variables for each $\alpha$-quantile. On the x-axis, we have the penalty $\lambda$ in a log scale. On the y-axis we have the size of coefficients. One can see how increasing $\lambda$ leads to a shrinking on the size of coefficients, up to a point where all coefficients are equal to 0.
+For the same quantile values, $\alpha$, we experimented on section \ref{sec:best-subset-mip} ($\alpha \in \{0.05, 0.1, 0.5, 0.9, 0.95\}$), we estimate the post-LASSO (from now on, we call it just LASSO, for simplicity). Figure \ref{fig:lasso-results} shows the path of variables for each $\alpha$-quantile. On the x-axis, we have the penalty $\lambda$ in a log scale. On the y-axis we have the size of coefficients. One can see how increasing $\lambda$ leads to a shrinking on the size of coefficients, up to a point where all coefficients are equal to 0.
 \begin{figure}
 	\centering
 	\begin{minipage}[t]{0.4\linewidth}
@@ -193,14 +203,12 @@ Thus, we can compare the best LASSO fit where exactly $K$ variables are selected
 As the MILP solution is the exact solution for the problem, while the LASSO solution is an approximation, we use the former as a \textit{benchmarking} for the quality of the latter solution. To help us view the difference of results between both methods, we define a similarity metric $d$ between the subset of coefficients chosen by each one of them. It is desirable that the LASSO solution be as related with the MILP solution as possible.
 The similarity is calculated as the solution of the following optimization problem
 \begin{eqnarray}
-d(\beta^*_{MILP(K)}, \beta^*_{\lambda^*_K}) =	1 - \max_{0\leq\delta_{ij}\leq1} & \sum\sum_{j} \delta_{ij} |\rho_{ij}| \label{eq:metricad0} \\
-\text{s.t.} & \sum_{j}\delta_{ij}=1 & \forall i\in L_{K}^{MILP},\\
-& \sum_{i}\delta_{ij}=1 & \forall j\in L_{K}^{LASSO},\\
-& \delta_{i,j} = 0, & \forall i \in \overline{L}_{K}^{MILP}, \forall j \in \{1,\dots,P\},\\
-& \delta_{i,j} = 0, & \forall j \in \overline{L}_{K}^{LASSO}, \forall i \in \{1,\dots,P\},\label{eq:metricad4}
+d(\beta^*_{MILP(K)}, \beta^*_{\lambda^*_K}) = \min_{0\leq\delta_{ij}\leq1} & \sum\limits_{i,j = 1}^K  \delta_{ij} (1-|\rho_{ij}|) \label{eq:metricad0} \\
+\text{s.t.} & \sum\limits_{j =1}^K\delta_{ij}=1, &  i=1,\dots,K,\\
+& \sum\limits_{i =1}^K\delta_{ij}=1, & j=1,\dots,K,
 \end{eqnarray}
-where $\rho_{ij}$ is the correlation between covariates $x_i$ and $x_j$, while $\delta_{ij} = 1$ means that the selected variable $i$ from the set $L_k^{MILP}$ is associated with variable $j$ from set $L_k^{LASSO}$, and the constraints guarantee that each variable is related with only one other variable. The set $\overline{L}_K^{m}$ represents the variable indexes $\{1,\dots,P\} \backslash {L}_K^{m}$ for method $m$ which are not present in ${L}_K^{m}$.
-When $d = 0$, both solutions are equal, and the LASSO method was able to select the best subset among the available possibilities.
+where $\rho_{ij}$ is the correlation between the $i$-th and $j$-th independent variables in sets $L_k^{MILP}$ and $L_k^{LASSO}$, respectively. The optimal value for the decision variables of this problem provides us with an assignment between selected covariates from both methods, namely, MILP and LASSO, that minimizes the overall ``index of uncorrelation" between selected covariates. If $\delta^*_{ij} = 1$, the $i$-th selected variable in  $L_k^{MILP}$ is associated with the $j$-th variable  in $L_k^{LASSO}$. For instance, if $d(\beta^*_{MILP(K)}, \beta^*_{\lambda^*_K}) = 0$, it means that there are $K$ perfectly correlated pair of variables, despite not being the same.
+
 % % % Trocar o sigma da função objetivo.
 
 

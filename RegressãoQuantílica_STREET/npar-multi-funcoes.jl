@@ -26,15 +26,15 @@
 using JuMP
 
 
-# function Plotar_quantis(x,y,thetas, )
+# function Plotar_quantis(x,y,thetas, )tmux
 type Registros
+  beta0::Array{Float64,2}
+  betas::Array{Float64,2}
   tempo::Float64
   Status::String
   objetivo::Float64
-  grupos::Float64
-  K::Float64
-  betas::Array{Float64,2}
-  beta0::Array{Float64,1}
+  grupos::String
+  K::Int64
 end
 
 
@@ -313,7 +313,7 @@ function rq_par(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_cross = true
     return betas0opt', betasopt
 end
 
-
+### Solves quantile regression with mixed integer programming
 function rq_par_mip(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_cross = true, max_K = NaN, TimeLimit = NaN, MIPGap = NaN)
 
     Alf = 1:length(Alphas)
@@ -358,6 +358,8 @@ function rq_par_mip(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_cross = 
   	tmp_betas0opt = getvalue(β0)
     tmp_betasopt = getvalue(β)
     objectiveValue = getobjectivevalue(m)
+    solvetime = getsolvetime(m)
+
     ## Transform both variables into an array
     betasopt = zeros(size(X)[2], length(Alphas))
     betas0opt = zeros(length(Alphas))
@@ -369,14 +371,14 @@ function rq_par_mip(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_cross = 
     end
 
 
-    return betas0opt', betasopt, objectiveValue, status
+    return betas0opt', betasopt, objectiveValue, status, solvetime
 end
 
 
 
 # max_K = 3; TimeLimit = 60; Grupos = 3; MIPGap = 0.0; non_cross = true
 
-
+### Solves quantile regression with mixed integer programming by grouping variables and limiting their number
 function rq_par_mip_grupos(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_cross = true, max_K = NaN, TimeLimit = NaN, MIPGap = NaN, Grupos = NaN)
 
     Alf = 1:length(Alphas)
@@ -435,6 +437,8 @@ function rq_par_mip_grupos(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_c
   	tmp_betas0opt = getvalue(β0)
     tmp_betasopt = getvalue(β)
     objectiveValue = getobjectivevalue(m)
+    solvetime = getsolvetime(m)
+
     # objetivo = getobjective()
     ## Transform both variables into an array
     betasopt = zeros(size(X)[2], length(Alphas))
@@ -447,7 +451,7 @@ function rq_par_mip_grupos(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_c
     end
 
 
-    return betas0opt', betasopt, objectiveValue, status
+    return betas0opt', betasopt, objectiveValue, status, solvetime
 end
 
 function solution2matrix(x)
@@ -471,6 +475,7 @@ type NodeData
          beta0::Vector{Float64}
          bestbound::Float64
          obj::Float64
+         
 end
 
 
@@ -479,7 +484,7 @@ end
 # y=X_lags[:,1]; X=X_lags[:, 2:end]; non_cross = true; max_K = max_K; TimeLimit = 200; MIPGap = 0.00; Grupos = Grupos
 
 
-
+### Solves quantile regression with mixed integer programming by limiting the number of changings among groups
 function rq_par_mip_grupos_rampa(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_cross = true, max_K = NaN, TimeLimit = NaN, MIPGap = NaN, Grupos = NaN, Save = NaN)
 
     Alf = 1:length(Alphas)
@@ -546,31 +551,35 @@ function rq_par_mip_grupos_rampa(y::Array{Float64}, X::Array{Float64,2}, Alphas;
 
 
 
-    global solutionvalues = NodeData[]
+    # global solutionvalues = NodeData[]
 
-    function infocallback(cb)
-        # println(a - time())
-        i = find(check .== 0)[1]
-        # println ("Tempo $(time()-a) e $(times[i])")
-        if time()-a > times[i]
-            obj       = MathProgBase.cbgetobj(cb)
-            bestbound = MathProgBase.cbgetbestbound(cb)
-            beta = JuMP.getvalue(β).innerArray
-            beta0 = JuMP.getvalue(β0).innerArray
-              JuMP.getobjectivevalue
-            # push!(bbdata2, NodeData(obj,bestbound))
-            # push!(solutionvalues, NodeData(time()-a,rand(5,5),rand(5),bestbound, obj))
-            push!(solutionvalues, NodeData(time()-a,beta,beta0,bestbound, obj))
-            check[i] = 1
-        end
-    end
+    # function infocallback(cb)
+    #     # println(a - time())
+    #     i = find(check .== 0)[1]
+    #     # println ("Tempo $(time()-a) e $(times[i])")
+    #     if time()-a > times[i]
+    #         #  obj       = JuMP.getobjectivevalue(cb)
+    #         bestbound = MathProgBase.cbgetbestbound(cb)
+    #         beta = JuMP.getvalue(β).innerArray
+    #         beta0 = JuMP.getvalue(β0).innerArray
+    #         # print(bestbound)
+    #         mipsol = MathProgBase.cbgetmipsolution(cb)
+    #         # print(JuMP.getobjectivevalue)
+    #         # println("Blaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaau")
+    #         # push!(bbdata2, NodeData(obj,bestbound))
+    #         # push!(solutionvalues, NodeData(time()-a,rand(5,5),rand(5),bestbound, obj))
+    #         push!(solutionvalues, NodeData(time()-a,beta,beta0,bestbound, mipsol))
+    #         # push!(solutionvalues, NodeData(time()-a,beta,beta0,bestbound, obj))
+    #         check[i] = 1
+    #     end
+    # end
 
-    addinfocallback(m, infocallback, when = :Intermediate)
+    # addinfocallback(m, infocallback, when = :MIPSol)
 
     global a = time()
   	@time status = solve(m)
 
-  	# tmp_betas0opt = getvalue(β0)
+  	tmp_betas0opt = getvalue(β0)
     tmp_betasopt = getvalue(β)
     objectiveValue = getobjectivevalue(m)
     solvetime = getsolvetime(m)
@@ -586,7 +595,7 @@ function rq_par_mip_grupos_rampa(y::Array{Float64}, X::Array{Float64,2}, Alphas;
     end
 
 
-    return betas0opt', betasopt, objectiveValue, status, solutionvalues
+    return betas0opt', betasopt, objectiveValue, status, solvetime
 
 end
 

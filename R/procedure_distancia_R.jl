@@ -26,14 +26,19 @@ function procedure_distancia(L_lasso, L_mip, rho)
 end
 
 
+# P = size(sel_mip)[1]
 
-# rho = readcsv("rho.csv")
-# L_lasso  = [1,5,6,11,12]
-# L_mip = [1,4,8,11,12]
+# L_mip = find(sel_mip)
+# L_lasso = find(sel_lasso)
+# L_nao_mip = find(!sel_mip)
+# L_nao_lasso = find(!sel_lasso)
+
+# K = size(L_mip)[1]
+
 # m = Model(solver = GurobiSolver())
 # @variable(m, 0 <= delta[1:P, 1:P] <= 1)
 
-# @objective(m, Max, (1/P)* sum( delta[i,j] * abs(rho[i,j])   for i=1:P, j = 1:P  ) )
+# @objective(m, Max, (1/K)* sum( delta[i,j] * abs(rho[i,j])   for i=1:P, j = 1:P  ) )
 
 # @constraint(m, arestai[i = L_mip], sum(delta[i,j] for j = L_lasso) == 1 )
 # @constraint(m, arestaj[j = L_lasso], sum(delta[i,j] for i = L_mip) == 1 )
@@ -41,3 +46,8 @@ end
 # @constraint(m, zerarj[j = L_nao_lasso, i = 1:P], delta[i,j] == 0 )
 # # print(m)
 # status = solve(m)
+
+# matriz_delta = getvalue(delta)
+# distancia = 1- getobjectivevalue(m)
+# return distancia, matriz_delta
+# end

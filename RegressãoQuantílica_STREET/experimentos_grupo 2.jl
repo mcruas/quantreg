@@ -1,11 +1,7 @@
-# for max_K in [4,5,2,6,1]
-#   include(homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/RegressãoQuantílica_STREET/experimentos_grupo.jl")
-# end
-# include(homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/RegressãoQuantílica_STREET/experimentos_grupo.jl")
+########### Script para ler arquivos .JLD e refazer gráficos e relatórios. ###########
 
-#######################################################
-# Este script gera gráficos para o relatório, mostrando como uma variação
-# em x_t afeta o quantil do período seguinte.
+
+#  include(homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/RegressãoQuantílica_STREET/experimentos_grupo 2.jl")
 
 ################# Gráficos linear #####################
 vetor_x = [-1 0 1 2 3 10] ; n = 100
@@ -14,7 +10,7 @@ vetor_x = [-1 0 1 2 3 10] ; n = 100
 limx = 55; limy = 55; # para icaraizinho
 # limx = NaN; limy = NaN # quando não se sabe
 
-using JuMP, DataFrames, Plots, Interpolations, LaTeXStrings, Dierckx, JLD, RCall #, Distributions
+using Plots, Interpolations, LaTeXStrings, Dierckx, JLD, RCall #, Distributions
 
 
 
@@ -24,95 +20,79 @@ pasta_trabalho = homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/"
 # max_K = 4
 cd(pasta_trabalho)
 
-#####################################################
-############# Carregar dados em R ########################
-pwd();
 include(pwd()*"/RegressãoQuantílica_STREET/funcoes_npqar.jl");
-# include(pwd()*"/RegressãoQuantílica_STREET/par-multi.jl");
 include(pwd()*"/RegressãoQuantílica_STREET/npar-multi-funcoes.jl");
-n = 100;
-# @rput n pasta_trabalho;
-# R"
-# serie = arima.sim(n = n, list(ar = c(0.9,-0.2), ma = NULL),
-#           sd = sqrt(0.1796))
-# setwd(pasta_trabalho)
-# source('R/biblioteca-funcoes-npquantile.R') # Carrega dados por script do R
-# # source('R/biblioteca-funcoes-npquantile.R')
-# # ipak(c('readxl', 'dplyr', 'lattice'))
-# # dados <- read_excel(path = 'Dados Climaticos/Solar-tubarao/tubarao solar.xlsx')[,1:6]
-# # dados_filtrados <- dados %>% select(yt0, yt1, hora, mes) %>% as.matrix
-# # boxplot(yt0 ~ hora, data = dados.filtrados, col = 2)
-# 
-#
-# @rget serie dados_filtrados
-# serie = dados_filtrados[:,1].values;
-################################################################
-
-############# Carregar dados ###################################
-
-# para icaraizinho
-serie = readcsv("Dados Climaticos/icaraizinho.csv"); nomeserie = "icaraizinho"; x_new = 30
-# serie = readcsv("Dados Climaticos/Enas/enas sudeste 1931-2014.csv"); nomeserie = "enasudeste"; serie = serie ./ 100; x_new = 500 # ENA Sudeste
-# vetor_X_tau = collect(200:50:700) # para ENA sudeste
-
-
-# serie = readcsv("Dados Climaticos/Solar-tabocas/tabocas.csv"); nomeserie = "solartabocas"; x_new = 0.4 # Para Tabocas
-
-
-n_tmp = length(serie); # keeps size of series before cutting them
-### Inicialização
-
-# Does adaptation for a AR(2) model
-
-# X = [serie[2:n_tmp-1] serie[1:n_tmp-2]]; # AR(2)
-
-# X = Array{Float64,2} # AR(1)
-tmp = serie[2:n_tmp-1];   # this is done so that X has two dimensions, instead of 1.
-X =zeros(Float64,length(tmp),1);
-X[:,1] = tmp;
-x = X[:,1]
-
-y = serie[3:n_tmp];
-n = length(y);55
-T = 1:n;
-
-# X_lags = lagmatrix(serie,0:2)
-# Alphas = collect(0.005:0.005:0.995);
-
-
-# Y = [ y * ones(1,n_cenarios);
-#       zeros(max_sim,n_cenarios)];
-
-limx = isnan(limx) ? maximum(serie) : limx
-limy = isnan(limy) ? maximum(serie) : limy
-
-# plot(serie)
 
 
 ################################################################################################
 ################################################################################################
 # Experimentos com o seleção inteira
+serie = readcsv("Dados Climaticos/icaraizinho.csv"); nomeserie = "icaraizinho"; x_new = 30
+
 X_lags = lagmatrix(serie,0:12)
-Alphas = [0.05,0.1,0.25,0.5,0.75,0.9,0.95]
+# Alphas = [0.05,0.1,0.25,0.5,0.75,0.9,0.95]
 Alphas = vcat(collect(0.005:0.005:0.05), collect(0.1:0.05:0.9), collect(0.95:0.005:0.995))
 TimeLimit = 200
 vetor_TimeLimit = [200, 600, 1800]
 vetor_Grupos = [1,2,3,10]
 
-vetor_max_K = [1,5,6] 
+vetor_max_K = 1:6
 # vetor_TimeLimit = [200, 600, 1800, 5400]
 
 
 # vetor_Grupos = [1,2,3,10]
-max_K = 5
+max_K = 4
 Grupos = 2
 # gr()
 Guarda_Registros = Registros[];
 include(pwd()*"/RegressãoQuantílica_STREET/npar-multi-funcoes.jl");
 
 for max_K in vetor_max_K
-    results = zeros(length(vetor_TimeLimit)*(length(vetor_Grupos)*2+1), 3); i = 1 # i keeps the row to write on results
     pasta_escrita = "RegressãoQuantílica_STREET/BetasMIP/K$max_K"
+
+    Auxiliar = load("$pasta_escrita/Guarda_Registros.jld") 
+    Guarda_Registros = Auxiliar["Guarda_Registros"]
+    
+    for i in 1:length(Guarda_Registros)
+        println("$i:  $(Guarda_Registros[i].tempo)  $(Guarda_Registros[i].grupos)   $(Guarda_Registros[i].K)")
+        # For the case where K is different than the desired K, skips iteration.
+        if Guarda_Registros[i].K != max_K
+          continue
+        end
+        println("PASSOU!")
+        betas = Guarda_Registros[i].betas
+        beta0 = Guarda_Registros[i].beta0
+        status = Guarda_Registros[i].Status
+        grupos = Guarda_Registros[i].grupos
+        obj = Guarda_Registros[i].objetivo
+        TimeLimit = Guarda_Registros[i].tempo
+        # Limpa valores quase zero, restando apenas os K maiores
+        for coluna in 1:size(betas)[2]
+              betas[sortperm(abs(betas[:,coluna]), rev = true)[max_K+1:end], coluna] = 0
+        end
+        betas_diff = (betas .!= 0)+0
+        titulo = "$grupos $(round(TimeLimit)) - $obj"
+        nome_arquivo = "$pasta_escrita/Heatmap - $(round(TimeLimit)) - $grupos - $obj.png"
+        # heatmap(betas .!= 0, title = titulo, xaxis = "Índice Alpha", yaxis = "Lag", legend = false)
+        betas_diff = (betas .!= 0)+0
+        R"
+        tmp_betas = $betas_diff
+        colnames(tmp_betas) = $Alphas
+        rownames(tmp_betas) = 1:12
+        png($nome_arquivo)
+        heatmap(tmp_betas, Rowv=NA, Colv=NA, col = c(8,4) , scale='column', margins=c(5,10), xlab = 'Probability', ylab = 'Lags', main = $titulo)
+        dev.off()
+        "
+
+
+    end
+    # 
+    # 
+
+end
+
+
+
 
       ## MIP convencional       
     for TimeLimit in vetor_TimeLimit  
@@ -128,7 +108,7 @@ for max_K in vetor_max_K
         heatmap(betas .!= 0, title = titulo, xaxis = "Índice Alpha", yaxis = "Lag", legend = false)
         betas_diff = (betas .!= 0)+0
         R"
-        tmp_betas = $betas_diff
+        tmp_betas = $
         colnames(tmp_betas) = $Alphas
         rownames(tmp_betas) = 1:12
         png($nome_arquivo)
