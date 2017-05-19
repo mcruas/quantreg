@@ -13,7 +13,7 @@ function procedure_distancia(L_lasso, L_mip, rho)
     m = Model(solver = GurobiSolver())
     @variable(m, 0 <= delta[1:K, 1:K] <= 1)
 
-    @objective(m, Min, sum( delta[i,j] * (1 - abs(rho[L_mip[i],L_lasso[j]]))   for i=1:K, j = 1:K  ) )
+    @objective(m, Min, (1/K) * sum( delta[i,j] * (1 - abs(rho[L_mip[i],L_lasso[j]]))   for i=1:K, j = 1:K  ) )
 
     @constraint(m, arestai[i = 1:K], sum(delta[i,j] for j = 1:K) == 1 )
     @constraint(m, arestaj[j = 1:K], sum(delta[i,j] for i = 1:K) == 1 )

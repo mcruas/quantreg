@@ -1,16 +1,86 @@
 ---
-title: "Untitled"
-author: "Ruas"
+title: "Conditional Quantile Regression Article Proposal"
+author: "Marcelo Ruas"
 date: "May 2, 2017"
-output: beamer_presentation
+output: 
+  beamer_presentation: 
+    colortheme: beaver
+    theme: Montpellier
 ---
 
-## Mixed Integer Linear Programming Models
-
-- We have four ways of 
 
 
-## One model for each $\alpha$-quantile
+## Overview
+
+Let a time series be given by
+$$y_t = A(L)y_t + \beta x_t + \varepsilon_t,$$
+where the distribution of $\varepsilon_t$ is unknown. 
+(...)
+
+# Nonparametric model
+
+## Nonparametric model - Formulation
+
+\tiny
+\begin{eqnarray}
+\min_{q_{\alpha t},\delta^+_{t}, \delta_t^-, \xi_t} & \sum_{\alpha \in A} \sum_{t \in T'}\left(\alpha\delta_{t \alpha }^{+}+(1-\alpha)\delta_{t \alpha }^{-}\right) & \\
+& \qquad \qquad \qquad \qquad \qquad + \lambda_1\sum_{t \in T'}\gamma_{t \alpha } + \lambda_2\sum_{t \in T'}\xi_{t \alpha } & \nonumber \\
+s.t. & \delta_{t}^{+}-\delta_{t \alpha }^{-}=y_{t}-q_{t \alpha }, & \qquad\forall t \in T',\forall \alpha \in A,\\
+   & D^{1}_{t \alpha }=\frac{q_{\alpha t+1}-q_{\alpha t}}{x_{t+1}-x_{t}},
+    & \qquad\forall t \in T',\forall \alpha \in A,\\   
+ & D^{2}_{t \alpha }=\frac{\left(\frac{q_{\alpha t+1}-q_{\alpha t}}{x_{t+1}-x_{t}}\right)-\left(\frac{q_{\alpha t}-q_{\alpha t-1}}{x_{t}-x_{t-1}}\right)}{x_{t+1}-2x_{t} + x_{t-1}}.
+  & \qquad\forall t \in T',\forall \alpha \in A,\\
+ & \gamma_{t \alpha}\geq D^1_{t \alpha }, & \qquad\forall t \in T',\forall \alpha \in A,\\
+  & \gamma_{t \alpha}\geq-D^1_{t \alpha}, & \qquad\forall t \in T',\forall \alpha \in A,\\
+  & \xi_{t \alpha}\geq D^2_{t \alpha }, & \qquad\forall t \in T',\forall \alpha \in A,\\
+ & \xi_{t \alpha}\geq-D^2_{t \alpha}, & \qquad\forall t \in T',\forall \alpha \in A,\\
+ & \delta_{t \alpha}^{+},\delta_{t \alpha}^{-},\gamma_{t \alpha}, \xi_{t \alpha}\geq0, & \qquad\forall t \in T',\forall \alpha \in A,\\
+  & q_{t \alpha} \leq q_{t \alpha'}, & \qquad \forall t \in T', \forall (\alpha, \alpha') \in A \times A, \alpha < \alpha',\nonumber \\  
+  \end{eqnarray}
+
+## Nonparametric vs. Linear Model
+
+- The nonparametric approach is more flexible to capture heteroscedasticity.
+
+\begin{figure}
+  \centering
+  \begin{minipage}[t]{\linewidth}
+    \centering
+    \begin{minipage}[t]{0.45\linewidth}
+      \centering     \includegraphics[width=\textwidth]{../Figuras/regressao-quantilica/icaraizinho-quantile-linear}
+    \end{minipage}
+    \begin{minipage}[t]{0.45\linewidth}
+      \centering     \includegraphics[width=\textwidth]{../Figuras/regressao-quantilica/icaraizinho-quantile-nonpar-lambda30}
+    \end{minipage}
+  \end{minipage}
+  \caption{Estimated quantile functions, for different values of $y_{t-1}$. On the left using a linear model and using a nonparametric approach on the right.}
+  \label{fig:quantiles-vs-xt}
+\end{figure}
+
+
+## Nonparametric vs. Linear Model
+
+- This flexibility might lead to overfitting, if we don't select a proper penalty, as shown below:
+\begin{figure}
+			\centering     \includegraphics[width=0.6 \textwidth]{../Figuras/regressao-quantilica/icaraizinho-crossing-01}
+	\caption{Example of a overfitted quantile function}
+	\label{fig:convergence}
+\end{figure}
+
+
+# Linear Models
+
+
+## Formulation
+
+\tiny
+\begin{eqnarray}
+\min_{\beta_{0\alpha},\beta_\alpha,\varepsilon_{t\alpha}^{+}, \varepsilon_{t\alpha}^{-}} &  \sum_{\alpha \in A} \sum_{t \in T}\left(\alpha \varepsilon_{t \alpha}^{+}+(1-\alpha)\varepsilon_{t \alpha}^{-}\right) & \label{eq:linear-opt-1} \\
+\mbox{s.t. } & \varepsilon_{t \alpha}^{+}-\varepsilon_{t \alpha}^{-}=y_{t} - \beta_{0\alpha} - \beta_{\alpha}^T x_{t}, & \qquad\forall t \in T,\forall \alpha \in A,\\
+& \varepsilon_{t\alpha}^+,\varepsilon_{t\alpha}^- \geq 0, & \qquad\forall t \in T,\forall \alpha \in A,\\ \label{eq:linear-opt-ult}
+& \beta_{0\alpha} + \beta_{\alpha}^T x_{t} \leq \beta_{0\alpha'} + \beta_{\alpha'}^T x_{t}, & \qquad \forall t \in T, \forall (\alpha, \alpha') \in A \times A,  \alpha < \alpha', \nonumber\\
+\end{eqnarray}
+
 
 ## One model for each $\alpha$-quantile - Resume
 
@@ -58,6 +128,24 @@ This assumption is modeled with binary variables $z_{p\alpha}$, which indicates 
 
 
 
+## Results
+- We start to notice, from $K=2$, that by letting 
+
+\begin{figure}
+	\centering
+	\begin{minipage}[t]{\linewidth}
+		\centering
+		\begin{minipage}[t]{0.45\linewidth}
+			\centering     \includegraphics[width=\textwidth]{Imagens/Heatmap-K2-1.png}
+		\end{minipage}
+		\begin{minipage}[t]{0.45\linewidth}
+			\centering     \includegraphics[width=\textwidth]{Imagens/Heatmap-K2-2.png}
+		\end{minipage}
+	\end{minipage}
+	\label{fig:scenario}
+\end{figure}
+
+
 ## Defining groups by the introduction of switching variable - Formulation
 \tiny
 \begin{eqnarray}
@@ -90,34 +178,18 @@ where $A' = A\setminus \{|A|\}$
 
 ## Results
 
-- As there are much less possibilities when $K=1$, every method gets pretty fast to the optimum result. Selecting the $12^{TH}$ lag was the best choice.
 
-\tiny
- \begin{figure}[t]
-	\centering
-  \includegraphics[height=0.7\textheight]{Imagens/Heatmap-K1.png}
-	\label{fig:scenario}
-\end{figure}
 
 
 ## Results
 
-- When 
+<!-- When $morenodowhatsapp$ -->
 
-## Results
-- We start to notice, from $K=2$, that by letting 
+<!-- ![alt text](../Figuras/Solar-exemplos/Example.jpg) -->
 
-\begin{figure}
-	\centering
-	\begin{minipage}[t]{\linewidth}
-		\centering
-		\begin{minipage}[t]{0.45\linewidth}
-			\centering     \includegraphics[width=\textwidth]{Imagens/Heatmap-K2-1.png}
-		\end{minipage}
-		\begin{minipage}[t]{0.45\linewidth}
-			\centering     \includegraphics[width=\textwidth]{Imagens/Heatmap-K2-2.png}
-		\end{minipage}
-	\end{minipage}
-	\label{fig:scenario}
-\end{figure}
+<!-- ``` -->
+<!-- while morenodowhatsapp and not tuira then -->
+<!--   flag intercambio <- true -->
+<!-- end -->
+<!-- ``` -->
 

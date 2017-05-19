@@ -128,7 +128,6 @@ for (i in 1:length(arquivos.tabelas.lasso)) {
 
   # For each number of variable, finds the one with the best SIC for the post-LASSO
   keep.best.K.i <- rep(0, maxK)
-  k = 1
   for (k in 1:maxK) {
     i.k <- which(nvar == (k+1))
     if (length(i.k)==0) { # if there is no estimation with k values, puts NA
@@ -155,7 +154,7 @@ for (i in 1:length(arquivos.tabelas.lasso)) {
   
   distance <- rep(0, maxK)
   distance2 <- rep(0,maxK)
-  k = 5
+  k = 3
   for(k in 1:maxK) {
     index.sol <- keep.best.K.i[k]
     if (is.na(index.sol)) {
@@ -183,8 +182,8 @@ for (i in 1:length(arquivos.tabelas.lasso)) {
                       @show  pwd();\\
                       include(\"R/procedure_distancia_R.jl\");\\
                       @show rho;\\
-L_lasso = convert(Array{Int64,1},L_lasso); L_mip = convert(Array{Int64,1},L_mip);\\
-      distancia, matriz_delta = procedure_distancia(L_lasso, L_mip, rho);") #                
+                      L_lasso = convert(Array{Int64,1},L_lasso); L_mip = convert(Array{Int64,1},L_mip);\\
+                      distancia, matriz_delta = procedure_distancia(L_lasso, L_mip, rho);") #                
       saidas <- j2r("(distancia, matriz_delta)")              
       distance2[k] <- saidas[[1]]
       
