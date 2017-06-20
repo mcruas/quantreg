@@ -95,7 +95,7 @@ limy = isnan(limy) ? maximum(serie) : limy
 X_lags = lagmatrix(serie,0:12)
 Alphas = [0.05,0.1,0.25,0.5,0.75,0.9,0.95]
 Alphas = vcat(collect(0.005:0.005:0.05), collect(0.1:0.05:0.9), collect(0.95:0.005:0.995))
-TimeLimit = 200
+TimeLimit = 600
 vetor_TimeLimit = [200, 600, 1800]
 vetor_Grupos = [1,2,3,10]
 
@@ -104,8 +104,8 @@ vetor_max_K = [1,5,6]
 
 
 # vetor_Grupos = [1,2,3,10]
-max_K = 5
-Grupos = 2
+max_K = 2
+Grupos = 37
 # gr()
 Guarda_Registros = Registros[];
 include(pwd()*"/RegressãoQuantílica_STREET/npar-multi-funcoes.jl");

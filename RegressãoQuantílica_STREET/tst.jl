@@ -105,3 +105,6 @@ for alf in 1:length(Alphas)
 end
 unicodeplots()
 plot(vetor_lambdas,  keep_betas[18]')
+
+R"x = rnorm(1999)
+  hist(x)"

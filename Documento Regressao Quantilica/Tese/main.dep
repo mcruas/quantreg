@@ -1,0 +1,119 @@
+\RequireVersions{
+  *{application}{TeX}     {1990/03/25 v3.x}
+  *{format} {LaTeX2e}     {2017/01/01 v2.e}
+  *{package}{snapshot}    {2002/03/05 v1.14}
+  *{class}  {scrartcl}    {2016/06/14 v3.21}
+  *{package}{scrkbase}    {2016/06/14 v3.21}
+  *{package}{scrbase}     {2016/06/14 v3.21}
+  *{package}{keyval}      {2014/10/28 v1.15}
+  *{package}{scrlfile}    {2016/06/14 v3.21}
+  *{package}{tocbasic}    {2016/06/14 v3.21}
+  *{file}   {scrsize11pt.clo}{2016/06/14 v3.21}
+  *{package}{typearea}    {2016/06/14 v3.21}
+  *{package}{graphicx}    {2014/10/28 v1.0g}
+  *{package}{graphics}    {2016/10/09 v1.0u}
+  *{package}{trig}        {2016/01/03 v1.10}
+  *{file}   {graphics.cfg}{2016/06/04 v1.11}
+  *{file}   {pdftex.def}  {2017/01/12 v0.06k}
+  *{package}{infwarerr}   {2016/05/16 v1.4}
+  *{package}{ltxcmds}     {2016/05/16 v1.23}
+  *{package}{inputenc}    {2015/03/17 v1.2c}
+  *{file}   {utf8x.def}   {2004/10/17 v8}
+  *{package}{ucs}         {2013/05/11 v2.2}
+  *{file}   {uni-global.def}{2013/05/13 v0.0}
+  *{package}{amsmath}     {2016/11/05 v2.16a}
+  *{package}{amstext}     {2000/06/29 v2.01}
+  *{package}{amsgen}      {1999/11/30 v2.0}
+  *{package}{amsbsy}      {1999/11/29 v1.2d}
+  *{package}{amsopn}      {2016/03/08 v2.02}
+  *{package}{amsfonts}    {2013/01/14 v3.01}
+  *{package}{amsthm}      {2015/03/04 v2.20.2}
+  *{package}{mathtools}   {2015/11/12 v1.18}
+  *{package}{calc}        {2014/10/28 v4.3}
+  *{package}{mhsetup}     {2010/01/21 v1.2a}
+  *{package}{hyperref}    {2016/06/24 v6.83q}
+  *{package}{hobsub-hyperref}{2016/05/16 v1.14}
+  *{package}{hobsub-generic}{2016/05/16 v1.14}
+  *{package}{hobsub}      {2016/05/16 v1.14}
+  *{package}{ifluatex}    {2016/05/16 v1.4}
+  *{package}{ifvtex}      {2016/05/16 v1.6}
+  *{package}{intcalc}     {2016/05/16 v1.2}
+  *{package}{ifpdf}       {2016/05/14 v3.1}
+  *{package}{etexcmds}    {2016/05/16 v1.6}
+  *{package}{kvsetkeys}   {2016/05/16 v1.17}
+  *{package}{kvdefinekeys}{2016/05/16 v1.4}
+  *{package}{pdftexcmds}  {2016/05/21 v0.22}
+  *{package}{pdfescape}   {2016/05/16 v1.14}
+  *{package}{bigintcalc}  {2016/05/16 v1.4}
+  *{package}{bitset}      {2016/05/16 v1.2}
+  *{package}{uniquecounter}{2016/05/16 v1.3}
+  *{package}{letltxmacro} {2016/05/16 v1.5}
+  *{package}{hopatch}     {2016/05/16 v1.3}
+  *{package}{xcolor-patch}{2016/05/16 v0.0}
+  *{package}{atveryend}   {2016/05/16 v1.9}
+  *{package}{atbegshi}    {2016/06/09 v1.18}
+  *{package}{refcount}    {2016/05/16 v3.5}
+  *{package}{hycolor}     {2016/05/16 v1.8}
+  *{package}{ifxetex}     {2010/09/12 v0.6}
+  *{package}{auxhook}     {2016/05/16 v1.4}
+  *{package}{kvoptions}   {2016/05/16 v3.12}
+  *{file}   {pd1enc.def}  {2016/06/24 v6.83q}
+  *{file}   {hyperref.cfg}{2002/06/06 v1.2}
+  *{package}{url}         {2013/09/16 v3.4}
+  *{file}   {hpdftex.def} {2016/06/24 v6.83q}
+  *{package}{rerunfilecheck}{2016/05/16 v1.8}
+  *{package}{indentfirst} {1995/11/23 v1.03}
+  *{package}{float}       {2001/11/08 v1.3d}
+  *{package}{caption}     {2016/02/21 v3.3-144}
+  *{package}{caption3}    {2016/05/22 v1.7-166}
+  *{package}{subcaption}  {2016/05/22 v1.1-161}
+  *{package}{todonotes}   {2012/07/25 v0.0}
+  *{package}{ifthen}      {2014/09/29 v1.1c}
+  *{package}{xkeyval}     {2014/12/03 v2.7a}
+  *{file}   {xkeyval.tex} {2014/12/03 v2.7a}
+  *{package}{xcolor}      {2016/05/11 v2.12}
+  *{file}   {color.cfg}   {2016/01/02 v1.6}
+  *{package}{tikz}        {2015/08/07 v3.0.1a}
+  *{package}{pgf}         {2015/08/07 v3.0.1a}
+  *{package}{pgfrcs}      {2015/08/07 v3.0.1a}
+  *{package}{everyshi}    {2001/05/15 v3.00}
+  *{file}   {pgfrcs.code.tex}{0000/00/00 v0.0}
+  *{package}{pgfcore}     {2010/04/11 v3.0.1a}
+  *{package}{pgfsys}      {2014/07/09 v3.0.1a}
+  *{file}   {pgfsys.code.tex}{0000/00/00 v0.0}
+  *{file}   {pgfsyssoftpath.code.tex}{2013/09/09 v1.9)}
+  *{file}   {pgfsysprotocol.code.tex}{2006/10/16 v1.4)}
+  *{file}   {pgfcore.code.tex}{0000/00/00 v0.0}
+  *{package}{pgfcomp-version-0-65}{2007/07/03 v3.0.1a}
+  *{package}{pgfcomp-version-1-18}{2007/07/23 v3.0.1a}
+  *{package}{pgffor}      {2013/12/13 v3.0.1a}
+  *{package}{pgfkeys}     {0000/00/00 v0.0}
+  *{file}   {pgfkeys.code.tex}{0000/00/00 v0.0}
+  *{package}{pgfmath}     {0000/00/00 v0.0}
+  *{file}   {pgfmath.code.tex}{0000/00/00 v0.0}
+  *{file}   {pgffor.code.tex}{0000/00/00 v0.0}
+  *{file}   {tikz.code.tex}{0000/00/00 v0.0}
+  *{package}{geometry}    {2010/09/12 v5.6}
+  *{package}{amssymb}     {2013/01/14 v3.01}
+  *{package}{tabulary}    {2014/06/11 v0.10}
+  *{package}{array}       {2016/10/06 v2.4d}
+  *{package}{booktabs}    {2016/04/27 v1.618033}
+  *{package}{pgfplots}    {2016/08/10 v1.14}
+  *{package}{fancyhdr}    {2016/09/06 v3.8}
+  *{file}   {supp-pdf.mkii}{0000/00/00 v0.0}
+  *{package}{epstopdf-base}{2016/05/15 v2.6}
+  *{package}{grfext}      {2016/05/16 v1.2}
+  *{file}   {epstopdf-sys.cfg}{2010/07/13 v1.3}
+  *{file}   {ucsencs.def} {2011/01/21 v3}
+  *{package}{nameref}     {2016/05/21 v2.44}
+  *{package}{gettitlestring}{2016/05/16 v1.5}
+  *{file}   {main.out}    {0000/00/00 v0.0}
+  *{file}   {main.out}    {0000/00/00 v0.0}
+  *{file}   {ot1bch.fd}   {2004/10/18 v1/bch.}
+  *{file}   {uni-0.def}   {2013/05/13 v0000..U+00FF}
+  *{file}   {umsa.fd}     {2013/01/14 v3.01}
+  *{file}   {umsb.fd}     {2013/01/14 v3.01}
+  *{file}   {omscmr.fd}   {2014/09/29 v2.5h}
+  *{file}   {tese-introduction.tex}{0000/00/00 v0.0}
+  *{file}   {main.bbl}    {0000/00/00 v0.0}
+}

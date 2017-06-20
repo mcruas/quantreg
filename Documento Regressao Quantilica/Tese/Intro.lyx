@@ -1,0 +1,159 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+As opposed to the conventional work of doing a model to forecast the conditional
+ mean, our work focus on finding a distribution for 
+\begin_inset Formula $y_{t}$
+\end_inset
+
+ on each 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ There are two main approaches while modelling a time series distribution:
+ consider it known a priori or estimate ir nonparametrically.
+ Among the former are the ARIMA or GAS models.
+ On the latter, we highlight the works of -__completar aqui_____ .
+ 
+\end_layout
+
+\begin_layout Standard
+Quantile Regression is a powerful tool for measuring quantiles others than
+ the median or predicting the mean.
+ A quantile of a random variable is important in risk measuring, as we can
+ measure the probability of occurrence of extreme events, and in many other
+ fields.
+\end_layout
+
+\begin_layout Standard
+In this work, we apply a few different techniques to forecast the quantile
+ function a few steps ahead.
+ The main frameworks we investigate are parametric linear models and a non-param
+etric regression.
+ We also investigate how to apply quantile estimations to produce an empirical
+ distribution for the 
+\begin_inset Formula $k$
+\end_inset
+
+-step ahead forecasting by using a nonparametric approach.
+ 
+\end_layout
+
+\begin_layout Standard
+We find a time series model, based on quantile autoregression (as in Konker
+ 2005).
+\end_layout
+
+\begin_layout Standard
+As we are interested in the whole distribution of 
+\begin_inset Formula $\hat{y}_{t+k|t}$
+\end_inset
+
+, we estimate a phin grid of quantiles in 
+\begin_inset Formula $0<\alpha_{1}<\alpha_{2}<\dots<\alpha_{|A|}<1$
+\end_inset
+
+, such that the distribution can be well approximated.
+\end_layout
+
+\begin_layout Standard
+As a Quantile Autoregression model, we are interested in selecting the best
+ subset of variables to model the time series.
+ Many works have 
+\end_layout
+
+\begin_layout Standard
+As we are trying to model the whole 
+\begin_inset Formula $k$
+\end_inset
+
+-step ahead distribution, we estimate many quantiles.
+ We didn't find any previous work where a given 
+\begin_inset Formula $\alpha$
+\end_inset
+
+-quantile model influenced another model.
+ It is logical to think that if we have 
+\begin_inset Formula $q_{\alpha}()$
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

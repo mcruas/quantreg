@@ -320,7 +320,7 @@ function rq_par_mip(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_cross = 
     M = 2
     n = size(y)[1]
     T = 1:n
-    Q = 1:size(X)[2]
+    P = 1:size(X)[2]
 
     if isnan(max_K)
       max_K = size(X)[2]
@@ -329,27 +329,30 @@ function rq_par_mip(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_cross = 
     m = Model(solver = GurobiSolver(MIPGap = MIPGap, TimeLimit = TimeLimit))
   	@variable(m, ɛ_tmais[T, Alf] >= 0)
   	@variable(m, ɛ_tmenos[T, Alf] >= 0)
-  	@variable(m, β[Q, Alf])
+  	@variable(m, β[P, Alf])
   	@variable(m, β0[Alf])
-    @variable(m, z[Q, Alf], Bin)
+    @variable(m, z[P, Alf], Bin)
 
 
     @objective(m, Min, sum(Alphas[j] * ɛ_tmais[i, j] + (1-Alphas[j]) *ɛ_tmenos[i, j] for i = T, j = Alf ))
 
   	########## Evitar cruzamento de quantis
     if non_cross
-  	   @constraint(m, evita_cross[i = T, j = 2:length(Alphas)], β0[j] + sum(β[q,j] * X[i,q] for q = Q) >= β0[j-1] + sum(β[q,j-1] * X[i,q] for q = Q))
+  	   @constraint(m, evita_cross[i = T, j = 2:length(Alphas)], β0[j] + sum(β[p,j] * X[i,p] for p = P) >= β0[j-1] + sum(β[p,j-1] * X[i,p] for p = P))
      end
 
   		# Dar valores ao ɛ_tmais e ao ɛ_tmenos
-  	 @constraint(m, epsilons[i = T, j = Alf], ɛ_tmais[i,j] - ɛ_tmenos[i,j] == y[i] - β0[j] - sum(β[q,j] * X[i,q] for q = Q))
+  	 @constraint(m, epsilons[i = T, j = Alf], ɛ_tmais[i,j] - ɛ_tmenos[i,j] == y[i] - β0[j] - sum(β[p,j] * X[i,p] for p = P))
 
      # Restringir a estimação a no máximo K valores
-     @constraint(m, range_beta_inf[i = Q, a = Alf], - M * z[i,a] <= β[i,a])
-     @constraint(m, range_beta_sup[i = Q, a = Alf], β[i,a] <= M * z[i,a])
+     @constraint(m, range_beta_inf[p = P, a = Alf], - M * z[p,a] <= β[p,a])
+     @constraint(m, range_beta_sup[p = P, a = Alf], β[p,a] <= M * z[p,a])
 
+     
      # Permite que no máximo max_K seja escolhido no modelo
-     @constraint(m, max_var[a = Alf], sum(z[i,a] for i = Q) <= max_K)
+     @constraint(m, max_var[a = Alf], sum(z[p,a] for p = P) <= max_K)
+            # Testar com restrição abaixo
+            # @constraint(m, max_var[a = Alf], sum(z[p,a] for p = P) == max_K)
 
 
 
@@ -357,19 +360,23 @@ function rq_par_mip(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_cross = 
 
   	tmp_betas0opt = getvalue(β0)
     tmp_betasopt = getvalue(β)
+    tmp_z = getvalue(z)
     objectiveValue = getobjectivevalue(m)
     solvetime = getsolvetime(m)
 
     ## Transform both variables into an array
     betasopt = zeros(size(X)[2], length(Alphas))
     betas0opt = zeros(length(Alphas))
+    zopt = zeros(size(X)[2], length(Alphas))
     for q in 1:size(X)[2] , j in 1:length(Alphas)
       betasopt[q,j] = tmp_betasopt[q,j]
     end
     for j in 1:length(Alphas)
       betas0opt[j] = tmp_betas0opt[j]
     end
-
+    for q in 1:size(X)[2] , j in 1:length(Alphas)
+      zopt[q,j] = tmp_z[q,j]
+    end
 
     return betas0opt', betasopt, objectiveValue, status, solvetime
 end
@@ -482,7 +489,7 @@ end
 ###########################################################################
 
 # y=X_lags[:,1]; X=X_lags[:, 2:end]; non_cross = true; max_K = max_K; TimeLimit = 200; MIPGap = 0.00; Grupos = Grupos
-
+# y=X_lags[1:50,1]; X=X_lags[1:50, 2:end]; non_cross = true; max_K = max_K; TimeLimit = 200; MIPGap = 0.00; Grupos = Grupos
 
 
 
@@ -558,31 +565,37 @@ function rq_par_mip_grupos_rampa(y::Array{Float64}, X::Array{Float64,2}, Alphas;
 
     # global solutionvalues = NodeData[]
 
-    # function infocallback(cb)
-    #     # println(a - time())
-    #     i = find(check .== 0)[1]
-    #     # println ("Tempo $(time()-a) e $(times[i])")
-    #     if time()-a > times[i]
-    #         #  obj       = JuMP.getobjectivevalue(cb)
-    #         bestbound = MathProgBase.cbgetbestbound(cb)
-    #         beta = JuMP.getvalue(β).innerArray
-    #         beta0 = JuMP.getvalue(β0).innerArray
-    #         # print(bestbound)
-    #         mipsol = MathProgBase.cbgetmipsolution(cb)
-    #         # print(JuMP.getobjectivevalue)
-    #         # println("Blaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaau")
-    #         # push!(bbdata2, NodeData(obj,bestbound))
-    #         # push!(solutionvalues, NodeData(time()-a,rand(5,5),rand(5),bestbound, obj))
-    #         push!(solutionvalues, NodeData(time()-a,beta,beta0,bestbound, mipsol))
-    #         # push!(solutionvalues, NodeData(time()-a,beta,beta0,bestbound, obj))
-    #         check[i] = 1
-    #     end
-    # end
+    # global times = [80,120, 150,190 , Inf] # Times that a new solution must be  ; leave Inf at the end
+    # global check = zeros(length(times)) # Whether a 
+    function infocallback(cb)
+        # println(a - time())
+        i = find(check .== 0)[1]
+        # println ("Tempo $(time()-a) e $(times[i])")
+        if time()-a > times[i]
+            # obj       = JuMP.getobjectivevalue(cb)
+            bestbound = MathProgBase.cbgetbestbound(cb)
+                obj       = MathProgBase.cbgetobj(cb)
+             beta = MathProgBase.cbgetbestbound(cb)
+            print(beta,beta0,bestbound, obj)
+
+            #beta = JuMP.getvalue(β).innerArray
+            #beta0 = JuMP.getvalue(β0).innerArray
+            # print(bestbound)
+            #mipsol = MathProgBase.cbgetmipsolution(cb)
+            # println("Blaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaau")
+            # push!(bbdata2, NodeData(obj,bestbound))
+            # push!(solutionvalues, NodeData(time()-a,rand(5,5),rand(5),bestbound, obj))
+            # push!(solutionvalues, NodeData(time()-a,beta,beta0,bestbound, mipsol))
+            # push!(solutionvalues, NodeData(time()-a,beta,beta0,bestbound, obj))
+            check[i] = 1
+        end
+    end
 
     # addinfocallback(m, infocallback, when = :MIPSol)
 
-    global a = time()
+    # global a = time()
   	@time status = solve(m)
+
 
   	tmp_betas0opt = getvalue(β0)
     tmp_betasopt = getvalue(β)
@@ -647,7 +660,7 @@ function rq_par_lasso(y::Array{Float64}, X::Array{Float64,2}, Alphas; lambda = 0
 
       global a = time()
       @time status = solve(m)
-
+      
       tmp_betas0opt = getvalue(β0)
       tmp_betasopt = getvalue(β)
       objectiveValue = getobjectivevalue(m)
@@ -685,6 +698,5 @@ function Estimar_Q_hat_par2(betas0,betas, x_new)
   Q_hat = (betas0 + x_new * betas)[1,:];
   return Q_hat
 end
-
 
 

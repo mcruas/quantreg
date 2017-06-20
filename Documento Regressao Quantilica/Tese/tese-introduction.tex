@@ -1,0 +1,23 @@
+\section{Introduction}
+
+As opposed to the conventional work of doing a model to forecast the
+conditional mean, our work focus on finding a distribution for $y_{t}$
+on each $t$. 
+
+We find a time series model, based on quantile autoregression (as
+in Konker 2005).
+
+As we are interested in the whole distribution of $\hat{y}_{t+k|t}$,
+we estimate a phin grid of quantiles in $0<\alpha_{1}<\alpha_{2}<\dots<\alpha_{|A|}<1$,
+such that the distribution can be well approximated.
+
+As a Quantile Autoregression model, we are interested in selecting
+the best subset of variables do model the time series. 
+
+As we are trying to model the whole $k$-step ahead distribution,
+we estimate many quantiles. We didn't find any previous work where
+a given $\alpha$-quantile model influenced another model.
+
+
+
+Regularization can be done by introducing a penalty on the $\ell_1$-norm of the coefficients. The work by \cite{belloni_l1-penalized_2009} defines proprieties and convergence analysis. The AdaLasso variant, where each coefficient may have a different weight on the objective function to ensure oracle proprieties, is developed on \cite{ciuperca_adaptive_2016}.

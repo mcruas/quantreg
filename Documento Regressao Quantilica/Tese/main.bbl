@@ -1,0 +1,15 @@
+\begin{thebibliography}{1}
+
+\bibitem{belloni_l1-penalized_2009}
+Alexandre Belloni and Victor Chernozhukov.
+\newblock L1-{Penalized} {Quantile} {Regression} in {High}-{Dimensional}
+  {Sparse} {Models}.
+\newblock {\em arXiv:0904.2931 [math, stat]}, April 2009.
+\newblock arXiv: 0904.2931.
+
+\bibitem{ciuperca_adaptive_2016}
+Gabriela Ciuperca.
+\newblock Adaptive {LASSO} model selection in a multiphase quantile regression.
+\newblock {\em Statistics}, 50(5):1100--1131, September 2016.
+
+\end{thebibliography}
