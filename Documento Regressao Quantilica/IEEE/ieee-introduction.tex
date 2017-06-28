@@ -1,0 +1,51 @@
+\section{Introduction}
+
+% % % Talk about renewable energy and its variability
+
+Renewable energy power is in the vogue in the recent years. This is happening because it is a much cleaner way of producing energy than by using other sources, such as coal and gas, and with less hazard potential as the nuclear plants. The installed capacity of renewable plants has been increasing in a fast pace. 
+In spite of being a  \todo{complete this} , it brings a new problem for the energy planners: due to its unpredictability behavior, the cost for the system may be high. 
+Having better models can help the planner to make better and less risky choices to the system, increasing the renewable energy attractiveness. 
+
+
+% % % Critics about point forecasts and gaussian models (ARIMA-GARCH). Compare GAS and nonparametric models. 
+
+The conventional way of having a model to produce point forecasts is not useful when dealing with renewable energy, as the variability and having notion of risk is of extreme importance for planning. Our attention is, then, turned to probabilistic forecasting models. Among these, we have many possibilities. \cite{zhang_review_2014} reviews the commonly used methodologies for this task, separating them in the parametric and nonparametric classes. Main characteristics of \textbf{parametric models} are assuming a distribution shape and low computational costs. GAS models \todo{ct gas} and ARIMA-GARCH, for example, model the renewable series by knowing the distribution \textit{a priori}. On the other hand, \textbf{nonparametric models} don't require a distribution to be specified, but needs mode data to produce a good approximation and have a higher computational cost. Popular methods are Quantile Regression, Kernel density estimation,  Artificial Intelligence and a mix of them.
+
+
+% % % Talk about nonparametric models and how to use quantile regression to estimate the whole distribution
+
+A common finding is that wind and solar time series don't have a Gaussian behavior. Furthermore, we can not point any distribution which fits on data without a doubt. Because of that, we choose to use a nonparametric approach.
+Quantile Regression (QR) is a powerful tool for measuring quantiles others than the median or predicting the mean. The approach of QR we use is the one defined in \cite{koenker2005quantile}. In this article, we use quantile regression and regularization techniques, such as the best subset selection \cite{bertsimas_best_2015} and the $\ell_1$ penalization \cite{belloni_l1-penalized_2009}. The AdaLasso variant, where each coefficient may have a different weight on the objective function to ensure oracle proprieties, is developed on \cite{ciuperca_adaptive_2016}.
+
+
+
+
+
+
+The next section discusses with bigger details how to fit a distribution function $Q_{Y|X}(\alpha,x)$ from a sequence of estimated quantiles, as well as showing two different strategies to estimate them: linear models and nonparametric models. In the former, $q_\alpha$ is a linear function of an explanatory variable $x_t$.
+In the latter, we let $q_\alpha(x_t)$ assume any functional form. To prevent overfitting, however, we penalize the function's roughness by incorporating a penalty on the second derivative.
+
+
+% % % % % % % % % % % % % % % % % % %
+
+As opposed to the conventional work of doing a model to forecast the
+conditional mean, our work focus on finding a distribution for $y_{t}$
+on each $t$. 
+
+We find a time series model, based on quantile autoregression (as
+in Koenker 2005).
+
+As we are interested in the whole distribution of $\hat{y}_{t+k|t}$,
+we estimate a phin grid of quantiles in $0<\alpha_{1}<\alpha_{2}<\dots<\alpha_{|A|}<1$,
+such that the distribution can be well approximated.
+
+As a Quantile Autoregression model, we are interested in selecting
+the best subset of variables do model the time series. 
+
+As we are trying to model the whole $k$-step ahead distribution,
+we estimate many quantiles. We didn't find any previous work where
+a given $\alpha$-quantile model influenced another model.
+
+In all works found, each quantile is estimated separately. 
+
+Regularization can be done by introducing a penalty on the $\ell_1$-norm of the coefficients. The work by \cite{belloni_l1-penalized_2009} defines proprieties and convergence analysis. The AdaLasso variant, where each coefficient may have a different weight on the objective function to ensure oracle proprieties, is developed on \cite{ciuperca_adaptive_2016}.

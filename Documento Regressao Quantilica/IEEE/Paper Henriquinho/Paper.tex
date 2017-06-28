@@ -1,0 +1,666 @@
+\documentclass[a4paper]{IEEEtran}
+\usepackage[latin1]{inputenc}
+%\usepackage{epstopdf}
+%\usepackage[spanish]{babel}
+\usepackage[cmex10]{amsmath}
+\interdisplaylinepenalty=2500
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{dcolumn}
+\usepackage{color}
+\usepackage[noadjust]{cite}
+\usepackage{url}
+\usepackage{balance}
+\usepackage[usenames,dvipsnames]{xcolor}
+\DeclareGraphicsExtensions{.eps}
+\usepackage{blindtext}
+
+\DeclareMathOperator*{\Max}{max}
+\DeclareMathOperator*{\Min}{min}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\Maximize}{Maximize}
+
+\begin{document}
+\title{Generating joint scenarios of renewable energy sources: the case for non-Gaussian models with time varying parameters}
+
+\author{Henrique~Hoeltgebaum,
+		Cristiano~Fernandes and
+		Alexandre~Street  ~\IEEEmembership{Member ~IEEE}
+	   
+
+\thanks{This work was partially supported by the R\&D project ANEEL PD-7625-0001/2013.}
+\thanks{Henrique Hoeltgebaum, Cristiano Fernandes and Alexandre Street are with the Electrical Engineering Department, Pontifical Catholic University of Rio de Janeiro (PUC-Rio), Rio de Janeiro, RJ, Brazil (e-mail: \mbox{hhhelfer@ele.puc-rio.br}; \mbox{cris@ele.puc-rio.br}; \mbox{street@ele.puc-rio.br}).}
+}
+
+
+\maketitle
+\begin{abstract}
+	The development of medium- and long-term studies for power-system planning under uncertainty of renewable generation is one of the key challenges faced by planners and market players in most of the power system worldwide. The characterization wind power generation (WPG) stochastic processes to devise time- and spatial-dependent scenarios, based on simulation procedures, for one to few years horizon is a difficult task. Multiple regimes and non Gaussian distributions are one of the main issues faced in both centralized and private planning/investment studies. In this paper a new methodology to simulate long-term joint scenarios for time series of several wind power plants generation is presented. The proposed framework is derived based on a new class of time-series model with time-varying parameters and arbitrary non Gaussian distribution, known as Generalized Auto Regressive Score models (GAS). GAS models are conceived based on a user-defined marginal probability density function (PDF), providing a relevant flexibility and control of the simulated scenarios in long-run chronological Monte Carlo simulation procedures. In this work, we study the case of a Beta PDF and spacial dependence is captured by a t-Student copula with time varying correlation matrix. Case studies based on the Brazilian power system show that the proposed methodology is capable to address relevant issues that arise in long-term simulation studies. 
+	
+\end{abstract}
+
+\begin{IEEEkeywords}
+	Score driven models, wind power, probabilistic forecasting, time varying parameters, dynamic copula.
+\end{IEEEkeywords}
+
+% ========== ========== ========== ========== ========== 
+% ===== Sec. I - Introduction ===== %
+% ========== ========== ========== ========== ========== 
+
+\section{Introduction}
+\label{Introduction}
+
+\begin{itemize}
+	
+	\item {\color{red} introduzir contribuiceos}.
+	
+	\item {\color{red} melhorar a parte da copula}.
+	
+	\item {\color{red} introducao da parada fuzzy nao é muito besta?}.
+	
+\end{itemize}
+
+\IEEEPARstart{R}{enewable} energy expansion has been growing worldwide, mainly in response to governmental incentive for reducing greenhouse gas emissions. In particular, wind-power generation (WPG) is one of the largest sources of renewable energy, and according to the International Energy Agency, will respond to 18\% of global power by 2050  \cite{IntEnerAgency}. However the uncertainty associated with its non dispatchable nature may jeopardize reliability of electricity supply. In attempting to minimize this kind of risk it is highly desirable to produce reliable forecasts and scenarios for WPG time series. The importance of such scenarios emerges in many instance, as for example: (i) energy trading, (ii) unit commitment, (iii) grid expansion planning, and (iv) investment decisions (see (\cite{moreiraStreet,jabr2013robust,zhaoguan,Aderson2017}) and references therein). 
+
+
+%In this paper, a methodology to generate long-term joint scenarios for time series of capacity factors (CF) associated with different wind plants is proposed. Modelling and simulating such a set of time series imposes two major challenges, namely: (i) the intrinsic non Gaussian nature of CF time series. (ii) the possibility of non linear dependence among these series. In order to properly address these two characteristics of CF time series we propose the use of a new class of time series models, the Generalized Autoregressive Score (GAS)  \cite{creal2013generalized} or Dynamic Conditional Score (DCS), following \cite{harvey2013dynamic}.%Another  strong seasonal pattern, which conventional autoregressive models cannot handle straightforward. To empirically illustrate such facts, we provide in Figure \ref{BoxPlots_IC_mensal} an annual plot of CF from one wind plant located at the Northeast of Brazil, namely Icaraizinho (here and after denoted as IC).
+
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[height=7cm,width=7cm]{figures/BOXPLOT_IC.eps}
+%\caption{Monthly capacity factor from a wind plant located at the Northest of Brazil. The time series ranges from January 1981 to December 2011.}
+%\label{BoxPlots_IC_mensal}
+%\end{figure}
+
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[height=5cm,width=6cm]{figures/HIST_ENxIC.eps}
+%\caption{Scatterplot+Histogram ENxIC}
+%\label{BoxPlots}
+%\end{figure}
+%
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[height=5cm,width=6cm]{figures/HIST_RFxEN.eps}
+%\caption{Scatterplot+Histogram RFxEN}
+%\label{BoxPlots}
+%\end{figure}
+%
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[height=5cm,width=6cm]{figures/HIST_RFxIC.eps}
+%\caption{Scatterplot+Histogram RFxIC}
+%\label{BoxPlots}
+%\end{figure}
+%
+%
+%
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[height=2cm,width=2cm]{figures/HIST_ICxRF_mesMar.eps}
+%\includegraphics[height=2cm,width=2cm]{figures/HIST_ICxRF_mesJun.eps}
+%\includegraphics[height=2cm,width=2cm]{figures/HIST_ICxRF_mesSep.eps}
+%\includegraphics[height=2cm,width=2cm]{figures/HIST_ICxRF_mesDec.eps}
+%\includegraphics[height=2cm,width=2cm]{figures/HIST_ENxRF_mesMar.eps}
+%\includegraphics[height=2cm,width=2cm]{figures/HIST_ENxRF_mesJun.eps}
+%\includegraphics[height=2cm,width=2cm]{figures/HIST_ENxRF_mesSep.eps}
+%\includegraphics[height=2cm,width=2cm]{figures/HIST_ENxRF_mesDec.eps}
+%\includegraphics[height=2cm,width=2cm]{figures/HIST_ICxEN_mesMar.eps}
+%\includegraphics[height=2cm,width=2cm]{figures/HIST_ICxEN_mesJun.eps}
+%\includegraphics[height=2cm,width=2cm]{figures/HIST_ICxEN_mesSep.eps}
+%\includegraphics[height=2cm,width=2cm]{figures/HIST_ICxEN_mesDec.eps}
+%\caption{Montly Histogram + Scatterplot}
+%\label{hist_Scatter}
+%\end{figure}
+
+
+
+
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[height=10cm,width=9cm]{figures/ENxIC_MES.eps}
+%\caption{Monthly qqplot ENxIC.}
+%\label{BoxPlots}
+%\end{figure}
+%
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[height=10cm,width=9cm]{figures/RFxIC_MES.eps}
+%\caption{Monthly qqplot RFxIC.}
+%\label{BoxPlots}
+%\end{figure}
+%
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[height=10cm,width=9cm]{figures/RFxEN_MES.eps}
+%\caption{Monthly qqplot RFxEN.}
+%\label{BoxPlots}
+%\end{figure}
+%
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[height=10cm,width=9cm]{figures/IC_QQ_MES.eps}
+%\caption{qqplot IC}
+%\label{BoxPlots}
+%\end{figure}
+%
+%
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[height=10cm,width=9cm]{figures/RF_QQ_MES.eps}
+%\caption{qqplot RF}
+%\label{BoxPlots}
+%\end{figure}
+%
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[height=10cm,width=9cm]{figures/EN_QQ_MES.eps}
+%\caption{qqplot EN}
+%\label{BoxPlots}
+%\end{figure}
+
+%\begin{table}[ht]
+%\centering
+%\caption{P-values of Jarque Bera test of Normality applied to each month time series.}
+%\begin{tabular}{rrrrr}
+%  \hline
+% & Mar & Jun & Sep & Dec \\ 
+%  \hline
+%  IC & 0.63 & 0.57 & 0.91 & 0.13 \\ 
+%  RF & 0.82 & 0.96 & 0.46 & 0.58 \\ 
+%  EN & 0.82 & 0.45 & 0.60 & 0.42 \\ 
+%   \hline
+%\end{tabular}
+%\end{table}
+
+%In addition to the strong seasonal pattern presented by Figure \ref{BoxPlots_IC_mensal}, another important stylized fact of CF time series is provided, season effects. During the first half of the year, wind speed tends to decrease and also its frequency. As an outcome, the CF of these months will naturally drop. On the other hand, during the second semester, the opposite happens.
+
+
+
+
+%and the non Gaussian pattern of such variable, which is statistically confirmed by the
+%Another evidence, which corroborates with our Moreover, checking each month empirical density, it is possible to conclude that they are asymmetric, and when calculating theirs values, August`s skewness is the closest to zero, in modulus, with a value of 0.1306.
+
+%Tradicionalmente, tem-se utilizado modelos ARMA e seus derivados, os quais pressupoe a hipotese de normalidade da serioe, o que contraria os fatos estilizados ja elucidados. Mesmo trabalhando com o log da serie, problemas persistem, pois como o objetvio é a simulacao na escala original da série, observa-se que ao se aplicar a exponenciacao, as simulacoes da serie obtida pelo modelo arma gaussiano, a magnitude dos valres simulados muitas vezes sao superiores aos valores historicamente observados
+
+%The non Gaussian nature of CF time series, in most applications in the energy literature, is not directly dealt with, either because of non availability of proper software or by the computational burden in implementing existing non Gaussian models. For example, if one decides to fit a non-Gaussian state space model using unobserved components, such as trend, seasonals and cycle, it would be necessary extensive Monte Carlo simulation for both state and fixed parameter estimation. See, for example, Durbin and Koopman (2012, pp 209-324). In practice a great deal of applied work involving scenario generation for wind speed or CF time series make use of ARMA models and its extensions, \cite{box1976time}, mostly under normality assumption. At best such models are fitted to the log of the variable of interest, and by taking the anti log, predictions and simulations on the original scale of the variable are obtained. Unfortunately such a strategy can result in unrealistic sampling paths for the original variable.
+
+%Hence, the need to apply the $log$ transformation and then fit the data properly. Yet, it is also a non conventional form, as it is known, to come back to the original scale, it is necessary the exponentiation of simulated Gaussian values that can result in unrealistic sampling paths as can be seen in Figure \ref{SARIMA_COM_TRANS} where we simulate 2000 scenarios 12 steps ahead.
+	
+
+
+	
+	%, and by propagation, this can badly affect the risk measures obtained from the simulated distribution of the cash flows associated with a particular portfolio of wind plants. %our approach can generate scenarios in just one step, avoiding the need of transforming back the outcome variables to its original scale, as it is the case under a Gaussian assumption for the marginal models. As it is known, exponentiation of simulated Gaussian values can result in unrealistic sampling paths for the wind capacity factor. 
+
+%Isso cria uma motivacao para o estabelecimento de modelos que sejam capazes de modelar series nao gaussianas e que contemplem a questao de nao linearidade
+
+%Such features motivates the insertion of a recently proposed time series framework which gracefully handles with the two aforementioned challenges. In this paper we applied to monthly  wind capacity factor (CF) time series a newly proposed class of observation-driven time series models, the so called GAS models \cite{creal2013generalized} or Dynamic Conditional Score (DCS), following \cite{harvey2013dynamic}. Our approach fits in the classification proposed by \cite{zhang2014review} as a long-term parametric probabilistic. More specifically one can pick any desirable predictive distribution judged appropriate for the response variable being modelled and, trough the dynamic equations proposed in the GAS frameworks, make its parameters time varying. We advocate that wind probabilistic forecasting should be preferred in practice since from it, apart from conditional measures of location, like mean or median, one can obtain many different measures of interest, like conditional quantiles, enabling improved decision making to power systems operators and investors.
+
+%However, for several applications, such as unit commitment, regulation and commercialization, these variables are plugged into the power curve to transform wind speed/wind power into a CF time series. The models here proposed are directly fitted to the CF time series which are directly available, and as consequence  no such transformations will be needed. \cite{zhang2014review} presents a detailed review of state-of-the-art methods and new developments in wind power uncertainty forecasting. 
+%As \cite{mur2010variability} conclude, wind power generation is a non-linear and non-stationary process, which are also features of wind speed time series. Therefore common choices of models that could reproduce its pattern use time series models (e.g. \cite{brown1984time}) or Artificial Intelligence \cite{sideratos2012probabilistic}. 
+
+Much research has been devoted to devise short-term forecast methods for wind speed and WPG time series (for instance, see 
+\cite{conradsen1984review, brown1984time, conejo2005forecasting,nielsen2006,pinson2007,taylor2009wind,wang2011review,bessa2012time,sideratos2012probabilistic,wan2016,gallego2016line,Xydas2017,cavalcante2017lasso,wang2017deep} 
+%\cite{conradsen1984review, brown1984time, conejo2005forecasting,nielsen2006,pinson2007,taylor2009wind,wang2011review,bessa2012time,sideratos2012probabilistic,wan2016,Xydas2017,cavalcante2017lasso,wang2017deep}
+and \cite{zhang2014review} for a survey on probabilistic forecasting of wind power generation). In many applications, the modeling of these time series is conducted using conventional ARMA models with seasonal lags, or SARIMA models, under a Gaussian distribution (\cite{FosteringWPP,souto2014high}). In its original formulation, SARIMA models present a fixed scale parameter. To add extra flexibility to these models \cite{lau2010approaches} proposes an ARIMA model with GARCH effect, allowing the conditional variance of wind power distribution to vary over time. Also, to provide a description of the spatial correlation of wind-speed time series, \cite{taylor2009wind} proposed an Autoregressive Fractionally Integrated-GARCH model (ARFIMA-GARCH). In these and other models, conditional on the past, the distribution of the response variable is assumed Gaussian.
+
+The non-Gaussian nature of WPG time series is well reported in the literature (see \cite{bessa2012time,jeon2012using,taylor2015forecasting,Wan2017}, and references therein). Notwithstanding, only very limited classes of non-Gaussian time-series models were available for forecasting WPG. The state of the art literature on short-term probabilistic forecast of WPG mainly rely on nonparametric models. For instance, in \cite{bessa2012time} and \cite{Wan2017}, nonparametric approaches were devised to forecast conditional distributions. While in \cite{bessa2012time}  kernel density estimators was employed to build a density forecast, in \cite{Wan2017} a quantile-regression-based model was used. Despite the computational virtues found in estimation for non-parametric methods, the development of new parametric models capable to properly characterize the full non-Gaussian distribution for WPG time series is a relevant research theme, which did not received too much attention so far. Relevant applications arise from risk assessment in both medium- and long-term planning/investment studies, which mainly rely on few data points to characterize conditional estimates of extreme quantiles \cite{FosteringWPP,SHAPIRO2013,Fanzeres2015,Aderson2017,kariniotakis2017renewable} {\color{red}, Outras referencias que nao as nossas}.
+
+In \cite{creal2013generalized}, a General Autoregressive Score (GAS) model was proposed to derive and estimate time series models with any non-Gaussian conditional distribution, either discrete or continuous, univariate or multivariate. In such paper, it has been shown that several well-known time-series models from the econometric literature are a particular case of GAS models\footnote{For instance, GARCH models that deal with heavy tailed distributions in finance \cite{engle1986modelling}, Autoregressive Conditional Duration models \cite{engle1998autoregressive} to tackle asymmetric distributions in finance applications such as time duration, and the Poisson count models of Davis \cite{davis2003observation} are particular cases of GAS models.}. More specifically, a GAS model is built based on a user-defined conditional density function whose parameters follow a data-driven dynamic equation, generally on the form of an autoregressive mechanism. Then, by construction, time-varying parameters can be accommodated according to an updating mechanism that uses the score as its driving force. The use of the score function for updating time-varying parameters is intuitive given that it is defined as the steepest ascent direction (gradient) for improving the local fit of the model in terms of the likelihood. In such an updating mechanism, information from the whole density is used to track the evolution of time varying parameters. 
+
+Several applications from finance to oil using GAS models have been published in the recent econometric literature. We refer the interested reader to the main on-line repository on GAS papers \cite{GASwebpage}. The virtue of GAS models to address non-linear and non-Gaussian time series models recognized in the recent literature notwithstanding, to the best of the authors' knowledge, there is no publication in the power systems literature using GAS models. The consideration of a seasonal structure in such models was also not addressed in the literature so far, despite being a relevant structure shared by a wide range of time series such as WPG (see \cite{tseng2002fuzzy,lei2009review,FosteringWPP,souto2014high} and references therein). Additionally, given the empirical evidence of positive correlation between WPG time series, it is crucial to incorporate such information when simulating joint scenarios. More commonly, such dependence is usually captured by the covariance matrix $\Sigma$ \cite{pinson2009probabilistic}. For example, \cite{morales2010methodology} uses a multivariate ARMA model and employed the variance-covariance matrix to characterize the spatial-temporal correlation of wind speed distribution. Under the multivariate assumption, a Vector Autoregressive Moving Average-GARCH model was employed to describe the bivariate wind vector time-series \cite{jeon2012using}. 
+
+In our work, the dependence structure among the WPG time series of different wind plants is captured through a elliptical copula with time-varying correlation matrix \cite{creal2011dynamic}. Copula-based models are very flexible  to construct multivariate distributions, since they allow the specification of the models for the marginals distributions (in our case the beta GAS models) separately from the dependence structure given by the copula.
+Details on estimation and inference for copulas applied to time series can be seen in \cite{cherubini2004copula,joe2005asymptotic, patton2012copula, patton2009copula, patton2006modelling, patton2002applications}. The adoption of a time-varying correlation matrix for the copula is justified by the fact that correlation among wind plants time series are not constant over time due to the fact that wind have different regimes depending on seasons. In our set up the correlation matrix will also evolve in time according to an appropriate GAS mechanism, which will makes it easier to capture and correct for outlier effects, as presented in \cite{creal2011dynamic}.
+
+The objective of this paper is to propose a new methodology to address non-Gaussian WPG multivariate time-series through GAS models. We also propose a time-varying copula-based approach to model spatial dependencies in a two-step procedure. Therefore, the contribution of this paper are threefold:
+
+\begin{itemize}
+	\item A new model capable to address non-Gaussian seasonal wind power generation time series. The proposed model allows the simulation of long-run scenarios widely demanded in many power system applications, such as planning and risk assessment studies. 
+
+	\item Spatial dependency is derived from a time-varying copula model with correlation matrix guided by second-step GAS procedure.
+	
+	\item {\color{red}, O QUE MAIS??}.
+	
+\end{itemize}
+
+The rest of this paper is organized as follows. In section \ref{marginals}, the proposed GAS model framework with seasonal dynamics in the updating mechanism is presented. Estimation, diagnoses and forecast procedures are also discussed in this section. In section \ref{copula}, an elliptical-copula model is devised based on \cite{creal2011dynamic} to model the time varying correlation matrix through a second-step procedure also following a GAS mechanism. Finally, in section \ref{Application}, a case study using realistic data from the Brazilian power system is presented to illustrate the application of the proposed framework and in section \ref{Conclusion}, final conclusions are addressed.
+
+
+%r example, one could use extensions of state space models to non-Gaussian environments (see, for example, \cite{durbin2012time}), but extensive Monte Carlo simulation is required to numerically evaluate the conditional densities that define the estimation process of such models. The high technicalities involved in implementing these algorithms and its accompanying computational cost have not helped its widespread use by practitioners. On the other hand, different attempts to extend ARMA type models with conditional non Gaussian distributions have been more successful. For example, the use of GARCH type models to deal with heavy tailed distributions in finance \cite{engle1986modelling}, the Autoregressive Conditional Duration (ACD) \cite{engle1998autoregressive} model to tackle asymmetric distributions in time duration and the Poisson count models of Davis \cite{davis2003observation} for the modeling of discrete events in time. But, so far, these extensions have lacked an unifying framework that would allow the specification, estimation and forecasting of a model based on an arbitrary non Gaussian distribution. The recently proposed GAS models \cite{creal2013generalized}) offer an unifying framework to derive and estimate time series model with any conditional non-Gaussian distribution, either discrete or continuous, univariate or multivariate. More specifically, in GAS models, conditional on past observations, a proper probability model, possibly non Gaussian, is chosen for the response variable at time $t$. Then, by construction, time varying parameters can be accommodated according to an updating mechanism that uses the score as its driving force. The use of the score for updating time-varying parameters is intuitive given that it defines the steepest ascent direction for improving the model's local fit in terms of the likelihood or density at time $t$, given the current parameter position. In such an updating mechanism information from the whole density is used to track the evolution of time varying parameters.% Analogous to the Generalized Linear Model (GLM), in the GAS framework it is also necessary to specify appropriate links functions, if time-varying parameters are defined in subsets of the real line. In addition, stationary and ergodicity properties of such models shall not be discussed in this paper, nevertheless it were already proven under some specific cases in \cite{blasques2014stationarity}.
+
+%Figures \ref{scat_ENIC}, \ref{scat_RFEN} and \ref{scat_RFIC}, depict scatterplots of the Probability Integral Transform (PIT) for the wind CF time series of the three aforementioned wind plants. From these graphs it is possible to conclude the existence of positive association between each pair of CF time series. 
+
+% XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX????????????????????
+
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[height=5cm,width=6cm]{figures/HIST_ENxIC.eps}
+%\caption{Scatterplot of the wind capacity factor with EN and IC time series. Histograms and inconditional correlation between these two time series are also provided.}
+%\label{scat_ENIC}
+%\end{figure}
+%
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[height=5cm,width=6cm]{figures/HIST_RFxEN.eps}
+%\caption{Scatterplot of the wind capacity factor with RF and EN time series. Histograms and inconditional correlation between these two time series are also provided.}
+%\label{scat_RFEN}
+%\end{figure}
+%
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[height=5cm,width=6cm]{figures/HIST_RFxIC.eps}
+%\caption{Scatterplot of the wind capacity factor with RF and IC time series. Histograms and inconditional correlation between these two time series are also provided.}
+%\label{scat_RFIC}
+%\end{figure}
+%
+
+%A general framework for the specification of feasible time series models Such framework has be recently proposedThe score driven, known as Generalized Autoregressive Score (GAS) model, is an observation-driven model that allows parameters to change over time, having the score as its main driving force \cite{creal2013generalized}. Stacionarity and ergodicity properties of such models shall not be discussed in this paper, nevertheless it were already proven in \cite{blasques2014stationarity}.
+
+%In spite of most of the final users having interest in the capacity factor (CF\footnote{Capacity factor is an average power generated over a period of time, divided by the maximum power of the wind turbine}) as the final outcome variable, the majority of the proposed methodologies in the literature  are mainly concerned in converting wind speed density forecasts to wind power density forecasts through the power curve. With these results in hands, it is then possible to calculate the CF of the former wind turbine.
+
+%In our problem set we have several wind plants from which one needs to generate joint scenarios for CF. The need for such scenarios can arise in many practical problems. For example, such scenarios can be used as input for regulatory purposes, such as the study of a new method to calculate firm energy certificates for wind plants, and also for commercialization strategies firmed at the Free Trade Environment (FTE). Such environment is part of the Brazilian electricity market where investors are able to buy contracts associated with wind plants thorough an auction system (see \cite{barroso2011offering} and references therein). It is then natural in such a decision process to evaluate the risk associated with contracts acquired to buy future energy that will be provided by a portfolio of wind plants. For evaluation purpose it is then necessary to jointly simulate capacity factor for wind plants.
+
+ %Additionally, GAS models are suitable to model non-linear and non-stationary time-series which are also features of wind speed and wind power time series. 
+
+%The parametric assumption is, somehow, important. Since the distribution shape only depends on a few parameters, when dealing with parametric approaches, the computational burden reduces \cite{zhang2014review}. Nevertheless, it is not reasonable to assume that wind power predictive density shape will not vary over time, due to its strong seasonal pattern. However, it is very complex to deal with multi-modal distributions, therefore non-parametric approaches figures as feasible alternatives, but computationally expensive.
+%We develop a model that lies inside the parametric approach to represent the wind power generation and does not need to transform variables.
+%
+
+%Indeed methods for wind power density forecasting are much less developed. The most direct approach to fulfill such task is proposing a time series model for the marginal densities, but due to the non-linearity of wind power it is not that simple. Therefore, the former reason justifies the use of the power curve to relate wind power and wind speed densities forecasting. To represent wind power uncertainty, one could use probabilistic forecasting \cite{bremnes2004probabilistic}, risk index \cite{pinson2004line} and scenario forecasting \cite{pinson2009probabilistic}. 
+
+%Given the empirical evidence of positive correlation between the time series of CF's, it is crucial to incorporate such information when generating the joint scenarios. More commonly, such dependence is usually captured by estimating a covariance matrix $\Sigma$ \cite{pinson2009probabilistic}.  For example, \cite{morales2010methodology} uses a multivariate ARMA model and employed the variance-covariance matrix to characterize the spatial-temporal correlation of wind speed distribution. Under the multivariate assumption, a Vector Autoregressive Moving Average-GARCH model was employed to describe the bivariate wind vector time-series \cite{jeon2012using}. 
+%
+%The generation of joint scenarios for a vector of time series is accomplished by use of a multivariate time series model, as for example, a vector auto regression (VAR) under the assumption of a multivariate conditional Gaussian distribution. In this paper, instead of specifying such a distribution from the outset, the multivariate distribution will be constructed by joining the marginal distributions associated with each individual time series via a copula. The use of copulas will make it possible to capture dependence, possibly non-linear, among the time series of CF's associated with plants in different geographical sites.
+%
+%In our work, the dependence structure among the time series of wind plants is captured through a Student t copula with time-varying correlation matrix \cite{creal2011dynamic} and fixed degrees of freedom. Copula-based models are very flexible  to construct multivariate distributions, since they allow the specification of the models for the marginals distributions (in our case the beta GAS models)separately from the dependence structure given by the copula.
+%Details on estimation and inference for copulas applied to time series can be seen in \cite{cherubini2004copula,joe2005asymptotic, patton2012copula, patton2009copula, patton2006modelling, patton2002applications}. The adoption of a time-varying correlation matrix for the copula is justified by the fact that correlation among wind plants time series are not constant over time due to the fact that wind have different regimes depending on seasons. In our set up the correlation matrix will also evolve in time according to an appropriate GAS mechanism, which will makes it easier to capture and correct for outlier effects, as presented in \cite{creal2011dynamic}. %Nevertheless, it does not seems reasonable to assume that the dependence structure among such variables will be constant, therefore we propose a copula model with a time-varying correlation matrix also being update trough a GAS mechanism.
+
+
+%In addition, as already mentioned in the introduction, when dealing with a decision-making problem, it seems more reasonable to use probability forecast which can provide a whole new set of quantitative information. In this sense it is commonly used, to reproduce such uncertainty, a Probability Density Function (PDFs) or a Cumulative Distribution Function (CDFs). Furthermore, it was proposed in the literature the use of Kernel Density Estimator (KDE) \cite{bessa2012time} and Quantile Regression (QR) \cite{bremnes2004probabilistic}.% Nevertheless, KDE suffer from the boundary effect problem \cite{wand1994kernel} and QR from the crossing-quantiles one [???]. In spite of having overcome such issues proposing new methodologies XX XX XX XX.
+
+%The literature on the joint generation of capacity factors in Brazil has the VARX model for the vector of log of capacity factors as its benchmark. See, for example, \cite{FosteringWPP}. However, given the Gaussianity assumption of VARX models, it is necessary to exponentiate the simulated values in order to avoid the possibility of generating negative capacity factors. Unfortunately this strategy can produce disproportionally high levels for the simulated capacity factors, rendering unrealistic inputs for estimating risk.
+
+%In the sequel we first discuss how univariate GAS models and a elliptical copula model can be combined to jointly simulate wind CF scenarios, Section \ref{marginals} and Section \ref{copula}. Then we present a method that combines the information from the copula model into the marginal densities to generate a multivariate joint density of CF. To motivate the use of our proposed methodology, we generate wind CF scenarios of three wind plants located at the Northest of Brazil.%run a case study supposing a portfolio of contracts from three Brazilian wind plants and evaluate its risk, considering scenarios with dependence structure and without it.
+
+
+
+
+% ========== ========== ========== ========== ========== 
+% ===== Sec. II - Marginal Models ===== %
+% ========== ========== ========== ========== ========== 
+
+\section{Score driven models} \label{marginals}
+
+Our time series data comprises of monthly measures of wind capacity factors (CF), which can only assume values in the range [0,100), indicating at the outset, the non adequacy of models with Gaussian distribution. In addition, such time series display a strong seasonal pattern derived from the inter annual variation of wind speed. These data features suggest that a proper model for CF series has to be non Gaussian with parameters that change in time, so that short term and seasonal variations can be properly captured. Firstly, one should choose an adequate density to each of the wind CF time series. %one should look for densities in which the time series values are contained into the densities support range.
+After trying several non Gaussian densities the best candidate was the beta. More precisely, in our application the CF time series $y_t$ is properly described by a beta density as follows,
+%from January 1981 to December 2011, measured at three wind plants located in the Brazilian Northeast, namely: Rio do Fogo (RF), Icaraizinho (IC) and Enacel (EN).  Since CF´s have nominal support in $[0,100)$, we propose a beta density function with support in $[0,m)$, as the univariate model for each CF, with m to be specified. Then, each marginal model will be specified as follows
+\begin{eqnarray}
+p(y_{it}|f_{it},\mathcal{F}_{t-1};\theta) \sim Beta\left(\beta_{it},\alpha_{i}\right),\,\,\forall\,\, i \in I \,\, \mbox{and}\,\, t \in T, \label{beta_dens}
+\end{eqnarray}
+\noindent
+where $y_{it}$ is the wind CF of the wind plant $i$ at time $t$, $\beta_{it}=h(f_{it})$, $\alpha_i>0$, with $h(\cdot)$ to be chosen.
+
+To fully specify a GAS model one has to choose which parameters of the distribution will evolve in time and those that will be fixed. The time varying parameters will then follow a GAS(p,q) updating mechanism. Considering the seasonal pattern of CF time series the appropriate form for this mechanism will be given by:
+\begin{equation}
+\begin{split}
+f_{i,t+1}=\omega_{i}&+A_{i,1}s_{i,t}+A_{i,2}s_{i,t-1}+A_{i,3}s_{i,t-2}\\
+&+A_{i,11}s_{i,t-10}+A_{i,12}s_{i,t-11}\\
+&+B_{i,1}f_{i,t}+B_{i,2}f_{i,t-1}+B_{i,3}f_{i,t-2}\\
+&+B_{i,11}f_{ti,-10}+B_{i,12}f_{i,t-11}\label{eq:2}
+\end{split}
+\end{equation}
+\noindent
+where $f_{i,t}$ is the time varying parameter of the beta density of the wind plant $i$ at time $t$, $s_{i,t}$ is the score of the beta density of the wind plant $i$ at time $t$ and the $\omega$'s, $A$'s and $B$'s are fixed parameters which will be estimated by maximum likelihood.
+
+To complete the description of the the updating mechanism of GAS models it is necessary to define $s_{t}$ in  Equation \eqref{eq:2}. The authors in \cite{creal2013generalized} propose the following scheme:
+\begin{align}
+s_{t} &= \mathcal{I}_{t|t-1}^{-d} \cdot \nabla_{t}\label{eq:score1}\\
+\nabla_{t} &= \frac{\partial \ln p(y_{t}|f_{t},\mathcal{F}_{t-1};\theta)}{\partial f_{t}}\label{eq:score2}\\
+\mathcal{I}_{t|t-1} &= E_{t|t-1}[\nabla_{t}^T\nabla_{t}],\label{eq:score3} 
+\end{align}
+\noindent
+where $p(y_{t}|f_{t},\mathcal{F}_{t-1};\theta)$ is the observation density function, $\mathcal{F}_{t-1}$ collects all relevant information up to time $t-1$, and $\mathcal{I}_{t|t-1}$ is a scaling matrix with appropriate dimensions. Different choices of $d$ results in different GAS models: $d=1$ means that it will be use the inverse of Fisher Information matrix, $d=1/2$ the pseudo-inverse of Fisher Information matrix $d=0$ the identity matrix. More details can be found in \cite{creal2013generalized}. In practice, the choice of $d$ has shown to be an empirical question: for a given model one chooses the value of $d$ which produces best diagnostics and forecasting.
+
+\subsection{Parametrization}
+
+Having in mind that the first shape parameter of the beta density, $\beta_{t}>0$, it is natural to choose $\beta_{t}=exp\{f_{t}\}$. From this, it follows that Equations \eqref{beta_dens}-\eqref{eq:score3} should also be re-parametrized with regard to $\ln(\beta_t)$. Considering a monotonically increasing mapping function $h(\cdot)$, then $\tilde{f}_{t}=h(f_{t})$. Taking $\dot{h_{t}} = \partial h(f_{t})/f_{t}^{'}$, the beta GAS specification updating mechanism, will be
+\begin{align}
+\dot{h}_{t} &= \frac{1}{\beta_{t}}\nonumber\\
+\tilde{\nabla_{t}}&=\beta_{t}\left\{\ln y_{t} - [\ln k + \psi_{1}(\beta_{t}) - \psi_{1}(\beta_{t}+\alpha)]\right\}\\ \nonumber
+\tilde{\mathcal{I}}_{t|t-1} &= \left\{ \beta_{t}^{2} [ \psi_{2} (\beta_{t} + \alpha) - \psi_{2} (\beta) ] \right\}^{-1}\\
+\tilde{s}_{t}&=\frac{\ln y_{t} - [\ln k + \psi_{1}(\beta_{t}) - \psi_{1}(\beta_{t}+\alpha)]}{\beta_{t}^{1-2d}[\psi_{2}(\beta_{t}) - \psi_{2}(\beta_{t} + \alpha)]^{1-d}},\label{betascore1}
+\end{align}
+\noindent
+where $\psi_{i}$ stands for the $i$-th order derivative of the logarithm of the gamma function.
+
+
+\subsection{Initial values}
+
+In practice, to initialize recursion \eqref{eq:2} at $t=1$, it is necessary to have lagged values of the time varying parameter $f_{t}$. As $s_{t}$ is a direct function of $f_{t}$, it is straightforward to calculate its lagged values. Then we will concentrate on deriving lagged values for $f_{t}$. Denote the initial time varying parameters values as $f_{i,1-q}=\{f_{i,0},f_{i,-1},...,f_{i,1-q}\}$, where $q$ denotes the persistence of the value $f_{t}$ over time, as shown by equation \eqref{eq:2}. In our particular case, the wind CF time series is split into 12 monthly time series, i.e., $\{Y_{Jan}^{(i)},..., Y_{Dec}^{(i)}\}$. For each of these time series $\{Y_{m}^{(i)}\}_{m=1}^{12}$, estimate via maximum likelihood the static shape parameters of a beta density, $\alpha_{i}$ and $\beta_{i}$. Then use these estimates to initialize Equation \eqref{eq:2}, having in mind the new parametrization, $f_{i,t}=\ln(\beta_{i,t})$. Note that using this methodology, the first twelve observations of the time series are removed in order to estimate the initial values of the time varying parameter of the beta density. As a result, the maximum likelihood and the residuals of the beta GAS(p,q) model are only computed after the thirteenth observation.
+
+
+\subsection{Diagnostics}
+
+In GAS models diagnostics can be evaluated using an appropriate type of residuals for non linear/ non Gaussian time series models known as quantile residuals. As described in \cite{dunn1996randomized}, the observed quantile residual is given by
+\begin{eqnarray} \label{residq}
+r_{t,\hat{\theta}} = \Phi^{-1}(F(y_{t}|f_{t},\mathcal{F}_{t},\hat{\theta})).
+\end{eqnarray} 
+ 
+where $F(\cdot)$ is the CDF associated with $p(y_{t}|f_{t},\mathcal{F}_{t-1};\theta)$ and $\Phi^{-1}$ is the quantile of a standard Gaussian distribution. Under correct model specification these residuals should be normally distributed and show no dependence. These can be checked, for example, using the Jarque Bera test for normality, and the Ljung Box test for absence of serial correlation and Ljung Box (on squared residuals) to test for absence of ARCH effect. 
+
+\subsection{Univariate Forecasting}
+
+The $k$ steps ahead distribution conditional on observations up to time $t$, $p(y_{t+k}|\mathcal{F}_{t} )$, is only analytical for $k=1$, when it coincides with the chosen probability model. However, for $k>1$ it has to be evaluated using Monte Carlo simulation.
+
+
+% ===== Sec. III - Copula Model ===== %
+
+\section{Dependence model}\label{copula}
+
+In the previously section, non Gaussian time series models were proposed to model each of the wind CF time series. To derive a proper mechanism for joint scenario generation of CF's time series it is also necessary to capture the observed dependence among the CF's time series. For this conditional copula models introduced by \cite{patton2002applications} are used. %In the following, the same author addressed the possibility of modeling the correlations among two random variables as a time varying process \cite{patton2006modelling}. Additionally, in the former work, the author boosted the driving mechanism to a generally applicable driving mechanism for copula parameters. Further multivariate extensions were presented in \cite{patton2009copula} and \cite{patton2012copula}.
+
+More specifically, using the framework developed in \cite{patton2012copula}, it will be possible to allow the correlations between pairs of CF's time series to change in time according to a GAS mechanism that will be described in the sequel. As it will be seen, it is straightforward to combine marginal densities as given by GAS models with copulas that also have time varying parameters. %If we assume that, when we simulate the joint values, the correlation among those plants shall be taken as a static value all over the forecasting horizon. Therefore we will address the possibility of modeling the observed dependency among the wind plants as a time-varying process. Nevertheless, to update such time varying process we use the same GAS mechanism formerly presented in Section \ref{marginals}. 
+
+ Considering each of the time series models $y_{it}$ estimated individually using a GAS model, $u_{it}$ denotes the probability integral transform (PIT) variable obtained from the marginal beta GAS(p,q) model described in section \ref{marginals}. That is 
+\begin{eqnarray}
+u_{it}=F_{beta}(y_{it}|f_{i,t},\mathcal{F}_{i,t},\hat{\theta}_{i}) \,\, \forall \,\,i \in I\,\, \mbox{and} \,\, t=13,\ldots,T
+\end{eqnarray}
+\noindent
+where $\hat{\theta_i}=\{\hat{\alpha} _{i},\hat{\omega} _{i}, \hat{A}_{i}'s, \hat{B}_{i}'s\}\,\,  \forall \,\, i=1,2,3$ is the estimated vector of fixed parameters from the univariate beta models. The driving mechanism presented in \cite{creal2011dynamic}, was derived for a multivariate Student t, being the Gaussian density a particular case of this when $\nu^{-1} \to 0$. Such density then acts on the $T \times I$ vector $\tilde{y}_{t}^{'}=[F_{\nu}^{-1}(u_{1t}), ..., F_{\nu}^{-1}(u_{it})]^{'}$, where $F_{\nu}^{-1}(\cdot)$ is the univariate inverse Student t distribution with $\nu$ degrees of freedom. The updating of the correlation matrix through a GAS mechanism follows a similar idea from the dynamical conditional correlation (DCC) model proposed by \cite{engle2002dynamic}, and commonly used in Finance. The updating mechanism of the time-varying parameter vector, proposed for this particular density in \cite{creal2011dynamic}, is $f_{t}=vech(Q_{t})$, where $Q_{t}$ is a symmetric positive definite matrix, carrying all the information regarding the correlation among the wind plants CF's time series. For details, see \cite{creal2011dynamic}. {\color{red}, Melhorar essa parte do detalhamento das copulas com GAS}
+
+\subsection{Estimation of the copula parameters}\label{copula_par}
+Estimation of the copula parameters are done using multi-stage optimization approach known as Inference for Margins (IFM) (\cite{xu1996statistical}, \cite{joe1997multivariate}). In IFM estimation, the marginal parameters are first estimated, and then conditional on these estimates,  copula parameters are estimated via maximum likelihood. In IFM estimation the unknown parameter vector is split in two sets, one containing the marginal densities parameters and the other the copula parameters. A suitable justification for such approach is presented in \cite{joe2005asymptotic} and shall not be discussed here.
+
+% ===== Sec. IV - Case Study ===== %
+
+\section{Case Study - Simulating long-term joint scenarios} \label{Application}
+
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[height=5cm,width=6cm]{figures/EN_QQ.eps}
+	\caption{QQ-plot of EN monthly capacity factor time series ranging from January 1981 to December 2011.}
+	\label{qq_EN}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[height=5cm,width=6cm]{figures/IC_QQ.eps}
+	\caption{QQ-plot of IC monthly capacity factor time series ranging from January 1981 to December 2011.}
+	\label{qq_IC}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[height=5cm,width=6cm]{figures/RF_QQ.eps}
+	\caption{QQ-plot of RF monthly capacity factor time series ranging from January 1981 to December 2011.}
+	\label{qq_RF}
+\end{figure}
+
+
+Our time series data comprises monthly wind CF, from January 1981 to December 2011, measured at three wind plants located in the Brazilian Northeast, namely: Rio do Fogo (RF), Icaraizinho (IC) and Enacel (EN). The last year of these time series were kept for out of sample forecasting evaluation.
+
+Firstly, parameters of the beta GAS(p,q) models are estimated via maximum likelihood. To accommodate outliers, dummy variables ($d_{t}$) were used where appropriate (for details see Table \ref{table1}). In this study, the same lag structure was used for the three wind plants time series, as presented in Equation \eqref{eq:2}. After removing the first and last years of data for initial values estimation and forecasting evaluation,  maximization of the likelihood function resulted in the estimated parameters presented in Table \ref{table1}. 
+
+\begin{table}[htbp]
+\centering
+\caption{Maximum likelihood estimation of the beta GAS(12,12) model applied to three Brazilian wind plants.}
+\label{my-label}
+\begin{tabular}{ccccccc}
+\multirow{2}{*}{Parameter} & \multicolumn{2}{c}{Rio do Fogo (RF)} & \multicolumn{2}{c}{Icaraizinho (IC)} & \multicolumn{2}{c}{Enacel (EN)} \\
+                           & Estim.     & S.E.      & Estim.     & S.E.      & Estim.     & S.E.      \\ \hline
+$A_{1}$                    & 0.551      & 0.006     & 0.539     & 0.071      & 0.540      & 0.060     \\
+$A_{2}$                    & 0.231      & 0.004     & -0.226      & 0.066     & 0.498     & 0.073     \\
+$A_{3}$                    & -0.147     & 0.007     & 0.352      & 0.070     & 0.041      & 0.053     \\
+$A_{11}$                   & 0.008      & 0.007     & 0.219      & 0.038     & 0.169      & 0.034     \\
+$A_{12}$                   & 0.110       & 0.004     & -0.176      & 0.043     & 0.228     & 0.031     \\
+$B_{1}$                    & -0.080      & 0.002     & 1.058      & 0.055     & -0.164      & 0.039     \\
+$B_{2}$                    & 0.441      & 0.006     & -0.818     & 0.043     & -0.186     & 0.036     \\
+$B_{3}$                    & -0.369     & 0.011     & 0.156    & 0.031     & -0.008       & 0.016     \\
+$B_{11}$                   & 0.207      & 0.013     & 0.227      & 0.016     & -0.004       & 0.005      \\
+$B_{12}$                   & 0.325      & 0.011     & 0.121      & 0.037     & 0.721      & 0.035     \\
+$\omega$                   & 3.139      & 0.019     & 2.571     & 0.260     & 5.485      & 0.780     \\
+$\alpha$                   & 9.408      & 0.042     & 10.244     & 0.791     & 9.293      & 0.515     \\
+$d_{t=21}^{(Set, 1983)}$   & -          & -         & 2.320      & 0.287     & 1.447          & 0.247         \\
+$d_{t=22}^{(Oct, 1983)}$   & -          & -         & 2.021      & 0.309     & 3.610      & 0.481     \\
+$d_{t=29}^{(May, 1984)}$   & -          & -         & -0.031      & 0.641     & -          & -     \\
+$d_{t=129}^{(Sep, 1992)}$  & -          & -         & 3.349      & 0.317     & 1.675      & 0.386     \\
+$d_{t=130}^{(Oct, 1992)}$  & -          & -         & -          & -         & 1.189      & 0.345     \\
+$d_{t=165}^{(Sep, 1995)}$  & -          & -         & 1.460      & 0.264     & -          & -     \\
+$d_{t=241}^{(Jan, 2002)}$  & -          & -         & -          & -         &-1.527      & 0.582     \\
+$d_{t=308}^{(Aug, 2007)}$  & 1.771      & 0.346     & -          & -         & -          & -         \\
+$d_{t=309}^{(Sep, 2007)}$  & 2.384      & 0.369     & -          & -         & -          & -         \\
+$d_{t=345}^{(Sep, 2010)}$  & 3.004      & 0.277     & -          & -         & -          & -         \\
+$d_{t=346}^{(Oct, 2010)}$  & -          & -         & -1.462     & 0.350     & -          & - \\\hline
+\end{tabular}
+\label{table1}
+\end{table}
+
+Finally, to investigate correct model specification Table \ref{table2} report the results for the Jarque-Bera test for normality (under the correct specification of the beta density, the residuals should be normally distributed), Ljung-Box test for absence of autocorrelation and Ljung-Box on the squared residuals to check for ARCH effect (both were conducted using 30 lags).  
+%To evaluate the model diagnostics, a fully detailed analysis in the time series quantile residuals was attended. The previously described diagnostic tests were applied, Jarque Bera test for normality, Ljung-Box and ARCH effects for autocorrelation. All the tests were conducted until lag 30 and their results are shown in Table \ref{table2}.
+
+\begin{table}[htbp]
+%\begin{table}[]
+\centering
+\caption{P-values of standard diagnostic tests.}
+\begin{tabular}{c|ccc}
+\hline
+{\bf Test}      & {\bf Rio do Fogo} & {\bf Icaraizinho} & {\bf Enacel} \\ \hline
+Normality       & 0.242             & 0.582            & 0.386        \\
+Autocorrelation & 0.174             & 0.854           & 0.127        \\
+Arch effect           & 0.703             & 0.479            & 0.175      \\ \hline
+\end{tabular}
+\label{table2}
+\end{table}
+
+From Table \ref{table2}, it can be concluded that the proposed beta GAS(12,12) models are adequate to describe the three time series of CF's. For forecasting evaluation the prediction of the GAS models were compared to those obtained from the fitting of a SARIMA model to the logarithm of the CF time series. To obtain the prediction for the original CF's series these values have to be exponentiated. As it is known, exponentiation of Gaussian values can result in unrealistically large values for the original variable. This will not be the case with GAS models since from the outset the chosen probability model is appropriate to the support of the response variable. To provide some evidence on the distortion brought by the anti log transformation, as an evidence, we fitted a Gaussian SARIMA model to the log of the three CF time series wind plants consired here (EN,IC,RF), and simulated 2000 scenarios 12 steps ahead. Then we compared the empirical quantiles obtained from the simulated CF series to the quantiles of the original CF series (both in the original scale) $Q^{(\alpha\%)}\, \forall \,\alpha \in \{0.05, 0.10, 0.5, 0.9, 0.95 \}$ which are depicted in Figure \ref{analise_cenarios_SARIMA}.  As a result, the simulated quantiles are far beyond the historical quantiles of the CF time series, indicating the distortions brought by fitting the model to the log of the series.
+	
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[height=6cm,width=9.0cm]{figures/IC_COM_LOG.pdf}
+%\caption{2000 simulations of 12 steps ahead using SARIMA model in the %log of time series of Icaraizinho CF.}
+%\label{SARIMA_COM_TRANS}
+%\end{figure}
+
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[height=5.3cm,width=8.0cm]{IC_COM_LOG.ps}
+%\caption{2000 simulations of 12 steps ahead using SARIMA model in the %log of time series of Icaraizinho CF.}
+%\label{SARIMA_COM_TRANS}
+%\end{figure}
+
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[height=5.3cm,width=8.0cm]{figures/SARIMA_SEM_LOG.pdf}
+%\caption{Monte carlo simulation (2000) of 12 steps ahead using SARIMA %model with log transformation of Icaraizinho CF time series.}
+%\label{SARIMA_COM_LOG}
+%\end{figure}
+
+%The VAR model used here is similar to the VARX model from \cite{FosteringWPP}, nonetheless without exogenous variables. 
+The $k$ steps ahead distribution conditional on observations up to time $t$, $p(y_{t+k}|\mathcal{F}_{t} )$, used to obtain out of sample forecasts, has no analytical form in GAS models, and therefore is estimated using Monte Carlo simulation. We produced 2000 scenarios for each of the $k$ ahead forecasting horizon $k=1,2,...,12$. Goodness of fit results as shown in Table \ref{tablefor} indicates that our model seems competitive when compared to the benchmark SARIMA model.
+
+\begin{table}[htbp]
+\centering
+\caption{Forecasting evaluation between beta GAS(12,12) and SARIMA model.}
+\begin{tabular}{c|cccc}
+\hline
+   Modelo                 & Medidas   & RF    & IC    & EN    \\ \hline
+                          & RMSE      & 5.639 & 6.181 & 8.736 \\
+beta GAS(12,12)           & MAE       & 5.209 & 5.021 & 7.346  \\
+                       & Pseudo R$^{2}$ & 0.834 & 0.941 & 0.875 \\ \hline
+                       & RMSE      & 7.566 & 10.668 & 9.737 \\
+SARIMA                 & MAE       & 6.263  & 7.675 & 8.222 \\
+                       & Pseudo R$^{2}$ & 0.809 & 0.831 & 0.859\\ \hline
+\end{tabular}
+\label{tablefor}
+\end{table}
+
+The main contribution of the proposed framework here is not to improve the conditional mean forecast. The methodology is devote to improve the modelling of the join density of wind CF, providing accurate scenarios that take into account the dependency structure among different geographical areas.
+
+
+In the following we will provide details on the multivariate modeling of the three CF time series using the dynamic copula approach previously described in Section \ref{copula}. After estimating the fixed parameter vector $\hat{\theta}_{i}$ of each marginal $i \in I$, PIT variables $u_{it}$ are generated using the whole set of information up to time $t$, $\mathcal{F}_{t}$. Then, in order to estimate the copula parameters, the multi-stage optimization approach, IFM is used. The degrees of freedom of the copula model was estimated using the profile likelihood process (see \cite{murphy2000profile}), resulting in $\hat{\nu}=340$ is the value that maximizes the log likelihood, which means that the proposed elliptical copula reduces itself to a time-varying Gaussian copula. %This process made our approach feasible, since it is easier to evaluate the log likelihood function without maximizing simultaneously $\nu$ and $\theta^{Cop}$.
+
+The model procedure involving the elliptical copula presented in Section \ref{copula} was applied to the $T \times I$ vector $\tilde{y}_{t}^{'}=[F_{\nu}^{-1}(u_{1t}), F_{\nu}^{-1}(u_{2t}), F_{\nu}^{-1}(u_{3t})]^{'}$. From now on, this will be referred as t-GAS(p,q). In our application, the updating mechanism of the copula parameter with $p=1$ and $q=1$ was shown satisfactory. Table \ref{tab_3}. presents the results for the estimation of the parameters for the t-GAS(1,1) model.%The results of static parameter vector of the t-GAS(1,1) are presented in Table \ref{tab_3}.
+
+   
+\begin{table}[htbp]
+\centering
+\caption{Maximum likelihood estimation of the t-GAS(1,1) model applied to three Brazilian wind plants.}
+\label{my-label2}
+\begin{tabular}{c|cc}
+\hline
+\multirow{2}{*}{{\bf Parameter}} & \multicolumn{2}{c}{{\bf t-GAS}}                       \\
+                                 & \multicolumn{1}{l}{Estim.} & \multicolumn{1}{l}{S.E.} \\\hline
+$\omega$                               & 1.589                      & 0.063                    \\
+A                                & 0.354                      & 0.017                    \\
+B                                & 0.425                      & 0.083                   \\\hline
+\end{tabular}
+\label{tab_3}.
+\end{table}
+   
+From Table \ref{tab_3}, it follows that all parameters are statistically significant at 5\% or less which implies that the correlation of the elliptical copula is indeed time-varying. The value of the parameter $A$, in the copula model, reinforce the fact that the association between these three wind plants might not be static over the analyzed period. It is important to mention that such feature will be contemplated when simulating values from the joint density through our proposed methodology.%Figures \ref{elementos_Sigma_RFxIC}, \ref{elementos_Sigma_RFxEN} and \ref{elementos_Sigma_ICxEN} depict the plot of this correlations in time. Such Figures reinforce the fact that the association between these three wind plants might not be static over the analyzed period. It is important to mention that such feature will be contemplated when simulating values from the joint density through our proposed methodology.
+   
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[height=6.9cm,width=6.9cm]{figures/roh_VT_RFxIC.pdf}
+%\caption{Elementos de $\hat{\Sigma_{t}}$ atualizados pelo mecanismo GAS entre $\tilde{y}_{1t}$ e $\tilde{y}_{2t}$, que representam as usinas de RF e IC respectivamente.}
+%\label{elementos_Sigma_RFxIC}
+%\end{figure}
+%
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[height=6.9cm,width=6.9cm]{figures/roh_VT_RFxEN.pdf}
+%%\includegraphics[height=6.9cm,width=6.9cm]{figures/roh_VT_RFxEN_gauss.eps}
+%\caption{Elementos de $\hat{\Sigma_{t}}$ atualizados pelo mecanismo GAS entre $\tilde{y}_{1t}$ e $\tilde{y}_{3t}$, que representam as usinas de RF e EN respectivamente.}
+%\label{elementos_Sigma_RFxEN}
+%\end{figure}
+%
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[height=6.9cm,width=6.9cm]{figures/roh_VT_ICxEN.pdf}
+%%\includegraphics[height=6.9cm,width=6.9cm]{figures/roh_VT_ICxEN_gauss.eps}
+%\caption{Elementos de $\hat{\Sigma_{t}}$ atualizados pelo mecanismo GAS entre entre $\tilde{y}_{2t}$ e $\tilde{y}_{3t}$, que representam as usinas de IC e EN respectivamente.}
+%\label{elementos_Sigma_ICxEN}
+%\end{figure}
+   
+Now, in order to introduce the dependence captured by the elliptical copula model in the joint scenarios of wind CF, the following steps should follow. First forecast the PIT variables 12 steps ahead using the t-GAS (1,1) model, producing $m$ path 12 steps ahead of $\{\mathbf{u}^{m}_{it}\}_{t=T+1}^{T+12}$. With such values in hands follow the steps in the sequel.
+   
+\begin{enumerate}
+\item Call $m=1$, i.e., $\{\mathbf{u}_{t}^{(1)}\}_{t=t+1}^{t+12}$, then update $\Sigma_{t}$ with $\hat{\theta}^{cop}$;
+
+\item Use a random number generator to sample from a Student t density with the correlation matrix updated in the aforementioned step and the estimated degrees of freedom, $\hat{\nu}=340$;
+
+\item Apply the conditional sampling technique (see \cite{cherubini2004copula}), in order to generate conditioned pairs of PIT variables, i.e., $\{\mathbf{u}_{t}^{*(1) }\}_{t=t+1}^{t+k}$;
+ 
+\item Since it is a fully parametric copula model, marginal densities are assumed to be are known. Calculate the quantile of a beta density function evaluated at $\{\mathbf{u}_{t}^{*(1) }\}_{t=t+1}^{t+k}$, where the first shape parameter  $\beta_{i,t}=exp\{f_{i,t}\}$ was already calculated to generate the forecasting set $S$;
+
+\item Repeat the above steps until $m=2000$.
+\end{enumerate}
+
+By following this procedure, one obtains 2000 replicates for each of the $k$ steps ahead forecasting, $k=1,2,...,12$, for CF values. Denote this model beta \emph{t-GAS}. Finally, to evaluate the quality of the simulated values, we propose the same comparison between the empirical quantiles obtained from the simulation with those obtained from the real data. In order to accomplish that, as done in the case of initial values for the beta GAS(p,q) model, first we segment the wind CF time series of wind plant $i \in I$ into 12 monthly time series, i.e., $\{Y_{Jan}^{(i)},..., Y_{Dez}^{(i)}\}$. The same is applied to the simulated sets from model beta \emph{t-GAS}. The quantiles $Q^{(\alpha\%)}\, \forall \,\alpha \in \{0.05, 0.10, 0.5, 0.9, 0.95 \}$ of each set were calculated and plotted in Figure \ref{analise_cenarios_gas}, where the lines are the monthly quantiles of the simulated set from one of the two models, while the geometric figures represent the monthly quantiles of the real data set. We also display in Figure \ref{analise_cenarios_SARIMA} the same analysis using SARIMA model with log transformation. Note that the quantiles from the simulated sets using our beta \emph{t-GAS} model are very close to the ones estimated from the real data set. These findings suggests that the simulated values produced by the beta \emph{t-GAS} model seem to capture the correct underlying dependency structure presented in the wind CF time series. To reinforce our findings, we also implemented the conditional coverage Value at Risk exceedances test of Cristoffersen \cite{christoffersen1998evaluating} to check the coverage level of each predictive density against real data in Table \ref{cristofersen}. Non significant p-values reinforce the idea that the proposed model is not adequate to fit the CF time series. As expected, p-values of Cristoffersen test applied to SARIMA predictive densities are all significant, considering a coverage level of 95\%. In contrast, predictive densities produced by beta \emph{t-GAS} model are all non-significant, using the same level of coverage.
+
+\begin{table}[htbp]
+%\begin{table}[]
+\centering
+\caption{P-values conditional coverage Value at Risk exceedances test of Cristoffersen considering a coverage level of 95\%.}
+\begin{tabular}{c|ccc}
+\hline
+{\bf Coverage level}      & {\bf Rio do Fogo} & {\bf Icaraizinho} & {\bf Enacel} \\ \hline
+\emph{t-GAS} model   & 0.306             & 0.421           & 0.305        \\
+SARIMA               & 0.034             & 0.035           & 0.011   \\ \hline     
+\end{tabular}
+\label{cristofersen}
+\end{table}
+
+%\begin{figure}[htbp]
+\begin{figure}[htbp]
+\centering
+\includegraphics[height=5.5cm,width=9.0cm]{figures/RF_BETA_GAS.pdf}
+\includegraphics[height=5.5cm,width=9.0cm]{figures/IC_BETA_GAS.pdf}
+\includegraphics[height=5.5cm,width=9.0cm]{figures/EN_BETA_GAS.pdf}
+\caption{Scenario evaluation of the year of 2011 through beta \emph{t-GAS} model against the real data set.}
+\label{analise_cenarios_gas}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[height=5.5cm,width=9.0cm]{figures/RF_COM_LOG.pdf}
+\includegraphics[height=5.5cm,width=9.0cm]{figures/IC_COM_LOG.pdf}
+\includegraphics[height=5.5cm,width=9.0cm]{figures/EN_COM_LOG.pdf}
+\caption{Scenario evaluation of the year of 2011 through SARIMA model against the real data set.}
+\label{analise_cenarios_SARIMA}
+\end{figure}
+
+As already argued, such scenarios can benefit several areas. One of them is comercialization. For instance, in order to quantify the investor's risk at the Brazilian Free Trade Environment (FTE), first it is necessary to transform the capacity factors ($CF_{t}$) into energy generation in (\%) of firm energy certificate (${G}_{t}$). This is done by using the following formula
+\begin{eqnarray}
+\tilde{G}_{i,t}=\frac{CF_{i,t}}{100}\cdot \frac{PoW_{i}}{FEC_{i}}, \label{eqrisk1}
+\end{eqnarray}
+\noindent
+where $PoW_{i}$ and $FEC_{i}$ are respectively the power and the firm energy certificate of the wind plant $i\in I$. Now, define $S=\lbrace 1,\ldots ,2000\rbrace $ are the scenarios generated independently from the Betas densities; $C={1,\ldots ,2000}$ are the scenarios obtained using the dependence structure as given by the Student t copula and $T=\lbrace 1,\ldots ,12\rbrace $ is the forecasting horizon for the risk evaluation for the year of 2011. At the most common contracts in the FTE, the so called quantity contracts, agents freely set a price of a bilateral contract where the seller compromises itself in delivering a fixed amount of energy $Q$, per period, in exchange of a fixed payoff (also per period). Still, in this setting, the contract represents only a financial instrument and does not impose a physical energy delivery obligation by the part of the seller. The differences between the energy due and the amount effectively generated are then settled at the spot market (by the spot price) at each period. In this sense, with $\tilde{G}_{t,i,z}$ and setting $z\in Z$, where $Z=\{S,C\}$ is the index that points out the aforementioned sets, it is possible to generate the distribution for a one year income obtained from a contract negotiated at the FTE. This is done by substituting $\tilde{G}_{t,i,z}$ as given in Equation \eqref{eqrisk1}, in the following equation: 
+\begin{eqnarray}
+\tilde{R}_{t,i,z}=PQh_{t}+(\tilde{G}_{t,i,z}-Q) \tilde{\pi}_{t,z}h_{t}\,\, \mbox{for}\,\, t \in T, \label{eqrisk2}
+\end{eqnarray}
+\noindent
+where $\tilde{\pi}_{t,z}$ denotes the spot price at configuration $z$ at each period of the contract's horizon, $h_{t}$ is the total number of hours of period $t$; $Q$ is the amount of energy sold through the bilateral contract, in avg-MW and, $P$ is the price that defines the contract's fixed payoff parcel at each period. The latter two quantities are fixed at $P=100$ R\$/MWh and $Q=1AvgMW$. The net present value (NPV) of each contract is then given by 
+\begin{eqnarray}
+\tilde{R}_{i,z}=\sum_{t\in T}{\frac{\tilde{R}_{t,i,z}}{(1+K)^{t}}}\,\, \mbox{for} \,\, i\in I
+\end{eqnarray}
+where $K$ is the interest rate, wich is fixed in zero. Now to generate the distribution of the NPV of the portfolio with contracts attached to those three wind plants, it is only necessary to substitute in Equation \eqref{eqrisk2} the variable $\tilde{G}_{t,i,z}$ for $\sum_{t\in T}{\sum_{i\in I}{\tilde{G}}_{t,i,z}}$. After that, to obtain the  distribution of the cash-flow generated by this portfolio, one just adds their values, as given by Equation \eqref{eqrisk2}, resulting in
+\begin{eqnarray}
+\tilde{R}_{z}^{Port}=\sum_{t\in T}{\sum_{i\in I}{\tilde{R}_{t,i,z}}}.
+\end{eqnarray}
+
+The CVaR estimated using the simulated distribution of the cash flows associated with this portfolio are presented in Table \ref{CVar_rendas}, where ``dependent'' refers to those scenarios generated through the Student t copula, and ``independent'',refers to simulations obtained directly from each of the beta marginal models.
+ \begin{table}%[H]
+ \centering
+% \small
+ \caption{CVaR for the distribution of cash flows for different portfolios.}
+ \begin{tabular}{|c|c|c|c|c|}
+ \hline
+ {$CVaR^{95\%}$} & Dependent & Independent \\ \hline
+% \midrule
+ $\tilde{R}_{RF,z}$ & -967.06 & -1,051.00 \\ \hline
+ $\tilde{R}_{IC,z}$ & 490.31 & 316.79 \\ \hline
+ $\tilde{R}_{EN,z}$ & 622.79 & 467.27 \\ \hline
+ $\tilde{R}_{z}^{Port}$ & 1,224.39 & 1,093.95 \\ \hline
+% \bottomrule
+ \end{tabular}%
+ \label{CVar_rendas}%
+ \end{table}%
+
+We focus our attention on the CVaR of $\tilde{R}_{z}^{Port}$. Such a figure indicates that by considering dependence between the CF's of the different wind plants, one obtains an increase of 12\% on this risk measure compared to the risk evaluated by not taking into account dependence. In the present context this means that an investor would experience a 12\% increase on his/her income when investing in such portfolio. Also the CVaR from the wind plant IC, $\tilde{R}_{2,v}$, presents the largest difference when comparing dependent with independent scenarios, 54.7\%. %These results indicate that the proposed approach figures as an alternative to that of the VARX model to generate integrated scenarios of wind capacity factor, where the simulation can be done only by one step.
+
+% ===== Sec. V - Conclusion ===== %
+
+\section{Conclusion}\label{Conclusion}
+
+Our methodology for simulate scenarios from a joint density of wind capacity factor seems fruitful and have several benefits when comparing to the models presented in the  literature so far. First, we propose a non Gaussian model to filter wind CF dynamic. By doing such, one does not need to transform variables and work with the $log$ of the observed data point, our framework is taylor made for the range of values that CF's time series can assume. In addition, the simulated values will be always inside physical limits of production, i.e., it will never assume values bigger than the maximum production of wind plant $i$.
+
+The results presented in this work indicates that our methodology figures as an alternative to simulate joint scenarios of renewable energy sources, where the simulation can be done only by one step.
+
+%\section*{Acknowledgment}
+
+%The authors would like to thank FICO (Xpress-MP developer) for the academic partnership program with the Electrical Engineering Department of Pontifical Catholic University of Rio de Janeiro, Brazil (PUC-Rio). The authors would also like thank the LAMPS researchers for the daily exchanges and their insightful considerations.
+
+%\IEEEtriggeratref{17}
+\bibliographystyle{IEEEtran}
+\bibliography{Bibhenriquinho}
+
+%\begin{IEEEbiographynophoto}{Bruno Fanzeres} (S'11) has a B.Sc. degree in Electrical and Industrial Engineering and a M.Sc. degree in Operations Research from PUC-Rio, Brazil. He is pursuing a Ph.D degree in Operations Research at the same university.
+%\end{IEEEbiographynophoto}
+
+%\begin{IEEEbiographynophoto}{Arthur Brigatto} (S'14) received a B.Sc. degree in Electrical Engineering from the Federal University of Juiz de Fora, Brazil, and is pursuing a M.Sc. in Electrical Engineering at PUC-Rio, Brazil.
+%\end{IEEEbiographynophoto}
+
+%\begin{IEEEbiographynophoto}{Alexandre Street} (S'06, M'10) holds the degrees of M.Sc. and D.Sc. in Electrical Engineering (Operations Research) from PUC-Rio, Brazil. 
+%\end{IEEEbiographynophoto}
+
+%\begin{IEEEbiographynophoto}{Luiz Augusto Barroso} (S'00, M'06, SM'07) has a B.Sc. in Mathematics and a Ph.D degree in Operations Research. He is a technical director at PSR.
+%\end{IEEEbiographynophoto}
+
+\end{document}
