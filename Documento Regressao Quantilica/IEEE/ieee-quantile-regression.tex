@@ -1,32 +1,45 @@
 \section{Quantile Regression based time series model}
 
-Let $Y$ be a real valued random variable. The quantile function $Q_Y:[0,1] \rightarrow \mathbb{R}$ is defined pointwise by its $\alpha$-quantile, which is given by
+Let the conditional quantile function $Q_{Y|X=x}:[0,1] \times \mathbb{R}^d \rightarrow \mathbb{R}$ (in short, from now on, $Q_{Y|X}(\cdot, \cdot)$) be defined as 
 \begin{equation}
-Q_Y(\alpha) = F_Y^{-1}(\alpha) = \inf\{y: F_Y(y) \geq \alpha\},
+Q_{Y|X}(\alpha,x) = F_{Y|X}^{-1}(\alpha,x) = \inf\{y: F_{Y|X}(y,x) \geq \alpha\},
 \label{eq:quantile-function}
 \end{equation}
-where $F_Y$ is the distribution function of random variable $Y$ and $\alpha \in [0,1]$. Equation \ref{eq:quantile-function} defines what we call from now on as the quantile function $Q_Y(\cdot)$, in relation to random variable $Y$. In this article, we are interested in a conditional quantile function $Q_{Y|X=x}:[0,1] \times \mathbb{R}^d \rightarrow \mathbb{R}$ (in short, from now on, $Q_{Y|X}(\cdot, \cdot)$), where $X$ can be a vector.
-
-
-Let $(\Omega, \mathcal{F}, P)$ be a probability space. The conditional quantile function can be found as the result of the following optimization problem:
-\begin{eqnarray}
-Q_{Y|X}(\alpha, \cdot)\quad & \in\quad\underset{q_\alpha(\cdot)}{\text{arg min}}\, &
-(1-\alpha)\int_{\omega \in \Omega}|Y(w)-q_\alpha(X(w))|^{-}P(dw) \label{eq:optim-continuous}
-\\ & & + (\alpha)\int_{\omega \in \Omega}|Y(w)-q_\alpha(X(w))|^{+}P(dw) \nonumber
-\end{eqnarray}
+where $Y$ is a random variable and $X$ a random vector. 
+In this work, we use the sample quantile,  where we calculate the optimization based on a finite number of observations, instead of integrating over all domain of random variable $Y$\todo{Definir $Y_t$ no lugar de $Y$?}.
+The sample quantile is given by 
 \begin{equation}
-q_\alpha  \in \mathcal{Q},
-\end{equation}
-The argument of optimization problem described on equation \ref{eq:optim-continuous} is the function $q_\alpha$, which belongs to a function space $\mathcal{Q}$. We might have different assumptions for the space $\mathcal{Q}$, depending on the type of function we want to find for $q_\alpha$. A few properties, however, must be achieved by our choice. The conditional quantile function $Q_{Y|X}(\alpha)$ must be monotone on $\alpha$, and its first derivative must be limited.
-
-In this work, we use the sample quantile,  where we calculate the optimization based on a finite number of observations, instead of integrating over all domain of random variable $Y$. For the specific case where the random variable is a time series $y_t$, quantiles are estimated from a $n$ size sample of observations of $y_t$ and a explanatory variable $x_t$ for each $t$, such that our random sample is formed by the sequence $\{y_t,x_t \}_{t=1}^n$. To estimate the $\alpha$-quantile from a sample, we change \ref{eq:optim-continuous} for the following optimization problem:
-\begin{equation}
-\hat{Q}_{Y|X}(\alpha, \cdot)\quad \in\quad\underset{q_\alpha(\cdot)}{\text{arg min}}\,\sum_{t \in T}\alpha|y_{t}-q_\alpha(\cdot)|^{+}+\sum_{t \in T}(1-\alpha)|y_{t}-q_\alpha(\cdot)|^{-},
+\hat{Q}_{Y|X}(\alpha, \cdot)\quad \in\quad\underset{q_\alpha(\cdot)}{\text{arg min}}\,\sum_{t \in T} \rho_\alpha(y_{t}-q_\alpha(\cdot)),
 \label{eq:linear-model}
 \end{equation}
 \begin{equation}
 q_\alpha  \in \mathcal{Q},
 \end{equation}
+and $\rho$ is the check function defined as
+\begin{equation}\label{eq:check-function}
+\rho_{\alpha}(x)=\begin{cases}
+\alpha x & \text{if }x\geq0\\
+(1-\alpha)x & \text{if }x<0
+\end{cases}.
+\end{equation}
+
+Let $Y$ be a real valued random variable. The quantile function $Q_Y:[0,1] \rightarrow \mathbb{R}$ is defined pointwise by its $\alpha$-quantile, which is given by
+where $F_Y$ is the distribution function of random variable $Y$ and $\alpha \in [0,1]$. Equation \ref{eq:quantile-function} defines what we call from now on as the quantile function $Q_Y(\cdot)$, in relation to random variable $Y$. In this article, we are interested in a conditional quantile function $Q_{Y|X=x}:[0,1] \times \mathbb{R}^d \rightarrow \mathbb{R}$ (in short, from now on, $Q_{Y|X}(\cdot, \cdot)$), where $X$ can be a vector.
+
+
+%Let $(\Omega, \mathcal{F}, P)$ be a probability space. The conditional quantile function can be found as the result of the following optimization problem:
+%\begin{eqnarray}
+%Q_{Y|X}(\alpha, \cdot)\quad & \in\quad\underset{q_\alpha(\cdot)}{\text{arg min}}\, &
+%(1-\alpha)\int_{\omega \in \Omega}|Y(w)-q_\alpha(X(w))|^{-}P(dw) \label{eq:optim-continuous}
+%\\ & & + (\alpha)\int_{\omega \in \Omega}|Y(w)-q_\alpha(X(w))|^{+}P(dw) \nonumber
+%\end{eqnarray}
+%\begin{equation}
+%q_\alpha  \in \mathcal{Q},
+%\end{equation}
+%The argument of optimization problem described on equation \ref{eq:optim-continuous} is the function $q_\alpha$, which belongs to a function space $\mathcal{Q}$. We might have different assumptions for the space $\mathcal{Q}$, depending on the type of function we want to find for $q_\alpha$. A few properties, however, must be achieved by our choice. The conditional quantile function $Q_{Y|X}(\alpha)$ must be monotone on $\alpha$, and its first derivative must be limited.
+
+In this work, we use the sample quantile,  where we calculate the optimization based on a finite number of observations, instead of integrating over all domain of random variable $Y$. For the specific case where the random variable is a time series $y_t$, quantiles are estimated from a $n$ size sample of observations of $y_t$ and a explanatory variable $x_t$ for each $t$, such that our random sample is formed by the sequence $\{y_t,x_t \}_{t=1}^n$. To estimate the $\alpha$-quantile from a sample, we change \ref{eq:optim-continuous} for the following optimization problem:
+
 where $T = \{1, \dots, n \}$, $|x|^+=\max\{0,x\}$ and $|x|^-=-\min\{0,x\}$. The solution from the above problem is an estimator $\hat{Q}_{Y|X}$ for the quantile function $Q_{Y|X}$.
 
 To model this problem as a Linear Programming problem, thus being able to use a modern solver to fit our model,  we create variables $\varepsilon^+_t$ e $\varepsilon^-_t$ to represent $|y-q(\cdot)|^+$ and $|y-q(\cdot)|^-$, respectively. The optimal argument $q_\alpha^*(\cdot)$ on the Linear Programming problem \ref{eq:qar-general} is the estimated $\alpha$-quantile for the given random sample.

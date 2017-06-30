@@ -1,5 +1,5 @@
 \documentclass[a4paper]{IEEEtran}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 %\usepackage{epstopdf}
 %\usepackage[spanish]{babel}
 \usepackage[cmex10]{amsmath}
@@ -60,7 +60,7 @@
 	
 	\item {\color{red} melhorar a parte da copula}.
 	
-	\item {\color{red} introducao da parada fuzzy nao é muito besta?}.
+	\item {\color{red} introducao da parada fuzzy nao Ã© muito besta?}.
 	
 \end{itemize}
 
@@ -185,7 +185,7 @@
 %and the non Gaussian pattern of such variable, which is statistically confirmed by the
 %Another evidence, which corroborates with our Moreover, checking each month empirical density, it is possible to conclude that they are asymmetric, and when calculating theirs values, August`s skewness is the closest to zero, in modulus, with a value of 0.1306.
 
-%Tradicionalmente, tem-se utilizado modelos ARMA e seus derivados, os quais pressupoe a hipotese de normalidade da serioe, o que contraria os fatos estilizados ja elucidados. Mesmo trabalhando com o log da serie, problemas persistem, pois como o objetvio é a simulacao na escala original da série, observa-se que ao se aplicar a exponenciacao, as simulacoes da serie obtida pelo modelo arma gaussiano, a magnitude dos valres simulados muitas vezes sao superiores aos valores historicamente observados
+%Tradicionalmente, tem-se utilizado modelos ARMA e seus derivados, os quais pressupoe a hipotese de normalidade da serioe, o que contraria os fatos estilizados ja elucidados. Mesmo trabalhando com o log da serie, problemas persistem, pois como o objetvio Ã© a simulacao na escala original da sÃ©rie, observa-se que ao se aplicar a exponenciacao, as simulacoes da serie obtida pelo modelo arma gaussiano, a magnitude dos valres simulados muitas vezes sao superiores aos valores historicamente observados
 
 %The non Gaussian nature of CF time series, in most applications in the energy literature, is not directly dealt with, either because of non availability of proper software or by the computational burden in implementing existing non Gaussian models. For example, if one decides to fit a non-Gaussian state space model using unobserved components, such as trend, seasonals and cycle, it would be necessary extensive Monte Carlo simulation for both state and fixed parameter estimation. See, for example, Durbin and Koopman (2012, pp 209-324). In practice a great deal of applied work involving scenario generation for wind speed or CF time series make use of ARMA models and its extensions, \cite{box1976time}, mostly under normality assumption. At best such models are fitted to the log of the variable of interest, and by taking the anti log, predictions and simulations on the original scale of the variable are obtained. Unfortunately such a strategy can result in unrealistic sampling paths for the original variable.
 
@@ -298,7 +298,7 @@ The rest of this paper is organized as follows. In section \ref{marginals}, the 
 
 Our time series data comprises of monthly measures of wind capacity factors (CF), which can only assume values in the range [0,100), indicating at the outset, the non adequacy of models with Gaussian distribution. In addition, such time series display a strong seasonal pattern derived from the inter annual variation of wind speed. These data features suggest that a proper model for CF series has to be non Gaussian with parameters that change in time, so that short term and seasonal variations can be properly captured. Firstly, one should choose an adequate density to each of the wind CF time series. %one should look for densities in which the time series values are contained into the densities support range.
 After trying several non Gaussian densities the best candidate was the beta. More precisely, in our application the CF time series $y_t$ is properly described by a beta density as follows,
-%from January 1981 to December 2011, measured at three wind plants located in the Brazilian Northeast, namely: Rio do Fogo (RF), Icaraizinho (IC) and Enacel (EN).  Since CF´s have nominal support in $[0,100)$, we propose a beta density function with support in $[0,m)$, as the univariate model for each CF, with m to be specified. Then, each marginal model will be specified as follows
+%from January 1981 to December 2011, measured at three wind plants located in the Brazilian Northeast, namely: Rio do Fogo (RF), Icaraizinho (IC) and Enacel (EN).  Since CFÂ´s have nominal support in $[0,100)$, we propose a beta density function with support in $[0,m)$, as the univariate model for each CF, with m to be specified. Then, each marginal model will be specified as follows
 \begin{eqnarray}
 p(y_{it}|f_{it},\mathcal{F}_{t-1};\theta) \sim Beta\left(\beta_{it},\alpha_{i}\right),\,\,\forall\,\, i \in I \,\, \mbox{and}\,\, t \in T, \label{beta_dens}
 \end{eqnarray}

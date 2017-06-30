@@ -1,11 +1,18 @@
-%\documentclass[a4paper]{IEEEtran}
-\documentclass[journal,12pt,onecolumn,draftclsnofoot,]{IEEEtran}
+%% Versão final IEEE
+\documentclass[a4paper]{IEEEtran}
 
-\usepackage[latin1]{inputenc}
+% Versão 
+%\documentclass[journal,12pt,onecolumn,draftclsnofoot,]{IEEEtran}
+%\usepackage[a4paper, marginparwidth=1in]{geometry}
+
+
+
+
+\usepackage[utf8]{inputenc}
 \usepackage{epstopdf}
 %\usepackage[spanish]{babel}
 \usepackage[cmex10]{amsmath}
-\interdisplaylinepenalty=2500
+%\interdisplaylinepenalty=2500
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
@@ -27,7 +34,14 @@
 
 
 % % % Adicionados por mim
-\usepackage[colorinlistoftodos]{todonotes}
+%\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage{xargs} 
+
+\newcommandx{\todoi}[2][1=]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1,inline]{#2}}
+%\newcommand{\todop}[1]{\todo[textsize=tiny]{#1}}
+%%%%
+
 
 
 \DeclareMathOperator*{\Max}{max}
