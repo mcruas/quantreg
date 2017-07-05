@@ -61,9 +61,10 @@ dev.off()
 
 
 ################# Mesmo gráficos com série solar
-library(readxl); library(dplyr)
-bd2a <- read_excel("Dados Climaticos/Solar-tubarao/tubarao solar.xlsx") %>% select(yt0, yt1,hora)
-bd2 <- bd2a %>% filter(yt0 > 0)
+library(readxl); library(dplyr); library(latex2exp); library(lattice)
+bd2_solar <- read_excel("Dados Climaticos/Solar-tubarao/tubarao solar.xlsx")
+bd2 <- bd2_solar %>% select(yt0, yt1,hora, mes) %>% filter(yt0 > 0)
+# bd2 <- bd2a 
 horas <- sort(unique(bd2$hora))
 pdf("Documento Regressao Quantilica/Figuras/Solar-exemplos/tubarao-boxplot.pdf")
 boxplot(yt0 ~ hora, data = bd2, col = 2, names = horas, ylab = "Mean MW", xlab = "Hours",
@@ -78,6 +79,15 @@ plot(bd2$yt0,bd2$yt1, xlab = (TeX("y_{t-1}")), ylab = (TeX("y_t")),
      main = ("Tubarão hourly data"), pch = 20)
 dev.off()
 
+
+xyplot(bd2$yt1 ~ bd2$yt0 | as.factor(bd2$hora), groups =  bd2$mes, main = "Tubarão Hourly Scatterplots", pch = 20, 
+       auto.key=list(space="right", pch=20))
+
+
+for (mmes in 1:12) {
+    xyplot(yt1 ~ yt0 | as.factor(hora), main = paste0("Tubarão Hourly Scatterplots ", mmes)  , pch = 20, 
+       data = (bd2 %>% filter(mes ==  mmes ))) %>% print
+}
 # bd.mes.a.mes <- bd %>% group_by(mes) %>% summarise(blau = mean(yt0, na.rm = TRUE))
 
 

@@ -3,14 +3,16 @@
 % % % Talk about renewable energy and its variability
 
 Renewable energy power is a hot topic in the recent years. It is a much cleaner way of producing energy than by using other sources such as coal and gas, and with less hazard potential than nuclear power plants. The installed capacity of renewable plants has been increasing in a fast pace and projections point that wind power alone will account to 18\% of global power by 2050  \cite{IntEnerAgency}.
-In spite of being a welcoming technology, it brings a new problem for energy planners: 
- the complex behavior of wind is very difficult to understand and predict. Due to its unpredictability, the cost for the system as a whole may be high. 
+In spite of being a welcoming technology, it brings new challenges for power system planners, operators, and agents. It is important to have good forecasts of either high and low quantiles
+ the complex behavior of wind is very difficult to model and predict.  \todo{é importante prever bem quantis altos e baixos p analise de risco - fica prejudicada pela dificuldade de previsao destes quantis }
 Having better prediction models can help the planner to make better and less risky decisions, increasing the attractiveness of renewable energy to the energy system. 
 In this work we will investigate how to model dynamics of renewable energy time series in both short and long terms.
 
 % % % Critics about point forecasts and gaussian models (ARIMA-GARCH). Compare GAS and nonparametric models. 
 
-Conventional statistics are often focused on estimating the conditional mean of a given random variable. This is not very useful when dealing with renewable energy, as the variability and the notion of risk is extremely important for planning. Our attention is, then, turned to probabilistic forecasting models. Among these, there are many possibilities. \cite{zhang_review_2014} reviews the commonly used methodologies for this task, separating them in parametric and nonparametric classes. Main characteristics of \textbf{parametric models} are (i) assuming a distribution shape and (ii) low computational costs. GAS models \cite{creal2013generalized} and ARIMA-GARCH, for example, model the renewable series by assuming the distribution \textit{a priori}. On the other hand, \textbf{nonparametric models} (i) don't require a distribution to be specified, (ii) needs mode data to produce a good approximation and (iii) have a higher computational cost. Popular methods are Quantile Regression, Kernel Density Estimation,  Artificial Intelligence or a mix of them.
+Conventional statistics are often focused on estimating the conditional mean of a given random variable.
+\todoi{Falar sobre modelos de previsão usando modelos tradicionais para energia renovável}
+ This is not very useful when dealing with renewable energy, as the variability and the notion of risk is extremely important for planning. Our attention is, then, turned to probabilistic forecasting models. Among these, there are many possibilities. \cite{zhang_review_2014} reviews the commonly used methodologies for this task, separating them in parametric and nonparametric classes. Main characteristics of \textbf{parametric models} are (i) assuming a distribution shape and (ii) low computational costs. ARIMA-GARCH, for example, model the renewable series by assuming the distribution \textit{a priori}. On the other hand, \textbf{nonparametric models} (i) don't require a distribution to be specified, (ii) needs mode data to produce a good approximation and (iii) have a higher computational cost. Popular methods are Quantile Regression, Kernel Density Estimation,  Artificial Intelligence or a mix of them.
 
 
 % % % Talk about nonparametric models and how to use quantile regression to estimate the whole distribution
@@ -19,7 +21,7 @@ A common finding is that wind and solar time series don't have a Gaussian behavi
 As we are working with time series, we rely on the results of \cite{koenker_quantile_2006}, which defines the quantile autoregression, extending the application of QR on cases where the covariates are lagged values of $y_t$. 
 QR is a powerful tool for measuring quantile others than the median. By estimating many quantiles on a thin grid of probabilities, one can have as many points as desired of the estimated conditional distribution function.
 
-However, when estimating a distribution function, as each quantile is estimated independently, the monotonicity of the distribution function may be violated. This issue is a known as crossing-quantiles. To get around it we propose to either add a constraint on the optimization model or make a transformation as in \cite{chernozhukov_quantile_2010}.
+However, when estimating a distribution function, as each quantile is estimated independently, the monotonicity of the distribution function may be violated. This issue is a known as crossing-quantiles. To get around it we propose to either add a constraint on the optimization model or make a transformation as in \cite{chernozhukov_quantile_2010}, which can be estimated independently.
 
 Using QR as in \cite{koenker2005quantile} is not a novelty when predicting the conditional distribution of wind power time series, as is already done in \cite{moller_time-adaptive_2008,nielsen2006,bremnes_probabilistic_2004,wan_direct_2017}.
 In this article, we combine QR with regularization techniques. On the Mixed Integer Linear Programming (MILP) approach, we use the best subset selection, which \cite{bertsimas_best_2015} does for minimizing the quadratic error and the $\ell_1$ penalization as in \cite{belloni_l1-penalized_2009} or \cite{ciuperca_adaptive_2016} (the AdaLasso variant, where each coefficient may have a different weight on the objective function to ensure oracle properties).
@@ -29,10 +31,77 @@ On the advantages of QR we highlight the fact that it is a direct way of finding
 
 \todoi{Review of quantile regression for wind and solar - procurar mais referências?}
 
+The approach by \cite{gallego2016line} is to use QR with a nonparametric methodology. The authors add a penalty term based on the Reproducing Kernel Hilbert Space, which allows a nonlinear relationship between the explanatory variables and the output. This paper also develops an on-line learning technique, where the model is easily updated after a new observation.
+
+In \cite{wan_direct_2017}, QR is used with a special type of Neural Network (NN) with one hidden layer, called extreme learning machine. In this setup, each quantile is a different linear combination of the features of the hidden layer. 
+
+
+ 
+
+
+
 %%%% Contributions
+The objective of this paper is to propose a new methodology to address nonparametric time-series focused on renewable energy. In our analysis, we develop both nonlinear and linear models for QR. The main contributions are:
+\begin{itemize}
+	\item A nonparametric methodology to model the conditional distribution of a given time series.
+	
+	\item On the linear case, we propose a parsimonious methodology that selects the global optimal solution with a given number of 
+	
+	\item Regularization techniques applied to an ensemble of quantile regressions to estimate the conditional distribution
+	
+	\item 
+	
+\end{itemize}
 
 We propose a new combination of methods to predict the $k$-step ahead conditional distribution. By using MILP, we achieve a solution which is optimal for the given objective. In order to improve the quality of predictions and interpretability, we incorporate a joint regularization by specifying the existence of groups among the probabilities $\alpha$. We could not find any other work in the literature that interpreted different quantiles as models depending on one another. 
 The objective of this paper is to propose and test different techniques of predicting the conditional distribution based on QR. 
+
+
+% OBJETIVOS:
+Um modelo para séries tmeporais autoregressivo e nao parametrico e baseado na função quantilica. No caso autoregressivo, uma metodologia de estimação com seleção parcimoniosa otima global é proposta e possibilita o controle dos números de grupos de regressores diferentes dentro do modelo para diferentes quantis. Para o modelo não paramétrico
+Modelo data driven, empirico
+
+
+% Next sessions paragraph
+
+The remaining of the paper is organized as follows. In section II, we present both the linear parametric and the nonlinear QR based time series models. In section III, we discuss the estimation procedures for them. The regularization strategies are also presented on this section. Finally, in section IV, a case study using real data from both solar and wind power is presented in order to ...
+Section V will conclude this article.
+
+
+
+%2) Quantile Regression based time series model
+%	A. Linear parametric explanatory model
+%	B. General non-linear nonparametric model
+%
+%3) Estimation procedures
+%	A. Linear model with optimal variable selection / regularization
+%	B. Nonlinear model
+%	
+%4) Case study
+%	A. Long term wind power generation
+%	B. Short term wind (solar?) generation
+%
+%5) Conclusion
+
+
+
+
+
+% % Seguir a estrutura paragrafo papaer henrique
+
+%1) Motivacao para minimizar o risco da WPG
+%2) Fala sobre a pesquisa em WPG utilizando ARMA e SARIMA com distribuição gaussiana 
+
+% % Colocar em especifico os objetivos e detalhar os papers anteriores, destacando o que o nosso tem e nenhum outro atingiu ate entao
+
+% procurar os objetivos que já discutimos.
+
+
+
+
+
+
+
 
 
 % % % % % % % % % % % % % % % % % % %

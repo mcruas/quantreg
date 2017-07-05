@@ -5,8 +5,8 @@ Let the conditional quantile function $Q_{Y|X=x}:[0,1] \times \mathbb{R}^d \righ
 Q_{Y|X}(\alpha,x) = F_{Y|X}^{-1}(\alpha,x) = \inf\{y: F_{Y|X}(y,x) \geq \alpha\},
 \label{eq:quantile-function}
 \end{equation}
-where $Y$ is a random variable and $X$ a random vector. 
-In this work, we use the sample quantile,  where we calculate the optimization based on a finite number of observations, instead of integrating over all domain of random variable $Y$\todo{Definir $Y_t$ no lugar de $Y$?}.
+where $Y$ is a random variable and $X$ a random vector of dimension $d$. 
+Let a dataset be composed of $n$ observations of $\{y_t,x_t \}$. To calculate the sample quantile, the optimization based on this finite number of observations, instead of integrating over all domain of random variable $Y$\todo{Definir $Y_t$ no lugar de $Y$?}.
 The sample quantile is given by 
 \begin{equation}
 \hat{Q}_{Y|X}(\alpha, \cdot)\quad \in\quad\underset{q_\alpha(\cdot)}{\text{arg min}}\,\sum_{t \in T} \rho_\alpha(y_{t}-q_\alpha(\cdot)),
@@ -23,8 +23,12 @@ and $\rho$ is the check function defined as
 \end{cases}.
 \end{equation}
 
+
 Let $Y$ be a real valued random variable. The quantile function $Q_Y:[0,1] \rightarrow \mathbb{R}$ is defined pointwise by its $\alpha$-quantile, which is given by
 where $F_Y$ is the distribution function of random variable $Y$ and $\alpha \in [0,1]$. Equation \ref{eq:quantile-function} defines what we call from now on as the quantile function $Q_Y(\cdot)$, in relation to random variable $Y$. In this article, we are interested in a conditional quantile function $Q_{Y|X=x}:[0,1] \times \mathbb{R}^d \rightarrow \mathbb{R}$ (in short, from now on, $Q_{Y|X}(\cdot, \cdot)$), where $X$ can be a vector.
+
+
+
 
 
 %Let $(\Omega, \mathcal{F}, P)$ be a probability space. The conditional quantile function can be found as the result of the following optimization problem:
