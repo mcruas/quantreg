@@ -1,122 +1,4 @@
 
-@misc{bosch_convergent_nodate,
-	title = {A convergent algorithm for quantile regression with smoothing splines - {ScienceDirect}},
-	url = {http://www.sciencedirect.com/science/article/pii/016794739400018E},
-	urldate = {2017-06-05},
-	author = {Bosch},
-	file = {A convergent algorithm for quantile regression with smoothing splines - ScienceDirect:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/DPMTTBVR/016794739400018E.html:text/html;Bosch 1995.pdf:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/Z2SVIQSW/Bosch 1995.pdf:application/pdf}
-}
-
-@article{bertsimas_best_2015,
-	title = {Best {Subset} {Selection} via a {Modern} {Optimization} {Lens}},
-	url = {http://arxiv.org/abs/1507.03133},
-	abstract = {In the last twenty-five years (1990-2014), algorithmic advances in integer optimization combined with hardware improvements have resulted in an astonishing 200 billion factor speedup in solving Mixed Integer Optimization (MIO) problems. We present a MIO approach for solving the classical best subset selection problem of choosing \$k\$ out of \$p\$ features in linear regression given \$n\$ observations. We develop a discrete extension of modern first order continuous optimization methods to find high quality feasible solutions that we use as warm starts to a MIO solver that finds provably optimal solutions. The resulting algorithm (a) provides a solution with a guarantee on its suboptimality even if we terminate the algorithm early, (b) can accommodate side constraints on the coefficients of the linear regression and (c) extends to finding best subset solutions for the least absolute deviation loss function. Using a wide variety of synthetic and real datasets, we demonstrate that our approach solves problems with \$n\$ in the 1000s and \$p\$ in the 100s in minutes to provable optimality, and finds near optimal solutions for \$n\$ in the 100s and \$p\$ in the 1000s in minutes. We also establish via numerical experiments that the MIO approach performs better than \{{\textbackslash}texttt \{Lasso\}\} and other popularly used sparse learning procedures, in terms of achieving sparse solutions with good predictive power.},
-	journal = {arXiv:1507.03133 [math, stat]},
-	author = {Bertsimas, Dimitris and King, Angela and Mazumder, Rahul},
-	month = jul,
-	year = {2015},
-	note = {arXiv: 1507.03133},
-	keywords = {Mathematics - Optimization and Control, Statistics - Computation, Statistics - Machine Learning, Statistics - Methodology},
-	annote = {Comment: This is a revised version (May, 2015) of the first submission in June 2014},
-	file = {arXiv\:1507.03133 PDF:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/VKRXDFQW/Bertsimas et al. - 2015 - Best Subset Selection via a Modern Optimization Le.pdf:application/pdf;arXiv.org Snapshot:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/HES5CFNW/1507.html:text/html}
-}
-
-@article{cai_regression_2002,
-	title = {Regression {Quantiles} for {Time} {Series}},
-	volume = {18},
-	issn = {0266-4666},
-	url = {http://www.jstor.org/stable/3533031},
-	abstract = {In this paper we study nonparametric estimation of regression quantiles for time series data by inverting a weighted Nadaraya-Watson (WNW) estimator of conditional distribution function, which was first used by Hall, Wolff, and Yao (1999 "Journal of the American Statistical Association" 94, 154-163). First, under some regularity conditions, we establish the asymptotic normality and weak consistency of the WNW conditional distribution estimator for α-mixing time series at both boundary and interior points, and we show that the WNW conditional distribution estimator not only preserves the bias, variance, and, more important, automatic good boundary behavior properties of local linear "double-kernel" estimators introduced by Yu and Jones (1998, "Journal of the American Statistical Association" 93, 228-237), but also has the additional advantage of always being a distribution itself. Second, it is shown that under some regularity conditions, the WNW conditional quantile estimator is weakly consistent and normally distributed and that it inherits all good properties from the WNW conditional distribution estimator. A small simulation study is carried out to illustrate the performance of the estimates, and a real example is also used to demonstrate the methodology.},
-	number = {1},
-	journal = {Econometric Theory},
-	author = {Cai, Zongwu},
-	year = {2002},
-	pages = {169--192},
-	file = {cai 2002.pdf:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/C3UZWNI9/cai 2002.pdf:application/pdf}
-}
-
-@article{carlier_vector_2014,
-	title = {Vector {Quantile} {Regression}: {An} {Optimal} {Transport} {Approach}},
-	shorttitle = {Vector {Quantile} {Regression}},
-	url = {http://arxiv.org/abs/1406.4643},
-	abstract = {We propose a notion of conditional vector quantile function and a vector quantile regression. A {\textbackslash}emph\{conditional vector quantile function\} (CVQF) of a random vector \$Y\$, taking values in \${\textbackslash}mathbb\{R\}{\textasciicircum}d\$ given covariates \$Z=z\$, taking values in \${\textbackslash}mathbb\{R\}\% {\textasciicircum}k\$, is a map \$u {\textbackslash}longmapsto Q\_\{Y{\textbackslash}mid Z\}(u,z)\$, which is monotone, in the sense of being a gradient of a convex function, and such that given that vector \$U\$ follows a reference non-atomic distribution \$F\_U\$, for instance uniform distribution on a unit cube in \${\textbackslash}mathbb\{R\}{\textasciicircum}d\$, the random vector \$Q\_\{Y{\textbackslash}mid Z\}(U,z)\$ has the distribution of \$Y\$ conditional on \$Z=z\$. Moreover, we have a strong representation, \$Y = Q\_\{Y{\textbackslash}mid Z\}(U,Z)\$ almost surely, for some version of \$U\$. The {\textbackslash}emph\{vector quantile regression\} (VQR) is a linear model for CVQF of \$Y\$ given \$Z\$. Under correct specification, the notion produces strong representation, \$Y={\textbackslash}beta {\textbackslash}left(U{\textbackslash}right) {\textasciicircum}{\textbackslash}top f(Z)\$, for \$f(Z)\$ denoting a known set of transformations of \$Z\$, where \$u {\textbackslash}longmapsto {\textbackslash}beta(u){\textasciicircum}{\textbackslash}top f(Z)\$ is a monotone map, the gradient of a convex function, and the quantile regression coefficients \$u {\textbackslash}longmapsto {\textbackslash}beta(u)\$ have the interpretations analogous to that of the standard scalar quantile regression. As \$f(Z)\$ becomes a richer class of transformations of \$Z\$, the model becomes nonparametric, as in series modelling. A key property of VQR is the embedding of the classical Monge-Kantorovich's optimal transportation problem at its core as a special case. In the classical case, where \$Y\$ is scalar, VQR reduces to a version of the classical QR, and CVQF reduces to the scalar conditional quantile function. An application to multiple Engel curve estimation is considered.},
-	journal = {arXiv:1406.4643 [stat]},
-	author = {Carlier, Guillaume and Chernozhukov, Victor and Galichon, Alfred},
-	month = jun,
-	year = {2014},
-	note = {arXiv: 1406.4643},
-	keywords = {49Q20, 49Q10, 90B20, Statistics - Methodology},
-	file = {arXiv\:1406.4643 PDF:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/XPEW49FM/Carlier et al. - 2014 - Vector Quantile Regression An Optimal Transport A.pdf:application/pdf;arXiv.org Snapshot:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/2N23WN44/1406.html:text/html}
-}
-
-@article{bertsimas_least_2014,
-	title = {Least quantile regression via modern optimization},
-	volume = {42},
-	issn = {0090-5364},
-	url = {http://arxiv.org/abs/1310.8625},
-	doi = {10.1214/14-AOS1223},
-	abstract = {We address the Least Quantile of Squares (LQS) (and in particular the Least Median of Squares) regression problem using modern optimization methods. We propose a Mixed Integer Optimization (MIO) formulation of the LQS problem which allows us to find a provably global optimal solution for the LQS problem. Our MIO framework has the appealing characteristic that if we terminate the algorithm early, we obtain a solution with a guarantee on its sub-optimality. We also propose continuous optimization methods based on first-order subdifferential methods, sequential linear optimization and hybrid combinations of them to obtain near optimal solutions to the LQS problem. The MIO algorithm is found to benefit significantly from high quality solutions delivered by our continuous optimization based methods. We further show that the MIO approach leads to (a) an optimal solution for any dataset, where the data-points \$(y\_i,{\textbackslash}mathbf\{x\}\_i)\$'s are not necessarily in general position, (b) a simple proof of the breakdown point of the LQS objective value that holds for any dataset and (c) an extension to situations where there are polyhedral constraints on the regression coefficient vector. We report computational results with both synthetic and real-world datasets showing that the MIO algorithm with warm starts from the continuous optimization methods solve small (\$n=100\$) and medium (\$n=500\$) size problems to provable optimality in under two hours, and outperform all publicly available methods for large-scale (\$n=\{\}\$10,000) LQS problems.},
-	number = {6},
-	journal = {The Annals of Statistics},
-	author = {Bertsimas, Dimitris and Mazumder, Rahul},
-	month = dec,
-	year = {2014},
-	note = {arXiv: 1310.8625},
-	keywords = {Statistics - Computation},
-	pages = {2494--2525},
-	annote = {Comment: Published in at http://dx.doi.org/10.1214/14-AOS1223 the Annals of Statistics (http://www.imstat.org/aos/) by the Institute of Mathematical Statistics (http://www.imstat.org)},
-	file = {arXiv.org Snapshot:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/T9XUH3C4/1310.html:text/html;Bertsimas 2014:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/8C55VP89/Bertsimas and Mazumder - 2014 - Least quantile regression via modern optimization.pdf:application/pdf}
-}
-
-@article{gaglianone_evaluating_2011,
-	title = {Evaluating {Value}-at-{Risk} {Models} via {Quantile} {Regression}},
-	volume = {29},
-	issn = {0735-0015},
-	url = {http://dx.doi.org/10.1198/jbes.2010.07318},
-	doi = {10.1198/jbes.2010.07318},
-	abstract = {This article is concerned with evaluating Value-at-Risk estimates. It is well known that using only binary variables, such as whether or not there was an exception, sacrifices too much information. However, most of the specification tests (also called backtests) available in the literature, such as Christoffersen (1998) and Engle and Manganelli (2004) are based on such variables. In this article we propose a new backtest that does not rely solely on binary variables. It is shown that the new backtest provides a sufficient condition to assess the finite sample performance of a quantile model whereas the existing ones do not. The proposed methodology allows us to identify periods of an increased risk exposure based on a quantile regression model (Koenker and Xiao 2002). Our theoretical findings are corroborated through a Monte Carlo simulation and an empirical exercise with daily S\&P500 time series.},
-	number = {1},
-	journal = {Journal of Business \& Economic Statistics},
-	author = {Gaglianone, Wagner Piazza and Lima, Luiz Renato and Linton, Oliver and Smith, Daniel R.},
-	month = jan,
-	year = {2011},
-	keywords = {Backtesting, Risk exposure},
-	pages = {150--160},
-	file = {Snapshot:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/4VFM3W7U/jbes.2010.html:text/html}
-}
-
-@article{belloni_l1-penalized_2009,
-	title = {L1-{Penalized} {Quantile} {Regression} in {High}-{Dimensional} {Sparse} {Models}},
-	url = {http://arxiv.org/abs/0904.2931},
-	abstract = {We consider median regression and, more generally, a possibly infinite collection of quantile regressions in high-dimensional sparse models. In these models the overall number of regressors \$p\$ is very large, possibly larger than the sample size \$n\$, but only \$s\$ of these regressors have non-zero impact on the conditional quantile of the response variable, where \$s\$ grows slower than \$n\$. We consider quantile regression penalized by the \${\textbackslash}ell\_1\$-norm of coefficients (\${\textbackslash}ell\_1\$-QR). First, we show that \${\textbackslash}ell\_1\$-QR is consistent at the rate \${\textbackslash}sqrt\{s/n\} {\textbackslash}sqrt\{{\textbackslash}log p\}\$. The overall number of regressors \$p\$ affects the rate only through the \${\textbackslash}log p\$ factor, thus allowing nearly exponential growth in the number of zero-impact regressors. The rate result holds under relatively weak conditions, requiring that \$s/n\$ converges to zero at a super-logarithmic speed and that regularization parameter satisfies certain theoretical constraints. Second, we propose a pivotal, data-driven choice of the regularization parameter and show that it satisfies these theoretical constraints. Third, we show that \${\textbackslash}ell\_1\$-QR correctly selects the true minimal model as a valid submodel, when the non-zero coefficients of the true model are well separated from zero. We also show that the number of non-zero coefficients in \${\textbackslash}ell\_1\$-QR is of same stochastic order as \$s\$. Fourth, we analyze the rate of convergence of a two-step estimator that applies ordinary quantile regression to the selected model. Fifth, we evaluate the performance of \${\textbackslash}ell\_1\$-QR in a Monte-Carlo experiment, and illustrate its use on an international economic growth application.},
-	urldate = {2017-06-06},
-	journal = {arXiv:0904.2931 [math, stat]},
-	author = {Belloni, Alexandre and Chernozhukov, Victor},
-	month = apr,
-	year = {2009},
-	note = {arXiv: 0904.2931},
-	keywords = {Mathematics - Probability, Mathematics - Statistics Theory, Statistics - Methodology},
-	file = {arXiv\:0904.2931 PDF:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/76CKZBH5/Belloni and Chernozhukov - 2009 - L1-Penalized Quantile Regression in High-Dimension.pdf:application/pdf;arXiv.org Snapshot:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/SFUZ227C/0904.html:text/html}
-}
-
-@article{gaglianone_constructing_2014,
-	title = {Constructing {Optimal} {Density} {Forecasts} from {Point} {Forecast} {Combinations}},
-	volume = {29},
-	issn = {1099-1255},
-	url = {http://onlinelibrary.wiley.com/doi/10.1002/jae.2352/abstract},
-	doi = {10.1002/jae.2352},
-	abstract = {Decision makers often observe point forecasts of the same variable computed, for instance, by commercial banks, IMF and the World Bank, but the econometric models used by such institutions are frequently unknown. This paper shows how to use the information available on point forecasts to compute optimal density forecasts. Our idea builds upon the combination of point forecasts under general loss functions and unknown forecast error distributions. We use real-time data to forecast the density of US inflation. The results indicate that the proposed method materially improves the real-time accuracy of density forecasts vis-à-vis those from the (unknown) individual econometric models. Copyright © 2013 John Wiley \& Sons, Ltd.},
-	language = {en},
-	number = {5},
-	urldate = {2017-06-07},
-	journal = {Journal of Applied Econometrics},
-	author = {Gaglianone, Wagner Piazza and Lima, Luiz Renato},
-	month = aug,
-	year = {2014},
-	pages = {736--757},
-	file = {Full Text PDF:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/KCMQEHVX/Gaglianone and Lima - 2014 - Constructing Optimal Density Forecasts from Point .pdf:application/pdf;Snapshot:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/FZJTDX6Q/abstract.html:text/html}
-}
-
 @article{li_l1-norm_2008,
 	title = {L1-{Norm} {Quantile} {Regression}},
 	volume = {17},
@@ -131,7 +13,7 @@
 	month = mar,
 	year = {2008},
 	pages = {163--185},
-	file = {Snapshot:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/B6UB3H3T/106186008X289155.html:text/html}
+	file = {Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/B6UB3H3T/106186008X289155.html:text/html}
 }
 
 @article{enss_nonparametric_2016,
@@ -147,7 +29,7 @@
 	year = {2016},
 	keywords = {Convergence, Electronic mail, estimate surrogate mn, Estimation, estimation theory, finite sample size behavior, function estimates, general error bound, Manganese, Monte Carlo methods, Monte Carlo surrogate quantile estimates, nonparametric estimation, Nonparametric quantile estimation, nonparametric statistics, quantile qmn(X),α, quantisation (signal), random variable, Random variables, rate of convergence, Splines (mathematics), surrogate models},
 	pages = {5727--5739},
-	file = {IEEE Xplore Abstract Record:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/9PBCBKC2/7501890.html:text/html;IEEE Xplore Full Text PDF:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/JWBTEV8R/Enss et al. - 2016 - Nonparametric Quantile Estimation Based on Surroga.pdf:application/pdf}
+	file = {IEEE Xplore Abstract Record:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/9PBCBKC2/7501890.html:text/html;IEEE Xplore Full Text PDF:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/JWBTEV8R/Enss et al. - 2016 - Nonparametric Quantile Estimation Based on Surroga.pdf:application/pdf}
 }
 
 @article{aue_piecewise_2017,
@@ -167,7 +49,7 @@
 	keywords = {Mathematics - Statistics Theory},
 	pages = {1--22},
 	annote = {Comment: Published at http://dx.doi.org/10.3150/14-BEJ671 in the Bernoulli (http://isi.cbs.nl/bernoulli/) by the International Statistical Institute/Bernoulli Society (http://isi.cbs.nl/BS/bshome.htm)},
-	file = {arXiv\:1609.08882 PDF:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/I24AZXAN/Aue et al. - 2017 - Piecewise quantile autoregressive modeling for non.pdf:application/pdf;arXiv.org Snapshot:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/R82A3ZVJ/1609.html:text/html}
+	file = {arXiv\:1609.08882 PDF:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/I24AZXAN/Aue et al. - 2017 - Piecewise quantile autoregressive modeling for non.pdf:application/pdf;arXiv.org Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/R82A3ZVJ/1609.html:text/html}
 }
 
 @article{takeuchi_nonparametric_2006,
@@ -182,7 +64,7 @@
 	month = dec,
 	year = {2006},
 	pages = {1231--1264},
-	file = {ACM Full Text PDF:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/EUS6RA5E/Takeuchi et al. - 2006 - Nonparametric Quantile Estimation.pdf:application/pdf}
+	file = {ACM Full Text PDF:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/EUS6RA5E/Takeuchi et al. - 2006 - Nonparametric Quantile Estimation.pdf:application/pdf}
 }
 
 @article{gallego-castillo_-line_2016,
@@ -199,7 +81,15 @@
 	year = {2016},
 	keywords = {On-line, Probabilistic forecast, quantile regression, Reproducing Kernel Hilbert Space (RKHS), Short-term, wind power},
 	pages = {355--365},
-	file = {ScienceDirect Snapshot:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/ZMDCASQC/S0360544216309793.html:text/html}
+	file = {ScienceDirect Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/ZMDCASQC/S0360544216309793.html:text/html}
+}
+
+@misc{bosch_convergent_nodate,
+	title = {A convergent algorithm for quantile regression with smoothing splines - {ScienceDirect}},
+	url = {http://www.sciencedirect.com/science/article/pii/016794739400018E},
+	urldate = {2017-06-05},
+	author = {Bosch},
+	file = {A convergent algorithm for quantile regression with smoothing splines - ScienceDirect:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/DPMTTBVR/016794739400018E.html:text/html;Bosch 1995.pdf:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/Z2SVIQSW/Bosch 1995.pdf:application/pdf}
 }
 
 @article{chernozhukov_quantile_2010,
@@ -218,7 +108,7 @@
 	year = {2010},
 	keywords = {Conditional quantiles, functional delta method, isotonic regression, monotonicity problem, rearrangement, structural quantiles},
 	pages = {1093--1125},
-	file = {Full Text PDF:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/IT38U25X/Chernozhukov et al. - 2010 - Quantile and Probability Curves Without Crossing.pdf:application/pdf;Snapshot:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/R5HHGM2Z/abstract.html:text/html}
+	file = {Full Text PDF:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/IT38U25X/Chernozhukov et al. - 2010 - Quantile and Probability Curves Without Crossing.pdf:application/pdf;Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/R5HHGM2Z/abstract.html:text/html}
 }
 
 @misc{anastasiades_quantile_nodate,
@@ -226,7 +116,21 @@
 	url = {http://www.mdpi.com/1996-1073/6/2/662},
 	urldate = {2017-06-08},
 	author = {Anastasiades},
-	file = {Energies | Free Full-Text | Quantile Forecasting of Wind Power Using Variability Indices:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/JNZVDPC3/662.html:text/html}
+	file = {Energies | Free Full-Text | Quantile Forecasting of Wind Power Using Variability Indices:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/JNZVDPC3/662.html:text/html}
+}
+
+@article{belloni_l1-penalized_2009,
+	title = {L1-{Penalized} {Quantile} {Regression} in {High}-{Dimensional} {Sparse} {Models}},
+	url = {http://arxiv.org/abs/0904.2931},
+	abstract = {We consider median regression and, more generally, a possibly infinite collection of quantile regressions in high-dimensional sparse models. In these models the overall number of regressors \$p\$ is very large, possibly larger than the sample size \$n\$, but only \$s\$ of these regressors have non-zero impact on the conditional quantile of the response variable, where \$s\$ grows slower than \$n\$. We consider quantile regression penalized by the \${\textbackslash}ell\_1\$-norm of coefficients (\${\textbackslash}ell\_1\$-QR). First, we show that \${\textbackslash}ell\_1\$-QR is consistent at the rate \${\textbackslash}sqrt\{s/n\} {\textbackslash}sqrt\{{\textbackslash}log p\}\$. The overall number of regressors \$p\$ affects the rate only through the \${\textbackslash}log p\$ factor, thus allowing nearly exponential growth in the number of zero-impact regressors. The rate result holds under relatively weak conditions, requiring that \$s/n\$ converges to zero at a super-logarithmic speed and that regularization parameter satisfies certain theoretical constraints. Second, we propose a pivotal, data-driven choice of the regularization parameter and show that it satisfies these theoretical constraints. Third, we show that \${\textbackslash}ell\_1\$-QR correctly selects the true minimal model as a valid submodel, when the non-zero coefficients of the true model are well separated from zero. We also show that the number of non-zero coefficients in \${\textbackslash}ell\_1\$-QR is of same stochastic order as \$s\$. Fourth, we analyze the rate of convergence of a two-step estimator that applies ordinary quantile regression to the selected model. Fifth, we evaluate the performance of \${\textbackslash}ell\_1\$-QR in a Monte-Carlo experiment, and illustrate its use on an international economic growth application.},
+	urldate = {2017-06-06},
+	journal = {arXiv:0904.2931 [math, stat]},
+	author = {Belloni, Alexandre and Chernozhukov, Victor},
+	month = apr,
+	year = {2009},
+	note = {arXiv: 0904.2931},
+	keywords = {Mathematics - Probability, Mathematics - Statistics Theory, Statistics - Methodology},
+	file = {arXiv\:0904.2931 PDF:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/76CKZBH5/Belloni and Chernozhukov - 2009 - L1-Penalized Quantile Regression in High-Dimension.pdf:application/pdf;arXiv.org Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/SFUZ227C/0904.html:text/html}
 }
 
 @article{haque_hybrid_2014,
@@ -242,7 +146,7 @@
 	year = {2014},
 	keywords = {Artificial neural networks, ART neural nets, Cedar Creek wind farm, decision-making, Deterministic and probabilistic wind power forecasting, deterministic regression approach, electricity market participants, FF optimization algorithm, firefly, firefly optimization algorithm, Forecasting, fuzzy ARTMAP, fuzzy ARTMAP network, fuzzy neural nets, hybrid deterministic WT-FA-FF-SVM model, hybrid intelligent model, optimisation, pattern classification, power engineering computing, power generation economics, power grid, power grids, power markets, power system operators, Predictive models, Probabilistic logic, probabilistic wind power forecasting algorithm, probability, quantile regression approach, regression analysis, support vector machine classifier, support vector machines, uncertain conditions, wavelet transform, wavelet transforms, Wind forecasting, wind power forecast error, Wind power generation, wind power penetration, wind power plants},
 	pages = {1663--1672},
-	file = {IEEE Xplore Abstract Record:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/5DIDJ8WF/6727578.html:text/html;IEEE Xplore Full Text PDF:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/XK9R5KUF/Haque et al. - 2014 - A Hybrid Intelligent Model for Deterministic and Q.pdf:application/pdf}
+	file = {IEEE Xplore Abstract Record:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/5DIDJ8WF/6727578.html:text/html;IEEE Xplore Full Text PDF:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/XK9R5KUF/Haque et al. - 2014 - A Hybrid Intelligent Model for Deterministic and Q.pdf:application/pdf}
 }
 
 @article{taieb_forecasting_2016,
@@ -258,7 +162,7 @@
 	year = {2016},
 	keywords = {additive quantile regression, Box-Cox transformation, disaggregated demand, electricity smart meter data, energy industry, Forecasting, forecasting uncertainty, gradient boosting, Ireland, load forecasting, Load modeling, Predictive models, probabilistic forecasts, Probabilistic load forecasting, Probabilistic logic, quantile regression, regression analysis, smart electricity meters, smart meter data, smart meters, time 30 min, Uncertainty},
 	pages = {2448--2455},
-	file = {IEEE Xplore Abstract Record:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/MA27SJJX/7423794.html:text/html;IEEE Xplore Full Text PDF:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/CV77HESM/Taieb et al. - 2016 - Forecasting Uncertainty in Electricity Smart Meter.pdf:application/pdf}
+	file = {IEEE Xplore Abstract Record:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/MA27SJJX/7423794.html:text/html;IEEE Xplore Full Text PDF:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/CV77HESM/Taieb et al. - 2016 - Forecasting Uncertainty in Electricity Smart Meter.pdf:application/pdf}
 }
 
 @article{wan_direct_2017,
@@ -274,7 +178,7 @@
 	year = {2017},
 	keywords = {Extreme learning machine, Forecasting, linear programming, Predictive models, Probabilistic forecasting, Probabilistic logic, quantile regression, Reliability, Uncertainty, Wind forecasting, wind power, Wind power generation},
 	pages = {2767--2778},
-	file = {IEEE Xplore Abstract Record:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/KHUMMI5K/7733064.html:text/html;IEEE Xplore Full Text PDF:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/QB7GT3BI/Wan et al. - 2017 - Direct Quantile Regression for Nonparametric Proba.pdf:application/pdf}
+	file = {IEEE Xplore Abstract Record:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/KHUMMI5K/7733064.html:text/html;IEEE Xplore Full Text PDF:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/QB7GT3BI/Wan et al. - 2017 - Direct Quantile Regression for Nonparametric Proba.pdf:application/pdf}
 }
 
 @article{bremnes_probabilistic_2004,
@@ -293,7 +197,25 @@
 	year = {2004},
 	keywords = {economic value, probabilistic forecasts, quantile regression, wind power},
 	pages = {47--54},
-	file = {Full Text PDF:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/ECSBIKQD/Bremnes - 2004 - Probabilistic wind power forecasts using local qua.pdf:application/pdf;Snapshot:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/P8ERDPM8/abstract.html:text/html}
+	file = {Full Text PDF:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/ECSBIKQD/Bremnes - 2004 - Probabilistic wind power forecasts using local qua.pdf:application/pdf;Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/P8ERDPM8/abstract.html:text/html}
+}
+
+@article{cai_general_2016,
+	title = {A {General} {Quantile} {Function} {Model} for {Economic} and {Financial} {Time} {Series}},
+	volume = {35},
+	issn = {0747-4938},
+	url = {http://dx.doi.org/10.1080/07474938.2014.976528},
+	doi = {10.1080/07474938.2014.976528},
+	abstract = {This article proposed a general quantile function model that covers both one- and multiple-dimensional models and that takes several existing models in the literature as its special cases. This article also developed a new uniform Bayesian framework for quantile function modelling and illustrated the developed approach through different quantile function models. Many distributions are defined explicitly only via their quanitle functions as the corresponding distribution or density functions do not have an explicit mathematical expression. Such distributions are rarely used in economic and financial modelling in practice. The developed methodology makes it more convenient to use these distributions in analyzing economic and financial data. Empirical applications to economic and financial time series and comparisons with other types of models and methods show that the developed method can be very useful in practice.},
+	number = {7},
+	urldate = {2017-06-26},
+	journal = {Econometric Reviews},
+	author = {Cai, Yuzhi},
+	month = aug,
+	year = {2016},
+	keywords = {Bayesian approach, C1, C11, C22, Currency exchange rates, German DAX, Quantile functions models},
+	pages = {1173--1193},
+	file = {Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/A2R2G3ZV/07474938.2014.html:text/html}
 }
 
 @techreport{chao_quantile_2012,
@@ -309,7 +231,66 @@
 	month = jan,
 	year = {2012},
 	keywords = {CoVaR, locally linear quantile regression, partial linear model, quantile regression, semiparametric model, Value-at-Risk},
-	file = {Snapshot:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/NV9AQXZQ/papers.html:text/html}
+	file = {Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/NV9AQXZQ/papers.html:text/html}
+}
+
+@article{bludszuweit_statistical_2008,
+	title = {Statistical {Analysis} of {Wind} {Power} {Forecast} {Error}},
+	volume = {23},
+	issn = {0885-8950},
+	doi = {10.1109/TPWRS.2008.922526},
+	abstract = {Wind power forecast error usually has been assumed to have a near Gaussian distribution. With a simple statistical analysis, it can be shown that this is not valid. To obtain a more appropriate probability density function (pdf) of the wind power forecast error, an indirect algorithm based on the Beta pdf is proposed. Measured one-year time series from two different wind farms are used to generate the forecast data. Three different forecast scenarios are simulated based on the persistence approach. This makes the results comparable to other forecast methods. It is found that the forecast error pdf has a variable kurtosis ranging from 3 (like the Gaussian) to over 10, and therefore it can be categorized as fat-tailed. A new approximation function for the parameters of the Beta pdf is proposed because results from former publications could not be confirmed. Besides, a linear approximation is developed to describe the relationship between the persistence forecast and the related mean measured power. An energy storage system (ESS), which reduces the forecast error and smooths the wind power output, is considered. Results for this case show the usefulness of the proposed forecast error pdf for finding the optimum rated ESS power.},
+	number = {3},
+	journal = {IEEE Transactions on Power Systems},
+	author = {Bludszuweit, H. and Dominguez-Navarro, J. A. and Llombart, A.},
+	month = aug,
+	year = {2008},
+	keywords = {approximation function, Beta pdf, energy storage system, Error analysis, ESS, Forecasting, Gaussian distribution, load forecasting, probability, probability density function, statistical analysis, wind, wind farms, wind power forecast error, Wind power generation, wind power plants},
+	pages = {983--991},
+	file = {IEEE Xplore Abstract Record:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/RU3J58JJ/4530750.html:text/html;IEEE Xplore Full Text PDF:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/NNN9AX4V/Bludszuweit et al. - 2008 - Statistical Analysis of Wind Power Forecast Error.pdf:application/pdf}
+}
+
+@article{cai_autoregression_2009,
+	title = {Autoregression with {Non}-{Gaussian} {Innovations}},
+	volume = {1},
+	issn = {1941-1928},
+	url = {https://www.degruyter.com/view/j/jtse.2009.1.2/jtse.2009.1.2.1016/jtse.2009.1.2.1016.xml},
+	doi = {10.2202/1941-1928.1016},
+	abstract = {Many economics and finance time series are non-Gaussian. In this paper, we propose a Bayesian approach to non-Gaussian autoregressive time series models via quantile functions. This approach is parametric, so we also compare the proposed parametric approach with a semi-parametric approach. Simulation studies and applications to real time series show that this method works very well.},
+	number = {2},
+	urldate = {2017-06-26},
+	journal = {Journal of Time Series Econometrics},
+	author = {Cai, Yuzhi},
+	year = {2009},
+	file = {cai2009.pdf:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/C544N683/cai2009.pdf:application/pdf}
+}
+
+@article{bertsimas_best_2015,
+	title = {Best {Subset} {Selection} via a {Modern} {Optimization} {Lens}},
+	url = {http://arxiv.org/abs/1507.03133},
+	abstract = {In the last twenty-five years (1990-2014), algorithmic advances in integer optimization combined with hardware improvements have resulted in an astonishing 200 billion factor speedup in solving Mixed Integer Optimization (MIO) problems. We present a MIO approach for solving the classical best subset selection problem of choosing \$k\$ out of \$p\$ features in linear regression given \$n\$ observations. We develop a discrete extension of modern first order continuous optimization methods to find high quality feasible solutions that we use as warm starts to a MIO solver that finds provably optimal solutions. The resulting algorithm (a) provides a solution with a guarantee on its suboptimality even if we terminate the algorithm early, (b) can accommodate side constraints on the coefficients of the linear regression and (c) extends to finding best subset solutions for the least absolute deviation loss function. Using a wide variety of synthetic and real datasets, we demonstrate that our approach solves problems with \$n\$ in the 1000s and \$p\$ in the 100s in minutes to provable optimality, and finds near optimal solutions for \$n\$ in the 100s and \$p\$ in the 1000s in minutes. We also establish via numerical experiments that the MIO approach performs better than \{{\textbackslash}texttt \{Lasso\}\} and other popularly used sparse learning procedures, in terms of achieving sparse solutions with good predictive power.},
+	journal = {arXiv:1507.03133 [math, stat]},
+	author = {Bertsimas, Dimitris and King, Angela and Mazumder, Rahul},
+	month = jul,
+	year = {2015},
+	note = {arXiv: 1507.03133},
+	keywords = {Mathematics - Optimization and Control, Statistics - Computation, Statistics - Machine Learning, Statistics - Methodology},
+	annote = {Comment: This is a revised version (May, 2015) of the first submission in June 2014},
+	file = {arXiv\:1507.03133 PDF:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/VKRXDFQW/Bertsimas et al. - 2015 - Best Subset Selection via a Modern Optimization Le.pdf:application/pdf;arXiv.org Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/HES5CFNW/1507.html:text/html}
+}
+
+@article{cai_regression_2002,
+	title = {Regression {Quantiles} for {Time} {Series}},
+	volume = {18},
+	issn = {0266-4666},
+	url = {http://www.jstor.org/stable/3533031},
+	abstract = {In this paper we study nonparametric estimation of regression quantiles for time series data by inverting a weighted Nadaraya-Watson (WNW) estimator of conditional distribution function, which was first used by Hall, Wolff, and Yao (1999 "Journal of the American Statistical Association" 94, 154-163). First, under some regularity conditions, we establish the asymptotic normality and weak consistency of the WNW conditional distribution estimator for α-mixing time series at both boundary and interior points, and we show that the WNW conditional distribution estimator not only preserves the bias, variance, and, more important, automatic good boundary behavior properties of local linear "double-kernel" estimators introduced by Yu and Jones (1998, "Journal of the American Statistical Association" 93, 228-237), but also has the additional advantage of always being a distribution itself. Second, it is shown that under some regularity conditions, the WNW conditional quantile estimator is weakly consistent and normally distributed and that it inherits all good properties from the WNW conditional distribution estimator. A small simulation study is carried out to illustrate the performance of the estimates, and a real example is also used to demonstrate the methodology.},
+	number = {1},
+	journal = {Econometric Theory},
+	author = {Cai, Zongwu},
+	year = {2002},
+	pages = {169--192},
+	file = {cai 2002.pdf:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/C3UZWNI9/cai 2002.pdf:application/pdf}
 }
 
 @article{li_quantile_2007,
@@ -342,7 +323,74 @@
 	year = {2009},
 	keywords = {Forecasting, multivariate Gaussian random variable, scenarios, Uncertainty, wind power},
 	pages = {51--62},
-	file = {Full Text PDF:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/HNDVE653/Pinson et al. - 2009 - From probabilistic forecasts to statistical scenar.pdf:application/pdf;Snapshot:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/4EU79WG6/abstract.html:text/html}
+	file = {Full Text PDF:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/HNDVE653/Pinson et al. - 2009 - From probabilistic forecasts to statistical scenar.pdf:application/pdf;Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/4EU79WG6/abstract.html:text/html}
+}
+
+@article{carlier_vector_2014,
+	title = {Vector {Quantile} {Regression}: {An} {Optimal} {Transport} {Approach}},
+	shorttitle = {Vector {Quantile} {Regression}},
+	url = {http://arxiv.org/abs/1406.4643},
+	abstract = {We propose a notion of conditional vector quantile function and a vector quantile regression. A {\textbackslash}emph\{conditional vector quantile function\} (CVQF) of a random vector \$Y\$, taking values in \${\textbackslash}mathbb\{R\}{\textasciicircum}d\$ given covariates \$Z=z\$, taking values in \${\textbackslash}mathbb\{R\}\% {\textasciicircum}k\$, is a map \$u {\textbackslash}longmapsto Q\_\{Y{\textbackslash}mid Z\}(u,z)\$, which is monotone, in the sense of being a gradient of a convex function, and such that given that vector \$U\$ follows a reference non-atomic distribution \$F\_U\$, for instance uniform distribution on a unit cube in \${\textbackslash}mathbb\{R\}{\textasciicircum}d\$, the random vector \$Q\_\{Y{\textbackslash}mid Z\}(U,z)\$ has the distribution of \$Y\$ conditional on \$Z=z\$. Moreover, we have a strong representation, \$Y = Q\_\{Y{\textbackslash}mid Z\}(U,Z)\$ almost surely, for some version of \$U\$. The {\textbackslash}emph\{vector quantile regression\} (VQR) is a linear model for CVQF of \$Y\$ given \$Z\$. Under correct specification, the notion produces strong representation, \$Y={\textbackslash}beta {\textbackslash}left(U{\textbackslash}right) {\textasciicircum}{\textbackslash}top f(Z)\$, for \$f(Z)\$ denoting a known set of transformations of \$Z\$, where \$u {\textbackslash}longmapsto {\textbackslash}beta(u){\textasciicircum}{\textbackslash}top f(Z)\$ is a monotone map, the gradient of a convex function, and the quantile regression coefficients \$u {\textbackslash}longmapsto {\textbackslash}beta(u)\$ have the interpretations analogous to that of the standard scalar quantile regression. As \$f(Z)\$ becomes a richer class of transformations of \$Z\$, the model becomes nonparametric, as in series modelling. A key property of VQR is the embedding of the classical Monge-Kantorovich's optimal transportation problem at its core as a special case. In the classical case, where \$Y\$ is scalar, VQR reduces to a version of the classical QR, and CVQF reduces to the scalar conditional quantile function. An application to multiple Engel curve estimation is considered.},
+	journal = {arXiv:1406.4643 [stat]},
+	author = {Carlier, Guillaume and Chernozhukov, Victor and Galichon, Alfred},
+	month = jun,
+	year = {2014},
+	note = {arXiv: 1406.4643},
+	keywords = {49Q20, 49Q10, 90B20, Statistics - Methodology},
+	file = {arXiv\:1406.4643 PDF:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/XPEW49FM/Carlier et al. - 2014 - Vector Quantile Regression An Optimal Transport A.pdf:application/pdf;arXiv.org Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/2N23WN44/1406.html:text/html}
+}
+
+@article{bremnes_comparison_2006,
+	title = {A comparison of a few statistical models for making quantile wind power forecasts},
+	volume = {9},
+	issn = {1099-1824},
+	url = {http://onlinelibrary.wiley.com/doi/10.1002/we.182/abstract},
+	doi = {10.1002/we.182},
+	abstract = {During the last few years, probabilistic wind power forecasts have received increasing attention because of their assumed value in decision-making processes. In the current article, three statistical methods are described and several models based on these are compared. The statistical methods are local quantile regression, a local Gaussian model and the Nadaraya–Watson estimator for conditional cumulative distribution functions. The focus is on quantile forecasts, since these often provide the required type of information to make optimal economic decisions and are ideal for visualizing uncertainty. The statistical methods are applied to data from a wind farm in Norway and results are compared using appropriate measures for assessment of quantile forecasts and in terms of a simple model for economic value. Copyright © 2005 John Wiley \& Sons, Ltd.},
+	language = {en},
+	number = {1-2},
+	urldate = {2017-06-28},
+	journal = {Wind Energy},
+	author = {Bremnes, John Bjørnar},
+	month = jan,
+	year = {2006},
+	keywords = {economic value, local Gaussian model, Nadaraya–Watson estimator, probabilistic forecasts, quantile forecasts, quantile regression, wind power},
+	pages = {3--11},
+	file = {Full Text PDF:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/SZ64BHSG/Bremnes - 2006 - A comparison of a few statistical models for makin.pdf:application/pdf;Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/484JCS5M/abstract.html:text/html}
+}
+
+@article{bertsimas_least_2014,
+	title = {Least quantile regression via modern optimization},
+	volume = {42},
+	issn = {0090-5364},
+	url = {http://arxiv.org/abs/1310.8625},
+	doi = {10.1214/14-AOS1223},
+	abstract = {We address the Least Quantile of Squares (LQS) (and in particular the Least Median of Squares) regression problem using modern optimization methods. We propose a Mixed Integer Optimization (MIO) formulation of the LQS problem which allows us to find a provably global optimal solution for the LQS problem. Our MIO framework has the appealing characteristic that if we terminate the algorithm early, we obtain a solution with a guarantee on its sub-optimality. We also propose continuous optimization methods based on first-order subdifferential methods, sequential linear optimization and hybrid combinations of them to obtain near optimal solutions to the LQS problem. The MIO algorithm is found to benefit significantly from high quality solutions delivered by our continuous optimization based methods. We further show that the MIO approach leads to (a) an optimal solution for any dataset, where the data-points \$(y\_i,{\textbackslash}mathbf\{x\}\_i)\$'s are not necessarily in general position, (b) a simple proof of the breakdown point of the LQS objective value that holds for any dataset and (c) an extension to situations where there are polyhedral constraints on the regression coefficient vector. We report computational results with both synthetic and real-world datasets showing that the MIO algorithm with warm starts from the continuous optimization methods solve small (\$n=100\$) and medium (\$n=500\$) size problems to provable optimality in under two hours, and outperform all publicly available methods for large-scale (\$n=\{\}\$10,000) LQS problems.},
+	number = {6},
+	journal = {The Annals of Statistics},
+	author = {Bertsimas, Dimitris and Mazumder, Rahul},
+	month = dec,
+	year = {2014},
+	note = {arXiv: 1310.8625},
+	keywords = {Statistics - Computation},
+	pages = {2494--2525},
+	annote = {Comment: Published in at http://dx.doi.org/10.1214/14-AOS1223 the Annals of Statistics (http://www.imstat.org/aos/) by the Institute of Mathematical Statistics (http://www.imstat.org)},
+	file = {arXiv.org Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/T9XUH3C4/1310.html:text/html;Bertsimas 2014:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/8C55VP89/Bertsimas and Mazumder - 2014 - Least quantile regression via modern optimization.pdf:application/pdf}
+}
+
+@article{koenker_quantile_2006,
+	title = {Quantile {Autoregression} [with {Comments}, {Rejoinder}]},
+	volume = {101},
+	issn = {0162-1459},
+	url = {http://www.jstor.org/stable/27590777},
+	abstract = {We consider quantile autoregression (QAR) models in which the autoregressive coefficients can be expressed as monotone functions of a single, scalar random variable. The models can capture systematic influences of conditioning variables on the location, scale, and shape of the conditional distribution of the response, and thus constitute a significant extension of classical constant coefficient linear time series models in which the effect of conditioning is confined to a location shift. The models may be interpreted as a special case of the general random-coefficient autoregression model with strongly dependent coefficients. Statistical properties of the proposed model and associated estimators are studied. The limiting distributions of the autoregression quantile process are derived. QAR inference methods are also investigated. Empirical applications of the model to the U.S. unemployment rate, short-term interest rate, and gasoline prices highlight the model's potential.},
+	number = {475},
+	urldate = {2017-06-27},
+	journal = {Journal of the American Statistical Association},
+	author = {Koenker, Roger and Xiao, Zhijie and Fan, Jianqing and Fan, Yingying and Knight, Marc and Hallin, Marc and Werker, Bas J. M. and Hafner, Christian M. and Linton, Oliver B. and Robinson, P. M.},
+	year = {2006},
+	pages = {980--1006},
+	file = {koenker 2006.pdf:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/TFHSICKD/koenker 2006.pdf:application/pdf}
 }
 
 @article{moller_time-adaptive_2008,
@@ -360,7 +408,24 @@
 	year = {2008},
 	keywords = {quantile regression, Simplex, Time-adaptive, wind power},
 	pages = {1292--1303},
-	file = {ScienceDirect Snapshot:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/5F73DX3G/S0167947307002502.html:text/html}
+	file = {ScienceDirect Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/5F73DX3G/S0167947307002502.html:text/html}
+}
+
+@article{gaglianone_evaluating_2011,
+	title = {Evaluating {Value}-at-{Risk} {Models} via {Quantile} {Regression}},
+	volume = {29},
+	issn = {0735-0015},
+	url = {http://dx.doi.org/10.1198/jbes.2010.07318},
+	doi = {10.1198/jbes.2010.07318},
+	abstract = {This article is concerned with evaluating Value-at-Risk estimates. It is well known that using only binary variables, such as whether or not there was an exception, sacrifices too much information. However, most of the specification tests (also called backtests) available in the literature, such as Christoffersen (1998) and Engle and Manganelli (2004) are based on such variables. In this article we propose a new backtest that does not rely solely on binary variables. It is shown that the new backtest provides a sufficient condition to assess the finite sample performance of a quantile model whereas the existing ones do not. The proposed methodology allows us to identify periods of an increased risk exposure based on a quantile regression model (Koenker and Xiao 2002). Our theoretical findings are corroborated through a Monte Carlo simulation and an empirical exercise with daily S\&P500 time series.},
+	number = {1},
+	journal = {Journal of Business \& Economic Statistics},
+	author = {Gaglianone, Wagner Piazza and Lima, Luiz Renato and Linton, Oliver and Smith, Daniel R.},
+	month = jan,
+	year = {2011},
+	keywords = {Backtesting, Risk exposure},
+	pages = {150--160},
+	file = {Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/4VFM3W7U/jbes.2010.html:text/html}
 }
 
 @article{ciuperca_adaptive_2016,
@@ -377,7 +442,7 @@
 	month = sep,
 	year = {2016},
 	pages = {1100--1131},
-	file = {Snapshot:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/NXG94UMU/02331888.2016.html:text/html}
+	file = {Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/NXG94UMU/02331888.2016.html:text/html}
 }
 
 @article{machado_counterfactual_2005,
@@ -395,7 +460,7 @@
 	month = may,
 	year = {2005},
 	pages = {445--465},
-	file = {Full Text PDF:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/KMMRAVC3/Machado and Mata - 2005 - Counterfactual decomposition of changes in wage di.pdf:application/pdf;Snapshot:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/5ZF6BNKQ/abstract.html:text/html}
+	file = {Full Text PDF:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/KMMRAVC3/Machado and Mata - 2005 - Counterfactual decomposition of changes in wage di.pdf:application/pdf;Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/5ZF6BNKQ/abstract.html:text/html}
 }
 
 @article{zhang_review_2014,
@@ -412,7 +477,7 @@
 	year = {2014},
 	keywords = {decision-making, Forecasting evaluation, Parametric and non-parametric density, Probabilistic forecasting, Stochastic optimization, Uncertainty forecasting, Uncertainty representation},
 	pages = {255--270},
-	file = {ScienceDirect Snapshot:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/BXSFZCFH/S1364032114000446.html:text/html}
+	file = {ScienceDirect Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/BXSFZCFH/S1364032114000446.html:text/html}
 }
 
 @article{bacher_online_2009,
@@ -430,7 +495,25 @@
 	year = {2009},
 	keywords = {Clear sky model, Forecasting, Numerical weather predictions, Photovoltaic, Prediction, quantile regression, Recursive least squares, Solar power, Time series},
 	pages = {1772--1783},
-	file = {ScienceDirect Snapshot:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/D8ZFH4VI/S0038092X09001364.html:text/html}
+	file = {ScienceDirect Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/D8ZFH4VI/S0038092X09001364.html:text/html}
+}
+
+@article{gaglianone_constructing_2014,
+	title = {Constructing {Optimal} {Density} {Forecasts} from {Point} {Forecast} {Combinations}},
+	volume = {29},
+	issn = {1099-1255},
+	url = {http://onlinelibrary.wiley.com/doi/10.1002/jae.2352/abstract},
+	doi = {10.1002/jae.2352},
+	abstract = {Decision makers often observe point forecasts of the same variable computed, for instance, by commercial banks, IMF and the World Bank, but the econometric models used by such institutions are frequently unknown. This paper shows how to use the information available on point forecasts to compute optimal density forecasts. Our idea builds upon the combination of point forecasts under general loss functions and unknown forecast error distributions. We use real-time data to forecast the density of US inflation. The results indicate that the proposed method materially improves the real-time accuracy of density forecasts vis-à-vis those from the (unknown) individual econometric models. Copyright © 2013 John Wiley \& Sons, Ltd.},
+	language = {en},
+	number = {5},
+	urldate = {2017-06-07},
+	journal = {Journal of Applied Econometrics},
+	author = {Gaglianone, Wagner Piazza and Lima, Luiz Renato},
+	month = aug,
+	year = {2014},
+	pages = {736--757},
+	file = {Full Text PDF:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/KCMQEHVX/Gaglianone and Lima - 2014 - Constructing Optimal Density Forecasts from Point .pdf:application/pdf;Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/FZJTDX6Q/abstract.html:text/html}
 }
 
 @article{lin_variable_2013,
@@ -450,48 +533,38 @@
 	pages = {255--268}
 }
 
-@article{cai_autoregression_2009,
-	title = {Autoregression with {Non}-{Gaussian} {Innovations}},
-	volume = {1},
-	issn = {1941-1928},
-	url = {https://www.degruyter.com/view/j/jtse.2009.1.2/jtse.2009.1.2.1016/jtse.2009.1.2.1016.xml},
-	doi = {10.2202/1941-1928.1016},
-	abstract = {Many economics and finance time series are non-Gaussian. In this paper, we propose a Bayesian approach to non-Gaussian autoregressive time series models via quantile functions. This approach is parametric, so we also compare the proposed parametric approach with a semi-parametric approach. Simulation studies and applications to real time series show that this method works very well.},
-	number = {2},
-	urldate = {2017-06-26},
-	journal = {Journal of Time Series Econometrics},
-	author = {Cai, Yuzhi},
-	year = {2009}
-}
-
-@article{cai_general_2016,
-	title = {A {General} {Quantile} {Function} {Model} for {Economic} and {Financial} {Time} {Series}},
-	volume = {35},
-	issn = {0747-4938},
-	url = {http://dx.doi.org/10.1080/07474938.2014.976528},
-	doi = {10.1080/07474938.2014.976528},
-	abstract = {This article proposed a general quantile function model that covers both one- and multiple-dimensional models and that takes several existing models in the literature as its special cases. This article also developed a new uniform Bayesian framework for quantile function modelling and illustrated the developed approach through different quantile function models. Many distributions are defined explicitly only via their quanitle functions as the corresponding distribution or density functions do not have an explicit mathematical expression. Such distributions are rarely used in economic and financial modelling in practice. The developed methodology makes it more convenient to use these distributions in analyzing economic and financial data. Empirical applications to economic and financial time series and comparisons with other types of models and methods show that the developed method can be very useful in practice.},
-	number = {7},
-	urldate = {2017-06-26},
-	journal = {Econometric Reviews},
-	author = {Cai, Yuzhi},
+@article{brown_time_1984,
+	title = {Time {Series} {Models} to {Simulate} and {Forecast} {Wind} {Speed} and {Wind} {Power}},
+	volume = {23},
+	issn = {0733-3021},
+	url = {http://journals.ametsoc.org/doi/abs/10.1175/1520-0450%281984%29023%3C1184%3ATSMTSA%3E2.0.CO%3B2},
+	doi = {10.1175/1520-0450(1984)023<1184:TSMTSA>2.0.CO;2},
+	abstract = {A general approach for modeling wind speed and wind power is described. Because wind power is a function of wind speed, the methodology is based on the development of a model of wind speed. Values of wind power are estimated by applying the appropriate transformations to values of wind speed. The wind speed modeling approach takes into account several basic features of wind speed data, including autocorrelation, non-Gaussian distribution, and diurnal nonstationarity. The positive correlation between consecutive wind speed observations is taken into account by fitting an autoregressive process to wind speed data transformed to make their distribution approximately Gaussian and standardized to remove diurnal nonstationarity. As an example, the modeling approach is applied to a small set of hourly wind speed data from the Pacific Northwest. Use of the methodology for simulating and forecasting wind speed and wind power is discussed and an illustration of each of these types of applications is presented. To take into account the uncertainty of wind speed and wind power forecasts, techniques are presented for expressing the forecasts either in terms of confidence intervals or in terms of probabilities.},
+	number = {8},
+	urldate = {2017-07-06},
+	journal = {Journal of Climate and Applied Meteorology},
+	author = {Brown, Barbara G. and Katz, Richard W. and Murphy, Allan H.},
 	month = aug,
-	year = {2016},
-	keywords = {Bayesian approach, C1, C11, C22, Currency exchange rates, German DAX, Quantile functions models},
-	pages = {1173--1193},
-	file = {Snapshot:/home/marcelo/.mozilla/firefox/mwad0hks.default/zotero/storage/A2R2G3ZV/07474938.2014.html:text/html}
+	year = {1984},
+	pages = {1184--1195},
+	file = {Full Text PDF:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/XAHAE4U8/Brown et al. - 1984 - Time Series Models to Simulate and Forecast Wind S.pdf:application/pdf;Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/ZB5A286Z/1520-0450(1984)0231184TSMTSA2.0.html:text/html}
 }
 
-@article{koenker_quantile_2006,
-	title = {Quantile {Autoregression} [with {Comments}, {Rejoinder}]},
-	volume = {101},
-	issn = {0162-1459},
-	url = {http://www.jstor.org/stable/27590777},
-	abstract = {We consider quantile autoregression (QAR) models in which the autoregressive coefficients can be expressed as monotone functions of a single, scalar random variable. The models can capture systematic influences of conditioning variables on the location, scale, and shape of the conditional distribution of the response, and thus constitute a significant extension of classical constant coefficient linear time series models in which the effect of conditioning is confined to a location shift. The models may be interpreted as a special case of the general random-coefficient autoregression model with strongly dependent coefficients. Statistical properties of the proposed model and associated estimators are studied. The limiting distributions of the autoregression quantile process are derived. QAR inference methods are also investigated. Empirical applications of the model to the U.S. unemployment rate, short-term interest rate, and gasoline prices highlight the model's potential.},
-	number = {475},
-	urldate = {2017-06-27},
-	journal = {Journal of the American Statistical Association},
-	author = {Koenker, Roger and Xiao, Zhijie and Fan, Jianqing and Fan, Yingying and Knight, Marc and Hallin, Marc and Werker, Bas J. M. and Hafner, Christian M. and Linton, Oliver B. and Robinson, P. M.},
-	year = {2006},
-	pages = {980--1006}
+@article{moeanaddin_numerical_1990,
+	title = {Numerical {Evaluation} of {Distributions} in {Non}-{Linear} {Autoregression}},
+	volume = {11},
+	issn = {1467-9892},
+	url = {http://onlinelibrary.wiley.com/doi/10.1111/j.1467-9892.1990.tb00040.x/abstract},
+	doi = {10.1111/j.1467-9892.1990.tb00040.x},
+	abstract = {Abstract.  We use the Chapman-Kolmogorov formula as a recursive relation for computing the m-step-ahead conditional density of a non-linear autoregressive model. We approximate the stationary marginal probability density function of the model by the m-step-ahead conditional density for sufficiently large m. An advantage of our method is its simple implementation; only one NAG subroutine is needed. We have also studied the advantage of incorporating the matrix-squaring procedure.},
+	language = {en},
+	number = {1},
+	urldate = {2017-07-06},
+	journal = {Journal of Time Series Analysis},
+	author = {Moeanaddin, R. and Tong, Howell},
+	month = jan,
+	year = {1990},
+	keywords = {Chapman-Kolmogorov formula, conditional density, eigenvalues, EXPAR models, Gauss-type formula, integral equation, matrix squaring, non-linear autoregressive models, numerical integration, SETAR models},
+	pages = {33--48},
+	file = {Snapshot:/home/mcruas/.mozilla/firefox/mwad0hks.default/zotero/storage/5JGUWU4A/abstract.html:text/html}
 }
