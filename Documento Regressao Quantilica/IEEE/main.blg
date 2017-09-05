@@ -13,46 +13,48 @@ Database file #3: Bibhenriquinho.bib
 -- IEEEtran.bst version 1.13 (2008/09/30) by Michael Shell.
 -- http://www.michaelshell.org/tex/ieeetran/bibtex/
 -- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+Warning--empty journal in belloni2009least
 
 Done.
-You've used 13 entries,
+You've used 27 entries,
             4039 wiz_defined-function locations,
-            904 strings with 10107 characters,
-and the built_in function-call counts, 10756 in all, are:
-= -- 915
-> -- 244
-< -- 104
-+ -- 139
-- -- 39
-* -- 575
-:= -- 1680
-add.period$ -- 25
-call.type$ -- 13
-change.case$ -- 14
-chr.to.int$ -- 234
-cite$ -- 13
-duplicate$ -- 732
-empty$ -- 765
-format.name$ -- 48
-if$ -- 2424
+            990 strings with 12294 characters,
+and the built_in function-call counts, 22422 in all, are:
+= -- 1933
+> -- 484
+< -- 233
++ -- 281
+- -- 72
+* -- 1135
+:= -- 3443
+add.period$ -- 53
+call.type$ -- 27
+change.case$ -- 29
+chr.to.int$ -- 528
+cite$ -- 28
+duplicate$ -- 1555
+empty$ -- 1590
+format.name$ -- 91
+if$ -- 5112
 int.to.chr$ -- 0
-int.to.str$ -- 13
-missing$ -- 121
-newline$ -- 80
-num.names$ -- 12
-pop$ -- 240
+int.to.str$ -- 27
+missing$ -- 241
+newline$ -- 124
+num.names$ -- 26
+pop$ -- 465
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 814
+skip$ -- 1728
 stack$ -- 0
-substring$ -- 559
-swap$ -- 666
-text.length$ -- 26
+substring$ -- 1260
+swap$ -- 1402
+text.length$ -- 57
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 13
-warning$ -- 0
-while$ -- 48
-width$ -- 15
-write$ -- 177
+type$ -- 27
+warning$ -- 1
+while$ -- 110
+width$ -- 29
+write$ -- 323
+(There was 1 warning)

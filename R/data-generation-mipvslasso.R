@@ -21,9 +21,14 @@ gensig=function(N,iid=FALSE){
 }
 
 
-dgp <- function(T, Nin, q, iid=FALSE, autoregressive = TRUE, sigma = NULL, rho=0, sigma_e = 1){
+dgp <- function(T, Nin, q, iid=FALSE, sigma = NULL, rho=0, sigma_e = 1){
+# Processo gerador de dados
+# rho é o coeficiente autoregressivo
+# sigma_e: variância do ruído da regressão 
+# 
 
-
+  
+  autoregressive <- (rho > 0)  
   if (is.null(sigma)) {
       sigma = gensig(N, iid)
   }
@@ -36,18 +41,20 @@ dgp <- function(T, Nin, q, iid=FALSE, autoregressive = TRUE, sigma = NULL, rho=0
   data=rmvnorm(T+100,mean=mu,sigma=sigma)
   beta=mu[1:q]*0.3
   
-  if(autoregressive==FALSE){
-    y=data[,1:q]%*%beta + rnorm(T+100,0,sqrt(sigma_e))
-    data=data[-1,]
-    rho = 0
+  if(autoregressive == FALSE){
+    
+    y = data[,1:q] %*% beta + rnorm(T+100,0,sqrt(sigma_e))
+    data=cbind(y[-length(y)],data[-1,])
+    
   }else{
     
     y=rep(0,T+100)
     for(i in 2:(T+100)){
-      y[i]=rho*y[i-1]+data[i,1:q]%*%beta[1:q]+rnorm(1,0,sqrt(sigma_e))
+      y[i] <- rho*y[i-1] + data[i,1:q] %*% beta[1:q] + rnorm(1,0,sqrt(sigma_e))
     }
     data=cbind(y[-length(y)],data[-1,])
     # beta = c(beta[1:q], rep(0,N-q))
+    
   }
   
   y=y[-1]
@@ -66,11 +73,12 @@ require(mvtnorm)
 require(normtest)
 
 
-# T = 10000; N = 3; q = 3; iid = FALSE; rho = 0.0; autoregressive = FALSE; sigma_e = 0.3
-# sigma = genPositiveDefMat(N,covMethod=c("unifcorrmat"), rangeVar = c(1,1))$Sigma
-# sigma = gensig(N, iid)
-# data = rmvnorm(T+100,mean=mu,sigma=sigma)
-# dados = dgp(T,N,q, iid, rho = rho, autoregressive =  autoregressive,sigma_e = sigma_e)
+
+# T = 1000000; N = 5; q = 3; iid = TRUE; rho = 0.5; sigma_e = 0.3
+# # sigma = genPositiveDefMat(N,covMethod=c("unifcorrmat"), rangeVar = c(1,1))$Sigma
+# # sigma = gensig(N, iid)
+# # # data = rmvnorm(T+100,mean=mu,sigma=sigma)
+# dados = dgp(T,N,q, iid, rho = rho, sigma_e = sigma_e)
 # X = dados$X
 # y = dados$Y
 # sigma = dados$sigma
@@ -90,8 +98,8 @@ require(normtest)
 #   print(var(y))
 #   print(V_yt <- ( (t(beta_true) %*% sigma %*% beta_true)[1,1] + sigma_e))
 # }
-# 
-# 
+
+
 # plot(density(y))
 # lines(valores_x <- seq(E_yt - 6*sqrt(V_yt),  E_yt + 6*sqrt(V_yt), 0.001), dnorm(valores_x, E_yt, sqrt(V_yt)), col = 4  )
 # abline(v = E_yt, col = 2)

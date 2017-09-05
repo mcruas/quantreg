@@ -1,0 +1,93 @@
+---
+title: "R Notebook"
+output: 
+  html_notebook: 
+    code_folding: hide
+---
+
+
+Read the data and format dates
+
+```{r}
+library(tidyverse); library(readr); library(lattice)
+
+
+```
+
+# Exploratory Analysis
+
+## Does the year profile is kept across months for the different locations?
+
+```{r}
+result <- WindData_melt %>% group_by(MONTH1, location) %>% summarise(mean = mean(wind)) 
+xyplot(mean~MONTH1, data= result, type = "l", groups = location, auto.key = TRUE)
+```
+
+```{r}
+result <- WindData_melt %>% group_by(MONTH1, location,YEAR1) %>% summarise(mean = mean(wind)) 
+xyplot(mean~MONTH1 | YEAR1, data= result, type = "l", groups = location, auto.key = TRUE)
+```
+
+
+## Have month in different years the same distribution?
+
+At first, we look how each year differ from each other.
+
+
+
+```{r fig.cap="Teste densidade"}
+densityplot(~W1 | factor(MONTH1), group = YEAR1,data = WindData, main="Density comparison across different years", auto.key = TRUE)
+densityplot(~W1 | factor(MONTH1), group = YEAR1,data = WindData_melt, main="Density comparison across different years", auto.key = TRUE)
+
+```
+As we can see in the graph,  
+
+
+
+```{r}
+densityplot(~W2 | factor(MONTH1), group = YEAR1,data = WindData, main="Density comparison across different years", auto.key = TRUE)
+```
+
+
+
+asdfsd
+
+```{r}
+densityplot(~W3 | factor(MONTH1), group = YEAR1,data = WindData, main="Density comparison across different years", auto.key = TRUE)
+```
+
+asdfd
+
+```{r}
+densityplot(~W4 | factor(MONTH1), group = YEAR1,data = WindData, main="Density comparison across different years", auto.key = TRUE)
+```
+
+
+
+## How does hour of the day influence the distribution
+
+Looking for the distribution of each hour as a whole, we notice pontual differences in distribution across years for each hour. This fact is consistent among different series 
+
+```{r}
+  densityplot(~W6 | factor(HOUR1), group = YEAR1,data = WindData, main="Density      comparison across different hours and years", auto.key = TRUE)
+```
+
+```{r}
+  densityplot(~W1 | factor(HOUR1), group = YEAR1,data = WindData, main="Density      comparison across different hours and years", auto.key = TRUE)
+```
+
+
+
+But what about the hour profile across different months. How does it behave?
+
+```{r fig.height=16, fig.width=8}
+
+  densityplot(~W1 | factor(HOUR1), group = MONTH1,data = WindData, main="Density      comparison across different hours and years", auto.key = TRUE)
+```
+
+
+
+```{r fig.height=16, fig.width=8}
+  densityplot(~W1 | factor(MONTH1), group = HOUR1,data = WindData, main="Density      comparison across different hours and years", auto.key = FALSE)
+```
+

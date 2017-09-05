@@ -6,16 +6,12 @@ Q_{Y|X}(\alpha,x) = F_{Y|X}^{-1}(\alpha,x) = \inf\{y: F_{Y|X}(y,x) \geq \alpha\}
 \label{eq:quantile-function}
 \end{equation}
 where $Y$ is a random variable and $X$ a random vector of dimension $d$. 
-Let a dataset be composed of $n$ observations of $\{y_t,x_t \}$. To calculate the sample quantile, the optimization based on this finite number of observations, instead of integrating over all domain of random variable $Y$\todo{Definir $Y_t$ no lugar de $Y$?}.
-The sample quantile is given by 
-\begin{equation}
-\hat{Q}_{Y|X}(\alpha, \cdot)\quad \in\quad\underset{q_\alpha(\cdot)}{\text{arg min}}\,\sum_{t \in T} \rho_\alpha(y_{t}-q_\alpha(\cdot)),
-\label{eq:linear-model}
-\end{equation}
-\begin{equation}
-q_\alpha  \in \mathcal{Q},
-\end{equation}
-and $\rho$ is the check function defined as
+Let a dataset be composed of $n$ observations of $\{y_t,x_t \}_{t=1}^n$. In order to calculate a sample quantile based on this finite number of observations, instead of integrating over all domain of random variable $Y$\todo{Definir $Y_t$ no lugar de $Y$?}, we sum individual ... is given by 
+\begin{eqnarray}
+\hat{Q}_{Y|X}(\alpha,\cdot)\quad\in\quad & \underset{q_{\alpha}(\cdot)}{\text{arg min}}\, & \sum_{t\in T}\rho_{\alpha}(y_{t}-q_{\alpha}(\cdot)),\label{eq:optim-qr1} \\
+ & q_{\alpha}\in\mathcal{Q},\label{eq:optim-qr2}
+\end{eqnarray}
+where $\rho$ is the check function, defined as
 \begin{equation}\label{eq:check-function}
 \rho_{\alpha}(x)=\begin{cases}
 \alpha x & \text{if }x\geq0\\
@@ -24,42 +20,15 @@ and $\rho$ is the check function defined as
 \end{equation}
 
 
-Let $Y$ be a real valued random variable. The quantile function $Q_Y:[0,1] \rightarrow \mathbb{R}$ is defined pointwise by its $\alpha$-quantile, which is given by
-where $F_Y$ is the distribution function of random variable $Y$ and $\alpha \in [0,1]$. Equation \ref{eq:quantile-function} defines what we call from now on as the quantile function $Q_Y(\cdot)$, in relation to random variable $Y$. In this article, we are interested in a conditional quantile function $Q_{Y|X=x}:[0,1] \times \mathbb{R}^d \rightarrow \mathbb{R}$ (in short, from now on, $Q_{Y|X}(\cdot, \cdot)$), where $X$ can be a vector.
-
-
-
-
-
-%Let $(\Omega, \mathcal{F}, P)$ be a probability space. The conditional quantile function can be found as the result of the following optimization problem:
-%\begin{eqnarray}
-%Q_{Y|X}(\alpha, \cdot)\quad & \in\quad\underset{q_\alpha(\cdot)}{\text{arg min}}\, &
-%(1-\alpha)\int_{\omega \in \Omega}|Y(w)-q_\alpha(X(w))|^{-}P(dw) \label{eq:optim-continuous}
-%\\ & & + (\alpha)\int_{\omega \in \Omega}|Y(w)-q_\alpha(X(w))|^{+}P(dw) \nonumber
-%\end{eqnarray}
-%\begin{equation}
-%q_\alpha  \in \mathcal{Q},
-%\end{equation}
-%The argument of optimization problem described on equation \ref{eq:optim-continuous} is the function $q_\alpha$, which belongs to a function space $\mathcal{Q}$. We might have different assumptions for the space $\mathcal{Q}$, depending on the type of function we want to find for $q_\alpha$. A few properties, however, must be achieved by our choice. The conditional quantile function $Q_{Y|X}(\alpha)$ must be monotone on $\alpha$, and its first derivative must be limited.
-
-In this work, we use the sample quantile,  where we calculate the optimization based on a finite number of observations, instead of integrating over all domain of random variable $Y$. For the specific case where the random variable is a time series $y_t$, quantiles are estimated from a $n$ size sample of observations of $y_t$ and a explanatory variable $x_t$ for each $t$, such that our random sample is formed by the sequence $\{y_t,x_t \}_{t=1}^n$. To estimate the $\alpha$-quantile from a sample, we change \ref{eq:optim-continuous} for the following optimization problem:
-
-where $T = \{1, \dots, n \}$, $|x|^+=\max\{0,x\}$ and $|x|^-=-\min\{0,x\}$. The solution from the above problem is an estimator $\hat{Q}_{Y|X}$ for the quantile function $Q_{Y|X}$.
-
-To model this problem as a Linear Programming problem, thus being able to use a modern solver to fit our model,  we create variables $\varepsilon^+_t$ e $\varepsilon^-_t$ to represent $|y-q(\cdot)|^+$ and $|y-q(\cdot)|^-$, respectively. The optimal argument $q_\alpha^*(\cdot)$ on the Linear Programming problem \ref{eq:qar-general} is the estimated $\alpha$-quantile for the given random sample.
-\begin{equation}
-\begin{aligned}q^*_\alpha(.) \in \underset{q_\alpha (\cdot),\varepsilon_{t}^{+}, \varepsilon_{t}^{-}}{\text{arg min}} & \sum_{t \in T}\left(\alpha \varepsilon_{t}^{+}+(1-\alpha)\varepsilon_{t}^{-}\right) & \\
-\mbox{s.t. } & \varepsilon_{t}^{+}-\varepsilon_{t}^{-}=y_{t}-q_\alpha(x_t), & \qquad\forall t \in T,\\
-& \varepsilon_t^+,\varepsilon_t^- \geq 0, & \qquad \forall t \in T.
-\end{aligned}
-\label{eq:qar-general}
-\end{equation}
 
 Let $A$ be a set containing a sequence of probabilities  $\alpha_i$ such that $0 < \alpha_1 < \alpha_2 < \dots < \alpha_Q < 1$. This set represents a finite discretization of the interval $[0,1]$.
 One of our goals with quantile regression is to estimate a quantile function $\hat{Q}_{Y|X}$ of a given real valued random variable $X$ from a sequence of quantiles $q_{\alpha_1}(x_t) \leq q_{\alpha_2}(x_t) \leq \dots \leq q_{\alpha_{|A|}}(x_t)$, with $0 < \alpha_1 < \alpha_2 < \dots < \alpha_{|A|} < 1$, for any given $t$.
 The process of fitting $\hat{Q}_{Y|X}$ is by mapping every $\alpha_i$ with its estimated quantile $\hat{q}_{\alpha_i}(x_t)$.
 The denser the grid of values in $A$, better is the approximation of $Q_{Y|X}$.
 Thus, the distribution found for $Y$ is nonparametric, as no previous assumptions are made about its shape, and its form is fully recovered by the data we have.
+
+The crossing quantile is a common issue when estimating a set of quantiles \cite{chernozhukov_quantile_2010}. Two a solution may be 
+
 
 A typical problem, however, arises when working with quantile regression. When quantiles are estimated independently, it is possible to find $q_{\alpha}(x_t) > q_{\alpha'}(x_t)$, for a given $t$, when $\alpha_1 < \alpha_2$. An example can be seen on Figure \ref{fig:crossing-quantiles}, where quantiles $\alpha = 0.95$ and $\alpha = 0.9$ cross. This problem, called \textit{crossing quantiles}, can be prevented by estimating all quantiles with a single minimization problem.
 
@@ -81,8 +50,49 @@ as we choose the nonparametric methodology we are released from this step. A dis
 	
 	
 	
-\subsection{Linear parametric explanatory model}
-	\blindtext
+%\subsection{Linear parametric explanatory model}
+%	\blindtext
+
+One of the options is to consider function $q_\alpha(\cdot)$ in problem (\ref{eq:optim-qr1})-(\ref{eq:optim-qr2}) as a linear function of its parameters. In this setup, 
+\begin{equation}
+\hat q_\alpha(x_t) = \beta^T x_t + \beta_0.
+\end{equation}
+
+\section{Regularization}
+Our study also (...) the regularization process together with the estimation of the conditional distribution function, which is a contribution in this paper.
+
+We investigate two ways of regularization.
+The first of them consists of selecting the best subset of variables through Mixed Integer Programming, given that $K$ variables are included in the model. 
+
+The second way is including a $\ell_1$ penalty on the linear quantile regression, 
+Both of them will be built over the standard Quantile Linear Regression model. In the end of the section, we discuss a information criteria to be used for quantile regression and verify how close are the solutions in the eyes of this criteria.
+
+When we choose $q_\alpha(x_t)$ to be a linear function
+\begin{equation}
+\hat{q}_\alpha(x_t) = \beta_{0\alpha} + \beta_\alpha^T x_t 
+\end{equation}
+we can substitute it on problem \ref{eq:qar-general}, getting the following LP problem:
+\begin{align}
+&\min_{\beta_{0\alpha},\beta_\alpha,\varepsilon_{t\alpha}^{+}, \varepsilon_{t\alpha}^{-}} \, \sum_{\alpha \in A} \sum_{t \in T}\left(\alpha \varepsilon_{t \alpha}^{+}+(1-\alpha)\varepsilon_{t \alpha}^{-}\right) \label{eq:linear-opt-1} + P() \\
+&\mbox{s.t. } \\
+&\varepsilon_{t \alpha}^{+}-\varepsilon_{t \alpha}^{-}=y_{t} - \beta_{0\alpha} - \beta_{\alpha}^T x_{t}, \qquad  \forall t \in T,\forall \alpha \in A, \\
+ &\varepsilon_{t\alpha}^+,\varepsilon_{t\alpha}^- \geq 0, \qquad    \forall t \in T,\forall \alpha \in A,\\ 
+ &
+ \beta_{0\alpha} + \beta_{\alpha}^T x_{t} \leq \beta_{0\alpha'} + \beta_{\alpha'}^T x_{t}, \nonumber \\
+& \label{eq:linear-opt-ult} \qquad \qquad \qquad \forall t \in T, \forall (\alpha, \alpha') \in A \times A,  \alpha < \alpha',
+ \end{align}
+	
+	
+	
+%To model \ref{eq:linear-model} as a Linear Programming problem, thus being able to use a modern solver to fit our model,  we create variables $\varepsilon^+_t$ e $\varepsilon^-_t$ to represent the positive and the negative values of \ref{eq:check-function}, respectively. The optimal argument $q_\alpha^*(\cdot)$ on the Linear Programming problem \ref{eq:qar-general} is the estimated $\alpha$-quantile for the given random sample.
+%\begin{equation}
+%\begin{aligned}q^*_\alpha(.) \in \underset{q_\alpha (\cdot),\varepsilon_{t}^{+}, \varepsilon_{t}^{-}}{\text{arg min}} & \sum_{t \in T}\left(\alpha \varepsilon_{t}^{+}+(1-\alpha)\varepsilon_{t}^{-}\right) & \\
+%\mbox{s.t. } & \varepsilon_{t}^{+}-\varepsilon_{t}^{-}=y_{t}-q_\alpha(x_t), & \qquad\forall t \in T,\\
+%& \varepsilon_t^+,\varepsilon_t^- \geq 0, & \qquad \forall t \in T.
+%\end{aligned}
+%\label{eq:qar-general}
+%\end{equation}
+
 	
 \subsection{General non-linear nonparametric model}
 	\blindtext
