@@ -1,9 +1,11 @@
 %% Versão final IEEE
-\documentclass[a4paper]{IEEEtran}
+%\documentclass[a4paper]{IEEEtran}
 
 % Versão Rascunho com uma coluna
 %\documentclass[journal,12pt,onecolumn,draftclsnofoot,]{IEEEtran}
-%\usepackage[a4paper, marginparwidth=1in]{geometry}
+\documentclass[journal,12pt,onecolumn,]{IEEEtran}
+%
+\usepackage[a4paper, marginparwidth=1in]{geometry}
 
 
 
@@ -29,6 +31,8 @@
 \usepackage{blindtext}
 %\usepackage{soul}
 \usepackage[normalem]{ulem}
+\usepackage{pgf,tikz}
+\usetikzlibrary{arrows}
 %\DeclareGraphicsExtensions{.eps} % eu que comentei
 %\AppendGraphicsExtensions{.pdf} % eu que comentei
 
@@ -82,11 +86,11 @@
 
 % ===== Sec. II - Quantile Regression ===== %
 %
-%\input{ieee-quantile-regression.tex}
+\input{ieee-quantile-regression.tex}
 %
 %% ===== Sec. III - Regularization ===== %
 %
-%\input{ieee-regularization.tex}
+\input{ieee-regularization.tex}
 
 
 % % % % % % % % % % % % % PLANO DO ARTIGO % % % % % % % % % % % % % %

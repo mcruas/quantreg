@@ -96,6 +96,8 @@ fit_i$coefficientsfit_i <- rq.lasso.fit(x = as.matrix(Data_estimation[,col_X]),
               tau=tau, lambda = 0.0013530478)
 fit_i$coefficients
 
+plot(density(diff(y)))
+
 
 ###############################33
 library(quantregGrowth)

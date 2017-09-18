@@ -27,7 +27,7 @@ By reducing the outcome to a single statistic, we loose important informations a
 %%%%%% 3. Falar da não-gaussianidade do WP e apresentar novas referências
 % Unir com parágrafo anterior??
 % Não gaussianidade dos dados de Fator de capacidade eólico 3 paragrafo HHH
-Most time series methods rely on the assumption of Gaussian errors. However, renewable series such as wind and solar are reported as non-Gaussian \cite{bessa2012time,jeon2012using,taylor2015forecasting,Wan2017}. To circumvent this problem, the usage of nonparametric methods, which doesn't rely on assuming any previously assumed distribution of errors, is adequate. We choose to use Quantile Regression (QR) as a tool for constructing a model for time series where errors are non-Gaussian, because of its facility to implement on commercial solvers and to extend the original model.
+Most time series methods rely on the assumption of Gaussian errors. However, renewable series such as wind and solar are reported as non-Gaussian \cite{bessa2012time,jeon2012using,taylor2015forecasting,Wan2017}. To circumvent this problem, the usage of nonparametric methods, which doesn't rely on assuming any previously assumed distribution of errors, is adequate. We choose to use Quantile Regression (QR) as a tool for constructing a methodology for non-Gaussian error time series, because of its facility to implement on commercial solvers and to extend the original model.
 However, when estimating a distribution function, as each quantile is estimated independently, the monotonicity of the distribution function may be violated. To get around this issue (known as crossing-quantiles) we propose to either add a constraint on the optimization model (which is more computationally intensive) or making a transformation as in \cite{chernozhukov_quantile_2010}, which can then be estimated independently.
 
 
@@ -38,7 +38,7 @@ However, when estimating a distribution function, as each quantile is estimated 
 
 
 The seminal work \cite{koenker1978regression} defines QR as we use today. By this formulation, the conditional quantile is the solution of an optimization problem where we minimize the sum of the check function (defined formally in the next session). Instead of using the classical regression to estimate the conditional mean, the QR determines any quantile from the conditional distribution. Applications are enormous, ranging from risk measuring at financial funds (the Value-at-Risk) to a central measure robust to outliers.
-By estimating many quantiles on a thin grid of probabilities, one can have as many points as desired of the estimated conditional distribution function. 
+By estimating many quantiles on a thin grid of probabilities, one can have as many points as desired from the estimated conditional distribution function. 
 In \cite{koenker_quantile_2006}, the application of QR is extended to time series, when the covariates are lagged values of $y_t$.  
 In our work, beyond autoregressive terms, it is also considered other exogenous variables as covariates. 
 
@@ -54,11 +54,14 @@ The approach by \cite{gallego2016line} is to use QR with a nonparametric methodo
 In \cite{wan_direct_2017}, wind power probabilistic forecasts are made by using QR with a special type of Neural Network (NN) with one hidden layer, called extreme learning machine. In this setup, each quantile is a different linear combination of the features of the hidden layer.
 The authors of \cite{cai_regression_2002} use the weighted Nadaraya-Watson to estimate the conditional function in the time series.
 
-Even though regularization is a topic already explored in previous QR articles, none of the aforementioned works that use QR to estimate the conditional distribution make use of regularization to do variable selection and arrive in a parsimonious model.
-The work by \cite{belloni_l1-penalized_2009} defines the proprieties and convergence rates for QR when adding a penalty proportional to the $\ell_1$-norm to perform variable selection, using the same idea as the LASSO \cite{tibshirani1996regression}. The ADALASSO equivalent to QR is proposed by \cite{ciuperca_adaptive_2016}. In this variant, the penalty for each variable has a different weight, and this modification ensures that the oracle propriety is being respected.
 
 %%%%% 6. Apresentar o nosso modelo (QR) to estimate time series models where the errors follow a distribution which is unknown, enfatizando o que o nosso tem e os outros não tem.
 % % % Talk about nonparametric models and how to use quantile regression to estimate the whole distribution
+
+Regularization is a topic already explored in previous QR papers.
+The work by \cite{belloni_l1-penalized_2009} defines the proprieties and convergence rates for QR when adding a penalty proportional to the $\ell_1$-norm to perform variable selection, using the same idea as the LASSO \cite{tibshirani1996regression}. The ADALASSO equivalent to QR is proposed by \cite{ciuperca_adaptive_2016}. In this variant, the penalty for each variable has a different weight, and this modification ensures that the oracle propriety is being respected.
+
+
 For the best of the authors knowledge, no other work has developed a methodology where regularization and estimation of the conditional distribution using QR is carried on at the same time.
 We propose to attack both problems simultaneously by using either Mixed Integer Linear Programming (MILP) or a LASSO penalization. On the LASSO formulation, regularization is performed for an individual quantile as described in \cite{belloni_l1-penalized_2009}, with the difference that all quantiles are estimated at the same time.
 In \cite{bertsimas_best_2015}, the best subset with size $K$ is selected  by solving a MILP problem to minimize the sum of squared errors.

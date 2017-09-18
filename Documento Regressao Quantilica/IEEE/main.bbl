@@ -77,6 +77,15 @@ C.~Wan, J.~Lin, J.~Wang, Y.~Song, and Z.~Y. Dong, ``Direct quantile regression
   \emph{IEEE Transactions on Power Systems}, vol.~32, no.~4, pp. 2767--2778,
   July 2017.
 
+\bibitem{chernozhukov_quantile_2010}
+\BIBentryALTinterwordspacing
+V.~Chernozhukov, I.~Fernández-Val, and A.~Galichon,
+  ``\BIBforeignlanguage{en}{Quantile and {Probability} {Curves} {Without}
+  {Crossing}},'' \emph{\BIBforeignlanguage{en}{Econometrica}}, vol.~78, no.~3,
+  pp. 1093--1125, May 2010. [Online]. Available:
+  \url{http://onlinelibrary.wiley.com/doi/10.3982/ECTA7880/abstract}
+\BIBentrySTDinterwordspacing
+
 \bibitem{koenker1978regression}
 R.~Koenker and G.~Bassett~Jr, ``Regression quantiles,'' \emph{Econometrica:
   journal of the Econometric Society}, pp. 33--50, 1978.
@@ -158,18 +167,17 @@ D.~Bertsimas, A.~King, and R.~Mazumder, ``Best {Subset} {Selection} via a
   \url{http://arxiv.org/abs/1507.03133}
 \BIBentrySTDinterwordspacing
 
-\bibitem{chernozhukov_quantile_2010}
-\BIBentryALTinterwordspacing
-V.~Chernozhukov, I.~Fernández-Val, and A.~Galichon,
-  ``\BIBforeignlanguage{en}{Quantile and {Probability} {Curves} {Without}
-  {Crossing}},'' \emph{\BIBforeignlanguage{en}{Econometrica}}, vol.~78, no.~3,
-  pp. 1093--1125, May 2010. [Online]. Available:
-  \url{http://onlinelibrary.wiley.com/doi/10.3982/ECTA7880/abstract}
-\BIBentrySTDinterwordspacing
-
 \bibitem{efroymson1960multiple}
 M.~Efroymson, ``Multiple regression analysis,'' \emph{Mathematical methods for
   digital computers}, vol.~1, pp. 191--203, 1960.
+
+\bibitem{hocking_selection_1967}
+\BIBentryALTinterwordspacing
+R.~R. Hocking and R.~N. Leslie, ``Selection of the {Best} {Subset} in
+  {Regression} {Analysis},'' \emph{Technometrics}, vol.~9, no.~4, pp. 531--540,
+  Nov. 1967. [Online]. Available:
+  \url{http://www.tandfonline.com/doi/abs/10.1080/00401706.1967.10490502}
+\BIBentrySTDinterwordspacing
 
 \bibitem{li2012l1}
 Y.~Li and J.~Zhu, ``L1-norm quantile regression,'' \emph{Journal of
@@ -182,5 +190,22 @@ A.~Belloni and V.~Chernozhukov, ``Least squares after model selection in
 \bibitem{machado1993robust}
 J.~A. Machado, ``Robust model selection and m-estimation,'' \emph{Econometric
   Theory}, vol.~9, pp. 478--493, 1993.
+
+\bibitem{bergmeir_note_2017}
+\BIBentryALTinterwordspacing
+C.~Bergmeir, R.~J. Hyndman, and B.~Koo, ``A {Note} on the {Validity} of
+  {Cross}-{Validation} for {Evaluating} {Time} {Series} {Prediction},'' Monash
+  University, Department of Econometrics and Business Statistics, Tech. Rep.
+  10/15, 2017. [Online]. Available:
+  \url{https://ideas.repec.org/p/msh/ebswps/2015-10.html}
+\BIBentrySTDinterwordspacing
+
+\bibitem{bergmeir_use_2012}
+\BIBentryALTinterwordspacing
+C.~Bergmeir and J.~M. Benítez, ``On the use of cross-validation for time
+  series predictor evaluation,'' \emph{Information Sciences}, vol. 191, pp.
+  192--213, May 2012. [Online]. Available:
+  \url{http://www.sciencedirect.com/science/article/pii/S0020025511006773}
+\BIBentrySTDinterwordspacing
 
 \end{thebibliography}

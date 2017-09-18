@@ -16,45 +16,45 @@ Database file #3: Bibhenriquinho.bib
 Warning--empty journal in belloni2009least
 
 Done.
-You've used 27 entries,
+You've used 30 entries,
             4039 wiz_defined-function locations,
-            990 strings with 12294 characters,
-and the built_in function-call counts, 22422 in all, are:
-= -- 1933
-> -- 484
-< -- 233
-+ -- 281
-- -- 72
-* -- 1135
-:= -- 3443
-add.period$ -- 53
-call.type$ -- 27
-change.case$ -- 29
-chr.to.int$ -- 528
-cite$ -- 28
-duplicate$ -- 1555
-empty$ -- 1590
-format.name$ -- 91
-if$ -- 5112
+            1011 strings with 13058 characters,
+and the built_in function-call counts, 24775 in all, are:
+= -- 2146
+> -- 531
+< -- 255
++ -- 307
+- -- 79
+* -- 1257
+:= -- 3829
+add.period$ -- 59
+call.type$ -- 30
+change.case$ -- 32
+chr.to.int$ -- 576
+cite$ -- 31
+duplicate$ -- 1719
+empty$ -- 1751
+format.name$ -- 101
+if$ -- 5638
 int.to.chr$ -- 0
-int.to.str$ -- 27
-missing$ -- 241
-newline$ -- 124
-num.names$ -- 26
-pop$ -- 465
+int.to.str$ -- 30
+missing$ -- 269
+newline$ -- 139
+num.names$ -- 29
+pop$ -- 515
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 1728
+skip$ -- 1909
 stack$ -- 0
-substring$ -- 1260
-swap$ -- 1402
-text.length$ -- 57
+substring$ -- 1375
+swap$ -- 1551
+text.length$ -- 63
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 27
+type$ -- 30
 warning$ -- 1
-while$ -- 110
-width$ -- 29
-write$ -- 323
+while$ -- 121
+width$ -- 32
+write$ -- 362
 (There was 1 warning)

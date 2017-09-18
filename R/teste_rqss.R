@@ -49,3 +49,9 @@ lines(x[-1], f.CI$coef[1] + f.CI$coef[-(1:2)], col="red")
 data(CobarOre)
 fCO <- rqss(z ~ qss(cbind(x,y), lambda= .08), data=CobarOre)
 plot(fCO)
+
+
+
+
+
+
