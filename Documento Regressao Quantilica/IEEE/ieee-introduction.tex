@@ -4,7 +4,16 @@
 
 Renewable energy power is an emergent topic which is demanding attention from the academic community. %It is a much cleaner way of producing energy than by using other sources such as coal and gas, and with less hazard potential than nuclear power plants. 
 The installed capacity of renewable energy plants has been increasing in a fast pace and projections point out that wind power alone will account to 18\% of global power by 2050  \cite{IntEnerAgency}.
-In spite of its virtues, several new challenges are inherent when dealing with such power source. New statistical models capable to handle with such difficulties are an emerging field in power systems literature \iffalse citar paper PYKA henriquinho \fi. The main objective in such literature is to propose new models capable of generating scenarios of renewable energy source which are demanded in (i) energy trading, (ii) unit commitment, (iii) grid expansion planning, and (iv) investment decisions (see (\cite{moreiraStreet,jabr2013robust,zhaoguan,Aderson2017}) and references therein). To provide good scenarios from an array of potential influential factors, one has to properly select which features are relevant and create a good model for the conditional distribution. Notwithstanding, a little attention is devoted to addressing both at the same time. 
+In spite of its virtues, several new challenges are inherent when dealing with such power source, due to its unpredictability. To overcome this lack of certainty, one has to work with many different possibilities of outcome.
+
+%Many applications in Power Systems use renewable scenarios as input.
+%For all the aforementioned applications, the knowledge of the time series conditional distribution can provide all that needed information.
+New statistical models capable of handling such difficulties are an emerging field in power systems literature\iffalse citar paper PYKA henriquinho \fi. 
+The main objective in such literature is to propose new models capable of generating scenarios of renewable energy source which are demanded in (i) energy trading, (ii) unit commitment, (iii) grid expansion planning, and (iv) investment decisions (see (\cite{moreiraStreet,jabr2013robust,zhaoguan,Aderson2017}) and references therein). 
+In stochastic optimization, problems such as Unit Commitment, Economic Dispatch, Transmission Expansion Planning all use scenarios as input. 
+When working with robust optimization, bounds for probable ranges of coefficients are needed.
+To provide good scenarios from an array of potential influential factors, one has to properly select which features are relevant and create a good model for the conditional distribution.  
+Notwithstanding, a little attention is devoted to addressing both at the same time.
 
 
 %%%%%% 1.b. Continuar 
@@ -20,16 +29,17 @@ In spite of its virtues, several new challenges are inherent when dealing with s
 Conventional statistical models are often focused on estimating the conditional mean of a given random variable. % This is not very useful when dealing with renewable energy, as the variability and the notion of risk is extremely important for planning. - ver a distribuicao como um todo - reescrever
 %One of the first works in wind power prediction, \cite{brown_time_1984} treated the nonlinearity of wind power by applying a transformation on the prediction of wind speed, which is modeled by an autoregressive process. The data is standardized to account for the normal variation during the day.
 %\cite{moeanaddin_numerical_1990} estimated the $k$-step-ahead conditional density function using the Chapman-Kolmorov relation. The method is applied on a non-linear autoregressive time series.
-By reducing the outcome to a single statistic, we loose important informations about the series random behavior. In order to account for the process inherent variability we focus our work on probability forecasting.
+By reducing the outcome to a single statistic, we loose important informations about the series random behavior. In order to account for the process inherent variability it is important to consider probability forecasting.
 \cite{zhang_review_2014} reviews the commonly used methodologies regarding probabilistic forecasting models, splitting them in parametric and nonparametric classes. Main characteristics of \textbf{parametric models} are (i) assuming a distribution shape and (ii) low computational costs. ARIMA-GARCH, for example, model the renewable series by assuming the distribution \textit{a priori}. On the other hand, \textbf{nonparametric models} (i) don't require a distribution to be specified, (ii) needs mode data to produce a good approximation and (iii) have a higher computational cost. Popular methods are Quantile Regression (QR), Kernel Density Estimation,  Artificial Intelligence or a mix of them.
 
 
 %%%%%% 3. Falar da não-gaussianidade do WP e apresentar novas referências
 % Unir com parágrafo anterior??
 % Não gaussianidade dos dados de Fator de capacidade eólico 3 paragrafo HHH
-Most time series methods rely on the assumption of Gaussian errors. However, renewable series such as wind and solar are reported as non-Gaussian \cite{bessa2012time,jeon2012using,taylor2015forecasting,Wan2017}. To circumvent this problem, the usage of nonparametric methods, which doesn't rely on assuming any previously assumed distribution of errors, is adequate. We choose to use Quantile Regression (QR) as a tool for constructing a methodology for non-Gaussian error time series, because of its facility to implement on commercial solvers and to extend the original model.
-However, when estimating a distribution function, as each quantile is estimated independently, the monotonicity of the distribution function may be violated. To get around this issue (known as crossing-quantiles) we propose to either add a constraint on the optimization model (which is more computationally intensive) or making a transformation as in \cite{chernozhukov_quantile_2010}, which can then be estimated independently.
-
+Most time series methods rely on the assumption of Gaussian errors. However, renewable series such as wind and solar are reported as non-Gaussian \cite{bessa2012time,jeon2012using,taylor2015forecasting,Wan2017}. To circumvent this problem, the usage of nonparametric methods - which doesn't rely on assuming any previously assumed distribution - is adequate. 
+Quantile Regression (QR) is a tool for constructing a methodology for non-gaussian time series, because of its facility to implement on commercial solvers and to extend the original model.
+However, when estimating a distribution function, as each quantile is estimated independently, the monotonicity of the distribution function may be violated.
+This issue - also known as crossing quantiles - can be adressed by constraining the sequence of quantiles to be in an increasing order. Other possibility is making a transformation afterwards, as shown in \cite{chernozhukov_quantile_2010}.
 
 %
 %, as defined in \cite{koenker_quantile_2006}.
@@ -54,32 +64,28 @@ The approach by \cite{gallego2016line} is to use QR with a nonparametric methodo
 In \cite{wan_direct_2017}, wind power probabilistic forecasts are made by using QR with a special type of Neural Network (NN) with one hidden layer, called extreme learning machine. In this setup, each quantile is a different linear combination of the features of the hidden layer.
 The authors of \cite{cai_regression_2002} use the weighted Nadaraya-Watson to estimate the conditional function in the time series.
 
-
-%%%%% 6. Apresentar o nosso modelo (QR) to estimate time series models where the errors follow a distribution which is unknown, enfatizando o que o nosso tem e os outros não tem.
-% % % Talk about nonparametric models and how to use quantile regression to estimate the whole distribution
-
 Regularization is a topic already explored in previous QR papers.
 The work by \cite{belloni_l1-penalized_2009} defines the proprieties and convergence rates for QR when adding a penalty proportional to the $\ell_1$-norm to perform variable selection, using the same idea as the LASSO \cite{tibshirani1996regression}. The ADALASSO equivalent to QR is proposed by \cite{ciuperca_adaptive_2016}. In this variant, the penalty for each variable has a different weight, and this modification ensures that the oracle propriety is being respected.
 
-
-For the best of the authors knowledge, no other work has developed a methodology where regularization and estimation of the conditional distribution using QR is carried on at the same time.
+We propose using Quantile Autoregression (QAR) to create a methodology capable of estimating and simulating a nongaussian time series, such as renewable energy source. By estimating a regularized QAR we model the conditional quantile function.
+For the best of the authors knowledge, no other work has developed a methodology where regularization and estimation of the conditional distribution using QR is carried on at the same time. 
 We propose to attack both problems simultaneously by using either Mixed Integer Linear Programming (MILP) or a LASSO penalization. On the LASSO formulation, regularization is performed for an individual quantile as described in \cite{belloni_l1-penalized_2009}, with the difference that all quantiles are estimated at the same time.
 In \cite{bertsimas_best_2015}, the best subset with size $K$ is selected  by solving a MILP problem to minimize the sum of squared errors.
 The idea is straightforward: integer variables are used to count whether a variable is included or not in the model; a total number of $K$ variables is allowed.
-Model selection for QR is performed using this same approach. The advantage we highlight on using the latter methodology is that the solution provided is optimal in the sense of minimizing the check function for a given number $K$ of variables.
+Model selection for QR is performed using this same approach. The advantage we highlight on using the latter methodology is that the solution provided is optimal in the sense of minimizing the check function for a given number $K$ of variables. The crossing quantile issue is solved by introducing a constraint on the optimization problems that forces the quantile function monotonicity.
 %The conditional distribution is formed by a thin grid of quantiles, estimated all at the same time. 
 
 
 
  
 %%%%%% 7. Objetivos do paper e contribuição
-The objective of this paper is, then, to propose a new methodology to address nonparametric time-series focused on renewable energy. In our analysis, we develop both nonlinear and linear models for QR. The main contributions are:
+The objective of this paper is, then, to propose a new methodology to address nonparametric time-series focused on renewable energy. This may be seen as a multiple quantile regression that specifies a time series model based on the empirical conditional distribution. The main contributions are:
 \begin{itemize}
 	\item A nonparametric methodology to model the conditional distribution of time series.
 	
-	\item On the linear case, we propose a parsimonious methodology that selects the global optimal solution.
+	\item We propose a parsimonious regularized based methodology that selects the global optimal solution.
 	
-	\item Regularization techniques applied to an ensemble of quantile functions to estimate the conditional distribution.
+	\item Regularization techniques applied to an ensemble of quantile functions to estimate the conditional distribution, solving the issue of non-crossing quantiles.
 	
 	%\item A nonlinear QR
 	

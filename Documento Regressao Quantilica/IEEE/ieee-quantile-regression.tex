@@ -1,38 +1,38 @@
-\section{Quantile Regression based time series model}
+\section{Quantile Regression based time series model} \label{sec:qr1}
 
-Let the conditional quantile function $Q_{Y|X=x}:[0,1] \times \mathbb{R}^d \rightarrow \mathbb{R}$ (in short, from now on, $Q_{Y|X}(\cdot, \cdot)$) be defined as 
+Let the $\alpha$-conditional quantile function of $Y$ for a given value $x$ of the $d$-dimensional random variable $X$, i.e., $Q_{Y|X}:[0,1] \times \mathbb{R}^d \rightarrow \mathbb{R}$, can be defined as %(in short, from now on, $Q_{Y|X}(\cdot, \cdot)$)
 \begin{equation}
-Q_{Y|X}(\alpha,x) = F_{Y|X}^{-1}(\alpha,x) = \inf\{y: F_{Y|X}(y,x) \geq \alpha\},
+Q_{Y|X}(\alpha,x) = F_{Y|X}^{-1}(\alpha,x) = \inf\{y: F_{Y|X}(y,x) \geq \alpha\}.
 \label{eq:quantile-function}
 \end{equation}
-where $Y$ is a random variable and $X$ a random vector of dimension $d$. 
-Let a dataset be composed of $n$ observations of $\{y_t,x_t \}_{t=1}^n$. The sample quantile function is based on a finite number of observations and is the solution to the following optimization problem:
-\begin{eqnarray}
-\hat{Q}_{Y|X}(\alpha,\cdot)\quad\in\quad & \underset{q_{\alpha}(\cdot)}{\text{arg min}}\, & \sum_{t\in T}\rho_{\alpha}(y_{t}-q_{\alpha}(\cdot)),\label{eq:optim-lqr1} \\
- & q_{\alpha}\in\mathcal{Q}.\label{eq:optim-lqr2}
-\end{eqnarray}
-where $\rho$ is the check function, defined as
+Let a dataset be composed of $n$ observations of $\{y_t,x_t \}_{t=1}^n$ and let $\rho$ be the check function 
 \begin{equation}\label{eq:check-function}
 \rho_{\alpha}(x)=\begin{cases}
 \alpha x & \text{if }x\geq0\\
 (1-\alpha)x & \text{if }x<0
 \end{cases}.
 \end{equation}
-Quantile $q_\alpha$ belongs to a function space $\mathcal{Q}$. We might have different assumptions for space $\mathcal{Q}$, depending on the type of function we want to find for $q_\alpha$. A few properties, however, must be achieved by our choice of space, such as being continuous and having limited first derivative. In this paper, we consider the case where $\mathcal{Q}$ is a linear function's space.
+The sample quantile function for a given probability $\alpha$ is then based on a finite number of observations and is the solution to minimizing the loss function $L(\cdot)$:
+\begin{IEEEeqnarray}{C}
+\hat{Q}_{Y|X}(\alpha,\cdot)\quad\in\quad  \underset{q_{\alpha}}{\text{arg min}}\, L(\alpha) = \sum_{t\in T}\rho_{\alpha}(y_{t}-q_{\alpha}(x_t)),\label{eq:optim-lqr1} \\
+q_{\alpha}\in\mathcal{Q}.\label{eq:optim-lqr2}
+\end{IEEEeqnarray}
+Equation \ref{eq:optim-lqr2} means that quantile $q_\alpha$ belongs to a function space $\mathcal{Q}$. We might have different assumptions for space $\mathcal{Q}$, depending on the type of function we want to find for $q_\alpha$. A few properties, however, must be achieved by our choice of space, such as being continuous and having limited first derivative. In this paper, we consider the case where $\mathcal{Q}$ is a linear function's space.
 
-The problem (\ref{eq:optim-lqr1})-(\ref{eq:optim-lqr2}) can be rewritten as a Linear Programming problem as in (\ref{eq:linear-opt-1})-(\ref{eq:linear-opt-ult}), thus being able to use a modern solver to fit our model. Variables $\varepsilon^+_t$ e $\varepsilon^-_t$ represent the quantities $|y-q(\cdot)|^+$ and $|y-q(\cdot)|^-$, respectively. $A$ is the set containing a sequence of probabilities  $\alpha_i$ such that $0 < \alpha_1 < \alpha_2 < \dots < \alpha_Q < 1$. This set represents a finite discretization of the interval $[0,1]$.  
-\begin{align}
-&\min_{\beta_{0\alpha},\beta_\alpha,\varepsilon_{t\alpha}^{+}, \varepsilon_{t\alpha}^{-}} \, \sum_{\alpha \in A} \sum_{t \in T}\left(\alpha \varepsilon_{t \alpha}^{+}+(1-\alpha)\varepsilon_{t \alpha}^{-}\right) \label{eq:linear-opt-1}\\
-&\mbox{s.t. } \\
-&\varepsilon_{t \alpha}^{+}-\varepsilon_{t \alpha}^{-}=y_{t} - \beta_{0\alpha} - \beta_{\alpha}^T x_{t}, \qquad  \forall t \in T,\forall \alpha \in A, \\
-&\varepsilon_{t\alpha}^+,\varepsilon_{t\alpha}^- \geq 0, \qquad \qquad \qquad \quad \qquad    \forall t \in T,\forall \alpha \in A,\\ 
-&
-\beta_{0\alpha} + \beta_{\alpha}^T x_{t} \leq \beta_{0\alpha'} + \beta_{\alpha'}^T x_{t}, \nonumber \\
-& \label{eq:linear-opt-ult} \qquad \qquad \qquad \forall t \in T, \forall (\alpha, \alpha') \in A \times A,  \alpha < \alpha',
-\end{align}
-After solving the problem, the sequence $\{ q_\alpha \}_{\alpha \in A}$ is fully defined by the optimum values $\beta^*_{0\alpha}$ and $\beta^*_\alpha$, for every $\alpha$.
+Let $A$ be the set containing a sequence of probabilities  $\alpha_i$ such that $0 < \alpha_1 < \alpha_2 < \dots < \alpha_Q < 1$. This set represents a finite discretization of the interval $[0,1]$. The problem (\ref{eq:optim-lqr1})-(\ref{eq:optim-lqr2}) can be rewritten as a Linear Programming problem as in (\ref{eq:linear-opt-1})-(\ref{eq:linear-opt-ult}), thus being able to use a modern solver to fit our model. Variables $\varepsilon^+_t$ and $\varepsilon^-_t$ represent the quantities $|y-q(\cdot)|^+$ and $|y-q(\cdot)|^-$, respectively. 
+\begin{IEEEeqnarray}{lr}
+\min_{\beta_{0\alpha},\beta_\alpha,\varepsilon_{t\alpha}^{+}, \varepsilon_{t\alpha}^{-}} \, \sum_{\alpha \in A} \sum_{t \in T}\left(\alpha \varepsilon_{t \alpha}^{+}+(1-\alpha)\varepsilon_{t \alpha}^{-}\right) \span \label{eq:linear-opt-1}\\
+\mbox{subject to} \span \nonumber \\
+\varepsilon_{t \alpha}^{+}-\varepsilon_{t \alpha}^{-}=y_{t} - \beta_{0\alpha} - \beta_{\alpha}^T x_{t}, & \forall t \in T,\qquad \forall \alpha \in A, \\
+\varepsilon_{t\alpha}^+,\varepsilon_{t\alpha}^- \geq 0, &  \forall t \in T,\forall \alpha \in A,\\ 
+\beta_{0\alpha} + \beta_{\alpha}^T x_{t} \leq \beta_{0\alpha'} + \beta_{\alpha'}^T x_{t}, \span \nonumber \\
+\span \label{eq:linear-opt-ult} \forall t \in T, \forall (\alpha, \alpha') \in A \times A,  \alpha < \alpha',
+\end{IEEEeqnarray}
+To estimate a conditional distribution based on quantile values, all quantiles $\{q_\alpha \}_{\alpha \in A}$ are estimated simultaneously. With the addition of constraint (\ref{eq:linear-opt-ult}), we assure the monotonicity of the quantile function, solving the issue of crossing-quantiles
+The output is the sequence $\{ q_\alpha \}_{\alpha \in A}$, which is fully defined by the optimum values $\beta^*_{0\alpha}$ and $\beta^*_\alpha$, for each $\alpha$.
 
-We apply QR to estimate the conditional distribution $\hat{Q}_{Y_{t+k}|X_t,Y_t, Y_{t-1}, \dots} (\alpha,\cdot)$ for a $k$-step ahead forecast, where $X_t$ is the  
+We apply QR to estimate the conditional distribution $\hat{Q}_{Y_{t+k}|X_{t+k},Y_t, Y_{t-1}, \dots} (\alpha,\cdot)$ for a $k$-step ahead forecast of time serie $\{y_t\}$, where $X_{t+k}$ is a vector of exogenous variables at the time we want to forecast. Once the conditional distribution is estimated, we are able to simulate and generate scenarios. In the next session, regularization techniques are presented, in order to choose parsimoniously which variables will be input for $\hat{Q}$.
+
 %Let $A$ be a set containing a sequence of probabilities  $\alpha_i$ such that $0 < \alpha_1 < \alpha_2 < \dots < \alpha_Q < 1$. This set represents a finite discretization of the interval $[0,1]$.
 %One of our goals with quantile regression is to estimate a quantile function $\hat{Q}_{Y|X}$ of a given real valued random variable $X$ from a sequence of quantiles $q_{\alpha_1}(x_t) \leq q_{\alpha_2}(x_t) \leq \dots \leq q_{\alpha_{|A|}}(x_t)$, with $0 < \alpha_1 < \alpha_2 < \dots < \alpha_{|A|} < 1$, for any given $t$.
 %The process of fitting $\hat{Q}_{Y|X}$ is by mapping every $\alpha_i$ with its estimated quantile $\hat{q}_{\alpha_i}(x_t)$.

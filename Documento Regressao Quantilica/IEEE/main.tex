@@ -1,19 +1,18 @@
 %% Versão final IEEE
-%\documentclass[a4paper]{IEEEtran}
+\documentclass[a4paper]{IEEEtran}
 
 % Versão Rascunho com uma coluna
 %\documentclass[journal,12pt,onecolumn,draftclsnofoot,]{IEEEtran}
-\documentclass[journal,12pt,onecolumn,]{IEEEtran}
+%\documentclass[journal,12pt,onecolumn,]{IEEEtran}
+%\usepackage[a4paper, marginparwidth=1in]{geometry}
 %
-\usepackage[a4paper, marginparwidth=1in]{geometry}
-
 
 
 
 \usepackage[utf8]{inputenc}
 \usepackage{epstopdf}
 %\usepackage[spanish]{babel}
-\usepackage[cmex10]{amsmath}
+\usepackage[cmex10]{amsmath,nccmath}
 %\interdisplaylinepenalty=2500
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -54,7 +53,7 @@
 \DeclareMathOperator*{\Maximize}{Maximize}
 
 \begin{document}
-\title{Nongaussian time series model via Quantile Regression}
+\title{Scenario generation for nongaussian time series via Quantile Regression}
 
 \author{Marcelo~Ruas~%,~\IEEEmembership{Student Member,~IEEE,}
 	    and Alexandre~Street,~\IEEEmembership{Member,~IEEE}	
@@ -91,6 +90,10 @@
 %% ===== Sec. III - Regularization ===== %
 %
 \input{ieee-regularization.tex}
+%
+%% ===== Sec. IV - Estimation ===== %
+%
+\input{ieee-estimation.tex}
 
 
 % % % % % % % % % % % % % PLANO DO ARTIGO % % % % % % % % % % % % % %

@@ -1,0 +1,148 @@
+%% Versão final IEEE
+\documentclass[a4paper]{IEEEtran}
+
+% Versão Rascunho com uma coluna
+%\documentclass[journal,12pt,onecolumn,draftclsnofoot,]{IEEEtran}
+%\documentclass[journal,12pt,onecolumn,]{IEEEtran}
+%%
+%\usepackage[a4paper, marginparwidth=1in]{geometry}
+
+
+
+
+\usepackage[utf8]{inputenc}
+\usepackage{epstopdf}
+%\usepackage[spanish]{babel}
+\usepackage[cmex10]{amsmath,nccmath}
+%\interdisplaylinepenalty=2500
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{array}
+%\usepackage{multirow}
+\usepackage{dcolumn}
+\usepackage{color}
+\usepackage[noadjust]{cite}
+\usepackage{url}
+\usepackage{balance}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{accents}
+\usepackage{blindtext}
+%\usepackage{soul}
+\usepackage[normalem]{ulem}
+\usepackage{pgf,tikz}
+\usetikzlibrary{arrows}
+%\DeclareGraphicsExtensions{.eps} % eu que comentei
+%\AppendGraphicsExtensions{.pdf} % eu que comentei
+
+
+% % % Adicionados por mim
+%\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorinlistoftodos,prependcaption,textsize=small]{todonotes}
+\usepackage{xargs} 
+
+\newcommandx{\todoi}[2][1=]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1,inline]{#2}}
+%\newcommand{\todop}[1]{\todo[textsize=tiny]{#1}}
+%%%%
+
+
+
+\DeclareMathOperator*{\Max}{max}
+\DeclareMathOperator*{\Min}{min}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\Maximize}{Maximize}
+
+\begin{document}
+\title{Nongaussian time series model via Quantile Regression}
+
+\author{Marcelo~Ruas~%,~\IEEEmembership{Student Member,~IEEE,}
+	    and Alexandre~Street,~\IEEEmembership{Member,~IEEE}	
+
+
+%\thanks{This work was partially supported by UTE Parna\'iba Gera\c{c}\~ao de Energia S.A. through R\&D project ANEEL PD-7625-0001/2013.}
+%\thanks{Bruno Fanzeres, Arthur Brigatto and Alexandre Street are with the Electrical Engineering Department, Pontifical Catholic University of Rio de Janeiro (PUC-Rio), Rio de Janeiro, RJ, Brazil (e-mail: \mbox{bsantos@ele.puc-rio.br}; \mbox{street@ele.puc-rio.br}).}
+%\thanks{L. A. Barroso are with PSR Consulting, Rio de Janeiro, RJ, Brazil (e-mail: \mbox{luiz@psr-inc.com}).}
+}
+
+\maketitle
+
+
+\begin{abstract}
+	\blindtext
+\end{abstract}
+
+\begin{IEEEkeywords}
+	Quantile Regression, Model Identification, Non-gaussian time series model
+\end{IEEEkeywords}
+
+
+\listoftodos
+
+
+% ===== Sec. I - Introduction ===== %
+
+\input{ieee-introduction.tex}
+
+% ===== Sec. II - Quantile Regression ===== %
+%
+\input{ieee-quantile-regression.tex}
+%
+%% ===== Sec. III - Regularization ===== %
+%
+\input{ieee-regularization.tex}
+%
+%% ===== Sec. IV - Estimation ===== %
+%
+\input{ieee-estimation.tex}
+
+
+% % % % % % % % % % % % % PLANO DO ARTIGO % % % % % % % % % % % % % %
+
+
+%1) Introdução
+%
+%2) Quantile Regression based time series model
+%	A. Linear parametric explanatory model
+%	B. General non-linear nonparametric model
+%
+%3) Estimation procedures
+%	A. Linear model with optimal variable selection / regularization
+%	B. Nonlinear model
+%	
+%4) Case study
+%	A. Long term wind power generation
+%	B. Short term wind (solar?) generation
+%
+%5) Conclusion
+
+
+
+
+
+
+
+
+
+
+%\section*{Acknowledgment}
+
+%The authors would like to thank FICO (Xpress-MP developer) for the academic partnership program with the Electrical Engineering Department of Pontifical Catholic University of Rio de Janeiro, Brazil (PUC-Rio). The authors would also like thank the LAMPS researchers for the daily exchanges and their insightful considerations.
+
+%\IEEEtriggeratref{17}
+\bibliographystyle{IEEEtran}
+\bibliography{Zotero,QR,Bibhenriquinho}
+
+%\begin{IEEEbiographynophoto}{Bruno Fanzeres} (S'11) has a B.Sc. degree in Electrical and Industrial Engineering and a M.Sc. degree in Operations Research from PUC-Rio, Brazil. He is pursuing a Ph.D degree in Operations Research at the same university.
+%\end{IEEEbiographynophoto}
+
+%\begin{IEEEbiographynophoto}{Arthur Brigatto} (S'14) received a B.Sc. degree in Electrical Engineering from the Federal University of Juiz de Fora, Brazil, and is pursuing a M.Sc. in Electrical Engineering at PUC-Rio, Brazil.
+%\end{IEEEbiographynophoto}
+
+%\begin{IEEEbiographynophoto}{Alexandre Street} (S'06, M'10) holds the degrees of M.Sc. and D.Sc. in Electrical Engineering (Operations Research) from PUC-Rio, Brazil. 
+%\end{IEEEbiographynophoto}
+
+%\begin{IEEEbiographynophoto}{Luiz Augusto Barroso} (S'00, M'06, SM'07) has a B.Sc. in Mathematics and a Ph.D degree in Operations Research. He is a technical director at PSR.
+%\end{IEEEbiographynophoto}
+
+\end{document}

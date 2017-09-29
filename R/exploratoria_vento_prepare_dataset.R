@@ -97,7 +97,9 @@ fit_i$coefficientsfit_i <- rq.lasso.fit(x = as.matrix(Data_estimation[,col_X]),
 fit_i$coefficients
 
 plot(density(diff(y)))
-
+media = mean(diff(y))
+desv_pad = sd(diff(y))
+lines(seq(-2,2,0.01),dnorm(seq(-2,2,0.01), mean = media, sd = desv_pad))
 
 ###############################33
 library(quantregGrowth)
