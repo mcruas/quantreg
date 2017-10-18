@@ -41,6 +41,7 @@ ggplot(data = meltdf, aes(x=Month, y=`Mean MW`)) +
 
 ggplot(meltdf,aes(x=Month,y=`Mean MW`,colour=Year,group=Year)) + geom_line() + xlab("")
 
+densityplot(~`Mean MW` | factor(Month),data = meltdf, main="Wind power density comparison across different months", xlab = "")
 
 # Faz tabela de icaraizinho mes a mes
 library(xtable)

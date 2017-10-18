@@ -1,0 +1,58 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: PaperV6.aux
+The style file: IEEEtran.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: Bibhenriquinho.bib
+Warning--I didn't find a database entry for "abadir2005matrix"
+-- IEEEtran.bst version 1.13 (2008/09/30) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+
+Done.
+You've used 36 entries,
+            4039 wiz_defined-function locations,
+            1029 strings with 13194 characters,
+and the built_in function-call counts, 28324 in all, are:
+= -- 2395
+> -- 597
+< -- 294
++ -- 345
+- -- 87
+* -- 1346
+:= -- 4260
+add.period$ -- 72
+call.type$ -- 36
+change.case$ -- 32
+chr.to.int$ -- 669
+cite$ -- 36
+duplicate$ -- 1980
+empty$ -- 2138
+format.name$ -- 111
+if$ -- 6534
+int.to.chr$ -- 0
+int.to.str$ -- 36
+missing$ -- 311
+newline$ -- 137
+num.names$ -- 34
+pop$ -- 646
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 2
+skip$ -- 2223
+stack$ -- 0
+substring$ -- 1590
+swap$ -- 1736
+text.length$ -- 71
+text.prefix$ -- 0
+top$ -- 5
+type$ -- 36
+warning$ -- 0
+while$ -- 144
+width$ -- 38
+write$ -- 382
+(There was 1 warning)

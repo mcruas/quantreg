@@ -1,15 +1,13 @@
 usesolver = "gurobi"    # Escolher entre os valores 'mosek' ou 'gurobi'
-# cd("/home/marcelo/Dropbox/Pesquisa Doutorado/Paper NPQuantile/RegressãoQuantílica_STREET")
-cd("/home/mcruas/Dropbox/Pesquisa Doutorado/Paper NPQuantile/RegressãoQuantílica_STREET")
-# cd("C:/Users/mcruas/Dropbox/Pesquisa Doutorado/Paper NPQuantile/RegressãoQuantílica_STREET")
 
+cd(homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/");
+include(pwd()*"/RegressãoQuantílica_STREET/funcoes_npqar.jl");
 
-include("funcoes_npqar.jl")
 
 # using JuMP, DataFrames, Winston, RCall #, Distributions
 using JuMP, DataFrames,LaTeXStrings, RCall #, Distributions
 
-x = convert(Matrix,readtable("icaraizinho.csv", header = false))
+x = convert(Matrix,readtable(pwd()*"/RegressãoQuantílica_STREET/icaraizinho.csv", header = false));
 
 # x = rcopy("arima.sim(list(order = c(6,0,3), ar = c(0.0,0.2,0.0, 0.05, 0.0, 0.2), ma = c(0.2, 0.6, 0.3)), n = 200)")
 
@@ -17,22 +15,22 @@ P = 12 # number of lags to include
 
 # takes a time series and transforms its lags
 
-n = length(x)
+n = length(x);
 #y = rand(Normal(), n)
-I = (P+1):(n)
-I1 = 1:(n-P)
-y = x[I]
+I = (P+1):(n);
+I1 = 1:(n-P);
+y = x[I];
 # lambdas = 10:10:500
-lambdas = e .^(-2:0.005:6.9)
+lambdas = e .^(-2:0.005:6.9); # range of lambdas for the LASSO
 # lambda = 500
 
 # Create matrix with all p lags.
-x_estim = lagmatrix(x,12)
+x_estim = lagmatrix(x,12);
 
 # plot(x_estim[:,1], y, "r.")
 
 
-n_var = (P)
+n_var = (P);
 
 keep_betas = zeros(P+1,length(lambdas))  # matrix to keep values of beta estimated for
 

@@ -8,11 +8,11 @@ As conditional distribution is the focus in this paper, we use a performance mea
 For each probability $\alpha \in A$, a loss function
 is defined by
 \begin{equation}
-	L(\alpha)= \sum_{t\in T}\rho_{\alpha}(y_{t}-q_{\alpha}(x_t)).
+	L_\alpha(q)= \sum_{t\in T}\rho_{\alpha}(y_{t}-q(x_t)).
 \end{equation}
 The loss score $\mathcal{L}$, which is the chosen evaluation metric to optimize, aggregates the score function over all elements of $A$:
 \begin{equation}
-\mathcal{L}= \frac{1}{|A|}\sum_{\alpha \in A}L(\alpha).
+\mathcal{L}= \frac{1}{|A|}\sum_{\alpha \in A}L_\alpha(q).
 \end{equation}
 
 
@@ -34,10 +34,13 @@ The usage of CV is not straightforward when data is dependent, which is the case
 	\caption{$\mathcal{K}$-fold CV and $\mathcal{K}$-fold with non-dependent data. Observations in blue are used to estimation and in orange for evaluation. Note that non-dependent data doesn't use all dataset in each fold.}
 	\label{fig:cross-validation-scheme}
 \end{figure}
-In both settings, the training data is randomly split into a collection of sets $J_k$, forming a $\mathcal{K}$ size partition. Each of these $J_k$ is used as test set, while the rest is used to estimate coefficients which will be used to predict values of $J_k$. As there are $\mathcal{K}$ folds, this procedure is done $\mathcal{K}$ times. So, for a given tuning parameter $t$ (which can be either $\lambda$ from the LASSO or $K$ from the MILP problem), the CV score is given by the sum of the loss function for each fold. The optimum value of $t$ in this criteria is the one that minimizes the CV score:
+In both settings, the training data is randomly split into a collection of sets $J_k$, forming a $\mathcal{K}$ size partition. Each of these $J_k$ is used as test set, while the rest is used to estimate coefficients which will be used to predict values of $J_k$. As there are $\mathcal{K}$ folds, this procedure is done $\mathcal{K}$ times. So, for a given vector of tuning parameter $\theta$ (which can be either $[\gamma \quad \lambda]^T$ for the LASSO or $[\gamma \quad K]^T$ from the MILP problem), the CV score is given by the sum of the loss function for each fold. The optimum value of $\theta$ in this criteria is the one that minimizes the CV score:
 \[
-t^* = \argmin_t CV(t) = \sum_{k \in \mathcal{K}} \sum_{\alpha \in A} L(\alpha).
+\theta^* = \argmin_\theta CV(\theta) = \sum_{k \in \mathcal{K}} \sum_{\alpha \in A} L_\alpha(q_\theta).\label{eq:cv-equation}
 \]
+The optimization in \ref{eq:cv-equation} is done by the Nelder-Mead method%\comments{Referencias p ele. Referencias p encontrar facil solucao em 2D. NM finciona com inteiros?}
+, which is an iterative method based on simplexes that is suitable for nonlinear problems. Given that this problem is only bidimensional, there is a high probability of the solution being close enough to the optimum $\theta^*$.
+
 
 
 % \todoi{Ver se novas figuras (R/grafico-cv.r) e ver se incluir outras formas de CV} % escolhemos trabalhar apenas com este tipo de CV
@@ -56,37 +59,37 @@ SIC(m) = |T| \log(\mathcal{L}^*)+\frac{1}{2}K\log |T|,\label{eq:SIC}
 where $K$ is the model's dimension. This procedure leads to a consistent model selection if the model is well specified. 
 By minimizing the $SIC$, the chosen model is the one with the best combination, according to this metric, of fit and parsimony among all models. 
 
-\subsection{Model selection distance}
+%\subsection{Model selection distance}
+%%
+%%On sections \ref{sec:best-subset-mip} and \ref{sec:best-subset-ell1}, we presented two ways of selecting variables. Nonetheless, regularization can be done with different levels of parsimony. For example, one can select a different number $K$ of variables to be included in the best subset selection via MILP or choose different values of $\lambda$ for the $\ell_1$ penalty. 
+%%There is a tradeoff between variability and bias, when selecting the number of variables in a model. In order to  
 %
-%On sections \ref{sec:best-subset-mip} and \ref{sec:best-subset-ell1}, we presented two ways of selecting variables. Nonetheless, regularization can be done with different levels of parsimony. For example, one can select a different number $K$ of variables to be included in the best subset selection via MILP or choose different values of $\lambda$ for the $\ell_1$ penalty. 
-%There is a tradeoff between variability and bias, when selecting the number of variables in a model. In order to  
-
-% % % Métrica
-
-Solving a LP problem such as the LASSO is many times faster than a similar-sized MILP problem, for introducing binary variables breaks the problem's convexity. On the other hand, in our case the MILP solution is the exact best solution in minimizing the QR objective function, while the LASSO is an approximation of that.
-
-One of our goals is to test how far from the optimal solution is the LASSO.
-%It would be interesting, then, to use a faster method that would provide a solution close to the optimal. 
-%To test how far are the solutions given by both methods, we propose an experiment that is described as follows. 
-For each number $K$ of total nonzero coefficients, there will be a penalty $\lambda^*_K$ which minimizes the errors from the quantile regression's objective function (given on equation (\ref{eq:post-lasso})): 
-%\todo{($K$ ranging from 0 until 12, where 0 means that only the intercept is included)}
-\begin{equation}
-\lambda^*_K = \argmin_\lambda \left\lbrace \left.  \mathcal{L}_{\lambda}^{*} \quad  \right| \, \| \beta^*_\lambda \|_0 = K \right\rbrace,
-\end{equation}
-where the quantity $\| \beta^*_\lambda \|_0$ is the $0$-norm, which gives the total of nonzero coefficients, for a given lambda of the LASSO estimations.
-
-We, then, define the sets $S_K^{LASSO}$ and $S_K^{MILP}$, which contains all nonzero indexes, for a given $K$, when using methods LASSO and MILP for regularization, respectively.
-Thus, we can compare the best LASSO fit where exactly $K$ variables are selected with the best fit given by the MILP problem, also with $K$ variables selected.
-
-As the MILP solution is the exact solution for the problem, while the LASSO solution is an approximation, we use the former as a \textit{benchmarking} for the quality of the latter solution. It is desirable that the LASSO solution be as related with the MILP solution as possible. The difference in performance is given by a similarity metric $d$, which measures distance from solutions weighted by the correlation between variables. 
-The similarity is calculated as the solution of the following optimization problem
-\begin{IEEEeqnarray}{lC}
-	d(\beta^*_{MILP(K)}, \beta^*_{\lambda^*_K}) = \min_{0\leq\delta_{ij}\leq1} & \sum\limits_{i,j = 1}^K  \delta_{ij} (1-|\rho_{ij}|) \label{eq:metricad0} \\
-	\text{subject to} & \nonumber \\
-	\sum\limits_{j =1}^K\delta_{ij}=1, &  i=1,\dots,K,\\
-	\sum\limits_{i =1}^K\delta_{ij}=1, & j=1,\dots,K,
-\end{IEEEeqnarray}
-where $\rho_{ij}$ is the correlation between the $i$-th and $j$-th independent variables in sets $S_k^{MILP}$ and $S_k^{LASSO}$, respectively. The optimal value for the decision variables of this problem provides us with an assignment between selected covariates from both methods, namely, MILP and LASSO, that minimizes the overall ``index of uncorrelation" between selected covariates. If $\delta^*_{ij} = 1$, the $i$-th selected variable in  $S_k^{MILP}$ is associated with the $j$-th variable  in $S_k^{LASSO}$. For instance, if $d(\beta^*_{MILP(K)}, \beta^*_{\lambda^*_K}) = 0$, it means that there are $K$ perfectly correlated pair of variables, even though not being the same subset. 
+%% % % Métrica
+%
+%Solving a LP problem such as the LASSO is many times faster than a similar-sized MILP problem, for introducing binary variables breaks the problem's convexity. On the other hand, in our case the MILP solution is the exact best solution in minimizing the QR objective function, while the LASSO is an approximation of that.
+%
+%One of our goals is to test how far from the optimal solution is the LASSO.
+%%It would be interesting, then, to use a faster method that would provide a solution close to the optimal. 
+%%To test how far are the solutions given by both methods, we propose an experiment that is described as follows. 
+%For each number $K$ of total nonzero coefficients, there will be a penalty $\lambda^*_K$ which minimizes the errors from the quantile regression's objective function (given on equation (\ref{eq:post-lasso})): 
+%%\todo{($K$ ranging from 0 until 12, where 0 means that only the intercept is included)}
+%\begin{equation}
+%\lambda^*_K = \argmin_\lambda \left\lbrace \left.  \mathcal{L}_{\lambda}^{*} \quad  \right| \, \| \beta^*_\lambda \|_0 = K \right\rbrace,
+%\end{equation}
+%where the quantity $\| \beta^*_\lambda \|_0$ is the $0$-norm, which gives the total of nonzero coefficients, for a given lambda of the LASSO estimations.
+%
+%We, then, define the sets $S_K^{LASSO}$ and $S_K^{MILP}$, which contains all nonzero indexes, for a given $K$, when using methods LASSO and MILP for regularization, respectively.
+%Thus, we can compare the best LASSO fit where exactly $K$ variables are selected with the best fit given by the MILP problem, also with $K$ variables selected.
+%
+%As the MILP solution is the exact solution for the problem, while the LASSO solution is an approximation, we use the former as a \textit{benchmarking} for the quality of the latter solution. It is desirable that the LASSO solution be as related with the MILP solution as possible. The difference in performance is given by a similarity metric $d$, which measures distance from solutions weighted by the correlation between variables. 
+%The similarity is calculated as the solution of the following optimization problem
+%\begin{IEEEeqnarray}{lC}
+%	d(\beta^*_{MILP(K)}, \beta^*_{\lambda^*_K}) = \min_{0\leq\delta_{ij}\leq1} & \sum\limits_{i,j = 1}^K  \delta_{ij} (1-|\rho_{ij}|) \label{eq:metricad0} \\
+%	\text{subject to} & \nonumber \\
+%	\sum\limits_{j =1}^K\delta_{ij}=1, &  i=1,\dots,K,\\
+%	\sum\limits_{i =1}^K\delta_{ij}=1, & j=1,\dots,K,
+%\end{IEEEeqnarray}
+%where $\rho_{ij}$ is the correlation between the $i$-th and $j$-th independent variables in sets $S_k^{MILP}$ and $S_k^{LASSO}$, respectively. The optimal value for the decision variables of this problem provides us with an assignment between selected covariates from both methods, namely, MILP and LASSO, that minimizes the overall ``index of uncorrelation" between selected covariates. If $\delta^*_{ij} = 1$, the $i$-th selected variable in  $S_k^{MILP}$ is associated with the $j$-th variable  in $S_k^{LASSO}$. For instance, if $d(\beta^*_{MILP(K)}, \beta^*_{\lambda^*_K}) = 0$, it means that there are $K$ perfectly correlated pair of variables, even though not being the same subset. 
 
 
 

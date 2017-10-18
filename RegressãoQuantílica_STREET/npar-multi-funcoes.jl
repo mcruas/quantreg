@@ -619,6 +619,69 @@ end
 
 
 
+function rq_par_lasso(y::Array{Float64}, X::Array{Float64,2}, Alphas; lambda = 0, non_cross = true, Save = NaN)
+  
+        Alf = 1:length(Alphas)
+        Alfm = 1:length(Alphas)-1 # it is the same indexes of Alpha but without the last observation.
+        M = 5
+        
+        n = size(y)[1]
+        T = 1:n
+        P = size(X)[2]
+        M2 = P * M
+  
+        m = Model(solver = solvfunc)
+  
+        @variable(m, ɛ_tmais[T, Alf] >= 0)
+        @variable(m, ɛ_tmenos[T, Alf] >= 0)
+        @variable(m, β[1:P, Alf])
+        @variable(m, β0[Alf])
+        @variable(m, ξ[1:P, Alf] >= 0) # The l1 norm of \beta_{p \alpha}
+  
+      # Objective Function
+        @objective(m, Min, sum(Alphas[a] * ɛ_tmais[i, a] + (1-Alphas[a]) *ɛ_tmenos[i, a] for i = T, a = Alf ) +
+                            lambda * sum(ξ[p,a]   for p = 1:P, a = Alf) )
+  
+  
+  
+        ########## Evitar cruzamento de quantis
+        if non_cross
+          @constraint(m, evita_cross[i = T, j = 2:length(Alphas)], β0[j] + sum(β[p,j] * X[i,p] for p = 1:P) >= β0[j-1] + sum(β[p,j-1] * X[i,p] for p = 1:P))
+        end
+  
+          # Dar valores ao ɛ_tmais e ao ɛ_tmenos
+        @constraint(m, epsilons[i = T, j = Alf], ɛ_tmais[i,j] - ɛ_tmenos[i,j] == y[i] - β0[j] - sum(β[p,j] * X[i,p] for p = 1:P))
+  
+        # Restringir a estimação a no máximo K valores
+        @constraint(m, abs_beta_pos[p = 1:P, a = Alf], ξ[p,a] >= β[p,a])
+        @constraint(m, abs_beta_neg[p = 1:P, a = Alf], ξ[p,a] >= - β[p,a])
+  
+  
+        global a = time()
+        @time status = solve(m)
+        
+        tmp_betas0opt = getvalue(β0)
+        tmp_betasopt = getvalue(β)
+        objectiveValue = getobjectivevalue(m)
+        solvetime = getsolvetime(m)
+        # objetivo = getobjective()
+        ## Transform both variables into an array
+        betasopt = zeros(size(X)[2], length(Alphas))
+        betas0opt = zeros(length(Alphas))
+        for q in 1:size(X)[2] , j in 1:length(Alphas)
+          betasopt[q,j] = tmp_betasopt[q,j]
+        end
+        for j in 1:length(Alphas)
+          betas0opt[j] = tmp_betas0opt[j]
+        end
+  
+  
+        return betas0opt', betasopt, objectiveValue, status, solvetime
+  
+  
+  end
+
+
 
 function rq_par_lasso(y::Array{Float64}, X::Array{Float64,2}, Alphas; lambda = 0, non_cross = true, Save = NaN)
 

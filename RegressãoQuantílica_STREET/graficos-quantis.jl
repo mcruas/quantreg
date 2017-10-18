@@ -144,6 +144,7 @@ gr()
 
 alpha_plot = collect(0:0.001:1);
 Alphas = collect(0.05:0.05:0.95);
+Alphas = [0.05,0.1,0.25,0.5,0.75,0.9,0.95];
 betas0, betas = rq_par(y,X, Alphas, non_cross = true); # coeficientes do modelo linear
 plot(leg = false, ylabel = "Q_{y_{t}|y_{t-1}}", xlabel = "\\alpha", ylim = (0,limy), grid = false)
 for i in 1:length(vetor_X_tau)

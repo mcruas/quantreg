@@ -123,7 +123,7 @@ end
 # receives a vector x and a number of lags do make de matrix
 function lagmatrix(x, lags)
   n = length(x)
-  if typeof(lags) == UnitRange{Int64}
+  if typeof(lags) == Int64
     lags = collect(lags)
   end
   n_lags = size(lags)[1]

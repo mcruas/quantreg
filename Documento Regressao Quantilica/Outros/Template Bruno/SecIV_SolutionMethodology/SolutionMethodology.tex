@@ -1,0 +1,54 @@
+\section{Solution Methodology}
+\label{SolMeth}
+
+	The portfolio allocation model presented in (\ref{FullFirstLevel1})-(\ref{FullFirstLevel5}) is a two-level mathematical programming problem which cannot be directly solved with commercial solvers \cite{Xpress}. In order to construct an computationally efficient formulation, we need to (i) handle the nonlinear relation between the worst-case spot price and the call option exercise rule in (\ref{RobustBusinessRevenue}) and (ii) derive an efficient solution methodology to solve bilevel contracting problem. In this section, we present a solution approach to overcome both obstacles, presenting an equivalent single-level two-stage linear stochastic optimization model.
+
+\subsection{Linear Second-Level Problem}
+\label{LinSLProb}
+
+	Although nonlinear, the exercise rule of the call options has an interesting property of being a two-segment convex function with respect to worst-case market price $\pi_{t,\omega}^{\text{WC}}$. Thus, for a given call option $j \in C_{t}$ in period $t \in H$ and scenario $\omega \in \Omega$, we can re-write this convex relation as the following linear programming:
+%
+\begin{align}
+	& \hspace{-0.29cm} \text{max}\big\{0, \pi_{t,\omega}^{\text{WC}} - \Gamma_{j}^{\text{call}}\big\} = \min\Big\{\eta \in \mathbb{R}_{+} \Big| \eta \geq \pi_{t,\omega}^{\text{WC}} - \Gamma_{j}^{\text{call}} \Big\}. \label{ReformExercRule}
+\end{align}
+
+	This reformulation, although contra-intuitive, is extremely useful since the exercise rule is embedded in the minimization problem (\ref{RobustBusinessRevenue}). Thus, the nonlinear term in the left-hand side of equation (\ref{ReformExercRule}) can be directly replaced by the linear programming in its right-hand side in the worst-case revenue problem (\ref{RobustBusinessRevenue}). Mathematically, for a given scenario $\omega \in \Omega$ and budget $K \in \mathcal{K}$, the nonlinear problem that defines the worst-case revenue is equivalent to the following linear programming problem.
+%
+\begin{align}
+	& \hspace{-0.45cm} R_{K}^{\text{WC}}(\mathbf{x}, \boldsymbol{\pi}_{\omega}^{\text{o}}) = \notag \\ 
+	& \hspace{0.2cm} \min_{\boldsymbol{\pi}^{\text{WC}}_{\omega}, \eta_{j,\omega}} \sum_{t \in H} \Bigg[ \Bigg(P^{\text{sell}} Q^{\text{sell}} x^{\text{sell}} - \sum_{i \in U} P_{i}^{\text{res}} F_{i}^{\text{res}} x_{i}^{\text{res}}\Bigg) h_{t} \notag \\
+	& \hspace{0.90cm} + \sum_{j \in C_{t}} \Big( \eta_{j,\omega} - P_{j}^{\text{call}} \Big) h_{t} Q_{j}^{\text{call}} x_{j}^{\text{call}} \notag \\
+	& \hspace{0.90cm} + \Bigg( \sum_{i \in U} G_{i,t,\omega}^{\text{res}} x_{i}^{\text{res}} - h_{t} Q^{\text{sell}} x^{\text{sell}} \Bigg)\pi^{\text{WC}}_{t,\omega} \Bigg] \label{RobustBusinessRevenue_Linear1} \\
+	& \hspace{0.90cm} \text{subject to:} \notag \\
+	& \hspace{0.90cm} \boldsymbol{\pi}^{\text{WC}}_{\omega} \in \Pi_{K}(\boldsymbol{\pi}^{\text{o}}_{\omega}) \label{RobustBusinessRevenue_Linear2} \\
+	& \hspace{0.90cm} \eta_{j,\omega} \geq \pi^{\text{WC}}_{t,\omega} - \Gamma_{j}^{\text{call}}, && \hspace{-2.90cm} \forall ~ j \in C_{t}, t \in H; \label{RobustBusinessRevenue_Linear3} \\
+	& \hspace{0.90cm} \eta_{j,\omega} \geq 0, && \hspace{-2.90cm} \forall ~ j \in C_{t}, t \in H. \label{RobustBusinessRevenue_Linear4}
+\end{align}
+
+	The linear programming formulation (\ref{RobustBusinessRevenue_Linear1})-(\ref{RobustBusinessRevenue_Linear4}) not only has advantage of being computationally tractable but also has a very interesting structure: its feasible region (\ref{RobustBusinessRevenue_Linear2})-(\ref{RobustBusinessRevenue_Linear4}) does not depend on the portfolio variables $\mathbf{x}$. This structure is explored next in order to transform the two-level portfolio allocation model (\ref{FullFirstLevel1})-(\ref{FullFirstLevel5}) into a linear single-level one using duality theory \cite{PriceOfRobustness}.
+
+\subsection{Single-Level Two-Stage Stochastic Model}
+\label{SL_TS_StochModel}
+
+	Even with the reformulation applied to the second-level problem presented in \ref{LinSLProb}, the portfolio allocation model proposed in this work (\ref{FullFirstLevel1})-(\ref{FullFirstLevel5}) has a hierarchical structure that cannot be easily solved using commercial solvers \cite{Xpress}. However, recurring to duality theory, an equivalent single-level linear model can be derived. The following three steps describe the procedure to construct such equivalent model \cite{PriceOfRobustness}:
+\begin{enumerate}
+	\item derive the dual objective function of (\ref{RobustBusinessRevenue_Linear1})-(\ref{RobustBusinessRevenue_Linear4});
+	\item obtain the dual feasible region  of (\ref{RobustBusinessRevenue_Linear1})-(\ref{RobustBusinessRevenue_Linear4});
+	\item replace the worst-case function in (\ref{FullFirstLevel3}) by the dual objective function found in 1) and add in (\ref{FullFirstLevel1})-(\ref{FullFirstLevel5}) the dual feasible region obtained in 2).
+\end{enumerate}
+	
+	Mathematically, the resulting single-level problem has the structure of a two-stage linear stochastic model. For each $\omega \in \Omega$, $K \in \mathcal{K}$ and a portfolio $\mathbf{x}$, let $\boldsymbol{y}_{\omega, K}$ be the set of dual variables of (\ref{RobustBusinessRevenue_Linear1})-(\ref{RobustBusinessRevenue_Linear4}), $R^{\text{dual}}(\mathbf{x}, \boldsymbol{y}_{\omega, K})$ and $\Pi_{K}^{\text{dual}}(\boldsymbol{\pi}^{\text{o}}_{\omega}, \mathbf{x})$ the corresponding dual objective function and feasible region, respectively. The portfolio allocation model presented in (\ref{FullFirstLevel1})-(\ref{FullFirstLevel5}) is equivalent to the following linear optimization model.
+%
+\begin{align}
+	& \hspace{-0.350cm} \Maximize_{\substack{\mathbf{x}, \boldsymbol{y}_{\omega, K}, \delta_{\omega}, z, \delta_{\omega, K}^{\text{WC}}, z_{K}^{\text{WC}}}} ~ \sum_{\omega \in \Omega} p_{\omega} R(\mathbf{x}, \boldsymbol{\pi}_{\omega}) && \label{CompleteModel1} \\
+	& \hspace{0.50cm} \text{subject to:} \notag \\
+	& \hspace{0.50cm} \text{Constraints} ~ (\ref{FullFirstLevel4})\text{-}(\ref{FullFirstLevel5}) \label{CompleteModel2} \\
+	& \hspace{0.50cm} \delta_{\omega} \geq z - R(\mathbf{x}, \boldsymbol{\pi}_{\omega}), && \hspace{-0.20cm} \forall ~ \omega \in \Omega; \label{CompleteModel3} \\
+	& \hspace{0.50cm} z - \sum_{\omega \in \Omega} \frac{p_{\omega} \delta_{\omega}}{1 - \alpha} \geq \underline{R}^{\text{risk}}; && \label{CompleteModel4} \\
+	& \hspace{0.50cm} \delta_{\omega, K}^{\text{WC}} \geq z_{K}^{\text{WC}} - R^{\text{dual}}(\mathbf{x}, \boldsymbol{y}_{\omega, K}), && \hspace{-0.20cm} \forall ~ \omega \in \Omega, K \in \mathcal{K}; \label{CompleteModel5} \\
+	& \hspace{0.50cm} z_{K}^{\text{WC}} - \sum_{\omega \in \Omega} \frac{p_{\omega} \delta_{\omega, K}^{\text{WC}}}{1 - \alpha} \geq \underline{R}_{K}^{\text{amb}}, && \hspace{-0.20cm} \forall ~ K \in \mathcal{K}; \label{CompleteModel6} \\
+	& \hspace{0.50cm} \boldsymbol{y}_{\omega, K} \in \Pi_{K}^{\text{dual}}(\boldsymbol{\pi}^{\text{o}}_{\omega}, \mathbf{x}), && \hspace{-0.20cm} \forall ~ \omega \in \Omega, K \in \mathcal{K}; \label{CompleteModel7} \\
+	& \hspace{0.50cm} \delta_{\omega}, \delta_{\omega, K}^{\text{WC}} \geq 0, && \hspace{-0.20cm} \forall ~ \omega \in \Omega, K \in \mathcal{K}. \label{CompleteModel8}
+\end{align}
+
+	Structurally, the linear programming model (\ref{CompleteModel1})-(\ref{CompleteModel8}) is the implementable version of (\ref{FullFirstLevel1})-(\ref{FullFirstLevel5}). It is important to mention that different approaches can be applied to solve the nonlinear portfolio allocation model presented in (\ref{FullFirstLevel1})-(\ref{FullFirstLevel5}), such as cutting-plane algorithms or KKT reformulation of the worst-case revenue problems (\ref{RobustBusinessRevenue_Linear1})-(\ref{RobustBusinessRevenue_Linear4}). However, we argue that the solution approach proposed in this section is, in general, more convenient for practical applications (in a computational sense) since the equivalent model (\ref{CompleteModel1})-(\ref{CompleteModel8}) lies in the class of two-stage stochastic problems with recourse \cite{Birge_StochProgm}, suitable for direct implementation in off-the-shelf solvers \cite{Xpress}.

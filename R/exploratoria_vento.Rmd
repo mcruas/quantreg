@@ -2,7 +2,7 @@
 title: "R Notebook"
 output: 
   html_notebook: 
-    code_folding: hide
+    fig_caption: yes
 ---
 
 
@@ -10,7 +10,7 @@ Read the data and format dates
 
 ```{r}
 library(tidyverse); library(readr); library(lattice)
-
+source("exploratoria_vento_prepare_dataset.R")
 
 ```
 
@@ -36,9 +36,11 @@ At first, we look how each year differ from each other.
 
 
 ```{r fig.cap="Teste densidade"}
-densityplot(~W1 | factor(MONTH1), group = YEAR1,data = WindData, main="Density comparison across different years", auto.key = TRUE)
+densityplot(~W1 | factor(MONTH1), group = YEAR1,data = WindData, main="Density comparison across different years", auto.key = TRUE, xlab = "")
 densityplot(~W1 | factor(MONTH1), group = YEAR1,data = WindData_melt, main="Density comparison across different years", auto.key = TRUE)
+densityplot(~W1 | factor(MONTH1),data = WindData, main="Wind power density comparison across different months", xlab = "")
 
+plot(WindData$W1, lag(WindData$W1))
 ```
 As we can see in the graph,  
 

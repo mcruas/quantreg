@@ -57,16 +57,20 @@ y = X_lags[:,1]; X = X_lags[:, 2:end];   non_cross = true; MIPGap = 0.00
 
 lambda = 0.1
 R"
-# library(rqPen)
+
+lambda = $lambda
+library(rqPen)
 # results_r = rq.lasso.fit.mult($X,$y,0.5, 1)
-X <- matrix(rnorm(800),nrow=100)
-y <- 1 + X[,1] - 3*X[,5] + rnorm(100)
-results_r <- rq.lasso.fit(X,y,lambda=$lambda)
+set.seed(123)
+X <- matrix(rnorm(8000),ncol=10)
+y <- 1 + X[,1] - 3*X[,5] + rnorm(800)
+results_r <- rq.lasso.fit.mult(X,y,lambda=lambda)
+rq.lasso.fit(X,y,lambda=lambda, tau = 0.7)
 "
-@rget x_blau y_blau results_r
+@rget X y results_r
 # gr()
 # Guarda_Registros = Registros[];
-results = rq_par_lasso(y_blau, x_blau, [0.5]; lambda = 1, non_cross = false, Save = NaN)
+results = rq_par_lasso(y, X, [0.1; 0.3; 0.5; 0.7; 0.9]; lambda = 0.2, non_cross = false, Save = NaN)
 
 results_r[:coefficients]
 

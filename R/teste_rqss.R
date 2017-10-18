@@ -28,9 +28,7 @@ for (tau in vector_tau) {
 
 
 
-
-
-for (tau in vector_tau) {
+  for (tau in vector_tau) {
   i = which(tau ==vector_tau)
   qs_alpha_N[i] <- rqss(y ~ qss(x, constraint= "N") + z, tau = tau)
   qs_alpha_I[i] <- rqss(y ~ qss(x, constraint= "I") + z, tau = tau)

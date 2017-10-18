@@ -5,7 +5,7 @@ Let the $\alpha$-conditional quantile function of $Y$ for a given value $x$ of t
 Q_{Y|X}(\alpha,x) = F_{Y|X}^{-1}(\alpha,x) = \inf\{y: F_{Y|X}(y,x) \geq \alpha\}.
 \label{eq:quantile-function}
 \end{equation}
-Let a dataset be composed of $n$ observations of $\{y_t,x_t \}_{t=1}^n$ and let $\rho$ be the check function 
+Let a dataset be composed from $\{y_t,x_t \}_{t \in T}$ and let $\rho$ be the check function 
 \begin{equation}\label{eq:check-function}
 \rho_{\alpha}(x)=\begin{cases}
 \alpha x & \text{if }x\geq0\\
@@ -14,24 +14,27 @@ Let a dataset be composed of $n$ observations of $\{y_t,x_t \}_{t=1}^n$ and let 
 \end{equation}
 The sample quantile function for a given probability $\alpha$ is then based on a finite number of observations and is the solution to minimizing the loss function $L(\cdot)$:
 \begin{IEEEeqnarray}{C}
-\hat{Q}_{Y|X}(\alpha,\cdot)\quad\in\quad  \underset{q_{\alpha}}{\text{arg min}}\, L(\alpha) = \sum_{t\in T}\rho_{\alpha}(y_{t}-q_{\alpha}(x_t)),\label{eq:optim-lqr1} \\
-q_{\alpha}\in\mathcal{Q}.\label{eq:optim-lqr2}
+\hat{Q}_{Y|X}(\alpha,\cdot)\quad\in\quad  \underset{q\in\mathcal{Q}}{\text{arg min}}\, L_\alpha(q) = \sum_{t\in T}\rho_{\alpha}(y_{t}-q(x_t)),\label{eq:optim-lqr1} 
 \end{IEEEeqnarray}
-Equation \ref{eq:optim-lqr2} means that quantile $q_\alpha$ belongs to a function space $\mathcal{Q}$. We might have different assumptions for space $\mathcal{Q}$, depending on the type of function we want to find for $q_\alpha$. A few properties, however, must be achieved by our choice of space, such as being continuous and having limited first derivative. In this paper, we consider the case where $\mathcal{Q}$ is a linear function's space.
+The $\alpha$-quantile function $q_\alpha$ belongs to a function space $\mathcal{Q}$. We might have different assumptions for space $\mathcal{Q}$, depending on the type of function we want to find for $q$. A few properties, however, must be achieved by our choice of space, such as being continuous and having limited first derivative. In this paper, we consider the case where $\mathcal{Q}$ is a linear function's space.
 
-Let $A$ be the set containing a sequence of probabilities  $\alpha_i$ such that $0 < \alpha_1 < \alpha_2 < \dots < \alpha_Q < 1$. This set represents a finite discretization of the interval $[0,1]$. The problem (\ref{eq:optim-lqr1})-(\ref{eq:optim-lqr2}) can be rewritten as a Linear Programming problem as in (\ref{eq:linear-opt-1})-(\ref{eq:linear-opt-ult}), thus being able to use a modern solver to fit our model. Variables $\varepsilon^+_t$ and $\varepsilon^-_t$ represent the quantities $|y-q(\cdot)|^+$ and $|y-q(\cdot)|^-$, respectively. 
-\begin{IEEEeqnarray}{lr}
-\min_{\beta_{0\alpha},\beta_\alpha,\varepsilon_{t\alpha}^{+}, \varepsilon_{t\alpha}^{-}} \, \sum_{\alpha \in A} \sum_{t \in T}\left(\alpha \varepsilon_{t \alpha}^{+}+(1-\alpha)\varepsilon_{t \alpha}^{-}\right) \span \label{eq:linear-opt-1}\\
+The quantile function is approximated by a sequence of $|J|$ (where $J$ is an index set) quantiles $q_{\alpha_1} \leq q_{\alpha_2} \leq \dots \leq q_{\alpha_{|J|}}$. 
+We also define the closely related set $A = \{ \alpha_j \mid j \in J \}$, whose elements all must range on $[0,1]$, for they are probability values such that $0 < \alpha_1 < \alpha_2 < \dots < \alpha_{|J|} < 1$. The sequence $\{ \alpha_j \}_{j \in J}$ provides a finite discretization of the interval $[0,1]$. 
+
+Problem (\ref{eq:optim-lqr1}) can be rewritten as a Linear Programming problem as in (\ref{eq:linear-opt-1})-(\ref{eq:linear-opt-ult}), thus being able to use a modern solver to fit our model. Variables $\varepsilon^+_t$ and $\varepsilon^-_t$ represent the quantities $|y-q(\cdot)|^+$ and $|y-q(\cdot)|^-$, respectively. This new formulation estimates all quantiles at the same time, and we denote $q$ as $q_\alpha$ to differentiate it from each $\alpha$.
+{\tiny }\begin{IEEEeqnarray}{lr}
+\min_{\beta_{0j},\beta_j,\varepsilon_{tj}^{+}, \varepsilon_{tj}^{-}} \, \sum_{j \in J} \sum_{t \in T}\left(\alpha_j \varepsilon_{t j}^{+}+(1-\alpha_j)\varepsilon_{t j}^{-}\right)
+ \span \label{eq:linear-opt-1}\\
 \mbox{subject to} \span \nonumber \\
-\varepsilon_{t \alpha}^{+}-\varepsilon_{t \alpha}^{-}=y_{t} - \beta_{0\alpha} - \beta_{\alpha}^T x_{t}, & \forall t \in T,\qquad \forall \alpha \in A, \\
-\varepsilon_{t\alpha}^+,\varepsilon_{t\alpha}^- \geq 0, &  \forall t \in T,\forall \alpha \in A,\\ 
-\beta_{0\alpha} + \beta_{\alpha}^T x_{t} \leq \beta_{0\alpha'} + \beta_{\alpha'}^T x_{t}, \span \nonumber \\
-\span \label{eq:linear-opt-ult} \forall t \in T, \forall (\alpha, \alpha') \in A \times A,  \alpha < \alpha',
+\varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}=y_{t} - \beta_{0j} - \beta_{j}^T x_{t}, & \forall t \in T, \forall j \in J, \\
+\varepsilon_{tj}^+,\varepsilon_{tj}^- \geq 0, & \forall t \in T,\forall j \in J,\\ 
+\beta_{0j} + \beta_{j}^T x_{t} \leq \beta_{0,j+1} + \beta_{j+1}^T x_{t}, \span \nonumber \\
+\span \label{eq:linear-opt-ult} \forall t \in T, \forall j \in J_{(-1)},
 \end{IEEEeqnarray}
-To estimate a conditional distribution based on quantile values, all quantiles $\{q_\alpha \}_{\alpha \in A}$ are estimated simultaneously. With the addition of constraint (\ref{eq:linear-opt-ult}), we assure the monotonicity of the quantile function, solving the issue of crossing-quantiles
+To estimate a conditional distribution based on quantile values, all quantiles $\{q_\alpha \}_{\alpha \in A}$ are estimated simultaneously. With the addition of constraint (\ref{eq:linear-opt-ult}), we assure the monotonicity of the quantile function, solving the issue of crossing-quantiles.
 The output is the sequence $\{ q_\alpha \}_{\alpha \in A}$, which is fully defined by the optimum values $\beta^*_{0\alpha}$ and $\beta^*_\alpha$, for each $\alpha$.
 
-We apply QR to estimate the conditional distribution $\hat{Q}_{Y_{t+k}|X_{t+k},Y_t, Y_{t-1}, \dots} (\alpha,\cdot)$ for a $k$-step ahead forecast of time serie $\{y_t\}$, where $X_{t+k}$ is a vector of exogenous variables at the time we want to forecast. Once the conditional distribution is estimated, we are able to simulate and generate scenarios. In the next session, regularization techniques are presented, in order to choose parsimoniously which variables will be input for $\hat{Q}$.
+We apply QR to estimate the conditional distribution $\hat{Q}_{Y_{t+h}|X_{t+h},Y_t, Y_{t-1}, \dots} (\alpha,\cdot)$ for a $h$-step ahead forecast of time serie $\{y_t\}$, where $X_{t+h}$ is a vector of exogenous variables at the time we want to forecast. Once the conditional distribution is estimated, we are able to simulate and generate scenarios. In the next session, regularization techniques are presented, in order to choose parsimoniously which variables will be input for $\hat{Q}$.
 
 %Let $A$ be a set containing a sequence of probabilities  $\alpha_i$ such that $0 < \alpha_1 < \alpha_2 < \dots < \alpha_Q < 1$. This set represents a finite discretization of the interval $[0,1]$.
 %One of our goals with quantile regression is to estimate a quantile function $\hat{Q}_{Y|X}$ of a given real valued random variable $X$ from a sequence of quantiles $q_{\alpha_1}(x_t) \leq q_{\alpha_2}(x_t) \leq \dots \leq q_{\alpha_{|A|}}(x_t)$, with $0 < \alpha_1 < \alpha_2 < \dots < \alpha_{|A|} < 1$, for any given $t$.

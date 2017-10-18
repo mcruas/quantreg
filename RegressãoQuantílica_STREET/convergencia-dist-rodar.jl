@@ -2,7 +2,7 @@
 
 using JuMP, DataFrames, Distributions, Plots, RCall, Interpolations, Dierckx #, Distributions
 pyplot()
-usesolver = "mosek"    # Escolher entre os valores 'mosek' ou 'gurobi'
+usesolver = "gurobi"    # Escolher entre os valores 'mosek' ou 'gurobi'
 cd(homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/")
 include(pwd()*"/RegressãoQuantílica_STREET/funcoes_npqar.jl")
 include(pwd()*"/RegressãoQuantílica_STREET/npar-multi-funcoes.jl")
