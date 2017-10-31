@@ -83,6 +83,8 @@ T = 1:n;
 limx = isnan(limx) ? maximum(serie) : limx
 limy = isnan(limy) ? maximum(serie) : limy
 
+gr()
+
 plot(serie)
 #######################################################
 ############## PARAMETRICO ############################
@@ -92,6 +94,7 @@ plot(serie)
 ######### Teste diferentes Alphas
 
 gr()
+unicodeplots()
 alpha_plot = collect(0:0.001:1);
 Pouco_Alphas = collect(0.05:0.05:0.95);
 betas0, betas = rq_par(y,X, Pouco_Alphas); # coeficientes do modelo linear
@@ -106,7 +109,8 @@ Q_hat_mto_alpha = (betas0 + x_new' * betas)[1,:];
 q_plot = Q(alpha_plot, Q_hat_mto_alpha, Mto_Alphas)
 plot!(alpha_plot, q_plot)
 
-# Pouco_Alphas = collect(0.07:0.1:0.97);
+
+# Pouco_Alphas = collect(0.07:0.1:0.97);[]
 # betas0, betas = rq_par(y,X, Pouco_Alphas); # coeficientes do modelo linear
 # Q_hat_pouco_alpha = (betas0 + X_tau' * betas)[1,:];
 # q_plot = Q(alpha_plot, Q_hat_pouco_alpha, Pouco_Alphas)

@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2017.4.24)  16 OCT 2017 17:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2017.10.23)  25 OCT 2017 15:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **main.tex
 (./main.tex
-LaTeX2e <2017/01/01> patch level 3
-Babel <3.9r> and hyphenation patterns for 83 language(s) loaded.
+LaTeX2e <2017-04-15>
+Babel <3.12> and hyphenation patterns for 84 language(s) loaded.
 (./IEEEtran.cls
 Document Class: IEEEtran 2012/11/21 V1.8c by Harald Hanche-Olsen and Anders Chr
 istensen
@@ -451,11 +451,11 @@ Package etexcmds Info: Could not find \expanded.
 (etexcmds)             In the latter case, load this package earlier.
 )))
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
-Package: pdftexcmds 2016/05/21 v0.22 Utility functions of pdfTeX for LuaTeX (HO
+Package: pdftexcmds 2017/03/19 v0.25 Utility functions of pdfTeX for LuaTeX (HO
 )
 
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
-Package: ifpdf 2016/05/14 v3.1 Provides the ifpdf switch
+Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
 )
 Package pdftexcmds Info: LuaTeX not detected.
 Package pdftexcmds Info: \pdf@primitive is available.
@@ -538,10 +538,10 @@ LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
 )
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
 
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2016/10/09 v1.0u Standard LaTeX Graphics (DPC,SPQR)
+Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
 
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
@@ -552,8 +552,7 @@ File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 Package graphics Info: Driver file: pdftex.def on input line 99.
 
 (/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
-File: pdftex.def 2017/01/12 v0.06k Graphics/color for pdfTeX
-\Gread@gobject=\count103
+File: pdftex.def 2017/06/24 v1.0g Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen127
 \Gin@req@width=\dimen128
@@ -622,9 +621,9 @@ File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
 Package: accents 2006/05/12 v1.3 Math Accent Tools
 \cc@skew=\dimen132
 \cc@wd=\dimen133
-\cc@code=\count104
-\cc@group=\count105
-\cc@skewchar=\count106
+\cc@code=\count103
+\cc@group=\count104
+\cc@skewchar=\count105
 )
 (/usr/share/texlive/texmf-dist/tex/latex/blindtext/blindtext.sty
 Package: blindtext 2012/01/06 V2.0 blindtext-Package
@@ -632,24 +631,24 @@ Package: blindtext 2012/01/06 V2.0 blindtext-Package
 (/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty
 Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 )
-\c@blindtext=\count107
-\c@Blindtext=\count108
-\c@blind@countparstart=\count109
-\blind@countxx=\count110
-\blindtext@numBlindtext=\count111
-\blind@countyy=\count112
-\c@blindlist=\count113
-\c@blindlistlevel=\count114
-\c@blindlist@level=\count115
-\blind@listitem=\count116
-\c@blind@listcount=\count117
-\c@blind@levelcount=\count118
-\blind@mathformula=\count119
-\blind@Mathformula=\count120
-\c@blind@randomcount=\count121
-\c@blind@randommax=\count122
-\c@blind@pangramcount=\count123
-\c@blind@pangrammax=\count124
+\c@blindtext=\count106
+\c@Blindtext=\count107
+\c@blind@countparstart=\count108
+\blind@countxx=\count109
+\blindtext@numBlindtext=\count110
+\blind@countyy=\count111
+\c@blindlist=\count112
+\c@blindlistlevel=\count113
+\c@blindlist@level=\count114
+\blind@listitem=\count115
+\c@blind@listcount=\count116
+\c@blind@levelcount=\count117
+\blind@mathformula=\count118
+\blind@Mathformula=\count119
+\c@blind@randomcount=\count120
+\c@blind@randommax=\count121
+\c@blind@pangramcount=\count122
+\c@blind@pangrammax=\count123
 )
 (/usr/share/texlive/texmf-dist/tex/generic/ulem/ulem.sty
 \UL@box=\box29
@@ -657,7 +656,7 @@ Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 \UL@skip=\skip49
 \UL@hook=\toks26
 \UL@height=\dimen134
-\UL@pe=\count125
+\UL@pe=\count124
 \UL@pixel=\dimen135
 \ULC@box=\box31
 Package: ulem 2012/05/18
@@ -704,10 +703,10 @@ ex
 \pgf@yc=\dimen146
 \w@pgf@writea=\write3
 \r@pgf@reada=\read2
-\c@pgf@counta=\count126
-\c@pgf@countb=\count127
-\c@pgf@countc=\count128
-\c@pgf@countd=\count129
+\c@pgf@counta=\count125
+\c@pgf@countb=\count126
+\c@pgf@countc=\count127
+\c@pgf@countd=\count128
 \t@pgf@toka=\toks31
 \t@pgf@tokb=\toks32
 \t@pgf@tokc=\toks33
@@ -726,8 +725,8 @@ File: pgfsys-common-pdf.def 2013/10/10  (rcs-revision 1.13)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.
 tex
 File: pgfsyssoftpath.code.tex 2013/09/09  (rcs-revision 1.9)
-\pgfsyssoftpath@smallbuffer@items=\count130
-\pgfsyssoftpath@bigbuffer@items=\count131
+\pgfsyssoftpath@smallbuffer@items=\count129
+\pgfsyssoftpath@bigbuffer@items=\count130
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.
 tex
@@ -741,7 +740,7 @@ Package: pgfcore 2010/04/11 v3.0.1a (rcs-revision 1.7)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
 \pgfmath@dimen=\dimen147
-\pgfmath@count=\count132
+\pgfmath@count=\count131
 \pgfmath@box=\box33
 \pgfmath@toks=\toks34
 \pgfmath@stack@operand=\toks35
@@ -765,7 +764,7 @@ tex)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerari
 thmetics.code.tex)))
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
-\c@pgfmathroundto@lastzeros=\count133
+\c@pgfmathroundto@lastzeros=\count132
 ))
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.te
 x
@@ -803,7 +802,7 @@ File: pgfcorescopes.code.tex 2015/05/08  (rcs-revision 1.46)
 \pgfpic=\box34
 \pgf@hbox=\box35
 \pgf@layerbox@main=\box36
-\pgf@picture@serial@count=\count134
+\pgf@picture@serial@count=\count133
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.c
 ode.tex
@@ -836,7 +835,7 @@ File: pgfcorearrows.code.tex 2015/05/14  (rcs-revision 1.43)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
 File: pgfcoreshade.code.tex 2013/07/15  (rcs-revision 1.15)
 \pgf@max=\dimen171
-\pgf@sys@shading@range@num=\count135
+\pgf@sys@shading@range@num=\count134
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
 File: pgfcoreimage.code.tex 2013/07/15  (rcs-revision 1.18)
@@ -894,7 +893,7 @@ Package: tikz 2015/08/07 v3.0.1a (rcs-revision 1.151)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers
 .code.tex
 File: pgflibraryplothandlers.code.tex 2013/08/31 v3.0.1a (rcs-revision 1.20)
-\pgf@plot@mark@count=\count136
+\pgf@plot@mark@count=\count135
 \pgfplotmarksize=\dimen176
 )
 \tikz@lastx=\dimen177
@@ -907,18 +906,18 @@ File: pgflibraryplothandlers.code.tex 2013/08/31 v3.0.1a (rcs-revision 1.20)
 \tikz@figbox@bg=\box40
 \tikz@tempbox=\box41
 \tikz@tempbox@bg=\box42
-\tikztreelevel=\count137
-\tikznumberofchildren=\count138
-\tikznumberofcurrentchild=\count139
-\tikz@fig@count=\count140
+\tikztreelevel=\count136
+\tikznumberofchildren=\count137
+\tikznumberofcurrentchild=\count138
+\tikz@fig@count=\count139
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
 File: pgfmodulematrix.code.tex 2013/09/17  (rcs-revision 1.8)
-\pgfmatrixcurrentrow=\count141
-\pgfmatrixcurrentcolumn=\count142
-\pgf@matrix@numberofcolumns=\count143
+\pgfmatrixcurrentrow=\count140
+\pgfmatrixcurrentcolumn=\count141
+\pgf@matrix@numberofcolumns=\count142
 )
-\tikz@expandcount=\count144
+\tikz@expandcount=\count143
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
 zlibrarytopaths.code.tex
@@ -947,7 +946,7 @@ Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
 \XKV@toks=\toks39
 \XKV@tempa@toks=\toks40
 )
-\XKV@depth=\count145
+\XKV@depth=\count144
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 ))
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
@@ -956,22 +955,22 @@ File: tikzlibrarypositioning.code.tex 2008/10/06 v3.0.1a (rcs-revision 1.7)
 )
 (/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count146
-\calc@Bcount=\count147
+\calc@Acount=\count145
+\calc@Bcount=\count146
 \calc@Adimen=\dimen184
 \calc@Bdimen=\dimen185
 \calc@Askip=\skip50
 \calc@Bskip=\skip51
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count148
+\calc@Ccount=\count147
 \calc@Cskip=\skip52
 )
-\c@@todonotes@numberoftodonotes=\count149
+\c@@todonotes@numberoftodonotes=\count148
 )
 (/usr/share/texlive/texmf-dist/tex/latex/xargs/xargs.sty
 Package: xargs 2008/03/22 v1.1  extended macro definitions  (mpg)
-\xargs@max=\count150
+\xargs@max=\count149
 \xargs@toksa=\toks41
 \xargs@toksb=\toks42
 ) (./main.aux)
@@ -992,16 +991,16 @@ LaTeX Font Info:    ... okay on input line 59.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count151
+\scratchcounter=\count150
 \scratchdimen=\dimen186
 \scratchbox=\box43
-\nofMPsegments=\count152
-\nofMParguments=\count153
+\nofMPsegments=\count151
+\nofMParguments=\count152
 \everyMPshowfont=\toks43
-\MPscratchCnt=\count154
+\MPscratchCnt=\count153
 \MPscratchDim=\dimen187
-\MPnumerator=\count155
-\makeMPintoPDFobject=\count156
+\MPnumerator=\count154
+\makeMPintoPDFobject=\count155
 \everyMPtoPDFconversion=\toks44
 ) ABD: EveryShipout initializing macros
 Underfull \hbox (badness 1454) in paragraph at lines 78--80
@@ -1032,6 +1031,9 @@ Underfull \hbox (badness 1365) in paragraph at lines 37--38
  []
 
 ) (./ieee-regularization.tex [3]
+Underfull \vbox (badness 2261) has occurred while \output is active []
+
+
 Overfull \hbox (14.3122pt too wide) in alignment at lines 182--191
  [] [] [][]
  []
@@ -1039,12 +1041,13 @@ Overfull \hbox (14.3122pt too wide) in alignment at lines 182--191
 [4]) (./ieee-estimation.tex
 <../Figuras/Cross-validation-scheme.png, id=39, 899.36pt x 476.78125pt>
 File: ../Figuras/Cross-validation-scheme.png Graphic file (type png)
-
 <use ../Figuras/Cross-validation-scheme.png>
-Package pdftex.def Info: ../Figuras/Cross-validation-scheme.png used on input l
-ine 33.
-(pdftex.def)             Requested size: 227.74333pt x 120.73006pt.
- [5 <../Figuras/Cross-validation-scheme.png>]) (./main.bbl
+Package pdftex.def Info: ../Figuras/Cross-validation-scheme.png  used on input 
+line 33. on input line 33.
+Package pdftex.def Info: Requested size: 227.74333pt x 120.73006pt on input lin
+e 33.
+ [5 <../Figuras/Cross-validation-scheme.png>])
+(./main.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 26--29
 []\OT1/ptm/m/n/8 International en-ergy agency. [On-line]. Avail-
  []
@@ -1069,10 +1072,10 @@ tober /
 ** the default language instead.
 ) [6] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 15160 strings out of 493013
- 294801 string characters out of 6135682
- 348340 words of memory out of 5000000
- 18342 multiletter control sequences out of 15000+600000
+ 15107 strings out of 492990
+ 294060 string characters out of 6135004
+ 344473 words of memory out of 5000000
+ 18303 multiletter control sequences out of 15000+600000
  43954 words of font info for 89 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  48i,14n,54p,779b,299s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1096,7 +1099,7 @@ ts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/font
 s/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/tim
 es/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
 </usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (6 pages, 263657 bytes).
+Output written on main.pdf (6 pages, 263537 bytes).
 PDF statistics:
  112 PDF objects out of 1000 (max. 8388607)
  81 compressed objects within 1 object stream

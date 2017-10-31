@@ -1,3 +1,5 @@
+
+
 \section{Introduction}\label{introduction}
 
 \begin{frame}{Motivation}
@@ -69,7 +71,7 @@ predicting the conditional distribution}
 
 \end{frame}
 
-\begin{frame}{Wind Power Time Series - Icaraizinho}
+\begin{frame}{Wind Power Time Series - Icaraizinho monthly data}
 
 \begin{figure}
     \centering
@@ -78,7 +80,8 @@ predicting the conditional distribution}
 
 \end{frame}
 
-\begin{frame}{The nongaussianity of Wind Power}
+\begin{frame}{Wind Power Time Series - Kaggle forecasting competition
+hourly data}
 
 \begin{figure}
     \centering
@@ -106,12 +109,25 @@ predicting the conditional distribution}
 
 \end{frame}
 
+\begin{frame}{Objectives}
+
+\begin{itemize}
+    \item A nonparametric methodology to model the conditional distribution of renewables time series to produce scenarios.
+    
+    \item We propose a methodology that selects the global optimal solution with parsimony both on the selection of covariates as on the quantiles. Regularization methods are based on two techniques: Best Subset Selection (MILP) and LASSO (Linear Programming) 
+    
+    \item Regularization techniques applied to an ensemble of quantile functions to estimate the conditional distribution, solving the issue of non-crossing quantiles. On regularizing quantiles, we propose a smoothness on the coefficients values across the sequence of quantiles. 
+
+\end{itemize}
+
+\end{frame}
+
 \section{Quantile Regression}\label{quantile-regression}
 
 \begin{frame}{Definition of the Conditional Quantile}
 
-Let the \(\alpha\)-conditional quantile function of \(Y\) for a given
-value \(x\) of the \(d\)-dimensional random variable \(X\), i.e.,
+Let the conditional quantile function of \(Y\) for a given value \(x\)
+of the \(d\)-dimensional random variable \(X\), i.e.,
 \(Q_{Y|X}:[0,1] \times \mathbb{R}^d \rightarrow \mathbb{R}\), can be
 defined as:
 \[Q_{Y|X}(\alpha,x) = F_{Y|X=x}^{-1}(\alpha) = \inf\{y: F_{Y|X=x}(y) \geq \alpha\}.\]
@@ -132,13 +148,11 @@ Let a dataset be composed from \(\{y_t,x_t \}_{t \in T}\) and let
 
 The sample quantile function for a given probability \(\alpha\) is then
 based on a finite number of observations and is the solution to
-minimizing the loss function \(L(\cdot)\):
-
-\begin{eqnarray}
-\hat{Q}_{Y|X}(\alpha,\cdot)\quad\in\quad  \underset{q(\cdot)\in\mathcal{Q}}{\text{arg min}}\, L_\alpha(q) = \sum_{t\in T}\rho_{\alpha}(y_{t}-q(x_t)).\label{eq:optim-lqr1}, 
-\end{eqnarray}
-
-where \(\mathcal{Q}\) is a space of functions. In this paper, we use
+minimizing the loss function \(L(\cdot)\): \[
+\hat{Q}_{Y|X}(\alpha,\cdot)\quad\in\quad  \underset{q(\cdot)\in\mathcal{Q}}{\text{arg min}}\, L_\alpha(q) = \sum_{t\in T}\rho_{\alpha}(y_{t}-q(x_t)), 
+\] \[
+q(x_t) = \beta_0 + \beta^T x_t,
+\] where \(\mathcal{Q}\) is a space of functions. In this paper, we use
 \(\mathcal{Q}\) as an \textbf{affine functions space}.
 
 \end{frame}
@@ -148,8 +162,8 @@ where \(\mathcal{Q}\) is a space of functions. In this paper, we use
 \begin{itemize}
 \tightlist
 \item
-  For a single quantile, the problem (\ref{eq:optim-lqr1}) can be solved
-  by the following Linear Programming problem: \[
+  For a single quantile, this problem can be solved by the following
+  Linear Programming problem: \[
   \begin{array}{lll}
    \underset{\beta_0, \beta,\varepsilon_{t}^{+}, \varepsilon_{t}^{-}}{\text{min}} & \sum_{t \in T} \left(\alpha \varepsilon_{t}^{+}+(1-\alpha)\varepsilon_{t}^{-}\right) & \\
   \mbox{s.t. } & \varepsilon_{t}^{+}-\varepsilon_{t}^{-}=y_{t} - \beta_{0} - \beta^T x_{t}, & \qquad\forall t \in T,\\
@@ -158,8 +172,8 @@ where \(\mathcal{Q}\) is a space of functions. In this paper, we use
   \]
 \item
   The output are the coefficients \(\beta_0\) and \(\beta\) (which is
-  the same dimension as \(x_t\)), that describe describes the quantile
-  function as an affine function.
+  the same dimension as \(x_t\)), that describe the quantile function as
+  an affine function.
 \end{itemize}
 
 \end{frame}
@@ -171,13 +185,15 @@ where \(\mathcal{Q}\) is a space of functions. In this paper, we use
   \begin{minipage}[t]{\linewidth}
     \centering
     \begin{minipage}[t]{0.45\linewidth}
-      \centering     \includegraphics[width=\textwidth]{Imagens/icaraizinho-quantile-linear-scatter}
+      \centering     \includegraphics[width=\textwidth]{Imagens/icaraizinho-quantile-linear-scatter-crossing}
+      \subcaption{Each $\alpha$-quantile estimated independently}
     \end{minipage}
     \begin{minipage}[t]{0.45\linewidth}
-      \centering     \includegraphics[width=\textwidth]{Imagens/icaraizinho-quantile-linear-scatter-crossing}
+      \centering     \includegraphics[width=\textwidth]{Imagens/icaraizinho-quantile-linear-scatter}
+      \subcaption{Estimation with non-crossing constraint}
     \end{minipage}
   \end{minipage}
-  \caption{Estimated quantile functions, for different values of $y_{t-1}$. On the left using a linear model and using a nonparametric approach on the right.}
+  \caption{These graphs show how the addition of a constraint can contour the crossing quantile issue}
   \label{fig:quantiles-vs-xt}
 \end{figure}
 
@@ -271,45 +287,123 @@ the quantiles\strut
 \end{array}
 \]
 
-We apply QR to estimate the conditional distribution
-\(\hat{Q}_{Y_{t+h}|X_{t+h},Y_t, Y_{t-1}, \dots} (\alpha,\cdot)\) for a
-\(k\)-step ahead forecast of time serie \(\{y_t\}\), where \(X_{t+h}\)
-is a vector of exogenous variables at the time we want to forecast.
-
-\end{frame}
-
-\section{Regularization}\label{regularization}
-
-\begin{frame}{Best Subset selection via MILP}
-
 \begin{itemize}
 \item
-  Mixed Integer Linear Programming (MILP) models allow only \(K\)
-  variables to be used for each \(\alpha\)-quantile. This means that
-  only \(K\) coefficients \(\beta_{pj}\) may have nonzero values, for
-  each \(\alpha\)-quantile. It must be guaranteed by constraints on the
-  optimization problem.
+  Coefficients \(\beta_{0j}\) and \(\beta_j\) refer to the
+  \(j\)\textsuperscript{th} quantile
 \item
-  We present three forms of regularization using MILP
+  We apply QR to estimate the conditional distribution
+  \(\hat{Q}_{Y_{t+h}|X_{t+h},Y_t, Y_{t-1}, \dots} (\alpha,\cdot)\) for a
+  \(k\)-step ahead forecast of time serie \(\{y_t\}\), where \(X_{t+h}\)
+  is a vector of exogenous variables at the time we want to forecast.
 \end{itemize}
 
 \end{frame}
 
-\begin{frame}{MILP - One model for each \(\alpha\)-quantile}
+\section{Regularization of
+covariates}\label{regularization-of-covariates}
+
+\begin{frame}{Best Subset selection via MILP}
+
+\begin{itemize}
+\tightlist
+\item
+  Mixed Integer Linear Programming (MILP) models allow only \(K\)
+  variables to be used for each \(\alpha\)-quantile.
+\item
+  Only \(K\) coefficients \(\beta_{pj}\) may have nonzero values, for
+  each \(\alpha\)-quantile.
+\item
+  It is guaranteed by constraints on the optimization model.
+\item
+  One model for each \(\alpha\)-quantile
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Best Subset selection via MILP}
 
 \[
 \begin{array}{lll}
- \underset{\beta_{0j},\beta_j,z_{p j} \varepsilon_{t j}^{+},\varepsilon_{t j}^{-}}{\text{min}} & \sum_{j \in J} \sum_{t\in T}\left(\alpha_j\varepsilon_{t j}^{+}+(1-\alpha_j)\varepsilon_{t j}^{-}\right)  & \\
-\mbox{s.t } & \varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}=y_{t}-\beta_{0 j}-\sum_{p=1}^{P}\beta_{p j}x_{t,p},& \forall t \in T ,\forall j \in J, \\
+ \underset{\beta_{0j},\beta_j,z_{p j}, \varepsilon_{t j}^{+},\varepsilon_{t j}^{-}}{\text{min}} & \sum_{j \in J} \sum_{t\in T}\left(\alpha_j\varepsilon_{t j}^{+}+(1-\alpha_j)\varepsilon_{t j}^{-}\right)  & \\
+\mbox{s.t } & \varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}=y_{t}-\beta_{0 j}-\beta_{j}^T x_{t},& \forall t \in T ,\forall j \in J, \\
 & \varepsilon_{t j}^{+},\varepsilon_{t j}^{-}\geq0,&\forall t \in T ,\forall j \in J, \\
 & - M z_{p j} \leq \beta_{p j} \leq M z_{p j},& \forall j \in J, \forall p\in P, \\
-& \sum_{p=1}^P z_{p j} \leq K, &  \forall j \in J, \\
+& \sum_{p \in P} z_{p j} \leq K, &  \forall j \in J, \\
 & z_{p j} \in \{0,1\},& \forall j \in J, \forall p\in P,\\
-& \beta_{0,j-1} + \beta_{j-1}^T x_{t} \leq \beta_{0,j} + \beta_{j}^T x_{t}, & \forall t \in T, \forall j \in J_{(-1)},
+& \beta_{0,j-1} + \beta_{j-1}^T x_{t} \leq \beta_{0j} + \beta_{j}^T x_{t}, & \forall t \in T, \forall j \in J_{(-1)},
 \end{array}
 \]
 
+\begin{itemize}
+\tightlist
+\item
+  \(z_{pj}\) is a binary variable which indicates when
+  \(\beta_{pj} > 0\).
+\end{itemize}
+
 \end{frame}
+
+\begin{frame}{Variable Selection via LASSO}
+
+\begin{itemize}
+\tightlist
+\item
+  Regularization by including the coefficients \(\ell_1\)-norm on the
+  objective function.
+\item
+  In this method, coefficients are shrunk towards zero by changing a
+  continuous parameter \(\lambda\), which penalizes the size of the
+  \(\ell_1\)-norm.\\
+\item
+  When the value of \(\lambda\) gets bigger, fewer variables are
+  selected to be used.
+\item
+  The optimization problem for a single quantile is presented below: \[
+  \underset{\beta_{0},\beta}{\text{min}} \sum_{t\in T}\rho_{\alpha}(y_{t}-(\beta_0 + \beta^T x_t))+\lambda\|\beta\|_{1},
+  \]
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Variable Selection via LASSO}
+
+\begin{itemize}
+\tightlist
+\item
+  At first, we select variables using LASSO
+\end{itemize}
+
+\begin{eqnarray*}
+\underset{\beta_{0},\beta,\varepsilon_{t j}^{+},\varepsilon_{t j}^{-}}{\text{arg min}} & \sum_{j \in J} \sum_{t \in T}\left(\alpha_j \varepsilon_{t j}^{+}+(1-\alpha_j)\varepsilon_{t j}^{-}\right)+\lambda\sum_{p=1}^{P}\mbox{\ensuremath{\xi}}_{p j} \span \label{eq:obj-lasso} \\
+\mbox{s.t. } & \varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}= y_{t}-\beta_{0 j}-\sum_{p=1}^{P}\beta_{p j}\tilde x_{t,p},&\forall t\in T, \forall j \in J, \\
+& \varepsilon_{t j}^{+},\varepsilon_{t j}^{-}\geq0,&\forall t \in T, \forall j \in J,\\
+& \xi_{p\alpha}\geq\beta_{p j},&\forall p\in P, \forall j \in J,  \label{l1-qar-3}
+\\
+& \beta_{0,j-1} + \beta_{j-1}^T x_{t} \leq \beta_{0j} + \beta_{j}^T x_{t}, & \forall t \in T, \forall j \in J_{(-1)},\\
+& \xi_{p\alpha}\geq-\beta_{p j},&\forall p\in P, \forall j \in J. 
+\end{eqnarray*}
+
+\end{frame}
+
+\begin{frame}{Variable Selection via LASSO}
+
+\begin{itemize}
+\item
+  We then define \(S_\lambda\) as the set of indexes of selected
+  variables given by \[
+  S_{\lambda} = \{ p \in \{ 1,\dots,P \} | \; |\beta^{*LASSO}_{\lambda,p}| \neq 0  \}.
+  \] Hence, we have that, for each \(p \in \{ 1,\dots,P \}\),
+  \[\beta^{*LASSO}_{\theta,p} = 0 \Longrightarrow \beta^{*}_{\theta,p} = 0.\]
+\item
+  On the second stage, we estimate coefficients using a regular QR where
+  input variables are only the ones which belonging to \(S_\lambda\)
+\end{itemize}
+
+\end{frame}
+
+\section{Regularization on the
+quantiles}\label{regularization-on-the-quantiles}
 
 \begin{frame}{MILP - Defining groups for \(\alpha\)-quantiles}
 
@@ -317,7 +411,8 @@ is a vector of exogenous variables at the time we want to forecast.
 \begin{array}{lll}
  \underset{\beta_{0j},\beta_j,z_{p j}, \varepsilon_{t j}^{+},\varepsilon_{t j}^{-}}{\text{min}} & \sum_{j \in J} \sum_{t\in T}\left(\alpha_j\varepsilon_{t j}^{+}+(1-\alpha_j)\varepsilon_{t j}^{-}\right)  & \\
 \mbox{s.t } & \varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}=y_{t}-\beta_{0 j}-\beta_{j}^T x_{t,p},& \forall t \in T ,\forall j \in J, \\
-& \varepsilon_{t j}^{+},\varepsilon_{t j}^{-}\geq0,&\forall t \in T ,\forall j \in J, \\
+& \varepsilon_{t j}^{+},\varepsilon_{t j}^{-}\geq0,&\forall t \in T ,\forall j \in 
+J, \\
 & - M z_{p j g} \leq \beta_{p j} \leq M z_{p j g},& \forall j \in J, \forall p\in P,  \\
 & & \quad \forall g \in G \\
 &z_{p j g} := 2 - ( 1-z_{pg}) - I_{gj}& \\
@@ -332,56 +427,24 @@ is a vector of exogenous variables at the time we want to forecast.
 
 \begin{frame}{MILP - Penalization of derivative}
 
-\tiny
+\small
 
-\begin{eqnarray}
- \underset{\beta_{0j},\beta_j,z_{p j} \varepsilon_{t j}^{+},\varepsilon_{t j}^{-}}{\text{min}} & \sum_{j \in J} \sum_{t\in T}\left(\alpha_k \varepsilon_{t j}^{+}+(1-\alpha_k)\varepsilon_{t\alpha}^{-}\right) + \gamma \sum_{j \in J'} D2_{p\alpha} \span \\
-\mbox{s.t } & \varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}=y_{t}-\beta_{0 j}-\sum_{p=1}^{P}\beta_{p j}x_{t,p},& \forall t \in T ,\forall j \in J, \\
+\begin{eqnarray*}
+ \underset{\beta_{0j},\beta_j,z_{p j} \varepsilon_{t j}^{+},\varepsilon_{t j}^{-}}{\text{min}} & \sum_{j \in J} \sum_{t\in T}\left(\alpha_k \varepsilon_{t j}^{+}+(1-\alpha_k)\varepsilon_{t\alpha}^{-}\right) + \gamma \sum_{j \in J'} D2_{pj} \span \\
+\mbox{s.t } & \varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}=y_{t}-\beta_{0 j}-\beta_{j}^T x_{t},& \forall t \in T ,\forall j \in J, \\
 & \varepsilon_{t j}^{+},\varepsilon_{t j}^{-}\geq0,&\forall t \in T ,\forall j \in J, \label{eq:mip2}\\
 & - M z_{p j} \leq \beta_{p j} \leq M z_{p j},& \forall j \in J, \forall p\in P, \label{eq:mip3}\\
-& \sum_{p=1}^P z_{p j} \leq K, & \qquad \forall j \in J, \label{eq:mip4}\\
+& \sum_{p \in P} z_{p j} \leq K, & \qquad \forall j \in J, \label{eq:mip4}\\
 & z_{p j} \in \{0,1\},& \forall j \in J, \forall p\in P, \label{eq:mip5}\\
 & \tilde{D}_{pj}^{2}=\frac{\left(\frac{\beta_{p,j+1}-\beta_{pj}}{\alpha_{j+1}-\alpha_{j}}\right)-\left(\frac{\beta_{p,j}-\beta_{p,j-1}}{\alpha_{J}-\alpha_{j-1}}\right)}{\alpha_{j+1}-2\alpha_{j}+\alpha_{j-1}} \span\\
-& D2_{pj} >  \tilde D_{pj}^{2} &  \forall j \in J_{(-1)}, \forall p\in P, \\
-& D2_{pj} >  - \tilde D_{pj}^{2} &  \forall j \in J_{(-1)}, \forall p\in P,\\
+& D2_{pj} \geq  \tilde D_{pj}^{2} &  \forall j \in J_{(-1)}, \forall p\in P, \\
+& D2_{pj} \geq  - \tilde D_{pj}^{2} &  \forall j \in J_{(-1)}, \forall p\in P,\\
 & \beta_{0,j-1} + \beta_{j-1}^T x_{t} \leq \beta_{0j} + \beta_{j}^T x_{t}, & \forall t \in T, \forall j \in J_{(-1)},
-\end{eqnarray}
+\end{eqnarray*}
 
 \end{frame}
 
-\begin{frame}{Variable Selection via LASSO}
-
-\begin{itemize}
-\tightlist
-\item
-  Another way of doing regularization is including the coefficients
-  \(\ell_1\)-norm on the objective function
-\item
-  In this method, coefficients are shrunk towards zero by changing a
-  continuous parameter \(\lambda\), which penalizes the size of the
-  \(\ell_1\)-norm.\\
-\item
-  When the value of \(\lambda\) gets bigger, fewer variables are
-  selected to be used.
-\item
-  The optimization problem for a single quantile is presented below: \[
-  \underset{\beta_{0},\beta}{\text{min}} \sum_{t \in T}\alpha|y_{t}-q(x_t)|^{+}+ \sum_{t \in T}(1-\alpha)|y_{t}-q(x_t)|^{-}+\lambda\|\beta\|_{1},
-  \]
-\end{itemize}
-
-\[
-q(x_t)=\beta_{0}-\sum_{p=1}^{P}\beta_{p}x_{t,p}.
-\]
-
-\end{frame}
-
-\begin{frame}{Variable Selection via LASSO}
-
-\begin{itemize}
-\tightlist
-\item
-  At first, we select variables using LASSO
-\end{itemize}
+\begin{frame}{LASSO - Penalization of derivative}
 
 \tiny
 
@@ -414,6 +477,36 @@ q(x_t)=\beta_{0}-\sum_{p=1}^{P}\beta_{p}x_{t,p}.
   On the second stage, we estimate coefficients using a regular QR where
   input variables are only the ones which belonging to \(S_\lambda\)
 \end{itemize}
+
+\end{frame}
+
+\begin{frame}{LASSO - Penalization of derivative}
+
+\begin{figure}
+\centering
+\includegraphics{../Figuras/Lasso-penalty-quantis/Lambda1.0-gamma0.3.pdf}
+\caption{}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}{LASSO - Penalization of derivative}
+
+\begin{figure}
+\centering
+\includegraphics{../Figuras/Lasso-penalty-quantis/Lambda20-gamma.pdf}
+\caption{}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}{LASSO - Penalization of derivative}
+
+\begin{figure}
+\centering
+\includegraphics{../Figuras/Lasso-penalty-quantis/Lambda100.0-gamma1.0.pdf}
+\caption{}
+\end{figure}
 
 \end{frame}
 
@@ -454,7 +547,7 @@ q(x_t)=\beta_{0}-\sum_{p=1}^{P}\beta_{p}x_{t,p}.
   The CV score is given by the sum of the loss function for each fold.
   The optimum value of \(t\) in this criteria is the one that minimizes
   the CV score: \[
-  \theta^* = \text{argmin}_\theta CV(\theta) = \sum_{k \in \mathcal{K}} \sum_{\alpha \in A} L(\alpha).
+  \theta^* = \text{argmin}_\theta CV(\theta) = \sum_{k \in \mathcal{K}} \sum_{\alpha \in A} L_\alpha(q).
   \]
 \item
   To optimize CV function in \(\theta\), we use the Nelder-Mead
@@ -465,6 +558,23 @@ q(x_t)=\beta_{0}-\sum_{p=1}^{P}\beta_{p}x_{t,p}.
 \end{frame}
 
 \section{Nonparametric model}\label{nonparametric-model}
+
+\begin{frame}{Nonparametric model}
+
+\[
+\hat{Q}_{Y|X}(\alpha,\cdot)\quad\in\quad  \underset{q(\cdot)\in\mathcal{Q}}{\text{arg min}}\, L_\alpha(q) = \sum_{t\in T}\rho_{\alpha}(y_{t}-q(x_t)),
+\]
+
+\begin{itemize}
+\item
+  On nonparametric models, \(q_\alpha\) belongs to a space of limited
+  second derivative function \(\mathcal{Q}\).
+\item
+  The \(\alpha\)-quantile function is flexible enough to capture
+  nonlinearities on the quantile function.
+\end{itemize}
+
+\end{frame}
 
 \begin{frame}{Nonparametric model - Formulation}
 
@@ -514,19 +624,66 @@ s.t. & \delta_{t}^{+}-\delta_{t \alpha }^{-}=y_{t}-q_{t \alpha }, & \qquad\foral
 
 \end{frame}
 
-\begin{frame}{Nonparametric vs.~Linear Model}
+\begin{frame}{Control of smoothing parameter}
 
 \begin{itemize}
 \tightlist
 \item
   This flexibility might lead to overfitting, if we don't select a
-  proper penalty, as shown below:
+  proper smoothing parameter.
+\end{itemize}
 
-  \begin{figure}
-          \centering     \includegraphics[width=0.6 \textwidth]{../Figuras/regressao-quantilica/icaraizinho-crossing-01}
-  \caption{Example of a overfitted quantile function}
-  \label{fig:convergence}
-  \end{figure}
+\begin{figure}
+  \centering
+  \begin{minipage}[t]{\linewidth}
+    \centering
+    \begin{minipage}[t]{0.45\linewidth}
+      \centering     \includegraphics[width=\textwidth]{../Figuras/npqar/icaraizinho-crossing-01}
+    \subcaption{$\lambda = 0.1$}
+    \end{minipage}
+    \begin{minipage}[t]{0.45\linewidth}
+      \centering     \includegraphics[width=\textwidth]{../Figuras/npqar/icaraizinho-crossing-3}
+\subcaption{$\lambda = 3$}
+    \end{minipage}
+  \end{minipage}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}{Control of smoothing parameter}
+
+\begin{figure}
+  \centering
+  \begin{minipage}[t]{\linewidth}
+    \centering
+    \begin{minipage}[t]{0.45\linewidth}
+      \centering     \includegraphics[width=\textwidth]{../Figuras/npqar/icaraizinho-crossing-10}
+      \subcaption{$\lambda = 10$}
+    \end{minipage}
+    \begin{minipage}[t]{0.45\linewidth}
+      \centering     \includegraphics[width=\textwidth]{../Figuras/npqar/icaraizinho-crossing-100}
+    \subcaption{$\lambda = 100$}
+    \end{minipage}
+  \end{minipage}
+\end{figure}
+
+\begin{itemize}
+\tightlist
+\item
+  On the limit, when \(\lambda \rightarrow \infty\), the nonparametric
+  model approaches a linear model.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Present issues}
+
+\begin{itemize}
+\tightlist
+\item
+  Difficult interpolation when \(x_t\) has dimension greater than 1.
+\item
+  Control of smoothing parameter
 \end{itemize}
 
 \end{frame}
