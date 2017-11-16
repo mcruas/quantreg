@@ -96,8 +96,9 @@ Equation (\ref{mipgrupzpa}) defines $z_{pj}$ to simplify writing.
 %where $A' = A\setminus \{|A|\}$
 
 \subsubsection{Inclusion of derivative penalty}
+Our estimation procedure consists of a different model for each $\alpha$-quantile. From the assumption that the value of similar quantiles be produced by similar models, we need to prevent big changes on the $p$ coefficient $\beta_p(\alpha)$ when seen as a function of probability $\alpha$, as shown on Figure \todoi{adicionar figura}. On the implementation side, we must limit the second difference of the sequence of coefficients $\{\beta_{pj}\}_{j \in J}$ for every parameter $p$. This will bring smoothness to $\beta_p(\alpha)$.
 
-To incorporate the idea of similarity between coefficients of similar probabilities $\alpha$, we propose to use a penalty on the difference of coefficients. The sequence of coefficients $\{\beta_{pj}\}_{j \in J}$, for a parameter $p$, must have limited second difference, bringing smoothness to the change of coefficients. By including this constraint, every time a variable enters or leaves the subset, its values must be increasing or decreasing smoothly. The second order differential of coefficients is given by the equation below:
+for a parameter $p$, must have limited second difference, bringing smoothness to the change of coefficients. By including this constraint, every time a variable enters or leaves the subset, its values must be increasing or decreasing smoothly. The second order differential of coefficients is given by the equation below:
 \begin{equation}
 \tilde{D}_{pj}^{2}:=\frac{\left(\frac{\beta_{p,j+1}-\beta_{pj}}{\alpha_{j+1}-\alpha_{j}}\right)-\left(\frac{\beta_{p,j}-\beta_{p,j-1}}{\alpha_{j}-\alpha_{j-1}}\right)}{\alpha_{j+1}-2\alpha_{j}+\alpha_{j-1}}.
 \end{equation}

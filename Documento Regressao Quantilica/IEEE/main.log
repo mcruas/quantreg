@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2017.10.23)  25 OCT 2017 15:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2017.10.23)  16 NOV 2017 14:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1003,38 +1003,35 @@ LaTeX Font Info:    ... okay on input line 59.
 \makeMPintoPDFobject=\count155
 \everyMPtoPDFconversion=\toks44
 ) ABD: EveryShipout initializing macros
-Underfull \hbox (badness 1454) in paragraph at lines 78--80
+Underfull \hbox (badness 1454) in paragraph at lines 79--81
 []\OT1/ptm/b/it/9 Keywords\OT1/ptm/b/n/9 ---\OT1/ptm/b/it/9 Quantile Re-gres-si
 on, Model Iden-ti-fi-ca-tion, Non-
  []
 
-(./main.tdo)
-\tf@tdo=\write4
-\openout4 = `main.tdo'.
-
- (./ieee-introduction.tex
-LaTeX Font Info:    Try loading font information for U+msa on input line 51.
-
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+(./main.tdo
+LaTeX Font Info:    Try loading font information for U+msa on input line 1.
+ (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 51.
+LaTeX Font Info:    Try loading font information for U+msb on input line 1.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+))
+\tf@tdo=\write4
+\openout4 = `main.tdo'.
 
 
-]) (./ieee-quantile-regression.tex [2]
+(./ieee-introduction.tex [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+
+
+]) (./ieee-quantile-regression.tex
 Underfull \hbox (badness 1365) in paragraph at lines 37--38
 []\OT1/ptm/m/n/10 We ap-ply QR to es-ti-mate the con-di-tional dis-tri-bu-tion
  []
 
-) (./ieee-regularization.tex [3]
-Underfull \vbox (badness 2261) has occurred while \output is active []
-
-
-Overfull \hbox (14.3122pt too wide) in alignment at lines 182--191
+[2]) (./ieee-regularization.tex [3]
+Overfull \hbox (14.3122pt too wide) in alignment at lines 183--192
  [] [] [][]
  []
 
@@ -1072,13 +1069,13 @@ tober /
 ** the default language instead.
 ) [6] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 15107 strings out of 492990
- 294060 string characters out of 6135004
- 344473 words of memory out of 5000000
- 18303 multiletter control sequences out of 15000+600000
- 43954 words of font info for 89 fonts, out of 8000000 for 9000
+ 15153 strings out of 492990
+ 295305 string characters out of 6135004
+ 344522 words of memory out of 5000000
+ 18348 multiletter control sequences out of 15000+600000
+ 45032 words of font info for 90 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 48i,14n,54p,779b,299s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 48i,14n,80p,779b,612s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/
 share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/
@@ -1099,7 +1096,7 @@ ts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/font
 s/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/tim
 es/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
 </usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (6 pages, 263537 bytes).
+Output written on main.pdf (6 pages, 259896 bytes).
 PDF statistics:
  112 PDF objects out of 1000 (max. 8388607)
  81 compressed objects within 1 object stream

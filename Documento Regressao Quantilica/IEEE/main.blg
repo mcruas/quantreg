@@ -1,5 +1,5 @@
-This is BibTeX, Version 0.99d (TeX Live 2016/Debian)
-Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: main.aux
 The style file: IEEEtran.bst
 Reallocated singl_function (elt_size=4) to 100 items from 50.
@@ -10,23 +10,23 @@ Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: Thesis.bib
 Database file #2: QR.bib
 Database file #3: Bibhenriquinho.bib
--- IEEEtran.bst version 1.14 (2015/08/26) by Michael Shell.
+-- IEEEtran.bst version 1.13 (2008/09/30) by Michael Shell.
 -- http://www.michaelshell.org/tex/ieeetran/bibtex/
 -- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
 Warning--empty journal in belloni2009least
 
 Done.
 You've used 30 entries,
-            4087 wiz_defined-function locations,
-            1022 strings with 13128 characters,
-and the built_in function-call counts, 24866 in all, are:
+            4039 wiz_defined-function locations,
+            1011 strings with 13058 characters,
+and the built_in function-call counts, 24775 in all, are:
 = -- 2146
 > -- 531
 < -- 255
 + -- 307
 - -- 79
 * -- 1257
-:= -- 3830
+:= -- 3829
 add.period$ -- 59
 call.type$ -- 30
 change.case$ -- 32
@@ -35,7 +35,7 @@ cite$ -- 31
 duplicate$ -- 1719
 empty$ -- 1751
 format.name$ -- 101
-if$ -- 5728
+if$ -- 5638
 int.to.chr$ -- 0
 int.to.str$ -- 30
 missing$ -- 269

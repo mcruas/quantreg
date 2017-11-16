@@ -12,9 +12,9 @@ transform.data <- function(df) {
   return(df)
 }
 
-ERAI <- read.csv("~/Dropbox/Pesquisa Doutorado/Paper NPQuantile/R/ICARAIZINHO/0-UEE0_ICARAIZINHO-ERAI.csv")
-MERRA <- read.csv("~/Dropbox/Pesquisa Doutorado/Paper NPQuantile/R/ICARAIZINHO/0-UEE0_ICARAIZINHO-MERRA.csv")
-NNRP <- read.csv("~/Dropbox/Pesquisa Doutorado/Paper NPQuantile/R/ICARAIZINHO/0-UEE0_ICARAIZINHO-NNRP.csv")
+ERAI <- read.csv("~/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/R/ICARAIZINHO/0-UEE0_ICARAIZINHO-ERAI.csv")
+MERRA <- read.csv("~/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/R/ICARAIZINHO/0-UEE0_ICARAIZINHO-MERRA.csv")
+NNRP <- read.csv("~/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/R/ICARAIZINHO/0-UEE0_ICARAIZINHO-NNRP.csv")
 
 ERAI <- transform.data(ERAI)
 MERRA <- transform.data(MERRA)
