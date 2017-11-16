@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2017.10.23)  16 NOV 2017 14:41
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2017.10.23)  16 NOV 2017 16:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1031,7 +1031,7 @@ Underfull \hbox (badness 1365) in paragraph at lines 37--38
  []
 
 [2]) (./ieee-regularization.tex [3]
-Overfull \hbox (14.3122pt too wide) in alignment at lines 183--192
+Overfull \hbox (14.3122pt too wide) in alignment at lines 186--196
  [] [] [][]
  []
 
@@ -1071,7 +1071,7 @@ tober /
 Here is how much of TeX's memory you used:
  15153 strings out of 492990
  295305 string characters out of 6135004
- 344522 words of memory out of 5000000
+ 346522 words of memory out of 5000000
  18348 multiletter control sequences out of 15000+600000
  45032 words of font info for 90 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1096,7 +1096,7 @@ ts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/font
 s/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/tim
 es/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
 </usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (6 pages, 259896 bytes).
+Output written on main.pdf (6 pages, 260663 bytes).
 PDF statistics:
  112 PDF objects out of 1000 (max. 8388607)
  81 compressed objects within 1 object stream

@@ -105,16 +105,17 @@ for a parameter $p$, must have limited second difference, bringing smoothness to
 This idea is implemented on the optimization problem by adding a penalty on the objective function to penalize the absolute value $|D_{pj'}^{2}|$ by a tuning parameter $\gamma$, that controls how rough the sequence $\{\beta_{pj}\}_{j \in J}$ can be. The full optimization problem for the best subset selection via MILP which incorporates the derivative penalty is given below:
 \begin{IEEEeqnarray}{lr}
 	\underset{\beta_{0j},\beta_j,z_{p j} \varepsilon_{t j}^{+},\varepsilon_{t j}^{-}}{\text{min}} \sum_{j \in J} \sum_{t\in T}\left(\alpha_j\varepsilon_{t j}^{+}+(1-\alpha_j)\varepsilon_{tj}^{-}\right) \nonumber \span \\
-	& + \gamma \sum_{j \in J'} D2_{pj}   \\
+	\span + \gamma \sum_{j \in J'} (D2_{pj}^+ + D2_{pj}^-)   \\
 	\mbox{subject to} \span \nonumber \\
 	\varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}=y_{t}-\beta_{0 j}-\beta_{j}^T x_{t,p},& \forall t \in T ,\forall j \in J,\\
-	\varepsilon_{t j}^{+},\varepsilon_{t j}^{-}\geq0, & \forall t \in T ,\forall j \in J, \\
 	- M z_{p \alpha} \leq \beta_{p j} \leq M z_{p \alpha}, & \forall j \in J, \forall p\in P, \\
 	\sum_{p \in P} z_{p \alpha} \leq K, & \forall j \in J, \\
+	D2_{pj}^+ - D2_{pj}^- = \frac{\left(\frac{\beta_{p,j+1}-\beta_{pj}}{\alpha_{j+1}-\alpha_{j}}\right)-\left(\frac{\beta_{p,j}-\beta_{p,j-1}}{\alpha_{j}-\alpha_{j-1}}\right)}{\alpha_{j+1}-2\alpha_{j}+\alpha_{j-1}}, \span   \nonumber \\
+	\span \forall j \in J_{(-1)}, \forall p\in P, \\
+\beta_{0j} + \beta_{j}^T x_{t} \leq \beta_{0,j+1} + \beta_{j+1}^T x_{t},&\forall t \in T, \forall j \in J_{(-1)}, \\
 	z_{p \alpha} \in \{0,1\}, & \forall j \in J,  \forall p\in P, \\
-	D2_{pj} >  \tilde D_{pj}^{2} &  \forall j \in J_{(-1)}, \forall p\in P, \\
-	D2_{pj} > - \tilde D_{pj}^{2} &  \forall j \in J_{(-1)}, \forall p\in P,\\
-\beta_{0j} + \beta_{j}^T x_{t} \leq \beta_{0,j+1} + \beta_{j+1}^T x_{t},&\forall t \in T, \forall j \in J_{(-1)}, 
+		\varepsilon_{t j}^{+},\varepsilon_{t j}^{-}\geq0, & \forall t \in T ,\forall j \in J, \\
+	 D2_{pj}^+, D2_{pj}^- \geq 0, & \forall j \in J,  \forall p\in P.
 \end{IEEEeqnarray}
 where $A'$ is the set formed by the same elements of $A$ without the first and the last elements.
 
@@ -142,16 +143,18 @@ This normalization process is a linear transformation to each covariate such tha
 We apply the transformation $\tilde{x}_{t,p} = (x_{t,p} - \bar{x}_{t,p}) / \hat\sigma_{x_{t,p}}$, where $\bar{x}_{t,p}$ and $\hat{\sigma}_{x_{t,p}}$ are respectively the sample's unconditional mean and standard deviation. The $\tilde{y}_{t-p,i}$ series will be used to estimate the coefficients, as this series has the desired properties.} are input on the following optimization problem:
 \begin{IEEEeqnarray}{lr}
 \tilde \beta_\lambda^{*LASSO} = \underset{\beta_{0},\beta,\varepsilon_{t j}^{+},\varepsilon_{t j}^{-}}{\text{arg min}} \sum_{j \in J} \sum_{t \in T}(\alpha_j\varepsilon_{t j}^{+}+(1-\alpha_j)\varepsilon_{t j}^{-}) \span \nonumber \\
-\hspace{3.5cm} +\lambda\sum_{p \in P}\mbox{\ensuremath{\xi}}_{p j} + \gamma \sum_{j \in J'} D2_{pj} \span \label{eq:obj-lasso} \\
+\span +\lambda\sum_{p \in P}\mbox{\ensuremath{\xi}}_{p j} + \gamma \sum_{j \in J'} (D2_{pj}^+ + D2_{pj}^-)  \label{eq:obj-lasso} \\
 \mbox{subject to } \nonumber & \\
-\varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}=y_{t}-\beta_{0 j}-\beta_{j}^T x_{t,p},& \forall t \in T ,\forall j \in J,\\\varepsilon_{t j}^{+},\varepsilon_{t j}^{-}\geq0,&\forall t \in T, \forall j \in J,\\
+\varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}=y_{t}-\beta_{0 j}-\beta_{j}^T x_{t,p},& \forall t \in T ,\forall j \in J,\\
 \xi_{pj}\geq\beta_{p j},&\forall p\in P, \forall j \in J,  \label{l1-qar-3}
 \\
 \xi_{pj}\geq - \beta_{p j},&\forall p\in P, \forall j \in J,  \label{l1-qar-4}
 \\
-	D2_{pj} >  \tilde D_{pj}^{2} &  \forall j \in J_{(-1)}, \forall p\in P, \\
-D2_{pj} > - \tilde D_{pj}^{2} &  \forall j \in J_{(-1)}, \forall p\in P,\\
-\beta_{0j} + \beta_{j}^T x_{t} \leq \beta_{0,j+1} + \beta_{j+1}^T x_{t},&\forall t \in T, \forall j \in J_{(-1)}, \label{eq:l1-qar5}
+	D2_{pj}^+ - D2_{pj}^- = \frac{\left(\frac{\beta_{p,j+1}-\beta_{pj}}{\alpha_{j+1}-\alpha_{j}}\right)-\left(\frac{\beta_{p,j}-\beta_{p,j-1}}{\alpha_{j}-\alpha_{j-1}}\right)}{\alpha_{j+1}-2\alpha_{j}+\alpha_{j-1}}, \span   \nonumber \\
+\span \forall j \in J_{(-1)}, \forall p\in P, \\
+\beta_{0j} + \beta_{j}^T x_{t} \leq \beta_{0,j+1} + \beta_{j+1}^T x_{t},&\forall t \in T, \forall j \in J_{(-1)}, \\
+\varepsilon_{t j}^{+},\varepsilon_{t j}^{-}\geq0,&\forall t \in T, \forall j \in J,\\
+D2_{pj}^+, D2_{pj}^- \geq 0, & \forall j \in J,  \forall p\in P. \label{eq:l1-qar5} 
 \end{IEEEeqnarray}
 This model is built upon the standard linear programming model for the quantile regression (\ref{eq:linear-opt-1})-(\ref{eq:linear-opt-ult}). 
 On the above formulation, the $\ell_1$ norm of equation (\ref{eq:l1-qar-optim}) is substituted by the sum of $\xi_p$, which represents the absolute value of $\beta_{pj}$. The link between variables $\xi_p$ and $\beta_{pj}$ is made by constraints (\ref{l1-qar-3}) and (\ref{l1-qar-4}). Note that the linear coefficient $\beta_{0j}$ is not included in the penalization, as the sum of penalties on the objective function \ref{eq:obj-lasso}.
@@ -182,13 +185,14 @@ $$\beta^{*LASSO}_{\lambda,p} = 0 \Longrightarrow \beta^{*}_{\lambda,p} = 0.$$
 Note that problem (\ref{eq:linear-opt-1})-(\ref{eq:linear-opt-ult}) is employed to act as variable selection only. On the second stage, the optimal coefficient vector $\beta_\lambda^{*LASSO}$ is estimated by the non-regularized QR, where only variables that bellongs to $S_\lambda$ are input:
 \begin{IEEEeqnarray*}{lr} (\mathcal{L}_{\lambda}^{*},\beta_{\lambda}^{*})\overset{(obj,var)}{\longleftarrow} \underset{\beta_{0j},\beta_j,z_{p j}, \varepsilon_{t j}^{+},\varepsilon_{t j}^{-}}{\text{min}} \sum_{j \in J} \sum_{t\in T}\left(\alpha_j \varepsilon_{t j}^{+}+(1-\alpha_j)\varepsilon_{t\alpha_j}^{-}\right) \span \nonumber
 \\
-&  + \gamma \sum_{j \in J'} D2_{pj} \\
+&  + \gamma \sum_{j \in J'} (D2_{pj}^+ + D2_{pj}^-) \\
 \text{subject to } \span \nonumber \\
 \varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}=y_{t} - \beta_{0\alpha} - \sum_{p\in S_\lambda} \beta_p x_{t,p}, & \forall t \in T, \forall j \in J, \\
+	D2_{pj}^+ - D2_{pj}^- = \frac{\left(\frac{\beta_{p,j+1}-\beta_{pj}}{\alpha_{j+1}-\alpha_{j}}\right)-\left(\frac{\beta_{p,j}-\beta_{p,j-1}}{\alpha_{j}-\alpha_{j-1}}\right)}{\alpha_{j+1}-2\alpha_{j}+\alpha_{j-1}}, \span   \nonumber \\
+\span \forall j \in J_{(-1)}, \forall p\in P, \\
+\beta_{0j} + \beta_{j}^T x_{t} \leq \beta_{0,j+1} + \beta_{j+1}^T x_{t}, & \forall t \in T, \forall j \in J_{(-1)},\\
 \varepsilon_{tj}^+,\varepsilon_{tj}^- \geq 0, &  \forall t \in T,\forall j \in J,\\ 
-D2_{pj} >  \tilde D_{pj}^{2} &  \forall j \in J_{(-1)}, \forall p\in P, \\
-D2_{pj} >  - \tilde D_{pj}^{2} &  \forall j \in J_{(-1)}, \forall p\in P,\\
-\beta_{0j} + \beta_{j}^T x_{t} \leq \beta_{0,j+1} + \beta_{j+1}^T x_{t}, & \forall t \in T, \forall j \in J_{(-1)},
+	 D2_{pj}^+, D2_{pj}^- \geq 0, & \forall j \in J,  \forall p\in P.
 \end{IEEEeqnarray*}
 The variable $\mathcal{L}_{\lambda}^{*}$ receives the value of the objective function on its optimal solution.
 In summary, the optimization in equation \ref{eq:l1-qar-optim} acts as a variable selection for the subsequent estimation, which is normally called the post-LASSO estimation \cite{belloni2009least}.
