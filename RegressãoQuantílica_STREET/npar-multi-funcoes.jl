@@ -759,7 +759,7 @@ function rq_par_lasso_oldfunction(y::Array{Float64}, X::Array{Float64,2}, Alphas
           end
 
 
-          m = Model(solver = GurobiSolver(OutputFlag = 0))
+          m = Model(solver = GurobiSolver(OutputFlag = 1))
           
                 @variable(m, ɛ_tmais[T, J] >= 0)
                 @variable(m, ɛ_tmenos[T, J] >= 0)

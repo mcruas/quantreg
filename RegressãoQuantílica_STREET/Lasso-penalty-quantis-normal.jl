@@ -1,3 +1,10 @@
+###########################################################################
+#  Este arquivo produz os gráficos disponíveis na pasta 'Documento Regressao Quantilica/Figuras/Lasso-penalty-quantis-normal'
+#  Ele testa estimação com o LASSO e ADALASSO comparando o resultado "cru" com a metodologia em que fazemos regularização 
+#  nos quantis. 
+#  DADOS SIMULADOS DE UMA DISTRIBUIÇÃO NORMAL
+
+
 using JuMP, DataFrames, Plots, Interpolations, LaTeXStrings, RCall #, Distributions
 
 
@@ -70,7 +77,7 @@ for n = [100, 250, 500,1000]  # n = 200; lambda = 3; gamma = 0.5 # TIRAR DEPOIS 
     # Guarda_Registros = Registros[];
     pyplot()
     nome_pasta = replace("n $n", ".0", "")
-    try mkdir("Documento Regressao Quantilica/Figuras/Lasso-penalty-quantis/$nome_pasta/") end
+    try mkdir("Documento Regressao Quantilica/Figuras/Lasso-penalty-quantis-normal/$nome_pasta/") end
     for lambda = [0.1, 0.3, 1.0,3.0,10.0,20.0,30.0,50.0,100.0]   # lambda = 2.0
         for gamma = [0.1, 0.3, 1.0, 3.0, 10.0,20.0]
 
@@ -111,8 +118,8 @@ for n = [100, 250, 500,1000]  # n = 200; lambda = 3; gamma = 0.5 # TIRAR DEPOIS 
             plot(p,q,r,s,t,u,v,v1,size = (1200,700), ylim = (-3.5,1.5))
     
             name_file = replace("Lambda$lambda-gamma$gamma",".","")
-            savefig("Documento Regressao Quantilica/Figuras/Lasso-penalty-quantis/$nome_pasta/$name_file.pdf")
-            savefig("Documento Regressao Quantilica/Figuras/Lasso-penalty-quantis/$nome_pasta/$name_file.png")
+            savefig("Documento Regressao Quantilica/Figuras/Lasso-penalty-quantis-normal/$nome_pasta/$name_file.pdf")
+            savefig("Documento Regressao Quantilica/Figuras/Lasso-penalty-quantis-normal/$nome_pasta/$name_file.png")
 
         end
 
