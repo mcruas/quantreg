@@ -72,6 +72,28 @@ Looking for the distribution of each hour as a whole, we notice pontual differen
 
 ```{r}
   densityplot(~W6 | factor(HOUR1), group = YEAR1,data = WindData, main="Density      comparison across different hours and years", auto.key = TRUE)
+
+  densityplot(~W6 | factor(HOUR1), group = YEAR1,data = WindData, main="Density      comparison across different hours and years", auto.key = TRUE)
+  
+  
+  
+  
+  
+  xyplot(W6~HOUR1 | factor(MONTH1), group = DAY1, data = filter(WindData, YEAR1 == 2012), type = "l", main = "Daily wind power factor stacked monthly", xlab = "Hour", ylab = "Power factor")
+  # xyplot(Consumo_max ~ times(Hora) | 
+  #        Mes, groups = Ano,data = tmp, type="l", auto.key = list(space = 'right'), 
+  #      ylab = "Consumo máximo", xlab="Hora do dia")
+
+  
+  
+  
+  plot.ts(WindData[25:48,6], ylim = c(0,2))
+  for (i in 1:20) {
+    lines(WindData[(1+(i*24)):(24+(i*24)),6], col = i)  
+  }
+  
+  
+  plot.ts(WindData[25:48,6])
 ```
 
 ```{r}

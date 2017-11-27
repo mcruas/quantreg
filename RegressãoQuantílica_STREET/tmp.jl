@@ -86,3 +86,50 @@ end
 #       abline(a = betas0[alf],b= betas[1 , alf])
 #    }
 # "
+
+
+using RCall
+
+
+function normalization(X)
+  R"
+  X_scale = scale($X)
+  X_mean = colMeans($X)
+  X_sd = apply($X,2,sd)
+  "
+  @rget X_scale X_mean X_sd
+  return X_scale, X_mean, X_sd
+
+end
+
+function denormalization(betas_til, beta0_til, X_sd, X_mean)
+
+
+end
+
+p_tmp = 3; n = 1000
+beta_tmp = 1:p_tmp
+R"
+X = matrix(0,$n, $p_tmp)
+for (i in 1:$p_tmp) {
+  X[,i] = rnorm($n, mean = i)
+}
+"
+@rget X
+colMeans(X)
+# X_tmp = rand(n_tmp,p_tmp)
+# X_scale, X_mean, X_sd = normalization(X_tmp)
+@rput X_tmp X_scale X_mean X_sd beta_tmp n_tmp
+
+
+
+R" 
+
+X_tmp = cbind(rnorm(n_tmp,1,2), rnorm(n_tmp, 3,4))
+y_tmp = X_tmp %*% beta_tmp + rnorm(nrow(X_tmp))
+X_scale = scale(X_tmp)
+res1 = lm(y_tmp ~ X_tmp)
+X_mean
+X_sd
+res2 = lm(y_tmp ~ X_scale)
+"

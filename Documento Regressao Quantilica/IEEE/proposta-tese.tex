@@ -442,6 +442,16 @@ input variables are only the ones which belonging to \(S_\lambda\)
 \section{Regularization on the
 quantiles}\label{regularization-on-the-quantiles}
 
+\begin{frame}{Regularization on the quantiles - Motivation}
+	In practice, often when we regularize 
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.5\linewidth]{Images/Lambda10-gamma03.pdf}
+	\end{figure}
+	
+\end{frame}
+
+
 \begin{frame}{MILP - Defining groups for \(\alpha\)-quantiles}
 
 
@@ -461,41 +471,45 @@ J, \\
 
 \end{frame}
 
-\begin{frame}{MILP - Penalization of derivative}
+
+
+
+\begin{frame}{MILP with quantile regularization}
 
 \small
-
-\begin{IEEEeqnarray*}{llr}
-\underset{\beta_{0j},\beta_j,z_{p j} \varepsilon_{t j}^{+},\varepsilon_{t j}^{-}}{\text{min}} & \sum_{j \in J} \sum_{t\in T}\left(\alpha_j \varepsilon_{tj}^{+}+(1-\alpha_j)\varepsilon_{t\alpha}^{-}\right) + \gamma \sum_{j \in J'} D2_{pj} \span \\
-\mbox{s.t } & \varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}=y_{t}-\beta_{0 j}-\beta_{j}^T x_{t},& \forall t \in T ,\forall j \in J, \\
-& \varepsilon_{t j}^{+},\varepsilon_{t j}^{-}\geq 0,&\forall t \in T ,\forall j \in J, \label{eq:mip2}\\
-& - M z_{p j} \leq \beta_{p j} \leq M z_{p j},& \forall j \in J, \forall p\in P, \label{eq:mip3}\\
-& \sum_{p \in P} z_{p j} \leq K, & \qquad \forall j \in J, \label{eq:mip4}\\
-& z_{p j} \in \{0,1\},& \forall j \in J, \forall p\in P, \label{eq:mip5}\\
-& \tilde{D}_{pj}^{2}:=\frac{\left(\frac{\beta_{p,j+1}-\beta_{pj}}{\alpha_{j+1}-\alpha_{j}}\right)-\left(\frac{\beta_{p,j}-\beta_{p,j-1}}{\alpha_{J}-\alpha_{j-1}}\right)}{\alpha_{j+1}-2\alpha_{j}+\alpha_{j-1}} \span\\
-& D2_{pj} \geq  \tilde D_{pj}^{2} &  \forall j \in J_{(-1)}, \forall p\in P, \\
-& D2_{pj} \geq  - \tilde D_{pj}^{2} &  \forall j \in J_{(-1)}, \forall p\in P,\\
-& \beta_{0,j-1} + \beta_{j-1}^T x_{t} \leq \beta_{0j} + \beta_{j}^T x_{t}, & \quad \forall t \in T, \forall j \in J_{(-1)},
+\begin{IEEEeqnarray*}{lr}
+	\underset{\beta_{0j},\beta_j,z_{p j} \varepsilon_{t j}^{+},\varepsilon_{t j}^{-}}{\text{min}} \sum_{j \in J} \sum_{t\in T}\left(\alpha_j\varepsilon_{t j}^{+}+(1-\alpha_j)\varepsilon_{tj}^{-}\right) \nonumber \span \\
+	\span + \gamma \sum_{j \in J'} (D2_{pj}^+ + D2_{pj}^-)   \\
+	\mbox{subject to} \span \nonumber \\
+	\varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}=y_{t}-\beta_{0 j}-\beta_{j}^T x_{t,p},& \forall t \in T ,\forall j \in J,\\
+	- M z_{p \alpha} \leq \beta_{p j} \leq M z_{p \alpha}, & \forall j \in J, \forall p\in P, \\
+	\sum_{p \in P} z_{p \alpha} \leq K, & \forall j \in J, \\
+	D2_{pj}^+ - D2_{pj}^- = \frac{\left(\frac{\beta_{p,j+1}-\beta_{pj}}{\alpha_{j+1}-\alpha_{j}}\right)-\left(\frac{\beta_{p,j}-\beta_{p,j-1}}{\alpha_{j}-\alpha_{j-1}}\right)}{\alpha_{j+1}-2\alpha_{j}+\alpha_{j-1}}, \span   \nonumber \\
+	\span \forall j \in J_{(-1)}, \forall p\in P, \\
+	\beta_{0j} + \beta_{j}^T x_{t} \leq \beta_{0,j+1} + \beta_{j+1}^T x_{t},&\forall t \in T, \forall j \in J_{(-1)}, \\
+	z_{p \alpha} \in \{0,1\}, & \forall j \in J,  \forall p\in P, \\
+	\varepsilon_{t j}^{+},\varepsilon_{t j}^{-}\geq0, & \forall t \in T ,\forall j \in J, \\
+	D2_{pj}^+, D2_{pj}^- \geq 0, & \forall j \in J,  \forall p\in P.
 \end{IEEEeqnarray*}
 
 \end{frame}
 
-\begin{frame}{LASSO - Penalization of derivative}
-
-\small
-
-\begin{IEEEeqnarray*}{llr}
-	\underset{\beta_{0},\beta,\varepsilon_{t j}^{+},\varepsilon_{t j}^{-}}{\text{min}} \sum_{j \in J} \sum_{t \in T}(\alpha_j\varepsilon_{t j}^{+}+(1-\alpha_j)\varepsilon_{t j}^{-}) +\lambda\sum_{p \in P}\mbox{\ensuremath{\xi}}_{p j} + \gamma \sum_{j \in J'} D2_{pj} \span \span \nonumber \\
-	\mbox{s.t.} \qquad \ & \varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}=y_{t}-\beta_{0 j}-\beta_{j}^T x_{t,p},& \forall t \in T ,\forall j \in J,\\
-	& \varepsilon_{t j}^{+},\varepsilon_{t j}^{-}\geq0,&\forall t \in T, \forall j \in J,\\
-	& \xi_{pj}\geq\beta_{p j},&\forall p\in P, \forall j \in J,  \label{l1-qar-3}
+\begin{frame}{LASSO with quantile regularization}
+\footnotesize
+\begin{IEEEeqnarray*}{lr}
+	\tilde \beta_\lambda^{*LASSO} = \underset{\beta_{0},\beta,\varepsilon_{t j}^{+},\varepsilon_{t j}^{-}}{\text{arg min}} \sum_{j \in J} \sum_{t \in T}(\alpha_j\varepsilon_{t j}^{+}+(1-\alpha_j)\varepsilon_{t j}^{-}) \span \nonumber \\
+	\span +\lambda\sum_{p \in P}\mbox{\ensuremath{\xi}}_{p j} + \gamma \sum_{j \in J'} (D2_{pj}^+ + D2_{pj}^-)  \label{eq:obj-lasso} \\
+	\mbox{subject to } \nonumber & \\
+	\varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}=y_{t}-\beta_{0 j}-\beta_{j}^T x_{t,p},& \forall t \in T ,\forall j \in J,\\
+	\xi_{pj}\geq\beta_{p j},&\forall p\in P, \forall j \in J,  \label{l1-qar-3}
 	\\
-	& \xi_{pj}\geq - \beta_{p j},&\forall p\in P, \forall j \in J,  \label{l1-qar-4}
+	\xi_{pj}\geq - \beta_{p j},&\forall p\in P, \forall j \in J,  \label{l1-qar-4}
 	\\
-& \tilde{D}_{pj}^{2} := \frac{\left(\frac{\beta_{p,j+1}-\beta_{pj}}{\alpha_{j+1}-\alpha_{j}}\right)-\left(\frac{\beta_{p,j}-\beta_{p,j-1}}{\alpha_{j}-\alpha_{j-1}}\right)}{\alpha_{j+1}-2\alpha_{j}+\alpha_{j-1}}\\
-& D2_{pj} \geq  \tilde D_{pj}^{2} &  \forall j \in J_{(-1)}, \forall p\in P, \\
-& D2_{pj} \geq - \tilde D_{pj}^{2} &  \forall j \in J_{(-1)}, \forall p\in P,\\
-& \beta_{0j} + \beta_{j}^T x_{t} \leq \beta_{0,j+1} + \beta_{j+1}^T x_{t},&\forall t \in T, \forall j \in J_{(-1)}, \label{eq:l1-qar5}
+	D2_{pj}^+ - D2_{pj}^- = \frac{\left(\frac{\beta_{p,j+1}-\beta_{pj}}{\alpha_{j+1}-\alpha_{j}}\right)-\left(\frac{\beta_{p,j}-\beta_{p,j-1}}{\alpha_{j}-\alpha_{j-1}}\right)}{\alpha_{j+1}-2\alpha_{j}+\alpha_{j-1}}, \span   \nonumber \\
+	\span \forall j \in J_{(-1)}, \forall p\in P, \\
+	\beta_{0j} + \beta_{j}^T x_{t} \leq \beta_{0,j+1} + \beta_{j+1}^T x_{t},&\forall t \in T, \forall j \in J_{(-1)}, \\
+	\varepsilon_{t j}^{+},\varepsilon_{t j}^{-}\geq0,&\forall t \in T, \forall j \in J,\\
+	D2_{pj}^+, D2_{pj}^- \geq 0, & \forall j \in J,  \forall p\in P. \label{eq:l1-qar5} 
 \end{IEEEeqnarray*}
 
 
@@ -515,11 +529,11 @@ J, \\
 
 \end{frame}
 
-\begin{frame}{LASSO - Penalization of derivative}
+\begin{frame}{Regularization on the quantiles}
 
 \begin{figure}
 \centering
-\includegraphics[width=0.9\linewidth]{Images/Lambda10-gamma03.pdf}
+\includegraphics[width=0.9\linewidth]{Images/}
 \end{figure}
 
 \end{frame}
@@ -552,50 +566,37 @@ LASSO solutions are solutions that minimize
 \[
 Q(\beta|X,y)=\frac{1}{2n}\parallel y-X\beta\parallel^{2}+\lambda\sum_{p \in P}\mid\beta_{p}\mid.
 \]
-The adaptive lasso simply adds weights to this to try to counteract
-the known issue of LASSO estimates being biased. 
-
+The adaptive lasso adds weights to try to correct the known issue of bias on the LASSO estimation. The ADALASSO estimation is the second step LASSO given by:
 \[
-Q_{a}(\beta|X,y,w)=\frac{1}{2n}\parallel y-X\beta\parallel^{2}+\lambda\sum_{p \in P}w_{p}\mid\beta_{p}\mid.
+Q_{a}(\beta|X,y,w)=\frac{1}{2n}\parallel y-X\beta\parallel^{2}+\lambda\sum_{p \in P}w_{p}\mid\beta_{p}\mid,
 \]
-Often you will see $w_p=1/\tilde{\beta}_{p}$, where $\tilde{\beta}_{p}$
-are some initial estimates of the $\beta$ (maybe from just using
-LASSO, or using least squares, etc). Sometimes adaptive lasso is fit
-using a pathwise approach where the
-weight is allowed to change with $\lambda$:
-
+where $w_p$ weights the coefficients differently according to their first step value.  Normally, we have
 \[
 w_{p}(\lambda)=w(\tilde{\beta}_{p,t}(\lambda)).
 \]
-In the \textbf{glmnet} package the weights can be specified with the
-penalty.factor argument. I'm not sure if you can specify the pathwise
-approach in glmnet.
 
 \end{frame}
 
 
-\begin{frame}{ADALASSO for quantiles}
+\begin{frame}{ADALASSO for quantile regression}
 	
 
 \small
-The problem modified for quantiles
-
+When estimating the ADALASSO for quantile regression, we show a few adaptations and extensions of the original method. The full process consists of two steps, each consisting of a LASSO estimation:
 \begin{itemize}
-	\item \textbf{First step:} Normal lasso regularization
+	\item \textbf{First step:} First LASSO regularization
 	\[
-\underset{\beta_{0j},\beta_j}{\text{min}} \sum_{j \in J} \left( \sum_{t\in T}\rho_{\alpha_j}(y_{t}-(\beta_{0j} + \beta_j^T x_t)) + \lambda\  \sum_{p \in P} \mid  \beta_{pj} \mid \right),
+\underset{\beta_{0j},\beta_j}{\text{min}} \sum_{j \in J} \left( \sum_{t\in T}\rho_{\alpha_j}(y_{t}-(\beta_{0j} + \beta_j^T x_t)) + \lambda\  \sum_{p \in P} \mid  \beta_{pj} \mid \right)  + \gamma \sum_{j \in J'} (D2_{pj}^+ + D2_{pj}^-),
 \]
 	
-
-	
-	\item \textbf{Second step:} Use initial estimation to determine $w_{pj}$. We can use two different approaches:
+	\item \textbf{Second step:} Two forms of using initial estimation to determine $w_{pj}$ are:
 	\begin{enumerate}
-		\item $w_{pj} = 1/ \parallel \beta_j \parallel_1$,
 		\item $w_{pj} = 1/ \beta_{pj}$.
+		\item $w_{pj} = 1/ (\beta_{pj} \parallel \beta_j \parallel_1)$,
 	\end{enumerate}
 	The weights $w_j$ are input to a second-stage Lasso estimation:
 		\[
-	\underset{\beta_{0j},\beta_j}{\text{min}} \sum_{j \in J} \left( \sum_{t\in T}\rho_{\alpha_j}(y_{t}-(\beta_{0j} + \beta_j^T x_t)) + \lambda\  \sum_{p \in P} w_{pj}^\delta \mid  \beta_{pj} \mid \right),
+	\underset{\beta_{0j},\beta_j}{\text{min}} \sum_{j \in J} \left( \sum_{t\in T}\rho_{\alpha_j}(y_{t}-(\beta_{0j} + \beta_j^T x_t)) + \lambda\  \sum_{p \in P} w_{pj}^\delta \mid  \beta_{pj} \mid \right) + \gamma \sum_{j \in J'} (D2_{pj}^+ + D2_{pj}^-),
 	\]
 	where $\delta$ is an exponential parameter, normally set to 1.
 	

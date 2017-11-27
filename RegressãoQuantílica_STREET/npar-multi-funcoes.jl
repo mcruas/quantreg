@@ -383,11 +383,6 @@ end
 
 
 
-
-
-
-
-
 # max_K = 3; TimeLimit = 60; Grupos = 3; MIPGap = 0.0; non_cross = true
 
 ### Solves quantile regression with mixed integer programming by grouping variables and limiting their number
@@ -720,18 +715,18 @@ function rq_par_lasso_oldfunction(y::Array{Float64}, X::Array{Float64,2}, Alphas
 
 
 
-  function normalization(X)
-    R"
-    X_scale = scale($X)
-    X_mean = colMeans($X)
-    X_sd = apply($X,2,sd)
-    "
-    @rget X_scale X_mean X_sd
-    return X_scale, X_mean, X_sd
-
-  end
-
-
+    function normalization(X)
+      R"
+      X_scale = scale($X)
+      X_mean = colMeans($X)
+      X_sd = apply($X,2,sd)
+      "
+      @rget X_scale X_mean X_sd
+      return X_scale, X_mean, X_sd
+  
+    end
+  
+  
 
 
 
@@ -751,6 +746,15 @@ function rq_par_lasso_oldfunction(y::Array{Float64}, X::Array{Float64,2}, Alphas
     P = 1:size(X)[2]
     M2 = P * M
 
+    # X_norm , X_mean, X_sd = normalization(X)
+    # R"coefs = coef(lm($y ~ $X_norm))
+    #   coefs2 = coef(lm($y ~ $X)) "
+    # @rget coefs coefs2
+    # beta0_til = coefs[1]
+    # betas_til = coefs[2:end]
+
+    denormalize(betas_til, beta0_til, X_mean, X_sd)
+    coefs2
     
           # if weights are not given by the user, then use a vector of ones
           try if isnan(w)
@@ -759,7 +763,7 @@ function rq_par_lasso_oldfunction(y::Array{Float64}, X::Array{Float64,2}, Alphas
           end
 
 
-          m = Model(solver = GurobiSolver(OutputFlag = 1))
+          m = Model(solver = GurobiSolver(OutputFlag = 0))
           
                 @variable(m, ɛ_tmais[T, J] >= 0)
                 @variable(m, ɛ_tmenos[T, J] >= 0)

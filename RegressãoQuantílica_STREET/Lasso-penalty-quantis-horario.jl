@@ -13,11 +13,12 @@ cd(pasta_trabalho)
 
 include(pwd()*"/RegressãoQuantílica_STREET/funcoes_npqar.jl");
 include(pwd()*"/RegressãoQuantílica_STREET/npar-multi-funcoes.jl");
-n = 300;
 
 # para icaraizinho
 
 serie_tmp = readtable("Dados Climaticos/Dados-kaggle/WindData_melt.csv"); nomeserie = "W1"
+serie_tmp = serie_tmp[1:50000,:]
+
 serie = serie_tmp[serie_tmp[:location] .== "W1", :wind]
 n_tmp = length(serie); # keeps size of series before cutting them
 
@@ -56,52 +57,54 @@ vetor_TimeLimit = [157] # Máximo de dois dias de simulação
 y = X_lags[:,1]; X = X_lags[:, 2:end];   non_cross = true; MIPGap = 0.00
 
 pyplot()
-lambda = 0.1
+lambda = 0.00000 ; gamma = 0.0; unicodeplots()
 # nome_pasta = replace("n $n", ".0", "")
-nome_pasta = "ALL"
+nome_pasta = "50000"
 try mkdir("Documento Regressao Quantilica/Figuras/Lasso-penalty-quantis-horario/$nome_pasta/") end
-for lambda = [0.1, 0.3, 1.0,3.0,10.0,20.0,30.0,50.0,100.0]   # lambda = 0.2
-    for gamma = [0.1, 0.3, 1.0, 3.0, 10.0,20.0]
-
-
+for lambda = [1000.0, 10000.0]   
+    for gamma = [0.0]
+    
+        print(replace("Lambda$lambda-gamma$gamma",".",""))
 ########## USAR CTRL + SHIFT + Q #############
 
 
-        # lambda = 5; gamma = 0.5 # TIRAR DEPOIS DOS EXPERIMENTOS        
-        # lambda = 3; gamma = 0.5 # TIRAR DEPOIS DOS EXPERIMENTOS        
+        # lambda = 0.2; gamma = 1.0 # TIRAR DEPOIS DOS EXPERIMENTOS        
         results_lasso = rq_par_lasso(y, X, Alphas; lambda = lambda, gamma = 0, non_cross = true) # estimates the normal lasso
+        unicodeplots()
+        p = plot(Alphas, results_lasso[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "(I) lambda=$lambda   gamma=$gamma     n=$n")
+        pyplot()
         p = plot(Alphas, results_lasso[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "(I)\$\\lambda=$lambda \\quad \\gamma_1=0 \\quad n=$n\$")
-        results_penlasso = rq_par_lasso(y, X, Alphas; lambda = lambda, gamma = gamma, non_cross = true) # estimates lasso with penalization of derivatives
-        q = plot(Alphas, results_penlasso[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "(II)\$\\lambda=$lambda \\quad \\gamma_1 = $gamma\$")
+        # results_penlasso = rq_par_lasso(y, X, Alphas; lambda = lambda, gamma = gamma, non_cross = true) # estimates lasso with penalization of derivatives
+        # q = plot(Alphas, results_penlasso[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "(II)\$\\lambda=$lambda \\quad \\gamma_1 = $gamma\$")
         
-        # w1 = calculate_w_as_norm(results_penlasso[:2])
-        w_penlasso = calculate_w_as_weight(results_penlasso[:2])
-        w_lasso = calculate_w_as_weight(results_lasso[:2])
-        w_lasso_wn = calculate_w_as_weighted_norm(results_lasso[:2])
-        w_penlasso_wn = calculate_w_as_weighted_norm(results_penlasso[:2])
-        # results_adap1 = rq_par_lasso(y, X, Alphas; lambda = lambda, w = w1, gamma = gamma, non_cross = true)
-        results_adap_lasso = rq_par_lasso(y, X, Alphas; lambda = lambda, w = w_lasso,  non_cross = true)
-        r = plot(Alphas, results_adap_lasso[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "Adaptive w=(I) \$\\gamma_2 = 0\$")
+        # # w1 = calculate_w_as_norm(results_penlasso[:2])
+        # w_penlasso = calculate_w_as_weight(results_penlasso[:2])
+        # w_lasso = calculate_w_as_weight(results_lasso[:2])
+        # w_lasso_wn = calculate_w_as_weighted_norm(results_lasso[:2])
+        # w_penlasso_wn = calculate_w_as_weighted_norm(results_penlasso[:2])
+        # # results_adap1 = rq_par_lasso(y, X, Alphas; lambda = lambda, w = w1, gamma = gamma, non_cross = true)
+        # results_adap_lasso = rq_par_lasso(y, X, Alphas; lambda = lambda, w = w_lasso,  non_cross = true)
+        # r = plot(Alphas, results_adap_lasso[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "Adaptive w=(I) \$\\gamma_2 = 0\$")
         
-        results_adap_penlasso = rq_par_lasso(y, X, Alphas; lambda = lambda, w = w_penlasso, gamma = gamma, non_cross = true)
-        s = plot(Alphas, results_adap_penlasso[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "Adaptive w=(II) \$\\gamma_2 = $gamma\$")
+        # results_adap_penlasso = rq_par_lasso(y, X, Alphas; lambda = lambda, w = w_penlasso, gamma = gamma, non_cross = true)
+        # s = plot(Alphas, results_adap_penlasso[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "Adaptive w=(II) \$\\gamma_2 = $gamma\$")
         
-        results_adap_penlasso_notpen = rq_par_lasso(y, X, Alphas; lambda = lambda, w = w_penlasso, gamma = 0, non_cross = true)
-        t = plot(Alphas, results_adap_penlasso_notpen[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "Adaptive w=(II) \$\\gamma_2 = 0\$")
+        # results_adap_penlasso_notpen = rq_par_lasso(y, X, Alphas; lambda = lambda, w = w_penlasso, gamma = 0, non_cross = true)
+        # t = plot(Alphas, results_adap_penlasso_notpen[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "Adaptive w=(II) \$\\gamma_2 = 0\$")
         
-        results_adap_lasso_wn = rq_par_lasso(y, X, Alphas; lambda = lambda, w = w_lasso_wn,  non_cross = true)
-        u = plot(Alphas, results_adap_lasso_wn[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "Adaptive wn=(I) \$\\gamma_2 = 0\$ ")
+        # results_adap_lasso_wn = rq_par_lasso(y, X, Alphas; lambda = lambda, w = w_lasso_wn,  non_cross = true)
+        # u = plot(Alphas, results_adap_lasso_wn[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "Adaptive wn=(I) \$\\gamma_2 = 0\$ ")
         
-        results_adap_penlasso_wn = rq_par_lasso(y, X, Alphas; lambda = lambda, w = w_penlasso_wn, gamma = gamma, non_cross = true)
-        v = plot(Alphas, results_adap_penlasso_wn[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "Adaptive wn=(II) \$\\gamma_2 = $gamma\$")
+        # results_adap_penlasso_wn = rq_par_lasso(y, X, Alphas; lambda = lambda, w = w_penlasso_wn, gamma = gamma, non_cross = true)
+        # v = plot(Alphas, results_adap_penlasso_wn[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "Adaptive wn=(II) \$\\gamma_2 = $gamma\$")
         
-        results_adap_penlasso_wn_notpen = rq_par_lasso(y, X, Alphas; lambda = lambda, w = w_penlasso_wn, gamma = 0, non_cross = true)
-        v1 = plot(Alphas, results_adap_penlasso_wn_notpen[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "Adaptive wn=(II) \$\\gamma_2 = 0\$")
+        # results_adap_penlasso_wn_notpen = rq_par_lasso(y, X, Alphas; lambda = lambda, w = w_penlasso_wn, gamma = 0, non_cross = true)
+        # v1 = plot(Alphas, results_adap_penlasso_wn_notpen[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "Adaptive wn=(II) \$\\gamma_2 = 0\$")
         
 
-        # r = plot(Alphas, results_adap1[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "\$w\$ as norm")
+        # # r = plot(Alphas, results_adap1[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "\$w\$ as norm")
         
-        plot(p,q,r,s,t,u,v,v1,size = (1200,700), ylim = (-3.5,1.5))
+        # plot(p,q,r,s,t,u,v,v1,size = (1200,700), ylim = (-3.5,1.5))
 
         name_file = replace("Lambda$lambda-gamma$gamma",".","")
         savefig("Documento Regressao Quantilica/Figuras/Lasso-penalty-quantis-horario/$nome_pasta/$name_file.pdf")

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2017.10.23)  16 NOV 2017 13:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2017.10.23)  23 NOV 2017 14:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1093,6 +1093,9 @@ lverine.sty))
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/themes/color/beamercolorthemebe
 aver.sty) (./proposta-tese.aux
 
+LaTeX Warning: Label `eq:obj-lasso' multiply defined.
+
+
 LaTeX Warning: Label `fig:quantiles-vs-xt' multiply defined.
 
 )
@@ -1464,13 +1467,21 @@ Overfull \hbox (68.84106pt too wide) has occurred while \output is active
 [18
 
 ]
+<Images/Lambda10-gamma03.pdf, id=590, pagebox=cropbox, 433.62pt x 289.08pt>
+File: Images/Lambda10-gamma03.pdf Graphic file (type pdf)
+<use Images/Lambda10-gamma03.pdf>
+Package pdftex.def Info: Images/Lambda10-gamma03.pdf  used on input line 452. o
+n input line 452.
+Package pdftex.def Info: Requested size: 171.14764pt x 114.09932pt on input lin
+e 452.
+
 Overfull \hbox (68.84106pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [19
 
-]
+ <./Images/Lambda10-gamma03.pdf>]
 Overfull \hbox (68.84106pt too wide) has occurred while \output is active
  [][][][]  
  []
@@ -1478,35 +1489,35 @@ Overfull \hbox (68.84106pt too wide) has occurred while \output is active
 [20
 
 ]
+Overfull \vbox (38.31721pt too high) detected at line 495
+ []
+
+
 Overfull \hbox (68.84106pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [21
 
-]
-<Images/Lambda10-gamma03.pdf, id=686, pagebox=cropbox, 433.62pt x 289.08pt>
-File: Images/Lambda10-gamma03.pdf Graphic file (type pdf)
-<use Images/Lambda10-gamma03.pdf>
-Package pdftex.def Info: Images/Lambda10-gamma03.pdf  used on input line 525. o
-n input line 525.
-Package pdftex.def Info: Requested size: 308.06367pt x 205.38496pt on input lin
-e 525.
-
+]pdfTeX warning (ext4): destination with the same identifier (name{eq:obj-lasso
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.530 \end{frame}
+                 
 Overfull \hbox (68.84106pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [22
 
- <./Images/Lambda10-gamma03.pdf>]
-<Images/Lambda500-gamma30.pdf, id=741, pagebox=cropbox, 433.62pt x 289.08pt>
-File: Images/Lambda500-gamma30.pdf Graphic file (type pdf)
-<use Images/Lambda500-gamma30.pdf>
-Package pdftex.def Info: Images/Lambda500-gamma30.pdf  used on input line 534. 
-on input line 534.
+]
+File: Images/Lambda10-gamma03.pdf Graphic file (type pdf)
+<use Images/Lambda10-gamma03.pdf>
+Package pdftex.def Info: Images/Lambda10-gamma03.pdf  used on input line 539. o
+n input line 539.
 Package pdftex.def Info: Requested size: 308.06367pt x 205.38496pt on input lin
-e 534.
+e 539.
 
 Overfull \hbox (68.84106pt too wide) has occurred while \output is active
  [][][][]  
@@ -1514,14 +1525,14 @@ Overfull \hbox (68.84106pt too wide) has occurred while \output is active
 
 [23
 
- <./Images/Lambda500-gamma30.pdf>]
-<Images/Lambda1000-gamma100.pdf, id=794, pagebox=cropbox, 433.62pt x 289.08pt>
-File: Images/Lambda1000-gamma100.pdf Graphic file (type pdf)
-<use Images/Lambda1000-gamma100.pdf>
-Package pdftex.def Info: Images/Lambda1000-gamma100.pdf  used on input line 544
-. on input line 544.
-Package pdftex.def Info: Requested size: 239.60567pt x 159.73994pt on input lin
-e 544.
+]
+<Images/Lambda500-gamma30.pdf, id=770, pagebox=cropbox, 433.62pt x 289.08pt>
+File: Images/Lambda500-gamma30.pdf Graphic file (type pdf)
+<use Images/Lambda500-gamma30.pdf>
+Package pdftex.def Info: Images/Lambda500-gamma30.pdf  used on input line 548. 
+on input line 548.
+Package pdftex.def Info: Requested size: 308.06367pt x 205.38496pt on input lin
+e 548.
 
 Overfull \hbox (68.84106pt too wide) has occurred while \output is active
  [][][][]  
@@ -1529,14 +1540,22 @@ Overfull \hbox (68.84106pt too wide) has occurred while \output is active
 
 [24
 
- <./Images/Lambda1000-gamma100.pdf>]
+ <./Images/Lambda500-gamma30.pdf>]
+<Images/Lambda1000-gamma100.pdf, id=823, pagebox=cropbox, 433.62pt x 289.08pt>
+File: Images/Lambda1000-gamma100.pdf Graphic file (type pdf)
+<use Images/Lambda1000-gamma100.pdf>
+Package pdftex.def Info: Images/Lambda1000-gamma100.pdf  used on input line 558
+. on input line 558.
+Package pdftex.def Info: Requested size: 239.60567pt x 159.73994pt on input lin
+e 558.
+
 Overfull \hbox (68.84106pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [25
 
-]
+ <./Images/Lambda1000-gamma100.pdf>]
 Overfull \hbox (68.84106pt too wide) has occurred while \output is active
  [][][][]  
  []
@@ -1544,6 +1563,13 @@ Overfull \hbox (68.84106pt too wide) has occurred while \output is active
 [26
 
 ]
+Overfull \hbox (13.04422pt too wide) detected at line 607
+[] [] [] \OT1/cmss/m/n/10 + \OML/cmm/m/it/10 ^^M []\OT1/cmss/m/n/10 (\OT1/mathk
+erncmss/m/sl/10 D\OT1/cmss/m/n/10 2[] + \OT1/mathkerncmss/m/sl/10 D\OT1/cmss/m/
+n/10 2[])\OML/cmm/m/it/10 ;
+ []
+
+
 Overfull \hbox (68.84106pt too wide) has occurred while \output is active
  [][][][]  
  []
@@ -1551,32 +1577,32 @@ Overfull \hbox (68.84106pt too wide) has occurred while \output is active
 [27
 
 ]
-<Images/Cross-validation-scheme.png, id=931, 899.36pt x 476.78125pt>
-File: Images/Cross-validation-scheme.png Graphic file (type png)
-<use Images/Cross-validation-scheme.png>
-Package pdftex.def Info: Images/Cross-validation-scheme.png  used on input line
- 635. on input line 635.
-Package pdftex.def Info: Requested size: 308.06367pt x 163.31114pt on input lin
-e 635.
-
-Overfull \vbox (7.30716pt too high) detected at line 635
- []
-
-
 Overfull \hbox (68.84106pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [28
 
- <./Images/Cross-validation-scheme.png>]
+]
+<Images/Cross-validation-scheme.png, id=961, 899.36pt x 476.78125pt>
+File: Images/Cross-validation-scheme.png Graphic file (type png)
+<use Images/Cross-validation-scheme.png>
+Package pdftex.def Info: Images/Cross-validation-scheme.png  used on input line
+ 636. on input line 636.
+Package pdftex.def Info: Requested size: 308.06367pt x 163.31114pt on input lin
+e 636.
+
+Overfull \vbox (7.30716pt too high) detected at line 636
+ []
+
+
 Overfull \hbox (68.84106pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [29
 
-]
+ <./Images/Cross-validation-scheme.png>]
 Overfull \hbox (68.84106pt too wide) has occurred while \output is active
  [][][][]  
  []
@@ -1591,56 +1617,63 @@ Overfull \hbox (68.84106pt too wide) has occurred while \output is active
 [31
 
 ]
-<../Figuras/regressao-quantilica/icaraizinho-quantile-linear.pdf, id=1043, page
-box=cropbox, 602.25pt x 401.5pt>
-File: ../Figuras/regressao-quantilica/icaraizinho-quantile-linear.pdf Graphic f
-ile (type pdf)
-<use ../Figuras/regressao-quantilica/icaraizinho-quantile-linear.pdf>
-Package pdftex.def Info: ../Figuras/regressao-quantilica/icaraizinho-quantile-l
-inear.pdf  used on input line 716. on input line 716.
-Package pdftex.def Info: Requested size: 154.03183pt x 102.68439pt on input lin
-e 716.
-<../Figuras/regressao-quantilica/icaraizinho-quantile-nonpar-lambda30.pdf, id=1
-044, pagebox=cropbox, 602.25pt x 401.5pt>
-File: ../Figuras/regressao-quantilica/icaraizinho-quantile-nonpar-lambda30.pdf 
-Graphic file (type pdf)
-<use ../Figuras/regressao-quantilica/icaraizinho-quantile-nonpar-lambda30.pdf>
-Package pdftex.def Info: ../Figuras/regressao-quantilica/icaraizinho-quantile-n
-onpar-lambda30.pdf  used on input line 716. on input line 716.
-Package pdftex.def Info: Requested size: 154.03183pt x 102.68439pt on input lin
-e 716.
-pdfTeX warning (ext4): destination with the same identifier (name{fig:quantiles
--vs-xt}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.716 \end{frame}
-                 
 Overfull \hbox (68.84106pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [32
 
+]
+<../Figuras/regressao-quantilica/icaraizinho-quantile-linear.pdf, id=1073, page
+box=cropbox, 602.25pt x 401.5pt>
+File: ../Figuras/regressao-quantilica/icaraizinho-quantile-linear.pdf Graphic f
+ile (type pdf)
+<use ../Figuras/regressao-quantilica/icaraizinho-quantile-linear.pdf>
+Package pdftex.def Info: ../Figuras/regressao-quantilica/icaraizinho-quantile-l
+inear.pdf  used on input line 717. on input line 717.
+Package pdftex.def Info: Requested size: 154.03183pt x 102.68439pt on input lin
+e 717.
+<../Figuras/regressao-quantilica/icaraizinho-quantile-nonpar-lambda30.pdf, id=1
+074, pagebox=cropbox, 602.25pt x 401.5pt>
+File: ../Figuras/regressao-quantilica/icaraizinho-quantile-nonpar-lambda30.pdf 
+Graphic file (type pdf)
+<use ../Figuras/regressao-quantilica/icaraizinho-quantile-nonpar-lambda30.pdf>
+Package pdftex.def Info: ../Figuras/regressao-quantilica/icaraizinho-quantile-n
+onpar-lambda30.pdf  used on input line 717. on input line 717.
+Package pdftex.def Info: Requested size: 154.03183pt x 102.68439pt on input lin
+e 717.
+pdfTeX warning (ext4): destination with the same identifier (name{fig:quantiles
+-vs-xt}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.717 \end{frame}
+                 
+Overfull \hbox (68.84106pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[33
+
  <../Figuras/regressao-quantilica/icaraizinho-quantile-linear.pdf> <../Figuras/
 regressao-quantilica/icaraizinho-quantile-nonpar-lambda30.pdf>]
-<../Figuras/npqar/icaraizinho-crossing-01.pdf, id=1083, pagebox=cropbox, 542.02
+<../Figuras/npqar/icaraizinho-crossing-01.pdf, id=1112, pagebox=cropbox, 542.02
 5pt x 542.025pt>
 File: ../Figuras/npqar/icaraizinho-crossing-01.pdf Graphic file (type pdf)
 <use ../Figuras/npqar/icaraizinho-crossing-01.pdf>
 Package pdftex.def Info: ../Figuras/npqar/icaraizinho-crossing-01.pdf  used on 
-input line 742. on input line 742.
+input line 743. on input line 743.
 Package pdftex.def Info: Requested size: 154.03183pt x 154.0321pt on input line
- 742.
-<../Figuras/npqar/icaraizinho-crossing-3.pdf, id=1084, pagebox=cropbox, 542.025
+ 743.
+<../Figuras/npqar/icaraizinho-crossing-3.pdf, id=1113, pagebox=cropbox, 542.025
 pt x 542.025pt>
 File: ../Figuras/npqar/icaraizinho-crossing-3.pdf Graphic file (type pdf)
 <use ../Figuras/npqar/icaraizinho-crossing-3.pdf>
 Package pdftex.def Info: ../Figuras/npqar/icaraizinho-crossing-3.pdf  used on i
-nput line 742. on input line 742.
+nput line 743. on input line 743.
 Package pdftex.def Info: Requested size: 154.03183pt x 154.0321pt on input line
- 742.
+ 743.
 
-Overfull \vbox (0.3573pt too high) detected at line 742
+Overfull \vbox (0.3573pt too high) detected at line 743
  []
 
 
@@ -1648,7 +1681,7 @@ Overfull \hbox (68.84106pt too wide) has occurred while \output is active
  [][][][]  
  []
 
-[33
+[34
 
  <../Figuras/npqar/icaraizinho-crossing-01.pdf> <../Figuras/npqar/icaraizinho-c
 rossing-3.pdf
@@ -1656,28 +1689,28 @@ rossing-3.pdf
 pdfTeX warning: /usr/bin/pdflatex (file ../Figuras/npqar/icaraizinho-crossing-3
 .pdf): PDF inclusion: multiple pdfs with page group included in a single page
 >]
-<../Figuras/npqar/icaraizinho-crossing-10.pdf, id=1141, pagebox=cropbox, 542.02
+<../Figuras/npqar/icaraizinho-crossing-10.pdf, id=1170, pagebox=cropbox, 542.02
 5pt x 542.025pt>
 File: ../Figuras/npqar/icaraizinho-crossing-10.pdf Graphic file (type pdf)
 <use ../Figuras/npqar/icaraizinho-crossing-10.pdf>
 Package pdftex.def Info: ../Figuras/npqar/icaraizinho-crossing-10.pdf  used on 
-input line 768. on input line 768.
+input line 769. on input line 769.
 Package pdftex.def Info: Requested size: 154.03183pt x 154.0321pt on input line
- 768.
-<../Figuras/npqar/icaraizinho-crossing-100.pdf, id=1142, pagebox=cropbox, 542.0
+ 769.
+<../Figuras/npqar/icaraizinho-crossing-100.pdf, id=1171, pagebox=cropbox, 542.0
 25pt x 542.025pt>
 File: ../Figuras/npqar/icaraizinho-crossing-100.pdf Graphic file (type pdf)
 <use ../Figuras/npqar/icaraizinho-crossing-100.pdf>
 Package pdftex.def Info: ../Figuras/npqar/icaraizinho-crossing-100.pdf  used on
- input line 768. on input line 768.
+ input line 769. on input line 769.
 Package pdftex.def Info: Requested size: 154.03183pt x 154.0321pt on input line
- 768.
+ 769.
 
 Overfull \hbox (68.84106pt too wide) has occurred while \output is active
  [][][][]  
  []
 
-[34
+[35
 
  <../Figuras/npqar/icaraizinho-crossing-10.pdf> <../Figuras/npqar/icaraizinho-c
 rossing-100.pdf
@@ -1690,14 +1723,14 @@ Overfull \hbox (68.84106pt too wide) has occurred while \output is active
  [][][][]  
  []
 
-[35
+[36
 
 ]
 Overfull \hbox (68.84106pt too wide) has occurred while \output is active
  [][][][]  
  []
 
-[36
+[37
 
 ]
 \tf@nav=\write6
@@ -1709,11 +1742,11 @@ Overfull \hbox (68.84106pt too wide) has occurred while \output is active
 \tf@snm=\write8
 \openout8 = `proposta-tese.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 808.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 808.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 809.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 809.
  (./proposta-tese.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 808.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 808.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 809.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 809.
 Package rerunfilecheck Info: File `proposta-tese.out' has not changed.
 (rerunfilecheck)             Checksum: 84EC0278CB748A5356C02EE8DB7DDDD9;384.
 
@@ -1722,34 +1755,40 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 19658 strings out of 492990
- 369953 string characters out of 6135004
- 455785 words of memory out of 5000000
- 22639 multiletter control sequences out of 15000+600000
- 17485 words of font info for 63 fonts, out of 8000000 for 9000
+ 19666 strings out of 492990
+ 370060 string characters out of 6135004
+ 455568 words of memory out of 5000000
+ 22644 multiletter control sequences out of 15000+600000
+ 19438 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  56i,17n,57p,807b,682s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmssi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cms
-si8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on proposta-tese.pdf (36 pages, 1834206 bytes).
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cms
+s8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi9.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/sym
+bols/msbm10.pfb>
+Output written on proposta-tese.pdf (37 pages, 1887256 bytes).
 PDF statistics:
- 1341 PDF objects out of 1440 (max. 8388607)
- 1182 compressed objects within 12 object streams
- 102 named destinations out of 1000 (max. 500000)
+ 1392 PDF objects out of 1440 (max. 8388607)
+ 1225 compressed objects within 13 object streams
+ 100 named destinations out of 1000 (max. 500000)
  199 words of extra memory for PDF output out of 10000 (max. 10000000)
 

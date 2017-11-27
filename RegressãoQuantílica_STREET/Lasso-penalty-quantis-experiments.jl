@@ -43,7 +43,7 @@
 
 
 ################################### TESTA NORMALIZAÇÂO #########################
-Alphas = [0.1,0.25,0.5,0.75,0.9]; lambda = 0.1; n = 100
+Alphas = [0.1,0.25,0.5,0.75,0.9]; lambda = 0.1; n = 100000
 @rput n
 R"
 lambda = $lambda
@@ -51,15 +51,21 @@ library(rqPen)
 # results_r = rq.lasso.fit.mult($X,$y,0.5, 1)
 set.seed(123)
 X <- cbind(rnorm(n,2,1),runif(n,1,2),rnorm(n,0,1.5))
-y <- 1 + X[,1] - 3*X[,2] + rnorm(n)
+y <- 2 + 3*X[,1] - 2*X[,2] + rnorm(n)
+lm(y~X)
 "
 @rget X y 
 
 
+
+
 function denormalize(betas_til, beta0_til, X_mean, X_sd)
-    # programar depois
-    beta[p] = beta_til[p]/s[p]
-    beta0_ = beta0_til - sum(x_mean[p],beta[p] for p = P)
+    P = 1:length(betas_til)
+    betas = zeros(length(P))
+
+    betas = betas_til ./ X_sd
+    beta0 = beta0_til - sum(X_mean[p] * betas[p] for p = P)
+    return beta0, betas
 end
 
 
@@ -73,9 +79,23 @@ function normalization(X)
     @rget X_scale X_mean X_sd
     return X_scale, X_mean, X_sd
 
-  end
+end
 
-lambda = 0
+
+
+X_norm , X_mean, X_sd = normalization(X)
+R"coefs = coef(lm($y ~ $X_norm))
+  coefs2 = coef(lm($y ~ $X))  "
+@rget coefs coefs2
+beta0_til = coefs[1]
+betas_til = coefs[2:end]
+
+denormalize(betas_til, beta0_til, X_mean, X_sd)
+coefs2
+
+
+
+lambda = 0 
 tmp_lasso1 = rq_par_lasso(y, X, Alphas; lambda = lambda, gamma = 0, non_cross = true) # estimates the normal lasso
 betas = tmp_lasso1[:2]
 beta0 = tmp_lasso1[:1]

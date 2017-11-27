@@ -120,18 +120,6 @@ end
 
 
 
-function simqar(Alphas, n)
-  beta1 = (a -> 1)
-  beta2 = (a -> a - 1)
-  beta12 = (a -> a - a^2)
-  R""
-
-
-
-
-end
-
-
 
 
 # receives a vector x and a number of lags do make de matrix

@@ -2,7 +2,7 @@ using JuMP, DataFrames, Plots, RCall, Interpolations, Dierckx #, Distributions
 
 n = 1000
 gr()
-usesolver = "mosek"    # Escolher entre os valores 'mosek' ou 'gurobi'
+usesolver = "gurobi"    # Escolher entre os valores 'mosek' ou 'gurobi'
 # cd("/home/marcelo/Dropbox/Pesquisa Doutorado/Paper NPQuantile/RegressãoQuantílica_STREET")
 cd(homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/")
 # cd("C:/Users/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/RegressãoQuantílica_STREET")
@@ -58,7 +58,7 @@ tau = n +1
 ### Step 2
 X_tau = [y[tau-1] ; y[tau-2]] #não é generico. nao aceitar.
 
-betas0, betas = rq(y,X, Alphas)
+betas0, betas = rq_par(y,X, Alphas)
 # plot(betas')
 Q_hat = (betas0 + X_tau' * betas)[1,:]
 

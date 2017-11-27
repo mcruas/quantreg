@@ -4,14 +4,23 @@
 #  nos quantis. 
 #  DADOS SIMULADOS DE UM PROCESSO ARIMA
 
-function simqar(Alphas, n)
-    beta1 = (a -> 1)
-    beta2 = (a -> a - 1)
-    beta12 = (a -> a - a^2)
-    R"arima.sim"
-  
-  
-  
+function simqar(Alphas, n, seed)
+    beta1 = (a -> ones(length(a)))
+    beta2 = (a -> a .- 1)
+    beta12 = (a -> a .- a .^ 2)
+    R"
+    set.seed($seed)
+    y = arima.sim(n = 100, list(ar = c(0.75, -0.5, rep(0,9), 0.15)), sd = 1)    
+    "
+    @rget y
+    y = [y;zeros(n+900)]
+    
+    for i = 101:length(y)
+        q = beta1(Alphas) * y[i-1] + beta2(Alphas) * y[i-2] + beta12(Alphas) * y[i-12]
+        
+        y[i]
+
+    end
   
   end
   

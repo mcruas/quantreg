@@ -13,15 +13,15 @@ non_cross = true
 
 # serie = readcsv("Dados Climaticos/icaraizinho.csv"); nomeserie = "icaraizinho"
 
-max_sim= 100;
-n_cenarios = 2000;
+max_sim= 10;
+n_cenarios = 20;
 
 
 
 tic()
 using JuMP, DataFrames, Distributions, Plots, RCall, Interpolations, Dierckx #, Distributions
 gr()
-usesolver = "mosek"    # Escolher entre os valores 'mosek' ou 'gurobi'
+usesolver = "gurobi"    # Escolher entre os valores 'mosek' ou 'gurobi'
 # cd("/home/marcelo/Dropbox/Pesquisa Doutorado/Paper NPQuantile/RegressãoQuantílica_STREET")
 cd(homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/")
 # cd("C:/Users/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/RegressãoQuantílica_STREET")
