@@ -14,22 +14,6 @@ cd(pasta_trabalho)
 
 include(pwd()*"/RegressãoQuantílica_STREET/funcoes_npqar.jl");
 include(pwd()*"/RegressãoQuantílica_STREET/npar-multi-funcoes.jl");
-n = 300;
-
-# para icaraizinho
-serie = readcsv("Dados Climaticos/icaraizinho.csv"); nomeserie = "icaraizinho"; x_new = 30
-
-n_tmp = length(serie); # keeps size of series before cutting them
-
-### Inicialização dos dados
-
-tmp = serie[2:n_tmp-1];   # this is done so that X has two dimensions, instead of 1.
-X =zeros(Float64,length(tmp),1);
-X[:,1] = tmp;
-x = X[:,1]
-y = serie[3:n_tmp];
-n = length(y);55
-T = 1:n;
 
 
 ################################################################################################
@@ -58,8 +42,8 @@ y = X_lags[:,1]; X = X_lags[:, 2:end];   non_cross = true; MIPGap = 0.00
 
 
 lambda = 0.1
-
-for n = [100, 250, 500,1000]  # n = 200; lambda = 3; gamma = 0.5 # TIRAR DEPOIS DOS EXPERIMENTOS        
+n= 100 ; gamma = 0.1; lambda = 0.1
+for n = [100, 250, 500,1000]  # n = 150; lambda = 3; gamma = 0.5 # TIRAR DEPOIS DOS EXPERIMENTOS        
     @rput n
     R"
     lambda = $lambda
@@ -78,7 +62,8 @@ for n = [100, 250, 500,1000]  # n = 200; lambda = 3; gamma = 0.5 # TIRAR DEPOIS 
     pyplot()
     nome_pasta = replace("n $n", ".0", "")
     try mkdir("Documento Regressao Quantilica/Figuras/Lasso-penalty-quantis-normal/$nome_pasta/") end
-    for lambda = [0.1, 0.3, 1.0,3.0,10.0,20.0,30.0,50.0,100.0]   # lambda = 2.0
+    # for lambda = [0.1, 0.3, 1.0,3.0,10.0,20.0,30.0,50.0,100.0]   # lambda = 2.0
+    for lambda = [0.1, 0.3, 1.0,3.0,10.0,20.0,30.0,50.0,100.0,2.0,4.0,5.0,6.0,7.0,8.0,9.0]   # lambda = 2.0
         for gamma = [0.1, 0.3, 1.0, 3.0, 10.0,20.0]
 
             # lambda = 5; gamma = 0.5 # TIRAR DEPOIS DOS EXPERIMENTOS        
@@ -115,7 +100,7 @@ for n = [100, 250, 500,1000]  # n = 200; lambda = 3; gamma = 0.5 # TIRAR DEPOIS 
     
             # r = plot(Alphas, results_adap1[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "\$w\$ as norm")
             
-            plot(p,q,r,s,t,u,v,v1,size = (1200,700), ylim = (-3.5,1.5))
+            plot(p,r,u, q ,s,t,v,v1,size = (1200,700), ylim = (-3.5,1.5))
     
             name_file = replace("Lambda$lambda-gamma$gamma",".","")
             savefig("Documento Regressao Quantilica/Figuras/Lasso-penalty-quantis-normal/$nome_pasta/$name_file.pdf")

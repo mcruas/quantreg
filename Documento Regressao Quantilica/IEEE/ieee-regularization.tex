@@ -1,11 +1,11 @@
-\section{Regularization} \label{sec:regularization}
+\section{Regularization on the covariates} \label{sec:regularization}
 
 When dealing with many candidates to use as covariates, one has to deal with the problem of selecting a subset of variables to use in constructing the model. 
 This means that the vector of coefficients $\beta_j = [ \beta_{1 j} \cdots \beta_{pj} ]$ should not have all nonzero values.
 There are many ways of selecting a subset of variables among the available options.
-Classical approaches for this problem are the Stepwise algorithm \cite{efroymson1960multiple}, \cite{hocking_selection_1967}, \cite{tibshirani1996regression}, which includes variables in sequence. 
+A classical approach for this problem is the Stepwise algorithm \cite{efroymson1960multiple}, \cite{hocking_selection_1967}, \cite{tibshirani1996regression}, which includes variables in sequence. 
 
-Two approaches will be employed. At first, we use a Mixed Integer Linear Programming optimization problem (MILP) to find the best subset among all choices of covariates. The second way is by using a LASSO-type technique, which consists in penalizing the $\ell_1$-norm of regressors, thus shrinking the size of estimated coefficients towards zero.  
+Two ways of selecting variables will be employed. In the first we use a Mixed Integer Linear Programming optimization problem (MILP) to find the best subset among all possible subsets of covariates. The second way is by using a LASSO-type technique, which consists in penalizing the $\ell_1$-norm of regressors, thus shrinking the size of estimated coefficients towards zero.  
 
 \subsection{Best subset selection via MILP}
 \label{sec:best-subset-mip}
@@ -95,10 +95,90 @@ Equation (\ref{mipgrupzpa}) defines $z_{pj}$ to simplify writing.
 %\end{eqnarray}
 %where $A' = A\setminus \{|A|\}$
 
-\subsubsection{Inclusion of derivative penalty}
-Our estimation procedure consists of a different model for each $\alpha$-quantile. From the assumption that the value of similar quantiles be produced by similar models, we need to prevent big changes on the $p$ coefficient $\beta_p(\alpha)$ when seen as a function of probability $\alpha$, as shown on Figure \todoi{adicionar figura}. On the implementation side, we must limit the second difference of the sequence of coefficients $\{\beta_{pj}\}_{j \in J}$ for every parameter $p$. This will bring smoothness to $\beta_p(\alpha)$.
 
-for a parameter $p$, must have limited second difference, bringing smoothness to the change of coefficients. By including this constraint, every time a variable enters or leaves the subset, its values must be increasing or decreasing smoothly. The second order differential of coefficients is given by the equation below:
+\subsection{Variable selection via LASSO}
+\label{sec:best-subset-ell1}
+
+The second form of regularization we work here the LASSO technique. This method consists on the inclusion of the penalized coefficients $\ell_1$-norm on the objective function of the QR problem. In \cite{belloni_l1-penalized_2009}, the reader can find properties and convergence rates when using the LASSO to select variables in a quantile regression setting. 
+The advantage of this method is that coefficients are shrunk towards zero by changing a continuous parameter $\lambda$, which penalizes the size of the $\ell_1$-norm.  
+When the value of $\lambda$ gets bigger, fewer variables are selected to be used. 
+This is the same strategy of the LASSO methodology, and its usage for the quantile regression is discussed in \cite{li2012l1}.
+On the litterature, the LASSO QR regularization is applied for a single quantile only by the following optimization problem:
+\begin{equation}
+\underset{\beta_{0\alpha},\beta_\alpha}{\text{min}} \sum_{t \in T}\alpha|y_{t}-q_\alpha(x_t)|^{+}+ \sum_{t \in T}(1-\alpha)|y_{t}-q_\alpha(x_t)|^{-}+\lambda\|\beta_\alpha\|_{1},
+\label{eq:l1-qar-optim}
+\end{equation}
+\[
+q_\alpha(x_t)=\beta_{0}-\beta^T x_{t}.
+\]
+In our problem, however, we need to estimate multiple quantiles at once, in order to being able to circumvent the crossing quantiles issue. 
+
+The process of estimation is done in two stages: (i) variable selection and (ii) coefficients estimation. At first, all normalized covariates\footnote{For such estimation to be coherent each covariate must have the same relative weight in comparison with one another, i.e., they must be normalized. 
+This normalization process is a linear transformation to each covariate such that all have mean $\mu = 0$ and variance $\sigma^2 = 1$. 
+We apply the transformation $\tilde{x}_{t,p} = (x_{t,p} - \bar{x}_{t,p}) / \hat\sigma_{x_{t,p}}$, where $\bar{x}_{t,p}$ and $\hat{\sigma}_{x_{t,p}}$ are respectively the sample's unconditional mean and standard deviation. The $\tilde{y}_{t-p,i}$ series will be used to estimate the coefficients, as this series has the desired properties.} are input on the following optimization problem:
+\begin{IEEEeqnarray}{lr}
+\tilde \beta_\lambda^{*} = \underset{\beta_{0j},\beta_j,\varepsilon_{t j}^{+},\varepsilon_{t j}^{-}}{\text{arg min}} \sum_{j \in J} \left( \sum_{t \in T}(\alpha_j\varepsilon_{t j}^{+}+(1-\alpha_j)\varepsilon_{t j}^{-}) \right. \span \nonumber \\
+\span \left. +\lambda\sum_{p \in P} (\xi^+_{pj} + \xi^-_{pj}) \right)   \label{eq:obj-lasso} \\
+\mbox{subject to } \nonumber & \\
+\varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}=y_{t}-\beta_{0 j}-\beta_{j}^T x_{t},& \forall t \in T ,\forall j \in J,\\
+\xi^+_{pj} - \xi^-_{pj} = \beta_{p j},&\forall p\in P, \forall j \in J,  \label{l1-qar-3}
+\\
+\beta_{0j} + \beta_{j}^T x_{t} \leq \beta_{0,j+1} + \beta_{j+1}^T x_{t},&\forall t \in T, \forall j \in J_{(-1)}, \\
+\varepsilon_{t j}^{+},\varepsilon_{t j}^{-}, \xi_{t j}^{+},\xi_{t j}^{-} \geq0,&\forall t \in T, \forall j \in J,\label{eq:obj-lasso-end}
+\end{IEEEeqnarray}
+This model is built upon the standard linear programming model for the quantile regression (\ref{eq:linear-opt-1})-(\ref{eq:linear-opt-ult}). 
+On the above formulation, the $\ell_1$-norm of equation (\ref{eq:l1-qar-optim}) is substituted by the sum $\xi^+_{pj} + \xi^-_{pj}$, for each $j$, which represents the absolute value of $\beta_{pj}$. 
+
+% % % % % % % % Esse trecho deve ser usado quando os coeficientes do lasso forem utilizados, e não apenas o lasso sendo um seletor de variáveis % % % % % % % % %
+%Each component of the output $\tilde \beta_\lambda^{*LASSO}$ must be corrected by multiplying each coefficient for its standard deviation: $\beta_{p\alpha,\lambda}^{*LASSO} = \tilde \beta_{p\alpha,\lambda}^{*LASSO} \hat\sigma_{x_{t,p}}$.
+%\begin{eqnarray}
+%\tilde \beta_\lambda^{*LASSO} = \underset{\beta_{0},\beta,\varepsilon_{t j}^{+},\varepsilon_{t j}^{-}}{\text{arg min}} & \sum_{j \in J} \sum_{t \in T}\left(\alpha\varepsilon_{t j}^{+}+(1-\alpha)\varepsilon_{t j}^{-}\right)+\lambda\sum_{p \in P}\mbox{\ensuremath{\xi}}_{p \alpha} \label{eq:obj-lasso} \\
+%\mbox{subject to } & \varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}= y_{t}-\beta_{0 \alpha}-\sum_{p \in P}\beta_{p j}\tilde x_{t,p},&\forall t\in T, \forall j \in J, \\
+%& \varepsilon_{t j}^{+},\varepsilon_{t j}^{-}\geq0,&\forall t \in T, \forall j \in J,\\
+%& \xi_{pj}\geq\beta_{p j},&\forall p\in P, \forall j \in J,  \label{l1-qar-3}
+%\\
+%& \xi_{pj}\geq-\beta_{p j},&\forall p\in P, \forall j \in J.  \label{l1-qar-4}
+%\end{eqnarray}
+
+For low values of $\lambda$, the penalty over the size of coefficients is small, making the output of problem (\ref{eq:obj-lasso})-(\ref{eq:obj-lasso-end}) be composed mainly of nonzero coefficients. On the other hand, when the penalty on $\| \beta_j \|_1$ is big, many covariates will have zero valued coefficients. When $\lambda$ approaches infinity, one has a constant model. 
+Note the linear coefficient $\beta_{0j}$ is not penalized.
+
+As the LASSO coefficients are shrunk towards zero they become biased. Our strategy will be to employ the LASSO as a variable selector, and estimate coefficients with regular QR on a second stage. 
+The optimum vector of coefficients $\tilde \beta_\lambda^{*}$ on the first stage may be composed by both nonzero and zero coefficients, for a given $\lambda$ . 
+We then define $S_\lambda$ as the set of indexes of selected variables given by
+\begin{equation*}
+S_\lambda = \{ p \in \{ 1,\dots,P \} | \; |\tilde \beta^{*}_{\lambda,p}| \neq 0  \}.
+\end{equation*}
+Hence, we have that, for each $p \in \{ 1,\dots,P \}$,
+$$\beta^{*LASSO}_{\lambda,p} = 0 \Longrightarrow \beta^{*}_{\lambda,p} = 0.$$
+
+On the second stage, the optimal coefficient vector $\tilde \beta_\lambda^{*}$ is estimated by the non-regularized QR, where only variables that belongs to $S_\lambda$ are input:
+\begin{IEEEeqnarray*}{lr} (\mathcal{L}_{\lambda}^{*},\beta_{\lambda}^{*})\overset{(obj,var)}{\longleftarrow} \underset{\beta_{0j},\beta_j,z_{p j}, \varepsilon_{t j}^{+},\varepsilon_{t j}^{-}}{\text{min}} \sum_{j \in J}  \sum_{t\in T}\left(\alpha_j \varepsilon_{t j}^{+}+(1-\alpha_j)\varepsilon_{tj}^{-}\right) \span \nonumber
+\\
+\text{subject to } \span \nonumber \\
+\varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}=y_{t} - \beta_{0\alpha} - \sum_{p\in S_\lambda} \beta_p x_{t,p}, & \forall t \in T, \forall j \in J, \\
+\span \forall j \in J_{(-1)}, \forall p\in P, \\
+\beta_{0j} + \beta_{j}^T x_{t} \leq \beta_{0,j+1} + \beta_{j+1}^T x_{t}, & \forall t \in T, \forall j \in J_{(-1)},\\
+\varepsilon_{tj}^+,\varepsilon_{tj}^- \geq 0, &  \forall t \in T,\forall j \in J,\\ 
+	 D2_{pj}^+, D2_{pj}^- \geq 0, & \forall j \in J,  \forall p\in P.
+\end{IEEEeqnarray*}
+The variable $\mathcal{L}_{\lambda}^{*}$ receives the value of the objective function on its optimal solution.
+In summary, the optimization in equation \ref{eq:l1-qar-optim} acts as a variable selection for the subsequent estimation, which is normally called the post-LASSO estimation \cite{belloni2009least}.
+
+\section{Regularization on the quantiles}
+
+The nonparametric approach we use in this paper consists of a different model for each $\alpha$-quantile. From the assumption that the value of similar quantiles be produced by similar models, we need to prevent instabilities and big changes on the $p$ coefficient $\beta_p(\alpha)$ when seen as a function of probability $\alpha$. 
+
+As an example of the aforementioned issue, we simulate 100 \textit{iid} observations of random variable $y= 1 + \beta_1 $, where $X_1$ are normal explanatory variables. Let $X_{reg} = [X_1 \, X_2]$ be input on the problem and we have to figure out the real model.   shown on Figure \ref{fig:lasso-selection-normal}.
+To force the model to have parsimony on the quantiles, we propose to penalize the second derivative of $\beta_p(\alpha)$. 
+On the implementation side, we must limit the second difference of the sequence of coefficients $\{\beta_{pj}\}_{j \in J}$ for every parameter $p$. This will bring smoothness to $\beta_p(\alpha)$.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.5\linewidth]{Images/Lambda10-gamma03-cropped}
+	\caption{$\mathcal{K}$-fold CV and $\mathcal{K}$-fold with non-dependent data. Observations in blue are used to estimation and in orange for evaluation. Note that non-dependent data doesn't use all dataset in each fold.}
+	\label{fig:lasso-selection-normal}
+\end{figure}
+
 \begin{equation}
 \tilde{D}_{pj}^{2}:=\frac{\left(\frac{\beta_{p,j+1}-\beta_{pj}}{\alpha_{j+1}-\alpha_{j}}\right)-\left(\frac{\beta_{p,j}-\beta_{p,j-1}}{\alpha_{j}-\alpha_{j-1}}\right)}{\alpha_{j+1}-2\alpha_{j}+\alpha_{j-1}}.
 \end{equation}
@@ -112,94 +192,64 @@ This idea is implemented on the optimization problem by adding a penalty on the 
 	\sum_{p \in P} z_{p \alpha} \leq K, & \forall j \in J, \\
 	D2_{pj}^+ - D2_{pj}^- = \frac{\left(\frac{\beta_{p,j+1}-\beta_{pj}}{\alpha_{j+1}-\alpha_{j}}\right)-\left(\frac{\beta_{p,j}-\beta_{p,j-1}}{\alpha_{j}-\alpha_{j-1}}\right)}{\alpha_{j+1}-2\alpha_{j}+\alpha_{j-1}}, \span   \nonumber \\
 	\span \forall j \in J_{(-1)}, \forall p\in P, \\
-\beta_{0j} + \beta_{j}^T x_{t} \leq \beta_{0,j+1} + \beta_{j+1}^T x_{t},&\forall t \in T, \forall j \in J_{(-1)}, \\
+	\beta_{0j} + \beta_{j}^T x_{t} \leq \beta_{0,j+1} + \beta_{j+1}^T x_{t},&\forall t \in T, \forall j \in J_{(-1)}, \\
 	z_{p \alpha} \in \{0,1\}, & \forall j \in J,  \forall p\in P, \\
-		\varepsilon_{t j}^{+},\varepsilon_{t j}^{-}\geq0, & \forall t \in T ,\forall j \in J, \\
-	 D2_{pj}^+, D2_{pj}^- \geq 0, & \forall j \in J,  \forall p\in P.
+	\varepsilon_{t j}^{+},\varepsilon_{t j}^{-}\geq0, & \forall t \in T ,\forall j \in J, \\
+	D2_{pj}^+, D2_{pj}^- \geq 0, & \forall j \in J,  \forall p\in P.
 \end{IEEEeqnarray}
-where $A'$ is the set formed by the same elements of $A$ without the first and the last elements.
+where $A'$ is the set formed by the same elements of $A$ without the first and the last elements, that need to be taken out of the sum as their second derivative cannot be calculated.
+The sum $D2_{pj}^+ + D2_{pj}^-$ represents the absolute value of the second derivative, and its penalty is tuned by parameter $\gamma$.
 
-\subsection{Variable selection via LASSO}
-\label{sec:best-subset-ell1}
+The same feature is incorporated in the LASSO estimation, which now incorporates penalization  of both coefficients $\ell_1$-norm as well as the second derivative of $\beta(\alpha)$, shown by the problem below: 
+The modified LASSO problem to include the 
 
-Another way of doing regularization is including the $\ell_1$-norm of the coefficients on the objective function. In \cite{belloni_l1-penalized_2009}, the reader can find properties and convergence rate when using the LASSO to select variables in a quantile regression setting. The ADALASSO variant is presented in \cite{ciuperca_adaptive_2016}. 
-The advantage of this method is that coefficients are shrunk towards zero by changing a continuous parameter $\lambda$, which penalizes the size of the $\ell_1$-norm.  
-When the value of $\lambda$ gets bigger, fewer variables are selected to be used. 
-This is the same strategy of the LASSO methodology, and its usage for the quantile regression is discussed in \cite{li2012l1}.
-On the litterature, the LASSO QR regularization is applied for only a single quantile by the following optimization problem:
-\begin{equation}
-\underset{\beta_{0\alpha},\beta_\alpha}{\text{min}} \sum_{t \in T}\alpha|y_{t}-q_\alpha(x_t)|^{+}+ \sum_{t \in T}(1-\alpha)|y_{t}-q_\alpha(x_t)|^{-}+\lambda\|\beta_\alpha\|_{1},
-\label{eq:l1-qar-optim}
-\end{equation}
-\[
-q_\alpha(x_t)=\beta_{0}-\beta^T x_{t}.
-\]
-In our problem, however, we need to estimate multiple quantiles in a way that the issue of crossing quantiles is circumvented. So, we use for the LASSO the same formulation of estimating all quantiles simultaneously with a non crossing constraint relating each quantile function.
-
-
-
-The process of estimation is done in two stages: variable selection and coefficients estimation. At first, all normalized covariates\footnote{For such estimation to be coherent each covariate must have the same relative weight in comparison with one another, i.e., they must be normalized. 
-This normalization process is a linear transformation to each covariate such that all have mean $\mu = 0$ and variance $\sigma^2 = 1$. 
-We apply the transformation $\tilde{x}_{t,p} = (x_{t,p} - \bar{x}_{t,p}) / \hat\sigma_{x_{t,p}}$, where $\bar{x}_{t,p}$ and $\hat{\sigma}_{x_{t,p}}$ are respectively the sample's unconditional mean and standard deviation. The $\tilde{y}_{t-p,i}$ series will be used to estimate the coefficients, as this series has the desired properties.} are input on the following optimization problem:
 \begin{IEEEeqnarray}{lr}
-\tilde \beta_\lambda^{*LASSO} = \underset{\beta_{0},\beta,\varepsilon_{t j}^{+},\varepsilon_{t j}^{-}}{\text{arg min}} \sum_{j \in J} \sum_{t \in T}(\alpha_j\varepsilon_{t j}^{+}+(1-\alpha_j)\varepsilon_{t j}^{-}) \span \nonumber \\
-\span +\lambda\sum_{p \in P}\mbox{\ensuremath{\xi}}_{p j} + \gamma \sum_{j \in J'} (D2_{pj}^+ + D2_{pj}^-)  \label{eq:obj-lasso} \\
-\mbox{subject to } \nonumber & \\
-\varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}=y_{t}-\beta_{0 j}-\beta_{j}^T x_{t,p},& \forall t \in T ,\forall j \in J,\\
-\xi_{pj}\geq\beta_{p j},&\forall p\in P, \forall j \in J,  \label{l1-qar-3}
-\\
-\xi_{pj}\geq - \beta_{p j},&\forall p\in P, \forall j \in J,  \label{l1-qar-4}
-\\
+	\tilde \beta_\lambda^{*LASSO} = \underset{\beta_{0},\beta,\varepsilon_{t j}^{+},\varepsilon_{t j}^{-}}{\text{arg min}} \sum_{j \in J} \sum_{t \in T}(\alpha_j\varepsilon_{t j}^{+}+(1-\alpha_j)\varepsilon_{t j}^{-}) \span \nonumber \\
+	\span + \lambda \sum_{p \in P} (\xi^+_{pj} + \xi^-_{pj}) + \gamma \sum_{j \in J'} (D2_{pj}^+ + D2_{pj}^-)  \label{eq:obj-lasso-2reg} \\
+	\mbox{subject to } \nonumber & \\
+	\varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}=y_{t}-\beta_{0 j}-\beta_{j}^T x_{t,p},& \forall t \in T ,\forall j \in J,\\
+	\xi_{pj}\geq\beta_{p j},&\forall p\in P, \forall j \in J, 
+	\\
+	\xi_{pj}\geq - \beta_{p j},&\forall p\in P, \forall j \in J,  
+	\\
 	D2_{pj}^+ - D2_{pj}^- = \frac{\left(\frac{\beta_{p,j+1}-\beta_{pj}}{\alpha_{j+1}-\alpha_{j}}\right)-\left(\frac{\beta_{p,j}-\beta_{p,j-1}}{\alpha_{j}-\alpha_{j-1}}\right)}{\alpha_{j+1}-2\alpha_{j}+\alpha_{j-1}}, \span   \nonumber \\
-\span \forall j \in J_{(-1)}, \forall p\in P, \\
-\beta_{0j} + \beta_{j}^T x_{t} \leq \beta_{0,j+1} + \beta_{j+1}^T x_{t},&\forall t \in T, \forall j \in J_{(-1)}, \\
-\varepsilon_{t j}^{+},\varepsilon_{t j}^{-}\geq0,&\forall t \in T, \forall j \in J,\\
-D2_{pj}^+, D2_{pj}^- \geq 0, & \forall j \in J,  \forall p\in P. \label{eq:l1-qar5} 
+	\span \forall j \in J_{(-1)}, \forall p\in P, \\
+	\beta_{0j} + \beta_{j}^T x_{t} \leq \beta_{0,j+1} + \beta_{j+1}^T x_{t},&\forall t \in T, \forall j \in J_{(-1)}, \\
+	\varepsilon_{t j}^{+},\varepsilon_{t j}^{-}\geq0,&\forall t \in T, \forall j \in J,\\
+	D2_{pj}^+, D2_{pj}^- \geq 0, & \forall j \in J,  \forall p\in P. \label{eq:obj-lasso-2reg-end} 
 \end{IEEEeqnarray}
-This model is built upon the standard linear programming model for the quantile regression (\ref{eq:linear-opt-1})-(\ref{eq:linear-opt-ult}). 
-On the above formulation, the $\ell_1$ norm of equation (\ref{eq:l1-qar-optim}) is substituted by the sum of $\xi_p$, which represents the absolute value of $\beta_{pj}$. The link between variables $\xi_p$ and $\beta_{pj}$ is made by constraints (\ref{l1-qar-3}) and (\ref{l1-qar-4}). Note that the linear coefficient $\beta_{0j}$ is not included in the penalization, as the sum of penalties on the objective function \ref{eq:obj-lasso}.
 
-% % % % % % % % Esse trecho deve ser usado quando os coeficientes do lasso forem utilizados, e não apenas o lasso sendo um seletor de variáveis % % % % % % % % %
-%Each component of the output $\tilde \beta_\lambda^{*LASSO}$ must be corrected by multiplying each coefficient for its standard deviation: $\beta_{p\alpha,\lambda}^{*LASSO} = \tilde \beta_{p\alpha,\lambda}^{*LASSO} \hat\sigma_{x_{t,p}}$.
-%\begin{eqnarray}
-%\tilde \beta_\lambda^{*LASSO} = \underset{\beta_{0},\beta,\varepsilon_{t j}^{+},\varepsilon_{t j}^{-}}{\text{arg min}} & \sum_{j \in J} \sum_{t \in T}\left(\alpha\varepsilon_{t j}^{+}+(1-\alpha)\varepsilon_{t j}^{-}\right)+\lambda\sum_{p \in P}\mbox{\ensuremath{\xi}}_{p \alpha} \label{eq:obj-lasso} \\
-%\mbox{subject to } & \varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}= y_{t}-\beta_{0 \alpha}-\sum_{p \in P}\beta_{p j}\tilde x_{t,p},&\forall t\in T, \forall j \in J, \\
-%& \varepsilon_{t j}^{+},\varepsilon_{t j}^{-}\geq0,&\forall t \in T, \forall j \in J,\\
-%& \xi_{pj}\geq\beta_{p j},&\forall p\in P, \forall j \in J,  \label{l1-qar-3}
-%\\
-%& \xi_{pj}\geq-\beta_{p j},&\forall p\in P, \forall j \in J.  \label{l1-qar-4}
-%\end{eqnarray}
+\subsection{ADALASSO}
+A popular extension of the LASSO is the Adaptive LASSO (ADALASSO). In \cite{ciuperca_adaptive_2016}, the authors extended the ADALASSO for QR and shown properties of the ADALASSO for the QR 
 
-For low values of $\lambda$, the penalty over the size of coefficients is small. Because of that, the output of problem (\ref{eq:obj-lasso})-(\ref{l1-qar-4}) is a model where most coefficients have nonzero value. On the other hand, when the penalty on $\| \beta_j \|_1$ is big, many covariates will have zero valued coefficients. When $\lambda$ approaches infinity, one has a constant model. 
-For instance, the penalty isn't applied to the linear coefficient $\beta_{0j}$. 
+When estimating the ADALASSO for quantile regression, we show a few adaptations and extensions of the original method. The full process consists of two steps, each consisting of a LASSO estimation:
+\begin{itemize}
+	\item \textbf{First step:} First LASSO regularization, as in problem (\ref{eq:obj-lasso-2reg})-(\ref{eq:obj-lasso-2reg-end}).
+	
+	\item \textbf{Second step:} The coefficients of the LASSO estimation are used to form the weights $w_{pj}$  are:
+	\begin{enumerate}
+		\item $w_{pj} = 1/ \beta_{pj}$.
+		\item $w_{pj} = 1/ (\beta_{pj} \parallel \beta_j \parallel_1)$,
+	\end{enumerate}
+	where $\beta_{pj}$ stands for the coefficients obtained on the first step and $\parallel \beta_j \parallel_1$ is the $\ell_1$-norm of the $j$\textsuperscript{th} quantile coefficients.
+	The weights $w_j$ are input to a second-stage Lasso estimation:
+	\begin{IEEEeqnarray*}{lr}
+		\underset{\beta_{0j},\beta_j}{\text{min}} \sum_{j \in J} \left( \sum_{t\in T}\rho_{\alpha_j}(y_{t}-(\beta_{0j} + \beta_j^T x_t)) + \lambda\  \sum_{p \in P} w_{pj}^\delta \mid  \beta_{pj} \mid \right) \span \\
+		\span + \gamma \sum_{j \in J'} (D2_{pj}^+ + D2_{pj}^-),
+	\end{IEEEeqnarray*}
+	where $\delta$ is an exponential parameter, normally set to 1.
+\end{itemize}
 
-In fact, the LASSO coefficients are biased, so it is employed only as a variable selector. 
-The optimum vector of coefficients $\tilde \beta_\lambda^{*LASSO}$ for a given $\lambda$ may be composed by both nonzero and zero coefficients. 
-We then define $S_\lambda$ as the set of indexes of selected variables given by
-\begin{equation*}
-S_\lambda = \{ p \in \{ 1,\dots,P \} | \; |\beta^{*LASSO}_{\lambda,p}| \neq 0  \}.
-\end{equation*}
-Hence, we have that, for each $p \in \{ 1,\dots,P \}$,
-$$\beta^{*LASSO}_{\lambda,p} = 0 \Longrightarrow \beta^{*}_{\lambda,p} = 0.$$
-
-Note that problem (\ref{eq:linear-opt-1})-(\ref{eq:linear-opt-ult}) is employed to act as variable selection only. On the second stage, the optimal coefficient vector $\beta_\lambda^{*LASSO}$ is estimated by the non-regularized QR, where only variables that bellongs to $S_\lambda$ are input:
-\begin{IEEEeqnarray*}{lr} (\mathcal{L}_{\lambda}^{*},\beta_{\lambda}^{*})\overset{(obj,var)}{\longleftarrow} \underset{\beta_{0j},\beta_j,z_{p j}, \varepsilon_{t j}^{+},\varepsilon_{t j}^{-}}{\text{min}} \sum_{j \in J} \sum_{t\in T}\left(\alpha_j \varepsilon_{t j}^{+}+(1-\alpha_j)\varepsilon_{t\alpha_j}^{-}\right) \span \nonumber
-\\
-&  + \gamma \sum_{j \in J'} (D2_{pj}^+ + D2_{pj}^-) \\
-\text{subject to } \span \nonumber \\
-\varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}=y_{t} - \beta_{0\alpha} - \sum_{p\in S_\lambda} \beta_p x_{t,p}, & \forall t \in T, \forall j \in J, \\
-	D2_{pj}^+ - D2_{pj}^- = \frac{\left(\frac{\beta_{p,j+1}-\beta_{pj}}{\alpha_{j+1}-\alpha_{j}}\right)-\left(\frac{\beta_{p,j}-\beta_{p,j-1}}{\alpha_{j}-\alpha_{j-1}}\right)}{\alpha_{j+1}-2\alpha_{j}+\alpha_{j-1}}, \span   \nonumber \\
-\span \forall j \in J_{(-1)}, \forall p\in P, \\
-\beta_{0j} + \beta_{j}^T x_{t} \leq \beta_{0,j+1} + \beta_{j+1}^T x_{t}, & \forall t \in T, \forall j \in J_{(-1)},\\
-\varepsilon_{tj}^+,\varepsilon_{tj}^- \geq 0, &  \forall t \in T,\forall j \in J,\\ 
-	 D2_{pj}^+, D2_{pj}^- \geq 0, & \forall j \in J,  \forall p\in P.
-\end{IEEEeqnarray*}
-The variable $\mathcal{L}_{\lambda}^{*}$ receives the value of the objective function on its optimal solution.
-In summary, the optimization in equation \ref{eq:l1-qar-optim} acts as a variable selection for the subsequent estimation, which is normally called the post-LASSO estimation \cite{belloni2009least}.
-
-
-
-% (\ref{eq:linear-opt-1})-(\ref{eq:linear-opt-ult}). 
-
-
-
+%
+%
+%\begin{IEEEeqnarray*}{lr} (\mathcal{L}_{\lambda}^{*},\beta_{\lambda}^{*})\overset{(obj,var)}{\longleftarrow} \underset{\beta_{0j},\beta_j,z_{p j}, \varepsilon_{t j}^{+},\varepsilon_{t j}^{-}}{\text{min}} \sum_{j \in J} \sum_{t\in T}\left(\alpha_j \varepsilon_{t j}^{+}+(1-\alpha_j)\varepsilon_{t\alpha_j}^{-}\right) \span \nonumber
+%	\\
+%	&  + \gamma \sum_{j \in J'} (D2_{pj}^+ + D2_{pj}^-) \\
+%	\text{subject to } \span \nonumber \\
+%	\varepsilon_{t j}^{+}-\varepsilon_{t j}^{-}=y_{t} - \beta_{0\alpha} - \sum_{p\in S_\lambda} \beta_p x_{t,p}, & \forall t \in T, \forall j \in J, \\
+%	D2_{pj}^+ - D2_{pj}^- = \frac{\left(\frac{\beta_{p,j+1}-\beta_{pj}}{\alpha_{j+1}-\alpha_{j}}\right)-\left(\frac{\beta_{p,j}-\beta_{p,j-1}}{\alpha_{j}-\alpha_{j-1}}\right)}{\alpha_{j+1}-2\alpha_{j}+\alpha_{j-1}}, \span   \nonumber \\
+%	\span \forall j \in J_{(-1)}, \forall p\in P, \\
+%	\beta_{0j} + \beta_{j}^T x_{t} \leq \beta_{0,j+1} + \beta_{j+1}^T x_{t}, & \forall t \in T, \forall j \in J_{(-1)},\\
+%	\varepsilon_{tj}^+,\varepsilon_{tj}^- \geq 0, &  \forall t \in T,\forall j \in J,\\ 
+%	D2_{pj}^+, D2_{pj}^- \geq 0, & \forall j \in J,  \forall p\in P.
+%\end{IEEEeqnarray*}

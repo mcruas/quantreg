@@ -5,7 +5,7 @@
 # - tipos de funcoes incluidas
 # - os dados gerados
 # - o nome dos arquivos
-mode_distribution = "np"   # choose between "par" for parametric
+mode_distribution = "par"   # choose between "par" for parametric
                             # and "np" for nonparametric
 
 lambda1 = 0; lambda2 = 300
@@ -13,8 +13,8 @@ non_cross = true
 
 # serie = readcsv("Dados Climaticos/icaraizinho.csv"); nomeserie = "icaraizinho"
 
-max_sim= 10;
-n_cenarios = 20;
+max_sim= 100;
+n_cenarios = 200;
 
 
 
@@ -177,7 +177,7 @@ end
 
 
 
-plot(Y[1:n,1], legend = false, title = "Scenarios $mode_distribution")
+plot(Y[1:n,1], legend = false, title = "Scenarios $mode_distribution", size = (1200,700))
 media = mapslices(mean, Y[n+1:end, :], 2)
 plot!(n+1:n+max_sim, media)
 p_quantis = [0.75,0.90, 0.95];

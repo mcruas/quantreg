@@ -4,35 +4,42 @@
 #  nos quantis. 
 #  DADOS SIMULADOS DE UM PROCESSO ARIMA
 
-function simqar(Alphas, n, seed)
-    beta1 = (a -> ones(length(a)))
-    beta2 = (a -> a .- 1)
-    beta12 = (a -> a .- a .^ 2)
+# Function to generate values that follow a QAR process
+function simqar(Alphas, n, seed) # n = 100 ; seed = 123
+    n_ini = 1000 # number of initial observations for 
+    n_burnin = 3000
+    
+    # At first, puts some initial value for the time series y
     R"
     set.seed($seed)
-    y = arima.sim(n = 100, list(ar = c(0.75, -0.5, rep(0,9), 0.15)), sd = 1)    
+    y = arima.sim(n = $n_ini, list(ar = c(0.75, -0.5, rep(0,9), 0.15)), sd = 1)    
+    #y = rep(0,n)
     "
     @rget y
-    y = [y;zeros(n+900)]
+    y = [y;zeros(n + n_burnin)]
     
-    for i = 101:length(y)
-        q = beta1(Alphas) * y[i-1] + beta2(Alphas) * y[i-2] + beta12(Alphas) * y[i-12]
-        
-        y[i]
 
-    end
-  
-  end
-  
-  
+    # create quantile function
+    Alphas = collect(0.05:0.05:0.95)
+    Q_hat = zeros(length(Alphas))
+    beta1 =  0.3 * ones(length(Alphas))
+    beta12 = (0.7 - 0.3 * Alphas)
+    beta2 = -2 * (Alphas .- (Alphas .^ 2))
+    for t = n_ini+1:length(y)
+        Q_hat = 0.9 .+ beta1 * y[t-1] .+ beta12 * y[t-12] .+ beta2 * y[t-2]
+        unif = rand(1)
+        y[t] = (Q(unif, Q_hat, Alphas) + 0.5 * randn(1))[1]
+    end 
+    return y[end-n:end]
+end   
 
 
 
 nome_arquivo = "Lasso-penalty-quantis-arima"
 
-using JuMP, DataFrames, Plots, Interpolations, LaTeXStrings, RCall #, Distributions
+using JuMP, DataFrames, Plots, Interpolations, LaTeXStrings, RCall, Dierckx #, Distributions
 
-
+pyplot()
 usesolver = "gurobi"    # Escolher entre os valores 'mosek' ou 'gurobi'
 pasta_trabalho = homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/"
 cd(pasta_trabalho)
@@ -48,7 +55,7 @@ include(pwd()*"/RegressãoQuantílica_STREET/npar-multi-funcoes.jl");
 Alphas = [0.05,0.1,0.25,0.5,0.75,0.9,0.95]
 Alphas = vcat(collect(0.005:0.005:0.05), collect(0.1:0.05:0.9), collect(0.95:0.005:0.995))
 Alphas= collect(0.05:0.05:0.95)
-pyplot()
+
 
 
 for n = [100, 250, 500,1000]  # n = 100; lambda = 3; gamma = 0.5 # TIRAR DEPOIS DOS EXPERIMENTOS        

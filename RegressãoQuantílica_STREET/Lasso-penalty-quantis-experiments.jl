@@ -1,5 +1,61 @@
 
 
+using JuMP, DataFrames, Plots, Interpolations, LaTeXStrings, RCall #, Distributions
+
+
+usesolver = "gurobi"    # Escolher entre os valores 'mosek' ou 'gurobi'
+pasta_trabalho = homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/"
+cd(pasta_trabalho)
+
+include(pwd()*"/RegressãoQuantílica_STREET/funcoes_npqar.jl");
+include(pwd()*"/RegressãoQuantílica_STREET/npar-multi-funcoes.jl");
+
+# para icaraizinho
+
+serie_tmp = readtable("Dados Climaticos/Dados-kaggle/WindData_melt.csv"); nomeserie = "W1"
+serie_tmp = serie_tmp[1:50000,:]
+
+serie = serie_tmp[serie_tmp[:location] .== "W1", :wind]
+n_tmp = length(serie); # keeps size of series before cutting them
+
+### Inicialização dos dados
+
+tmp = serie[2:n_tmp-1];   # this is done so that X has two dimensions, instead of 1.
+X =zeros(Float64,length(tmp),1);
+X[:,1] = tmp;
+x = X[:,1]
+y = serie[3:n_tmp];
+n = length(y);
+T = 1:n;
+
+################################################################################################
+################################################################################################
+# Experimentos com o seleção inteira
+X_lags = lagmatrix(serie,0:12)
+Alphas = [0.05,0.1,0.25,0.5,0.75,0.9,0.95]
+Alphas = vcat(collect(0.005:0.005:0.05), collect(0.1:0.05:0.9), collect(0.95:0.005:0.995))
+Alphas= collect(0.05:0.05:0.95)
+TimeLimit = 157
+vetor_TimeLimit = [200, 600, 1800]
+
+
+vetor_TimeLimit = [18000] # Máximo de dois dias de simulação
+
+
+# TEMP
+vetor_Grupos = [10]
+vetor_max_K = [2] 
+vetor_TimeLimit = [157] # Máximo de dois dias de simulação
+
+
+
+
+y = X_lags[:,1]; X = X_lags[:, 2:end];   non_cross = true; MIPGap = 0.00
+
+pyplot()
+lambda = 0.00000 ; gamma = 0.0; unicodeplots()
+# nome_pasta = replace("n $n", ".0", "")
+nome_pasta = "50000"
         # lambda = 5; gamma = 0.5 # TIRAR DEPOIS DOS EXPERIMENTOS        
         results_lasso = rq_par_lasso(y, X, Alphas; lambda = lambda, gamma = 0, non_cross = false) # estimates the normal lasso
         p = plot(Alphas, results_lasso[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "(I)\$\\lambda=$lambda \\quad \\gamma_1=0\$")
@@ -59,47 +115,12 @@ lm(y~X)
 
 
 
-function denormalize(betas_til, beta0_til, X_mean, X_sd)
-    P = 1:length(betas_til)
-    betas = zeros(length(P))
-
-    betas = betas_til ./ X_sd
-    beta0 = beta0_til - sum(X_mean[p] * betas[p] for p = P)
-    return beta0, betas
-end
-
-
-
-function normalization(X)
-    R"
-    X_scale = scale($X)
-    X_mean = colMeans($X)
-    X_sd = apply($X,2,sd)
-    "
-    @rget X_scale X_mean X_sd
-    return X_scale, X_mean, X_sd
-
-end
-
-
-
-X_norm , X_mean, X_sd = normalization(X)
-R"coefs = coef(lm($y ~ $X_norm))
-  coefs2 = coef(lm($y ~ $X))  "
-@rget coefs coefs2
-beta0_til = coefs[1]
-betas_til = coefs[2:end]
-
-denormalize(betas_til, beta0_til, X_mean, X_sd)
-coefs2
-
 
 
 lambda = 0 
 tmp_lasso1 = rq_par_lasso(y, X, Alphas; lambda = lambda, gamma = 0, non_cross = true) # estimates the normal lasso
-betas = tmp_lasso1[:2]
-beta0 = tmp_lasso1[:1]
-X_norm , X_mean, X_sd = normalization(X)
+tmp_lasso2 = rq_par_lasso_
+
 
 tmp_lasso2 = rq_par_lasso(y, X_norm, Alphas; lambda = lambda, gamma = 0, non_cross = true) # estimates the normal lasso
 betas_til = tmp_lasso2[:2]
@@ -113,3 +134,6 @@ beta0_new = beta0 * 0;
 for j = 1:length(beta0)
 
 betas_new - betas
+
+
+

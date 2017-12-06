@@ -104,7 +104,7 @@ for lambda = [1000.0, 10000.0]
 
         # # r = plot(Alphas, results_adap1[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "\$w\$ as norm")
         
-        # plot(p,q,r,s,t,u,v,v1,size = (1200,700), ylim = (-3.5,1.5))
+        # plot(p,q,r,s,t,u,v,v1,, ylim = (-3.5,1.5))
 
         name_file = replace("Lambda$lambda-gamma$gamma",".","")
         savefig("Documento Regressao Quantilica/Figuras/Lasso-penalty-quantis-horario/$nome_pasta/$name_file.pdf")
