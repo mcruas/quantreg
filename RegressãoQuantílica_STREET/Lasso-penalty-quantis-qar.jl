@@ -71,7 +71,7 @@ for n = [100, 250, 500,1000]  # n = 5000; lambda = 3; gamma = 0.5 # TIRAR DEPOIS
     
     nome_pasta = replace("n $n", ".0", "")
     try mkdir("Documento Regressao Quantilica/Figuras/$nome_arquivo/$nome_pasta/") end
-    for lambda = [0.01, 0.03, 0.1, 0.3, 1.0,3.0,10.0,20.0,30.0,50.0,100.0]   # lambda = 1.0
+    for lambda = [0.01, 0.03, 0.1, 0.3, 1.0,3.0,10.0,20.0,30.0,50.0,100.0]   # lambda = 1.0 ; gamma = 1
         for gamma = [0.03, 0.1, 0.3, 1.0, 3.0, 10.0]
 
             # lambda = 5; gamma = 0.5 # TIRAR DEPOIS DOS EXPERIMENTOS        
@@ -110,7 +110,7 @@ for n = [100, 250, 500,1000]  # n = 5000; lambda = 3; gamma = 0.5 # TIRAR DEPOIS
 
             # r = plot(Alphas, results_adap1[:2]', legend = false, xlab = "\$\\alpha\$", ylab = "\$\\beta_{p} (\\alpha)\$", title = "\$w\$ as norm")
             
-            plot(p,r,u, q ,s,t,v,v1,v2, size = (1200,700), ylim = (-3.5,1.5))
+            plot(p,r,u, q ,s,t,v,v1,v2, size = (1200,700), ylim = (-1.5,1.5))
     
             name_file = replace("Lambda$lambda-gamma$gamma",".","")
             savefig("Documento Regressao Quantilica/Figuras/$nome_arquivo/$nome_pasta/$name_file.pdf")

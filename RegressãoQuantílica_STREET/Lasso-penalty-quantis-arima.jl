@@ -13,7 +13,6 @@ function simqar(Alphas, n, seed) # n = 100 ; seed = 123
     R"
     set.seed($seed)
     y = arima.sim(n = $n_ini, list(ar = c(0.75, -0.5, rep(0,9), 0.15)), sd = 1)    
-    #y = rep(0,n)
     "
     @rget y
     y = [y;zeros(n + n_burnin)]
@@ -62,7 +61,8 @@ for n = [100, 250, 500,1000]  # n = 100; lambda = 3; gamma = 0.5 # TIRAR DEPOIS 
     @rput n
     R"
     set.seed(n)
-    serie <- arima.sim(n = n, list(ar = c(0.75, -0.5, rep(0,9), 0.15)), sd = 1)
+    # serie <- arima.sim(n = n, list(ar = c(0.75, -0.5, rep(0,9), 0.15)), sd = 1)
+    serie <- arima.sim(n = n, list(ar = c(0.75), sd = 1)
     "
     @rget serie
     X_lags = lagmatrix(serie,0:12)

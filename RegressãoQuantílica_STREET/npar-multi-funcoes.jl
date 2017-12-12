@@ -279,7 +279,7 @@ function rq_par(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_cross = true
     T = 1:n
     Q = 1:size(X)[2]
 
-    m = Model(solver = solvfunc)
+    m = Model(solver = GurobiSolver(OutputFlag = 0))
   	@variable(m, ɛ_tmais[T, Alf] >= 0) 
   	@variable(m, ɛ_tmenos[T, Alf] >= 0)
   	@variable(m, β[Q, Alf])
@@ -326,7 +326,7 @@ function rq_par_mip(y::Array{Float64}, X::Array{Float64,2}, Alphas; non_cross = 
       max_K = size(X)[2]
     end
 
-    m = Model(solver = GurobiSolver(MIPGap = MIPGap, TimeLimit = TimeLimit))
+    m = Model(solver = GurobiSolver(MIPGap = MIPGap, TimeLimit = TimeLimit, OutputFlag =0))
   	@variable(m, ɛ_tmais[T, Alf] >= 0)
   	@variable(m, ɛ_tmenos[T, Alf] >= 0)
   	@variable(m, β[P, Alf])
@@ -625,7 +625,7 @@ function rq_par_lasso_oldfunction(y::Array{Float64}, X::Array{Float64,2}, Alphas
       P = size(X)[2]
       M2 = P * M
 
-      m = Model(solver = GurobiSolver(OutputFlag = 1))
+      m = Model(solver = GurobiSolver(OutputFlag = 0))
 
       @variable(m, ɛ_tmais[T, Alf] >= 0)
       @variable(m, ɛ_tmenos[T, Alf] >= 0)
@@ -744,83 +744,83 @@ function rq_par_lasso_normalize(y::Array{Float64}, X::Array{Float64,2}, alpha; w
 # Implements the LASSO in a regularization quantile context
 # When w is not provided, the normal LASSO is estimated; if w > 0, then 
 # gamma
-J = 1:length(alpha)
-Jm1 = 2:length(J) # it is the same indexes of Alpha but without the last observation.
-J_quantile_reg = 2:length(J)-1
-M = 5
+  J = 1:length(alpha)
+  Jm1 = 2:length(J) # it is the same indexes of Alpha but without the last observation.
+  J_quantile_reg = 2:length(J)-1
+  M = 5
 
-n = size(y)[1]
-T = 1:n
-Tm1 = 2:n
-P = 1:size(X)[2]
-M2 = P * M
+  n = size(y)[1]
+  T = 1:n
+  Tm1 = 2:n
+  P = 1:size(X)[2]
+  M2 = P * M
 
-# normalize variables
-X_norm , X_mean, X_sd = normalization(X)
-  
-# if weights are not given by the user, then use a vector of ones
-try if isnan(w)
-  w = ones(length(P),length(J))
-    end
-end
-
-
-m = Model(solver = GurobiSolver(OutputFlag = 0))
-
-@variable(m, ɛ_tmais[T, J] >= 0)
-@variable(m, ɛ_tmenos[T, J] >= 0)
-@variable(m, β[P, J])
-@variable(m, β0[J])
-@variable(m, ξ[P, J] >= 0) # The l1 norm of \beta_{p \alpha}
-@variable(m, D2[P, J_quantile_reg] >= 0) # The l1 norm of \beta_{p \alpha}
+  # normalize variables
+  X_norm , X_mean, X_sd = normalization(X)
+    
+  # if weights are not given by the user, then use a vector of ones
+  try if isnan(w)
+    w = ones(length(P),length(J))
+      end
+  end
 
 
-# Objective Function
-@objective(m, Min, sum(alpha[j] * ɛ_tmais[i, j] + (1-alpha[j]) *ɛ_tmenos[i, j] for i = T, j = J ) +
-                    lambda * sum(ξ[p,j] * w[p,j]  for p = P, j = J) + gamma * sum(D2[p,j]   for p = P, j = J_quantile_reg) )
+  m = Model(solver = GurobiSolver(OutputFlag = 0))
+
+  @variable(m, ɛ_tmais[T, J] >= 0)
+  @variable(m, ɛ_tmenos[T, J] >= 0)
+  @variable(m, β[P, J])
+  @variable(m, β0[J])
+  @variable(m, ξ[P, J] >= 0) # The l1 norm of \beta_{p \alpha}
+  @variable(m, D2[P, J_quantile_reg] >= 0) # The l1 norm of \beta_{p \alpha}
 
 
-########## Evitar cruzamento de quantis
-if non_cross
-  @constraint(m, evita_cross[i = T, j = Jm1], β0[j] + sum(β[p,j] * X_norm[i,p] for p = P) >= β0[j-1] + sum(β[p,j-1] * X_norm[i,p] for p = P))
-end
-
-  # Dar valores ao ɛ_tmais e ao ɛ_tmenos
-@constraint(m, epsilons[i = T, j = J], ɛ_tmais[i,j] - ɛ_tmenos[i,j] == y[i] - β0[j] - sum(β[p,j] * X_norm[i,p] for p = P))
-
-# Valor absoluto dos betas
-@constraint(m, abs_beta_pos[p = P, j = J], ξ[p,j] >= β[p,j])
-@constraint(m, abs_beta_neg[p = P, j = J], ξ[p,j] >= - β[p,j])
-
-# Valor absoluto de D2pj
-@expression(m, D2_til[p=P,j=J_quantile_reg],
-( ( (β[p,j+1]-β[p,j])/(alpha[j+1]-alpha[j]) - (β[p,j]-β[p,j-1])/(alpha[j]-alpha[j-1]) ) / (alpha[j+1]- alpha[j-1]) ))
-@constraint(m, abs_D2_pos[p = P, j = J_quantile_reg], D2[p,j] >= D2_til[p,j])
-@constraint(m, abs_D2_neg[p = P, j = J_quantile_reg], D2[p,j] >= - D2_til[p,j])
+  # Objective Function
+  @objective(m, Min, sum(alpha[j] * ɛ_tmais[i, j] + (1-alpha[j]) *ɛ_tmenos[i, j] for i = T, j = J ) +
+                      lambda * sum(ξ[p,j] * w[p,j]  for p = P, j = J) + gamma * sum(D2[p,j]   for p = P, j = J_quantile_reg) )
 
 
-global a = time()
-@time status = solve(m)
+  ########## Evitar cruzamento de quantis
+  if non_cross
+    @constraint(m, evita_cross[i = T, j = Jm1], β0[j] + sum(β[p,j] * X_norm[i,p] for p = P) >= β0[j-1] + sum(β[p,j-1] * X_norm[i,p] for p = P))
+  end
 
-tmp_betas0opt = getvalue(β0)
-tmp_betasopt = getvalue(β)
-objectiveValue = getobjectivevalue(m)
-solvetime = getsolvetime(m)
-# objetivo = getobjective()
-## Transform both variables into an array
-betasopt = zeros(size(X)[2], length(alpha))
-betas0opt = zeros(length(alpha))
-for q in 1:size(X)[2] , j in 1:length(alpha)
-  betasopt[q,j] = tmp_betasopt[q,j]
-end
-for j in 1:length(alpha)
-  betas0opt[j] = tmp_betas0opt[j]
-end
+    # Dar valores ao ɛ_tmais e ao ɛ_tmenos
+  @constraint(m, epsilons[i = T, j = J], ɛ_tmais[i,j] - ɛ_tmenos[i,j] == y[i] - β0[j] - sum(β[p,j] * X_norm[i,p] for p = P))
 
-# Denormalize coefficients, that were normalized on the beginning of the procedure
-betas0opt_denorm, betasopt_denorm = denormalize(betas0opt, betasopt, X_mean, X_sd) 
+  # Valor absoluto dos betas
+  @constraint(m, abs_beta_pos[p = P, j = J], ξ[p,j] >= β[p,j])
+  @constraint(m, abs_beta_neg[p = P, j = J], ξ[p,j] >= - β[p,j])
 
-return betas0opt_denorm', betasopt_denorm, objectiveValue, status, solvetime
+  # Valor absoluto de D2pj
+  @expression(m, D2_til[p=P,j=J_quantile_reg],
+  ( ( (β[p,j+1]-β[p,j])/(alpha[j+1]-alpha[j]) - (β[p,j]-β[p,j-1])/(alpha[j]-alpha[j-1]) ) / (alpha[j+1]- alpha[j-1]) ))
+  @constraint(m, abs_D2_pos[p = P, j = J_quantile_reg], D2[p,j] >= D2_til[p,j])
+  @constraint(m, abs_D2_neg[p = P, j = J_quantile_reg], D2[p,j] >= - D2_til[p,j])
+
+
+  global a = time()
+  @time status = solve(m)
+
+  tmp_betas0opt = getvalue(β0)
+  tmp_betasopt = getvalue(β)
+  objectiveValue = getobjectivevalue(m)
+  solvetime = getsolvetime(m)
+  # objetivo = getobjective()
+  ## Transform both variables into an array
+  betasopt = zeros(size(X)[2], length(alpha))
+  betas0opt = zeros(length(alpha))
+  for q in 1:size(X)[2] , j in 1:length(alpha)
+    betasopt[q,j] = tmp_betasopt[q,j]
+  end
+  for j in 1:length(alpha)
+    betas0opt[j] = tmp_betas0opt[j]
+  end
+
+  # Denormalize coefficients, that were normalized on the beginning of the procedure
+  betas0opt_denorm, betasopt_denorm = denormalize(betas0opt, betasopt, X_mean, X_sd) 
+
+  return betas0opt_denorm', betasopt_denorm, objectiveValue, status, solvetime
 
 
 end
@@ -834,26 +834,26 @@ function rq_par_lasso(y::Array{Float64}, X::Array{Float64,2}, alpha; w = NaN,  g
 # Implements the LASSO in a regularization quantile context
 # When w is not provided, the normal LASSO is estimated; if w > 0, then 
 # gamma
-J = 1:length(alpha)
-Jm1 = 2:length(J) # it is the same indexes of Alpha but without the last observation.
-J_quantile_reg = 2:length(J)-1
-M = 5
+  J = 1:length(alpha)
+  Jm1 = 2:length(J) # it is the same indexes of Alpha but without the last observation.
+  J_quantile_reg = 2:length(J)-1
+  M = 5
 
-n = size(y)[1]
-T = 1:n
-Tm1 = 2:n
-P = 1:size(X)[2]
-M2 = P * M
+  n = size(y)[1]
+  T = 1:n
+  Tm1 = 2:n
+  P = 1:size(X)[2]
+  M2 = P * M
 
 
-# if weights are not given by the user, then use a vector of ones
-try if isnan(w)
-  w = ones(length(P),length(J))
-    end
-end
+  # if weights are not given by the user, then use a vector of ones
+  try if isnan(w)
+      w = ones(length(P),length(J))
+      end
+  end
 
-# Defines the optimization model
-m = Model(solver = GurobiSolver(OutputFlag = 0))
+  # Defines the optimization model
+  m = Model(solver = GurobiSolver(OutputFlag = 0))
 
       @variable(m, ɛ_tmais[T, J] >= 0)
       @variable(m, ɛ_tmenos[T, J] >= 0)
