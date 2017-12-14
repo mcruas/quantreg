@@ -20,23 +20,27 @@ Alphas = collect(0.05:0.05:0.95)
 vector_gamma = [0.0, 0.01, 0.03, 0.1, 0.3, 1.0, 3.0, 10.0,20.0] 
 
 K_folds = 10
-n_iter = 1000
+n_iter = 50
 n = 400
 
 keep_betas = zeros(n_iter, length(vector_gamma), length(Alphas))
 keep_APD = zeros(n_iter, length(vector_gamma), length(Alphas))
-
+keep_ar = zeros(n_iter)
 name_file = homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/RegressãoQuantílica_STREET/Analise-histograma-coeficients/variables_$(n)_$(n_iter).jld"
 
 tic()
 
 for iter = 1:n_iter
     R"
+    library(forecast)
     set.seed($iter)
-    serie <- arima.sim(n = $n, list(ar = c(0.6), sd = 1))
+    serie <- arima.sim(n = $n, list(ar = c(0.6), sd = 1)) # generates time serie
+    coef_ar <- coef(arima(serie, order = c(1,0,0)))[1] # gets ar(1) coefficient
     "
-    @rget serie
+    @rget serie coef_ar
     
+    keep_ar[iter] = coef_ar
+
     X_lags = lagmatrix(serie,0:1)
     y = X_lags[:,1]; X = X_lags[:, 2:end]; 
     
@@ -96,4 +100,4 @@ end # end iter
 
 toc()
 
-save(name_file, "keep_betas", keep_betas, "keep_APD", keep_APD)
+save(name_file, "keep_betas", keep_betas, "keep_APD", keep_APD, "keep_ar", keep_ar)
