@@ -168,9 +168,20 @@ In summary, the optimization in equation \ref{eq:l1-qar-optim} acts as a variabl
 \section{Regularization on the quantiles}
 
 The nonparametric approach we use in this paper consists of a different model for each $\alpha$-quantile. From the assumption that the value of similar quantiles be produced by similar models, we need to prevent instabilities and big changes on the $p$ coefficient $\beta_p(\alpha)$ when seen as a function of probability $\alpha$. 
-Another issue we find in practice is how the quantile estimation is less precise on the boundaries (an example will be provided that illustrates this effect).
+Another issue we find in practice is how the quantile estimation is less precise on the boundaries.
 
-As an example of the aforementioned issue, we simulate 100 \textit{iid} observations of random variable $y= 1 + \beta_1 $, where $X_1$ are normal explanatory variables. Let $X_{reg} = [X_1 \, X_2]$ be input on the problem and we have to figure out the real model.   shown on Figure \ref{fig:lasso-selection-normal}.
+At first, we show an example to illustrate the aforementioned issues. We simulate 400 observations of the following AR(1) process:
+\begin{equation}
+	y_t = 0.6 y_{t-1} + \varepsilon_t, \quad \varepsilon_t \sim N(0, 1)
+\end{equation} 
+To prevent initial value bias, we use 1000 observations as burn in and discard them.
+
+
+
+To see if this difference is significant, we use an $F$ test for the variance ratio. Let $X$ and $Y$ be two datasets from normally distributed random variables with $n$ and $m$ observations, respectively. The statistic $F = \frac{S^2_X}{S^2_Y}$ follows an $F$ distribution with $n-1$ and $m-1$ degrees of freedom.
+
+
+\textit{iid} observations of random variable $y= 1 + \beta_1 $, where $X_1$ are normal explanatory variables. Let $X_{reg} = [X_1 \, X_2]$ be input on the problem and we have to figure out the real model.   shown on Figure \ref{fig:lasso-selection-normal}.
 To force the model to have parsimony on the quantiles, we propose to penalize the second derivative of $\beta_p(\alpha)$. 
 On the implementation side, we must limit the second difference of the sequence of coefficients $\{\beta_{pj}\}_{j \in J}$ for every parameter $p$. This will bring smoothness to $\beta_p(\alpha)$.
 \begin{figure}

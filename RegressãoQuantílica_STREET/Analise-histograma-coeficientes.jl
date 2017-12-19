@@ -20,7 +20,7 @@ Alphas = collect(0.05:0.05:0.95)
 vector_gamma = [0.0, 0.01, 0.03, 0.1, 0.3, 1.0, 3.0, 10.0,20.0] 
 
 K_folds = 10
-n_iter = 50
+n_iter = 1003
 n = 400
 
 keep_betas = zeros(n_iter, length(vector_gamma), length(Alphas))
@@ -30,11 +30,11 @@ name_file = homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/RegressãoQu
 
 tic()
 
-for iter = 1:n_iter
+for iter = 1:n_iter  # iter = 1
     R"
     library(forecast)
     set.seed($iter)
-    serie <- arima.sim(n = $n, list(ar = c(0.6), sd = 1)) # generates time serie
+    serie <- arima.sim(n = $n, list(ar = c(0.3), sd = 1)) # generates time serie
     coef_ar <- coef(arima(serie, order = c(1,0,0)))[1] # gets ar(1) coefficient
     "
     @rget serie coef_ar
@@ -51,10 +51,12 @@ for iter = 1:n_iter
 
     
     for i_gamma =  1:length(vector_gamma)   # For each value of the parameter, performs CV
+          # k = 1 ; i_gamma = 1
         gamma = vector_gamma[i_gamma]
 
         #### Inicia aqui o CV
         for k = 1:K_folds # for each fold, estimates and gets the values 
+          
 
             # separates fold
             y_fold = y[find(folds .!= k)]
@@ -64,7 +66,7 @@ for iter = 1:n_iter
             X_test_fold = X[find(folds .== k), :]
 
             # Estimate coefficients for fold
-            results_qr = rq_par_lasso(y, X, Alphas; lambda = 0, gamma = gamma, non_cross = true) # estimates QR with quantile regularization
+            results_qr = rq_par_lasso(y_fold, X_fold, Alphas; lambda = 0, gamma = gamma, non_cross = true) # estimates QR with quantile regularization
             beta0 = results_qr[:1]; betas = results_qr[:2]
             keep_betas[iter,i_gamma, :] = betas[1,:]
                
@@ -91,7 +93,7 @@ for iter = 1:n_iter
     if (iter % 50) == 0
         print(iter)
         name_file = homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/RegressãoQuantílica_STREET/Analise-histograma-coeficients/variables_$(n)_$(n_iter).jld"
-        save(name_file, "keep_betas", keep_betas, "keep_APD", keep_APD)
+        save(name_file, "keep_betas", keep_betas, "keep_APD", keep_APD, "keep_ar", keep_ar)
     end
         
 

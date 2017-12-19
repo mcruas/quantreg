@@ -1,0 +1,20 @@
+\subsection{ADALASSO}
+A popular extension of the LASSO is the Adaptive LASSO (ADALASSO). In \cite{ciuperca_adaptive_2016}, the authors extended the ADALASSO for QR and have shown properties of the ADALASSO for the QR 
+
+When estimating the ADALASSO for quantile regression, we show a few adaptations and extensions of the original method. The full process consists of two steps, each consisting of a LASSO estimation:
+\begin{itemize}
+	\item \textbf{First step:} First LASSO regularization, as in problem (\ref{eq:obj-lasso-2reg})-(\ref{eq:obj-lasso-2reg-end}).
+	
+	\item \textbf{Second step:} The coefficients of the LASSO estimation are used to form the weights $w_{pj}$  are:
+	\begin{enumerate}
+		\item $w_{pj} = 1/ \beta_{pj}$.
+		\item $w_{pj} = 1/ (\beta_{pj} \parallel \beta_j \parallel_1)$,
+	\end{enumerate}
+	where $\beta_{pj}$ stands for the coefficients obtained on the first step and $\parallel \beta_j \parallel_1$ is the $\ell_1$-norm of the $j$\textsuperscript{th} quantile coefficients.
+	The weights $w_j$ are input to a second-stage Lasso estimation:
+	\begin{IEEEeqnarray*}{lr}
+		\underset{\beta_{0j},\beta_j}{\text{min}} \sum_{j \in J} \left( \sum_{t\in T}\rho_{\alpha_j}(y_{t}-(\beta_{0j} + \beta_j^T x_t)) + \lambda\  \sum_{p \in P} w_{pj}^\delta \mid  \beta_{pj} \mid \right) \span \\
+		\span + \gamma \sum_{j \in J'} (D2_{pj}^+ + D2_{pj}^-),
+	\end{IEEEeqnarray*}
+	where $\delta$ is an exponential parameter, normally set to 1.
+\end{itemize}

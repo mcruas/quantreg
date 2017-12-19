@@ -7,22 +7,37 @@ pasta_trabalho = homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/"
 cd(pasta_trabalho)
 nome_arquivo = homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/RegressãoQuantílica_STREET/Analise-histograma-coeficients/variables_$(n)_$(n_iter).jld"
 pasta_raiz = homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/RegressãoQuantílica_STREET/Analise-histograma-coeficients/"
+keep_betas, keep_APD = load(nome_arquivo, "keep_betas", "keep_APD")
 keep_betas, keep_APD, keep_ar = load(nome_arquivo, "keep_betas", "keep_APD", "keep_ar")
+betas_koenker = keep_betas[:,1,:] # Takes coefficients with gamma = 0 to compare
+
 
 Alphas = collect(0.05:0.05:0.95)
 vector_gamma = [0.0, 0.01, 0.03, 0.1, 0.3, 1.0, 3.0, 10.0,20.0] 
 
 
+### Executes this if using a partial version of JLD files
+n_iter = find(keep_betas[:,1,1] .== 0)[1] - 1; 
+keep_betas = keep_betas[1:n_iter, : , :]
+keep_APD = keep_APD[1:n_iter, :_APD, keep_ar = , :]
+betas_koenker = keep_betas[:,1,:]
+
+
 ## Seleciona apenas os betas por CV para cada iteração
 betas_CV = zeros(n_iter, length(Alphas)) # betas that were selected by CV
 keep_gammas = zeros(n_iter)
+indexes_best_CV = zeros(n_iter)
 for iter = 1:n_iter
     betas_iter = keep_betas[iter,:,:]     # gets the values of
     CV_gamma = sum(keep_APD[iter,:,:], 2)  # Finds the CV for each gamma, by summing every alpha
     index_best_CV = findmin(CV_gamma)[:2]  # Finds the value of index of gamma which minimizes the CV function
+    indexes_best_CV[iter] = index_best_CV
     betas_CV[iter,:] = keep_betas[iter,index_best_CV, :]
 end
 
+## Shows the frequency of the gamma selected as the best ones on the CV
+best_gammas = map(x->(vector_gamma[convert(Int64,x)]), indexes_best_CV)
+R"barplot(table($best_gammas), main = 'Frequency of selected gammas')"
 
 ## Gammas Boxplots 
 R"""
@@ -34,8 +49,13 @@ bwplot(beta ~ factor(Alpha, labels = $Alphas) | factor(Gamma, labels = $vector_g
 # De modo geral, o erro dos coeficientes é aproximadamente o mesmo para todos 
 # os valores de gamma
 
-pvalues = zeros(length(Alphas))
+## Teste de hipóteses de diferença de medias
+
+
+
+
 ## Teste de hipóteses de variância
+pvalues = zeros(length(Alphas))
 for i_alpha = 1:length(Alphas)
     var_CV = var(betas_CV[:,i_alpha])
     var_0 = var(keep_betas[:,1,i_alpha])
@@ -49,6 +69,9 @@ library(xtable)
 table_pvalues = xtable(data.frame(`Probability` = $Alphas, `P-values` = $pvalues))
 print(table_pvalues, include.rownames=FALSE, file = $nome_tex)
 """
+
+## Checks for difference on the mean
+sum(abs(colMeans(betas_CV ) - 0.3) - abs(colMeans(betas_koenker) - 0.3))
 
 
 R"""
