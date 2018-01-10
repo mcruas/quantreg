@@ -174,8 +174,23 @@ At first, we show an example to illustrate the aforementioned issues. We simulat
 \begin{equation}
 	y_t = 0.6 y_{t-1} + \varepsilon_t, \quad \varepsilon_t \sim N(0, 1)
 \end{equation} 
-To prevent initial value bias, we use 1000 observations as burn in and discard them.
+%To prevent initial value bias, we use 1000 observations as burn in and discard them.
 
+
+Controlled experiment
+- melhora a variancia
+- as pontas são mais dificeis pra RQ
+- no meio parece om ar1
+
+In this controlled experiment, the results are shown on Figure \todoi{Colocar figura boxplot}. The main results are: (i) compared with the original QR model in \cite{koenker1978regression}, our estimator has statistically significant smaller variance (p-values shown on table \todoi{put table}); (ii) Extreme quantiles show larger variance than central quantiles; (iii) by using QR we can 
+
+
+\begin{figure*}
+	\centerline{\includegraphics[width=7in]{Images/boxplot-ar1.pdf}}
+\end{figure*}
+
+
+\input{Tables/p-values-ar1.tex}
 
 
 To see if this difference is significant, we use an $F$ test for the variance ratio. Let $X$ and $Y$ be two datasets from normally distributed random variables with $n$ and $m$ observations, respectively. The statistic $F = \frac{S^2_X}{S^2_Y}$ follows an $F$ distribution with $n-1$ and $m-1$ degrees of freedom.
@@ -232,7 +247,7 @@ The modified LASSO problem to include the
 \end{IEEEeqnarray}
 
 \subsection{ADALASSO}
-A popular extension of the LASSO is the Adaptive LASSO (ADALASSO). In \cite{ciuperca_adaptive_2016}, the authors extended the ADALASSO for QR and shown properties of the ADALASSO for the QR 
+A popular extension of the LASSO is the Adaptive LASSO (ADALASSO). In \cite{ciuperca_adaptive_2016}, the authors extended the ADALASSO for QR and have shown properties of the ADALASSO for the QR .
 
 When estimating the ADALASSO for quantile regression, we show a few adaptations and extensions of the original method. The full process consists of two steps, each consisting of a LASSO estimation:
 \begin{itemize}

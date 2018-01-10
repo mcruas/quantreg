@@ -5,21 +5,22 @@ using JuMP, DataFrames, Plots, Interpolations, LaTeXStrings, RCall, Dierckx, JLD
 
 ########################## Gráficos ########################
 # keep_betas[:,1,:]
-n =  400; n_iter = 1001
+n =  400; n_iter = 101
 pasta_trabalho = homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/"
 cd(pasta_trabalho)
-nome_arquivo = homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/RegressãoQuantílica_STREET/Analise-histograma-coeficients/variables_$(n)_$(n_iter).jld"
-pasta_raiz = homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/RegressãoQuantílica_STREET/Analise-histograma-coeficients/"
-keep_betas, betas_CV, betas_koenker, keep_APD, keep_ar, keep_best_gamma_CV = 
-    load(nome_arquivo, "keep_betas", "betas_CV", "betas_koenker", "keep_APD", "keep_ar",  "keep_best_gamma_CV")
+nome_arquivo = homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/RegressãoQuantílica_STREET/Analise-histograma-coeficients-qar/variables_$(n)_$(n_iter).jld"
+pasta_raiz = homedir()*"/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/RegressãoQuantílica_STREET/Analise-histograma-coeficients-qar/"
+# keep_betas, betas_CV, betas_koenker, keep_APD, keep_ar, keep_best_gamma_CV, keep_score_APD = 
+#     load(nome_arquivo, "keep_betas", "betas_CV", "betas_koenker", "keep_APD", "keep_ar",  "keep_best_gamma_CV", "keep_score_APD")
+keep_betas, betas_CV, betas_koenker, keep_APD, keep_ar, keep_best_gamma_CV, keep_score_APD, betas0_sim, betas_sim  = 
+    load(nome_arquivo, "keep_betas", "betas_CV", "betas_koenker", "keep_APD", "keep_ar",  
+    "keep_best_gamma_CV", "keep_score_APD", "beta0_sim", "betas_sim")
+
 
 
 Alphas = collect(0.05:0.05:0.95)
-vector_gamma = [0.0, 0.01, 0.03, 0.1, 0.3, 1.0, 3.0, 10.0,20.0] 
+vector_gamma = [0.0,0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1.0, 3.0, 10.0,20.0] 
 K_folds = 10
-n_iter = 1001
-n = 400
-rho = 0.3
 
 ### Executes this if using a partial version of JLD files
 n_iter = find(keep_betas[:,1,1] .== 0)[1] - 1; 
@@ -28,7 +29,7 @@ betas_koenker = betas_koenker[1:n_iter, : ]
 keep_best_gamma_CV = keep_best_gamma_CV[1:n_iter]
 keep_betas = keep_betas[1:n_iter, :, :]
 keep_ar = keep_ar[1:n_iter]
-
+keep_score_APD =  keep_score_APD[1:n_iter, : ]
 
 # ## Seleciona apenas os betas por CV para cada iteração
 # betas_CV = zeros(n_iter, length(Alphas)) # betas that were selected by CV
@@ -100,21 +101,19 @@ output_plot = "$(pasta_raiz)boxplot-ar1.pdf"
 # Boxplot final comparando cross-validation com gamma = 0 e Ar(1)
 R"""
 quantiles_ar = quantile($keep_ar,c(0.005,0.25,0.5,0.75,0.995))
-library(ggplot2)
-library(gridExtra)
+library(reshape2);library(ggplot2);library(gridExtra)
 t1= cbind.data.frame(melt($betas_CV, varnames = c("Iteration", "Alpha"), value.name = "beta") , Type = "Gamma CV", stringsAsFactors = FALSE)
 t2 = cbind.data.frame(melt($betas_koenker, varnames = c("Iteration", "Alpha"), value.name = "beta"), Type = "Gamma = 0", stringsAsFactors = FALSE)
 tnew = rbind(t1,t2)
+betas_df = data.frame(betas = t($betas), alphas = $Alphas)
 limites = c(min(tnew[,3]),max(tnew[,3]))
 p1 = ggplot(data = tnew, aes(x = factor(Alpha, labels = Alphas), y = beta)) + 
     geom_boxplot(aes(fill = factor(Type)), width = 0.8)  + xlab(expression(alpha)) + ylab(expression(beta(alpha))) +
-    scale_fill_discrete(name = "Type") + geom_abline(intercept = quantiles_ar[1], slope = 0, linetype = 2, colour = "grey") + ylim(limites) +
-    geom_abline(intercept = quantiles_ar[2], slope = 0, linetype = 2) + geom_abline(intercept = quantiles_ar[3], slope = 0, linetype = 2, colour = "blue") +
-    geom_abline(intercept = quantiles_ar[4], slope = 0, linetype = 2) + geom_abline(intercept = quantiles_ar[5], slope = 0, linetype = 2, colour = "grey")
+    scale_fill_discrete(name = "Type") + ylim(limites)
 p2 = qplot(y=$keep_ar, x=0.5, geom = "boxplot") + ylim(limites) + ylab(expression(beta^AR)) + xlab("") # + labs(y = NULL)
 p_12 = arrangeGrob(p2,p1,widths = c(1,6))
 plot(p_12)
-ggsave(file = output_plot, p_12,width = 12, height = 8)
+# ggsave(file = output_plot, p_12,width = 12, height = 8)
 """
 
 R"""

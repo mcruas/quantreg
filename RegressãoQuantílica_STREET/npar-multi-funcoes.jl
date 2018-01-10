@@ -1,42 +1,4 @@
-# Function to estimate all quantiles at the same time, iwth a noncrossing quantile constraint
-# cd("/home/mcruas/Dropbox/Pesquisa Doutorado/Paper-NPQuantile/"); usesolver = "mosek"
-# y = randn(100)
-# x = randn(100,3)
-#
-# Alphas = 0.01:0.1:0.99
-# Alphas = [0.01,0.05, 0.25, 0.5, 0.75, 0.95, 0.99]
-# typeof(Alphas)
-#
-
-# include("RegressãoQuantílica_STREET/funcoes_npqar.jl")
-# using JuMP, DataFrames, Plots, RCall, Interpolations #, Distributions
-
-# tmp = [rand(5) ["a", "b", "c", "d" ,"e"]]
-# sort(tmp, by)
-# sortrows(tmp, by=x->(x[1]))
-
-# scatter(x,y)
-
-
-# lambda2 = 10
-# This function receives a vector of dimension 1 as y and a
-# vector of regressors (X).
-# The function returns coefficients for the following model
-#   q_alpha =
 using JuMP
-
-
-# function Plotar_quantis(x,y,thetas, )tmux
-type Registros
-  beta0::Array{Float64,2}
-  betas::Array{Float64,2}
-  tempo::Float64
-  Status::String
-  objetivo::Float64
-  grupos::String
-  K::Int64
-end
-
 
 
 function rq_np(y::Array{Float64}, x::Array{Float64}, Alphas, lambda1 = NaN, lambda2 = NaN; range_data = NaN, non_cross = true)
@@ -888,8 +850,13 @@ function rq_par_lasso(y::Array{Float64}, X::Array{Float64,2}, alpha; w = NaN,  g
 
 
   global a = time()
-  @time status = solve(m)
-  
+
+  # TT = STDOUT # save original STDOUT stream
+  # redirect_stdout()
+  @time status = solve(m; suppress_warnings=true)
+  # redirect_stdout(TT) # restore STDOUT
+   
+
   tmp_betas0opt = getvalue(β0)
   tmp_betasopt = getvalue(β)
   objectiveValue = getobjectivevalue(m)
@@ -929,3 +896,68 @@ function Estimar_Q_hat_par2(betas0,betas, x_new)
 end
 
 
+# Evaluates fit by testing, for each alpha, how close are the number of obs on the expected range
+function Calculate_APD(y_test, q_hat , Alphas)
+  output = zeros(length(Alphas))
+  for i_alpha = 1:length(Alphas)
+    alpha = Alphas[i_alpha]
+    output[i_alpha] = abs(sum(q_hat[:,i_alpha] .> y_test)/length(y_test) - alpha)
+  end
+  return output
+end
+
+
+
+# Function to find values of coefficients beta0 from the sequence of values of betas
+# Both betas and beta0 are scaled in order to span all values of X with a probability greater than 0
+function SimB0Qar(X::Array{Float64,2}, Alphas, β::Array{Float64,2})
+    
+  J = 1:length(Alphas)
+  Jm1 = 2:length(J) # it is the same indexes of Alpha but without the last observation.
+  T = 1:size(X)[1]
+  P = 1:size(X)[2]
+
+      # Defines the optimization model
+  m = Model(solver = GurobiSolver(OutputFlag = 0))
+
+      @variable(m, β0[J])
+      
+      @objective(m, Min,  β0[length(J)] - β0[1] )
+
+      @constraint(m, evita_cross[i = T, j = Jm1], β0[j] + sum(β[p,j] * X[i,p] for p = P) >= β0[j-1] + sum(β[p,j-1] * X[i,p] for p = P))
+      @constraint(m, β0[1] + minimum(X) * β[1]  == minimum(X) )
+  status = solve(m; suppress_warnings=true)
+  # Gets optimum values of beta0 and puts into an array           
+  tmp_betas0opt = getvalue(β0)
+  betas0 = zeros(length(Alphas))
+  for j in 1:length(Alphas)
+    betas0[j] = tmp_betas0opt[j]
+  end
+  # Transforms the data so they are all generated along the same images
+  max_Im1 = betas0[length(J)] + β[length(J)]*maximum(X)
+  min_Im1 = betas0[1] + β[1]*minimum(X)
+  betas_transformed = β .* (maximum(X) - minimum(X))/(max_Im1 - min_Im1)
+  betas0_transformed =  minimum(X) .+  (betas0' + minimum(X) .* β .- min_Im1) .* 
+            ((maximum(X)-minimum(X))/(max_Im1 - min_Im1)) - (minimum(X) .* betas_transformed)
+  return betas0_transformed, betas_transformed
+end
+
+
+# Function to generate values that follow a QAR process
+function simqar(Alphas, n, seed, betas0, betas; y0 = 0) # n = 100 ; seed = 123
+n_burnin = 3000
+
+y = zeros(n + n_burnin)
+y[1] = y0
+# create quantile function
+# Alphas = collect(0.05:0.05:0.95)
+Q_hat = zeros(length(Alphas))
+# plot(betas)
+for t = 2:length(y)
+    ytm1 = y[t-1]
+    Q_hat = (betas0' * ones(length([ytm1]))'  + betas' * [ytm1]')'
+    unif = rand(1)
+    y[t] = Q(unif, Q_hat[:], Alphas)[1]
+end 
+return y[end-n+1:end]
+end   
